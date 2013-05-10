@@ -1,0 +1,9 @@
+[submodule "greg"]
+	path = greg
+	url = git://github.com/nddrylliog/greg.git
+[submodule "MarkdownTest"]
+	path = MarkdownTest
+	url = https://github.com/fletcher/MMD-Test-Suite.git
+[submodule "Support"]
+	path = Support
+	url = https://github.com/fletcher/MMD-Support.git
