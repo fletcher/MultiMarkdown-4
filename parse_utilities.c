@@ -368,6 +368,9 @@ char * clean_string(char *str) {
 	which must be freed after use. */
 char *label_from_node_tree(node *n) {
 	char *label;
+	if (n == NULL)
+		return NULL;
+	
 #ifdef DEBUG_ON
 		fprintf(stderr, "\n\nstart label from node_tree\n");
 #endif
@@ -389,6 +392,9 @@ char *label_from_node_tree(node *n) {
 char *label_from_node(node *n) {
 	char *label;
 	char *label2;
+	if (n == NULL)
+		return NULL;
+	
 	GString *raw = g_string_new("");
 	print_raw_node(raw, n);
 	label =  label_from_string(raw->str);

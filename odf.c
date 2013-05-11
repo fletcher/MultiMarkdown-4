@@ -636,7 +636,7 @@ void print_odf_node(GString *out, node *n, scratch_pad *scratch) {
 			print_odf_node_tree(out, n->children, scratch);
 			g_string_append_printf(out, "</table:table>\n");
 			/* caption if present */
-			if (n->children->key == TABLECAPTION) {
+			if ((n->children != NULL) && (n->children->key == TABLECAPTION)) {
 				if (n->children->children->key == TABLELABEL) {
 					temp = label_from_string(n->children->children->str);
 				} else {

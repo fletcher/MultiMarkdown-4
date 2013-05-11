@@ -722,7 +722,7 @@ void print_latex_node(GString *out, node *n, scratch_pad *scratch) {
 			free(temp);
 			break;
 		case TABLECAPTION:
-			if (n->children->key == TABLELABEL) {
+			if ((n->children != NULL) && (n->children->key == TABLELABEL)) {
 				temp = label_from_string(n->children->str);
 			} else {
 				temp = label_from_node_tree(n->children);
