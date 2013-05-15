@@ -390,9 +390,12 @@ void print_latex_node(GString *out, node *n, scratch_pad *scratch) {
 					g_string_append_printf(out, "%s (\\autoref{%s})", temp_str->str, n->link_data->label);
 				} else {
 					if (n->link_data->label == NULL) {
-						/* This link was specified as [](#bar) */
-						/* do as told, even if it doesn't make sense */
-						g_string_append_printf(out, "\\href{%s}{}", n->link_data->source);
+						if ((n->link_data->source !=  NULL) && (strncmp(n->link_data->source,"#",1) == 0)) {
+							/* This link was specified as [](#bar) */
+							g_string_append_printf(out, "\\autoref{%s}", n->link_data->source + 1);
+						} else {
+							g_string_append_printf(out, "\\href{%s}{}", n->link_data->source);
+						}
 					} else {
 						g_string_append_printf(out, "\\autoref{%s}", n->link_data->label);
 					}
