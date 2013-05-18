@@ -28,7 +28,7 @@ MultiMarkdown v4 is basically a complete rewrite of v3.  It uses the same basic 
 
 # Installation #
 
-Currently, MMD v4 has to be compiled in order to use it.  Once it is out of beta, I will create some binary builds that can be downloaded and installed without compiling.
+You can compile for yourself, or download a precompiled binary from the [downloads] page.
 
 * Download the source from the [github] web site using `git`
 * `git submodule init` and then `git submodule update` to download `greg` and the test suite
@@ -56,8 +56,6 @@ Once installed, you simply do something like the following:
 
 
 # Notes #
-
-MMD v4 is not quite finished, but it's almost feature-complete when compared to MMD v3.  A few things have been intentionally changed (and are reflected in the Test Suite)
 
 If you get an error that `greg` fails to build try `touch greg\greg.c`.  I had an issue where the timestamp on that file might have been too old, which caused the build to fail.
 
