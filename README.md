@@ -15,7 +15,7 @@ Introduction
 
 MultiMarkdown started as a Perl script, which was modified from the original Markdown.pl.
 
-MultiMarkdown v3 (aka 'peg-multimarkdown') was based on John MacFarlane's [peg-markdown].  Is used a parsing expression grammar (PEG), and was written in C in order to compile on almost any operating system.  Thanks to work by Daniel Jalkut, MMD v3 was built so that it didn't have any external library requirements.
+MultiMarkdown v3 (aka 'peg-multimarkdown') was based on John MacFarlane's [peg-markdown].  It used a parsing expression grammar (PEG), and was written in C in order to compile on almost any operating system.  Thanks to work by Daniel Jalkut, MMD v3 was built so that it didn't have any external library requirements.
 
 MultiMarkdown v4 is basically a complete rewrite of v3.  It uses the same basic PEG for parsing (Multi)Markdown text, but otherwise is almost completely rebuilt:
 
