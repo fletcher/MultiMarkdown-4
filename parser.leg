@@ -244,6 +244,7 @@ Inlines =	a:StartList ( !Endline Inline { a = cons($$, a); }
 Inline = #&{ check_timeout((parser_data *)G->data) }
 # TODO: the check_timeout function still slows us down -- do we still need it??
 		&{ ext(EXT_CRITIC) } CriticMarkup
+		| &{ !ext(EXT_COMPATIBILITY) } DollarMath
 		| Str
 		| &{ !ext(EXT_COMPATIBILITY) } MathSpan
 		| Endline
@@ -305,6 +306,13 @@ MathSpan = '\\' < (
 	$$ = str(yytext);
 	$$->key = MATHSPAN;
 }
+
+DollarMathStart = '$' !(Spacechar | Newline)
+
+DollarMathEnd = Nonspacechar '$' !Nonspacechar
+
+DollarMath = < DollarMathStart (!DollarMathEnd !Newline .)*  DollarMathEnd >
+		{ $$ = str(yytext); $$->key = MATHSPAN; }
 
 # This keeps the parser from getting bogged down on long strings of '*' or '_',
 # or strings of '*' or '_' with space on each side:

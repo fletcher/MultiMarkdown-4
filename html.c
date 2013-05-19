@@ -243,7 +243,10 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 			g_string_append_printf(out, "<br/>\n");
 			break;
 		case MATHSPAN:
-			if (n->str[strlen(n->str) - 1] == ']') {
+			if (n->str[0] == '$') {
+				n->str[strlen(n->str)-1] = '\0';
+				g_string_append_printf(out, "<span class=\"math\">\\(%s\\)</span>",&n->str[1]);
+			} else if (n->str[strlen(n->str) - 1] == ']') {
 				n->str[strlen(n->str) - 3] = '\0';
 				g_string_append_printf(out, "<span class=\"math\">%s\\]</span>",n->str);
 			} else {
