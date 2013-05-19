@@ -225,7 +225,7 @@ OptionallyIndentedLine = Indent? Line
 Symbol = < SpecialChar >
 		{ $$ = str(yytext); }
 
-EscapedChar = '\\' !Newline < [-\\`|*_{}[\]()#+.!><'""] >
+EscapedChar = '\\' !Newline < [-\\`|*_{}[\]()#+.!$><'""] >
 		{ $$ = str(yytext); }
 
 Entity = ( HexEntity | DecEntity | CharEntity )
@@ -309,7 +309,7 @@ MathSpan = '\\' < (
 
 DollarMathStart = '$' !(Spacechar | Newline)
 
-DollarMathEnd = Nonspacechar '$' !Nonspacechar
+DollarMathEnd = (!'\\' Nonspacechar) '$' !Nonspacechar
 
 DollarMath = < DollarMathStart (!DollarMathEnd !Newline .)*  DollarMathEnd >
 		{ $$ = str(yytext); $$->key = MATHSPAN; }
