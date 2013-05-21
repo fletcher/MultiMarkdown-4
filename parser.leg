@@ -238,7 +238,7 @@ Plain =	a:Inlines
 		{ $$ = a; $$->key = PLAIN; }
 
 Inlines =	a:StartList ( !Endline Inline { a = cons($$, a); }
-			| c:Endline &Inline { a = cons(c, a); } )+ Endline?
+			| c:Endline &Inline { a = cons(c, a); } )+ voidEndline?
 		{ $$ = list(LIST, a); }
 
 Inline = #&{ check_timeout((parser_data *)G->data) }
@@ -281,6 +281,11 @@ TerminalEndline = Sp Newline Eof
 
 LineBreak = "  " a:NormalEndline
 		{ a->key = LINEBREAK; }
+
+voidEndline = ("  " voidNormalEndline) | (Sp Newline Eof) | voidNormalEndline
+
+voidNormalEndline = Sp Newline !BlankLine !'>' !AtxStart
+		!(Line ('='+ | '-'+) Newline)
 
 Str = 	a:StartList < NormalChar+ > { a = cons(str(yytext), a); }
 		( StrChunk { a = cons($$, a); } )*
