@@ -281,7 +281,7 @@ TerminalEndline = Sp Newline Eof
 		{ $$ = NULL; }
 
 LineBreak = "  " a:NormalEndline
-		{ a->key = LINEBREAK; }
+		{ $$ = a; $$->key = LINEBREAK; }
 
 voidEndline = ("  " voidNormalEndline) | (Sp Newline Eof) | voidNormalEndline
 

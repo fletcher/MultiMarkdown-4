@@ -162,4 +162,6 @@ bool tree_contains_key(node *list, int key);
 
 bool check_timeout();
 
+void debug_node(node *n);
+
 #endif

@@ -587,3 +587,11 @@ char * mmd_version(void) {
 	return result;
 }
 
+void debug_node(node *n) {
+	while (n != NULL) {
+		fprintf(stderr, "node (%d) %u:%u '%s'\n", n->key, n->start, n->stop, n->str);
+		if (n->children != NULL)
+			debug_node(n->children);
+		n = n->next;
+	}
+}
