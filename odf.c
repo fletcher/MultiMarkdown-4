@@ -284,7 +284,9 @@ void print_odf_node(GString *out, node *n, scratch_pad *scratch) {
 			g_string_append_printf(out, "<text:line-break/>");
 			break;
 		case MATHSPAN:
-			if (n->str[strlen(n->str) - 1] == ']') {
+			if (n->str[0] == '$') {
+				g_string_append_printf(out, "<text:span text:style-name=\"math\">%s</text:span>",n->str);
+			} else if (n->str[strlen(n->str) - 1] == ']') {
 				n->str[strlen(n->str) - 3] = '\0';
 				g_string_append_printf(out, "<text:span text:style-name=\"math\">%s\\]</text:span>",n->str);
 			} else {

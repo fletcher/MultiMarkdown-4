@@ -299,7 +299,14 @@ void print_latex_node(GString *out, node *n, scratch_pad *scratch) {
 			g_string_append_printf(out, "\\\\\n");
 			break;
 		case MATHSPAN:
-			if (strncmp(&n->str[2],"\\begin",5) == 0) {
+			if (n->str[0] == '$') {
+				if (strncmp(&n->str[1],"\\begin",5) == 0) {
+					n->str[strlen(n->str)-1] = '\0';
+					g_string_append_printf(out, "%s",&n->str[1]);
+				} else {
+					g_string_append_printf(out, "%s",n->str);
+				}
+			} else if (strncmp(&n->str[2],"\\begin",5) == 0) {
 				/* trim */
 				n->str[strlen(n->str)-3] = '\0';
 				g_string_append_printf(out, "%s", &n->str[2]);
