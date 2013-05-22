@@ -316,14 +316,14 @@ SingleDollarMathStart = '$' !(Spacechar | Newline | '$' )
 
 SingleDollarMathEnd = (!'\\' !'$' Nonspacechar) '$' !Nonspacechar
 
-SingleDollarMath = < SingleDollarMathStart (!SingleDollarMathEnd !Newline .)*  SingleDollarMathEnd >
+SingleDollarMath = < SingleDollarMathStart (!SingleDollarMathEnd !(BlankLine BlankLine) .)*  SingleDollarMathEnd >
 		{ $$ = str(yytext); $$->key = MATHSPAN; }
 
 DoubleDollarMathStart = '$' '$' !(Spacechar | Newline)
 
 DoubleDollarMathEnd = (!'\\' Nonspacechar) '$' '$' !Nonspacechar
 
-DoubleDollarMath = < DoubleDollarMathStart (!DoubleDollarMathEnd !Newline .)*  DoubleDollarMathEnd >
+DoubleDollarMath = < DoubleDollarMathStart (!DoubleDollarMathEnd !(BlankLine BlankLine) .)*  DoubleDollarMathEnd >
 		{ $$ = str(yytext); $$->key = MATHSPAN; }
 
 DollarMath = SingleDollarMath | DoubleDollarMath
