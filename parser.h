@@ -19,7 +19,7 @@
 
 #define TABSTOP 4
 
-#define MMD_VERSION "4.0b2"
+#define MMD_VERSION "4.1"
 
 #define MMD_COPYRIGHT \
 	"Copyright (c) 2013 Fletcher T. Penney.\n\n" \
