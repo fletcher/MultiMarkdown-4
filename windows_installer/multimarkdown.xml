@@ -1,0 +1,128 @@
+<project>
+    <shortName>multimarkdown</shortName>
+    <fullName>MultiMarkdown</fullName>
+    <version>3.2</version>
+    <installerFilename>MMD-${platform_name}-${product_version}.${platform_exec_suffix}</installerFilename>
+    <readmeFile>README.txt</readmeFile>
+    <licenseFile>../LICENSE</licenseFile>
+    <htmlLicenseFile>LICENSE.html</htmlLicenseFile>
+    <leftImage>Installer support files/logotype.png</leftImage>
+    <splashImage>Installer support files/logotype.png</splashImage>
+    <postInstallationActionList>
+        <addDirectoryToPath>
+            <insertAt>end</insertAt>
+            <path>${installdir}</path>
+        </addDirectoryToPath>
+        <setWindowsACL>
+            <action>allow</action>
+            <files>${installdir}/*</files>
+            <recurseContainers>1</recurseContainers>
+            <recurseObjects>1</recurseObjects>
+            <users>S-1-2-0</users>
+        </setWindowsACL>
+    </postInstallationActionList>
+    <postUninstallationActionList>
+        <removeDirectoryFromPath>
+            <path>${installdir}</path>
+        </removeDirectoryFromPath>
+    </postUninstallationActionList>
+    <enableRollback>1</enableRollback>
+    <enableTimestamp>1</enableTimestamp>
+    <saveRelativePaths>1</saveRelativePaths>
+    <vendor>fletcherpenney.net</vendor>
+    <componentList>
+        <component>
+            <name>default</name>
+            <description>Default Component</description>
+            <canBeEdited>1</canBeEdited>
+            <selected>1</selected>
+            <show>1</show>
+            <folderList>
+                <folder>
+                    <description>Program Files</description>
+                    <destination>${installdir}</destination>
+                    <name>programfiles</name>
+                    <platforms>all</platforms>
+                    <shortcutList>
+                        <shortcut>
+                            <comment>Uninstall</comment>
+                            <exec>${installdir}/${uninstallerName}</exec>
+                            <icon></icon>
+                            <name>Uninstall ${product_fullname}</name>
+                            <path>${installdir}</path>
+                            <platforms>all</platforms>
+                            <runAsAdmin>0</runAsAdmin>
+                            <runInTerminal>0</runInTerminal>
+                            <windowsExec>${installdir}/${uninstallerName}.exe</windowsExec>
+                            <windowsExecArgs></windowsExecArgs>
+                            <windowsIcon></windowsIcon>
+                            <windowsPath>${installdir}</windowsPath>
+                        </shortcut>
+                    </shortcutList>
+                </folder>
+                <folder>
+                    <description>Program Files</description>
+                    <destination>${installdir}</destination>
+                    <name>programfileslinux</name>
+                    <platforms>linux</platforms>
+                </folder>
+                <folder>
+                    <description>Program Files</description>
+                    <destination>${installdir}</destination>
+                    <name>programfileswindows</name>
+                    <platforms>windows</platforms>
+                    <distributionFileList>
+                        <distributionFile>
+                            <origin>mmd.bat</origin>
+                        </distributionFile>
+                        <distributionFile>
+                            <origin>mmd2tex.bat</origin>
+                        </distributionFile>
+                        <distributionFile>
+                            <origin>multimarkdown.exe</origin>
+                        </distributionFile>
+                        <distributionFile>
+                            <origin>mmd2opml.bat</origin>
+                        </distributionFile>
+                        <distributionFile>
+                            <origin>mmd2odf.bat</origin>
+                        </distributionFile>
+                    </distributionFileList>
+                </folder>
+                <folder>
+                    <description>Program Files</description>
+                    <destination>${installdir}</destination>
+                    <name>programfilesosx</name>
+                    <platforms>osx</platforms>
+                </folder>
+            </folderList>
+            <startMenuShortcutList>
+                <startMenuShortcut>
+                    <comment>Uninstall ${product_fullname}</comment>
+                    <name>Uninstall ${product_fullname}</name>
+                    <runAsAdmin>0</runAsAdmin>
+                    <runInTerminal>0</runInTerminal>
+                    <windowsExec>${installdir}/${uninstallerName}.exe</windowsExec>
+                    <windowsExecArgs></windowsExecArgs>
+                    <windowsIcon></windowsIcon>
+                    <windowsPath>${installdir}/</windowsPath>
+                </startMenuShortcut>
+            </startMenuShortcutList>
+        </component>
+    </componentList>
+    <parameterList>
+        <directoryParameter>
+            <name>installdir</name>
+            <description>Installer.Parameter.installdir.description</description>
+            <explanation>Installer.Parameter.installdir.explanation</explanation>
+            <value></value>
+            <default>${platform_install_prefix}/${product_fullname}</default>
+            <allowEmptyValue>0</allowEmptyValue>
+            <cliOptionName>prefix</cliOptionName>
+            <mustBeWritable>1</mustBeWritable>
+            <mustExist>0</mustExist>
+            <width>30</width>
+        </directoryParameter>
+    </parameterList>
+</project>
+
