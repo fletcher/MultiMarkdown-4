@@ -106,7 +106,7 @@ Block =	BlankLine*
 		| StyleBlock
 		| &{ !ext(EXT_COMPATIBILITY) } Table
 		| &{ !ext(EXT_COMPATIBILITY) } ImageBlock
-		| !(Sp? HtmlBlockOpenDiv) Para
+		| !(Sp? HtmlBlockInTags) Para
 		| Plain )
 
 HeadingSectionBlock = BlankLine* !Heading
@@ -124,7 +124,7 @@ HeadingSectionBlock = BlankLine* !Heading
 		| StyleBlock
 		| &{ !ext(EXT_COMPATIBILITY) } Table
 		| &{ !ext(EXT_COMPATIBILITY) } ImageBlock
-		| !(Sp? HtmlBlockOpenDiv) Para
+		| !(Sp? HtmlBlockInTags) Para
 		| Plain )
 
 Heading = SetextHeading | AtxHeading
