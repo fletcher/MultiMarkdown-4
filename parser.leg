@@ -312,12 +312,21 @@ MathSpan = '\\' < (
 	$$->key = MATHSPAN;
 }
 
-DollarMathStart = '$' !(Spacechar | Newline)
+SingleDollarMathStart = '$' !(Spacechar | Newline | '$' )
 
-DollarMathEnd = (!'\\' Nonspacechar) '$' !Nonspacechar
+SingleDollarMathEnd = (!'\\' !'$' Nonspacechar) '$' !Nonspacechar
 
-DollarMath = < DollarMathStart (!DollarMathEnd !Newline .)*  DollarMathEnd >
+SingleDollarMath = < SingleDollarMathStart (!SingleDollarMathEnd !Newline .)*  SingleDollarMathEnd >
 		{ $$ = str(yytext); $$->key = MATHSPAN; }
+
+DoubleDollarMathStart = '$' '$' !(Spacechar | Newline)
+
+DoubleDollarMathEnd = (!'\\' Nonspacechar) '$' '$' !Nonspacechar
+
+DoubleDollarMath = < DoubleDollarMathStart (!DoubleDollarMathEnd !Newline .)*  DoubleDollarMathEnd >
+		{ $$ = str(yytext); $$->key = MATHSPAN; }
+
+DollarMath = SingleDollarMath | DoubleDollarMath
 
 # This keeps the parser from getting bogged down on long strings of '*' or '_',
 # or strings of '*' or '_' with space on each side:
