@@ -403,18 +403,22 @@ void print_latex_node(GString *out, node *n, scratch_pad *scratch) {
 			if ((n->link_data->source != NULL) && (n->link_data->source[0] == '#' )) {
 				/* link to anchor within the document */
 				if (strlen(temp_str->str) > 0) {
-					g_string_append_printf(out, "%s (\\autoref{%s})", temp_str->str, n->link_data->label);
-				} else {
-					if (n->link_data->label == NULL) {
-						if ((n->link_data->source !=  NULL) && (strncmp(n->link_data->source,"#",1) == 0)) {
-							/* This link was specified as [](#bar) */
-							g_string_append_printf(out, "\\autoref{%s}", n->link_data->source + 1);
-						} else {
-							g_string_append_printf(out, "\\href{%s}{}", n->link_data->source);
-						}
+					/* We have text before the link */
+					g_string_append_printf(out, "%s (", temp_str->str);
+				}
+				
+				if (n->link_data->label == NULL) {
+					if ((n->link_data->source !=  NULL) && (strncmp(n->link_data->source,"#",1) == 0)) {
+						/* This link was specified as [](#bar) */
+						g_string_append_printf(out, "\\autoref{%s}", n->link_data->source + 1);
 					} else {
-						g_string_append_printf(out, "\\autoref{%s}", n->link_data->label);
+						g_string_append_printf(out, "\\href{%s}{}", n->link_data->source);
 					}
+				} else {
+					g_string_append_printf(out, "\\autoref{%s}", n->link_data->label);
+				}
+				if (strlen(temp_str->str) > 0) {
+					g_string_append_printf(out, ")", temp_str->str);
 				}
 			} else if (1 == 2){
 				/* This is a <link> */
