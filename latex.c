@@ -67,6 +67,7 @@ void print_latex_node(GString *out, node *n, scratch_pad *scratch) {
 	char *width = NULL;
 	char *height = NULL;
 	GString *temp_str;
+	GString *raw_str;
 	int i;
 	double temp_float;
 
@@ -399,6 +400,8 @@ void print_latex_node(GString *out, node *n, scratch_pad *scratch) {
 			}
 			temp_str = g_string_new("");
 			print_latex_node_tree(temp_str, n->children, scratch);
+			raw_str = g_string_new("");
+			print_raw_node_tree(raw_str, n->children);
 			
 			if ((n->link_data->source != NULL) && (n->link_data->source[0] == '#' )) {
 				/* link to anchor within the document */
@@ -420,9 +423,10 @@ void print_latex_node(GString *out, node *n, scratch_pad *scratch) {
 				if (strlen(temp_str->str) > 0) {
 					g_string_append_printf(out, ")", temp_str->str);
 				}
-			} else if (1 == 2){
+			} else if (strcmp(raw_str->str, n->link_data->source) == 0){
 				/* This is a <link> */
-			} else if (strcmp(temp_str->str,&n->link_data->source[7]) == 0) {
+				g_string_append_printf(out, "\\href{%s}{%s}", n->link_data->source, temp_str->str);
+			} else if (strcmp(raw_str->str,&n->link_data->source[7]) == 0) {
 				/*This is a <mailto> */
 				g_string_append_printf(out, "\\href{%s}{%s}", n->link_data->source, temp_str->str);
 			} else {
@@ -439,6 +443,7 @@ void print_latex_node(GString *out, node *n, scratch_pad *scratch) {
 				}
 			}
 			g_string_free(temp_str, true);
+			g_string_free(raw_str, true);
 			n->link_data->attr = NULL;
 			break;
 		case ATTRKEY:
