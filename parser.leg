@@ -1720,11 +1720,6 @@ int main(int argc, char **argv)
 		
 		/* extract metadata */
 		if (target_meta_key) {
-				if (has_metadata(inputbuf->str, extensions)) {
-					fprintf(stdout, "+ meta\n");
-				} else {
-					fprintf(stdout, "- meta\n");
-				}
 			out = extract_metadata_value(inputbuf->str, extensions, target_meta_key);
 			if (out != NULL)
 				fprintf(stdout, "%s\n", out);
