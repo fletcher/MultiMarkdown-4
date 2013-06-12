@@ -12,11 +12,6 @@
 #include "glib.h"
 #include "libMultiMarkdown.h"
 
-// If you want to compile this as a library, simply define MMD_LIBRARY in your build
-// command, or uncomment the following line:
-
-//#define MMD_LIBRARY 1
-
 #define TABSTOP 4
 
 #define MMD_VERSION "4.1.1"
