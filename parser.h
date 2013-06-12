@@ -119,7 +119,7 @@ void   free_node_tree(node * n);
 void   print_node_tree(node * n);
 
 node * cons(node *new, node *list);
-node * reverse(node *list);
+node * reverse_list(node *list);
 void   append_list(node *new, node *list);
 
 node    * mk_str_from_list(node *list, bool extra_newline);

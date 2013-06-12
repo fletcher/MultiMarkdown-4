@@ -121,7 +121,7 @@ void print_beamer_node(GString *out, node *n, scratch_pad *scratch) {
 
 /* print_beamer_endnotes */
 void print_beamer_endnotes(GString *out, scratch_pad *scratch) {
-	scratch->used_notes = reverse(scratch->used_notes);
+	scratch->used_notes = reverse_list(scratch->used_notes);
 	node *note = scratch->used_notes;
 #ifdef DEBUG_ON
 	fprintf(stderr, "start endnotes\n");

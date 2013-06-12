@@ -45,7 +45,7 @@ node * mk_str(char *string) {
 /* mk_str_from_list - merge list into a STR */
 node * mk_str_from_list(node *list, bool extra_newline) {
 	node *result = mk_node(STR);
-	node *rev = reverse(list);
+	node *rev = reverse_list(list);
 	
 	GString *c = concat_string_list(rev);
 	if (extra_newline)
@@ -98,7 +98,7 @@ GString * concat_string_list(node *list) {
 node * mk_list(int key, node *list) {
 	node *result;
 	result = mk_node(key);
-	result->children = reverse(list);
+	result->children = reverse_list(list);
 	return result;
 }
 	
@@ -175,7 +175,7 @@ node * cons(node *new, node *list) {
 }
 
 /* reverse -- reverse a list to get it back into proper order */
-node * reverse(node *list) {
+node * reverse_list(node *list) {
 	node *new = NULL;
 	node *next = NULL;
 	
