@@ -106,7 +106,7 @@ Block =	BlankLine*
 		| StyleBlock
 		| &{ !ext(EXT_COMPATIBILITY) } Table
 		| &{ !ext(EXT_COMPATIBILITY) } ImageBlock
-		| !(Sp? HtmlBlockOpenDiv) Para
+		| !(Sp HtmlBlockOpenDiv) Para
 		| Plain )
 
 HeadingSectionBlock = BlankLine* !Heading
@@ -124,7 +124,7 @@ HeadingSectionBlock = BlankLine* !Heading
 		| StyleBlock
 		| &{ !ext(EXT_COMPATIBILITY) } Table
 		| &{ !ext(EXT_COMPATIBILITY) } ImageBlock
-		| !(Sp? HtmlBlockOpenDiv) Para
+		| !(Sp HtmlBlockOpenDiv) Para
 		| Plain )
 
 Heading = SetextHeading | AtxHeading
@@ -133,12 +133,12 @@ HeadingSection = a:StartList Heading { a = cons($$, a); }
 	(HeadingSectionBlock {a = cons($$, a); })*
 	{ $$ = list(HEADINGSECTION, a); }
 
-AtxInline = !Newline !( &{ !ext(EXT_COMPATIBILITY) } Sp AutoLabel Sp? '#'* Sp Newline) !(Sp? '#'* Sp Newline) Inline
+AtxInline = !Newline !( &{ !ext(EXT_COMPATIBILITY) } Sp AutoLabel Sp '#'* Sp Newline) !(Sp '#'* Sp Newline) Inline
 
 AtxStart =  < ( "######" | "#####" | "####" | "###" | "##" | "#" ) >
 		{ $$ = node(H1 + ((int)strlen(yytext) - 1)); }
 
-AtxHeading = s:AtxStart Sp? a:StartList ( AtxInline { a = cons($$, a); } )+ ( Sp? b:AutoLabel { append_list(b,a);})? (Sp? '#'* Sp)? Sp < Newline >
+AtxHeading = s:AtxStart Sp a:StartList ( AtxInline { a = cons($$, a); } )+ ( Sp b:AutoLabel { append_list(b,a);})? (Sp '#'* Sp)? Sp < Newline >
 # <newline> ensures that we count characters all the way to the end
 		{ $$ = list(s->key,a); free(s); }
 
@@ -149,11 +149,11 @@ SetextBottom1 = '='+ Newline
 SetextBottom2 = '-'+ Newline
 
 SetextHeading1 =  &(RawLine SetextBottom1)
-		a:StartList ( !Endline !( &{ !ext(EXT_COMPATIBILITY) } Sp AutoLabel ) Inline { a = cons($$, a); } )+ ( Sp b:AutoLabel { append_list(b,a);} Sp? )? Sp? Newline
+		a:StartList ( !Endline !( &{ !ext(EXT_COMPATIBILITY) } Sp AutoLabel ) Inline { a = cons($$, a); } )+ ( Sp b:AutoLabel { append_list(b,a);} Sp )? Sp Newline
 		<SetextBottom1> { $$ = list(H1, a); }
 
 SetextHeading2 =  &(RawLine SetextBottom2)
-		a:StartList ( !Endline !( &{ !ext(EXT_COMPATIBILITY) } Sp AutoLabel ) Inline { a = cons($$, a); } )+ ( Sp b:AutoLabel { append_list(b,a)} Sp? )? Sp? Newline
+		a:StartList ( !Endline !( &{ !ext(EXT_COMPATIBILITY) } Sp AutoLabel ) Inline { a = cons($$, a); } )+ ( Sp b:AutoLabel { append_list(b,a)} Sp )? Sp Newline
 		<SetextBottom2> { $$ = list(H2, a); }
 
 
@@ -515,7 +515,7 @@ Label = < "[" !'[' ( !'^' !'#' &{ ext(EXT_NOTES) } | &. &{ !ext(EXT_NOTES) } )
 			']'>
 	{ $$ = list(LIST, a); }
 
-AutoLabel = '[' < (!Newline !'^' !'#' . )( !Newline !']' . )+ > ']' &(!(Sp? ('(' | '[')))
+AutoLabel = '[' < (!Newline !'^' !'#' . )( !Newline !']' . )+ > ']' &(!(Sp ('(' | '[')))
 {
 	node *ref;
 	$$ = str(yytext);
@@ -1145,9 +1145,9 @@ OPMLHeadingSection = a:StartList OPMLHeading { a = cons($$, a); }
 
 OPMLHeading = OPMLAtxHeading | OPMLSetextHeading
 
-OPMLAtxHeading = &(Heading) s:AtxStart Sp? 
-		< (!Newline !(Sp? '#'* Sp Newline) .)* > 
-		(Sp? '#'+)? Sp? Newline
+OPMLAtxHeading = &(Heading) s:AtxStart Sp 
+		< (!Newline !(Sp '#'* Sp Newline) .)* > 
+		(Sp '#'+)? Sp Newline
 		{
 			$$ = str(yytext);
 			$$->key = s->key;
