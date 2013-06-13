@@ -21,6 +21,7 @@
 		5A60F8E3172C07E200EFBF5B /* odf.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A89852C17297DFB00D1D72D /* odf.c */; };
 		5A60F8E4172C07E200EFBF5B /* opml.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A2534F3172768A8003D1A91 /* opml.c */; };
 		5A60F8E5172C07E200EFBF5B /* parser.c in Sources */ = {isa = PBXBuildFile; fileRef = 5AD6CB211718CCD90085E51D /* parser.c */; };
+		5AE4484C1769F0EA0055DD27 /* multimarkdown.c in Sources */ = {isa = PBXBuildFile; fileRef = 5AE4484B1769F0EA0055DD27 /* multimarkdown.c */; };
 		5AE59DB5172A14D600401A65 /* GLibFacade.c in Sources */ = {isa = PBXBuildFile; fileRef = 5AD6CB0A1718CB560085E51D /* GLibFacade.c */; };
 		5AE59DB7172A14D600401A65 /* parser.c in Sources */ = {isa = PBXBuildFile; fileRef = 5AD6CB211718CCD90085E51D /* parser.c */; };
 		5AE59DB8172A14D600401A65 /* text.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A1D85901719B95900C6ADD3 /* text.c */; };
@@ -90,6 +91,7 @@
 		5AD6CB0E1718CB560085E51D /* parser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = parser.h; sourceTree = "<group>"; };
 		5AD6CB0F1718CB560085E51D /* parser.leg */ = {isa = PBXFileReference; lastKnownFileType = text; path = parser.leg; sourceTree = "<group>"; };
 		5AD6CB211718CCD90085E51D /* parser.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = parser.c; sourceTree = "<group>"; };
+		5AE4484B1769F0EA0055DD27 /* multimarkdown.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = multimarkdown.c; sourceTree = "<group>"; };
 		5AE59DC5172A14D600401A65 /* multimarkdown */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = multimarkdown; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -114,6 +116,7 @@
 		5AD6CB021718CA910085E51D = {
 			isa = PBXGroup;
 			children = (
+				5AE4484B1769F0EA0055DD27 /* multimarkdown.c */,
 				5A60F8FF172C099100EFBF5B /* libMultiMarkdown.h */,
 				5AD6CB091718CB560085E51D /* glib.h */,
 				5AD6CB0A1718CB560085E51D /* GLibFacade.c */,
@@ -323,6 +326,7 @@
 				5AE59DBF172A14D600401A65 /* odf.c in Sources */,
 				5A60F8B4172BFE4700EFBF5B /* parse_utilities.c in Sources */,
 				5A116B581734545700DB0DE6 /* critic.c in Sources */,
+				5AE4484C1769F0EA0055DD27 /* multimarkdown.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -365,7 +369,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
-					"MMD_LIBRARY=1",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -402,7 +405,7 @@
 				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)\"";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = "MMD_LIBRARY=1";
+				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
