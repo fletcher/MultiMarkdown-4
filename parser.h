@@ -12,14 +12,9 @@
 #include "glib.h"
 #include "libMultiMarkdown.h"
 
-// If you want to compile this as a library, simply define MMD_LIBRARY in your build
-// command, or uncomment the following line:
-
-//#define MMD_LIBRARY 1
-
 #define TABSTOP 4
 
-#define MMD_VERSION "4.0b2"
+#define MMD_VERSION "4.1.1"
 
 #define MMD_COPYRIGHT \
 	"Copyright (c) 2013 Fletcher T. Penney.\n\n" \
@@ -119,7 +114,7 @@ void   free_node_tree(node * n);
 void   print_node_tree(node * n);
 
 node * cons(node *new, node *list);
-node * reverse(node *list);
+node * reverse_list(node *list);
 void   append_list(node *new, node *list);
 
 node    * mk_str_from_list(node *list, bool extra_newline);
@@ -161,5 +156,7 @@ char * metavalue_for_key(char *key, node *list);
 bool tree_contains_key(node *list, int key);
 
 bool check_timeout();
+
+void debug_node(node *n);
 
 #endif

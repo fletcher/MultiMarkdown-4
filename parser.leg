@@ -23,7 +23,6 @@
 #include "parser.h"
 #include "writer.h"
 
-#include <getopt.h>
 
 /* Define shortcuts to adding nodes, etc. */
 #define node(x)       mk_pos_node(x, NULL, thunk->begin, thunk->end)
@@ -57,7 +56,7 @@ Doc =  BOM? a:StartList b:StartList
 	BlankLine*	# TODO: Why do we need this when we didn't before? 
 	{
 		if (b!= NULL) a = cons(b,a);
-		((parser_data *)G->data)->result = reverse(a);
+		((parser_data *)G->data)->result = reverse_list(a);
 	}
 
 MetaData = a:StartList !([A-Za-z]+ "://") !SetextHeading
@@ -106,7 +105,7 @@ Block =	BlankLine*
 		| StyleBlock
 		| &{ !ext(EXT_COMPATIBILITY) } Table
 		| &{ !ext(EXT_COMPATIBILITY) } ImageBlock
-		| !(Sp HtmlBlockOpenDiv) Para
+		| !(Sp HtmlBlockInTags) Para
 		| Plain )
 
 HeadingSectionBlock = BlankLine* !Heading
@@ -124,7 +123,7 @@ HeadingSectionBlock = BlankLine* !Heading
 		| StyleBlock
 		| &{ !ext(EXT_COMPATIBILITY) } Table
 		| &{ !ext(EXT_COMPATIBILITY) } ImageBlock
-		| !(Sp HtmlBlockOpenDiv) Para
+		| !(Sp HtmlBlockInTags) Para
 		| Plain )
 
 Heading = SetextHeading | AtxHeading
@@ -238,7 +237,7 @@ Plain =	a:Inlines
 		{ $$ = a; $$->key = PLAIN; }
 
 Inlines =	a:StartList ( !Endline Inline { a = cons($$, a); }
-			| c:Endline &Inline { a = cons(c, a); } )+ Endline?
+			| c:Endline &Inline { a = cons(c, a); } )+ voidEndline?
 		{ $$ = list(LIST, a); }
 
 Inline = #&{ check_timeout((parser_data *)G->data) }
@@ -281,7 +280,12 @@ TerminalEndline = Sp Newline Eof
 		{ $$ = NULL; }
 
 LineBreak = "  " a:NormalEndline
-		{ a->key = LINEBREAK; }
+		{ $$ = a; $$->key = LINEBREAK; }
+
+voidEndline = ("  " voidNormalEndline) | (Sp Newline Eof) | voidNormalEndline
+
+voidNormalEndline = Sp Newline !BlankLine !'>' !AtxStart
+		!(Line ('='+ | '-'+) Newline)
 
 Str = 	a:StartList < NormalChar+ > { a = cons(str(yytext), a); }
 		( StrChunk { a = cons($$, a); } )*
@@ -307,12 +311,21 @@ MathSpan = '\\' < (
 	$$->key = MATHSPAN;
 }
 
-DollarMathStart = '$' !(Spacechar | Newline)
+SingleDollarMathStart = '$' !(Spacechar | Newline | '$' )
 
-DollarMathEnd = (!'\\' Nonspacechar) '$' !Nonspacechar
+SingleDollarMathEnd = (!'\\' !'$' Nonspacechar) '$' !Nonspacechar
 
-DollarMath = < DollarMathStart (!DollarMathEnd !Newline .)*  DollarMathEnd >
+SingleDollarMath = < SingleDollarMathStart (!SingleDollarMathEnd !(BlankLine BlankLine) .)*  SingleDollarMathEnd >
 		{ $$ = str(yytext); $$->key = MATHSPAN; }
+
+DoubleDollarMathStart = '$' '$' !(Spacechar | Newline)
+
+DoubleDollarMathEnd = (!'\\' Nonspacechar) '$' '$' !Nonspacechar
+
+DoubleDollarMath = < DoubleDollarMathStart (!DoubleDollarMathEnd !(BlankLine BlankLine) .)*  DoubleDollarMathEnd >
+		{ $$ = str(yytext); $$->key = MATHSPAN; }
+
+DollarMath = SingleDollarMath | DoubleDollarMath
 
 # This keeps the parser from getting bogged down on long strings of '*' or '_',
 # or strings of '*' or '_' with space on each side:
@@ -436,7 +449,7 @@ AutoLinkEmail = '<' ( "mailto:" )? < [-A-Za-z0-9+_./!%~$]+ '@' ( !Newline !'>' .
 
 LinkReference = a:StartList NonindentSpace !"[]" l:Label ':' Spnl s:RefSrc
 		t:RefTitle
-		( &{ !ext(EXT_COMPATIBILITY) } <Attributes { a = reverse($$); } )?>
+		( &{ !ext(EXT_COMPATIBILITY) } <Attributes { a = reverse_list($$); } )?>
 		BlankLine+	# TODO: Can I get rid of this to allow sequential references?
 		{ 
 			/* Get label for referencing */
@@ -1139,7 +1152,7 @@ DocForOPML = BOM? a:StartList
 		&( MetaDataKey Sp ':' Sp (!Newline)) MetaData { a = cons($$, a); })?
 		( OPMLBlock { a = cons($$, a); } )*
 		BlankLine*	# TODO: Why do we need this when we didn't before? 
-		{ ((parser_data *)G->data)->result = reverse(a); }
+		{ ((parser_data *)G->data)->result = reverse_list(a); }
 
 OPMLBlock = BlankLine* ( OPMLHeadingSection | OPMLPlain )
 
@@ -1199,7 +1212,7 @@ CriticComment = ('{>>' < (!'<<}' .)* > '<<}')
 DocForCritic = BOM? a:StartList
 		( CriticString { a = cons($$, a); } | RawString { a = cons($$, a); } )*
 		( RawString { a = cons($$, a); } )* Eof
-		{ ((parser_data *)G->data)->result = reverse(a); }
+		{ ((parser_data *)G->data)->result = reverse_list(a); }
 
 CriticString = CriticMarkup
 
@@ -1388,369 +1401,3 @@ char * extract_metadata_value(char *source, int extensions, char *key) {
 	return out;
 }
 
-#ifndef MMD_LIBRARY
-
-int main(int argc, char **argv)
-{
-	int numargs;
-	int c;
-	int i;
-	static int batch_flag = 0;
-	static int complete_flag = 0;
-	static int compatibility_flag = 0;
-	static int notes_flag = 0;
-	static int no_notes_flag = 0;
-	static int typography_flag = 0;
-	static int no_typography_flag = 0;
-	static int label_flag = 0;
-	static int no_label_flag = 0;
-	static int obfuscate_flag = 0;
-	static int no_obfuscate_flag = 0;
-	static int process_html_flag = 0;
-	char *target_meta_key = FALSE;
-		
-	static struct option long_options[] = {
-		{"batch", no_argument, &batch_flag, 1},                    /* process each file separately */
-		{"to", required_argument, 0, 't'},                         /* which output format to use */
-		{"full", no_argument, &complete_flag, 1},                  /* complete document */
-		{"output", required_argument, 0, 'o'},                     /* which output format to use */
-		{"notes", no_argument, &notes_flag, 1},                    /* use footnotes */
-		{"nonotes", no_argument, &no_notes_flag, 1},               /* don't use footnotes */
-		{"smart", no_argument, &typography_flag, 1},               /* use smart typography */
-		{"nosmart", no_argument, &no_typography_flag, 1},          /* don't use smart typography */
-		{"mask", no_argument, &obfuscate_flag, 1},                 /* mask email addresses */
-		{"nomask", no_argument, &no_obfuscate_flag, 1},            /* don't mask email addresses */
-		{"labels", no_argument, &label_flag, 1},                   /* generate labels */
-		{"nolabels", no_argument, &no_label_flag, 1},              /* don't generate labels */
-		{"compatibility", no_argument, &compatibility_flag, 1},    /* compatibility mode */
-		{"process-html", no_argument, &process_html_flag, 1},      /* process Markdown inside HTML */
-		{"accept", no_argument, 0, 'a'},                           /* Accept all proposed CriticMarkup changes */
-		{"reject", no_argument, 0, 'r'},                           /* Reject all proposed CriticMarkup changes */
-		{"extract", required_argument, 0, 'e'},                    /* show value of specified metadata */
-		{"version", no_argument, 0, 'v'},                          /* display version information */
-		{"help", no_argument, 0, 'h'},                             /* display usage information */
-		{NULL, 0, NULL, 0}
-	};
-	
-	GString *inputbuf;
-	FILE *input;
-	FILE *output;
-	int curchar;
-	GString *filename = NULL;
-	char *temp;
-	
-	char *out;
-	
-	/* set up my data for the parser */
-	int output_format = 0;
-	int extensions = 0;
-	extensions = extensions | EXT_SMART | EXT_NOTES | EXT_OBFUSCATE;
-	
-	/* process options */
-	while (1) {
-		int option_index = 0;
-
-		c = getopt_long (argc, argv, "vhco:bft:e:ar", long_options, &option_index);
-		
-		if (c == -1)
-			break;
-		
-		switch (c) {
-			case 0: /* handle long_options */
-				/* printf ("option %s", long_options[option_index].name);
-				if (optarg)
-				printf (" with arg %s", optarg);
-				printf("\n"); */
-				break;
-			
-			case 'b':	/* batch */
-				batch_flag = 1;
-				break;
-			
-			case 'c':	/* compatibility */
-				compatibility_flag = 1;
-				break;
-			
-			case 'o':	/* output filename */
-				if (optarg)
-					filename = g_string_new(optarg);
-				break;
-			
-			case 'v':	/* show version */
-				printf("\nMultiMarkdown version %s\n%s\n",MMD_VERSION, MMD_COPYRIGHT);
-				return(EXIT_SUCCESS);
-
-			case 'h':	/* show usage */
-				printf("\nMultiMarkdown version %s\n\n",MMD_VERSION);
-				printf("    %s  [OPTION...] [FILE...]\n",argv[0]);
-				printf("\n"
-				"    Options:\n"
-				"    -h, --help             Show help\n"
-				"    -v, --version          Show version information\n"
-				"    -o, --output=FILE      Send output to FILE\n"
-				"    -t, --to=FORMAT        Convert to FORMAT\n"
-				"    -b, --batch            Process each file separately\n"
-				"    -c, --compatibility    Markdown compatibility mode\n"
-				"    -f, --full             Force a complete document\n"
-				"    --process-html         Process Markdown inside of raw HTML\n"
-				"    -e, --extract          Extract specified metadata\n"
-				"    -a, --accept           Accept all CriticMarkup changes\n"
-				"    -r, --reject           Reject all CriticMarkup changes\n"
-				"\n"
-				"    --smart, --nosmart     Toggle smart typography\n"
-				"    --notes, --nonotes     Toggle footnotes\n"
-				"    --labels, --nolabels   Disable id attributes for headers\n"
-				"    --mask, --nomask       Mask email addresses in HTML\n"
-				
-				"\nAvailable FORMATs: html(default), latex, beamer, memoir, odf, opml\n\n\n"
-				);
-				return(EXIT_SUCCESS);
-			
-			case 't':	/* output format */
-				if (strcmp(optarg, "text") == 0)
-					output_format = TEXT_FORMAT;
-				else if (strcmp(optarg, "html") == 0)
-					output_format = HTML_FORMAT;
-				else if (strcmp(optarg, "latex") == 0)
-					output_format = LATEX_FORMAT;
-				else if (strcmp(optarg, "memoir") == 0)
-					output_format = MEMOIR_FORMAT;
-				else if (strcmp(optarg, "beamer") == 0)
-					output_format = BEAMER_FORMAT;
-				else if (strcmp(optarg, "opml") == 0)
-					output_format = OPML_FORMAT;
-				else if (strcmp(optarg, "odf") == 0)
-					output_format = ODF_FORMAT;
-				else {
-					/* no valid format specified */
-					fprintf(stderr, "%s: Unknown output format '%s'\n",argv[0], optarg);
-					exit(EXIT_FAILURE);
-				}
-				break;
-			
-			case 'f':	/* full doc */
-				extensions = extensions | EXT_COMPLETE;
-				break;
-			
-			case 'e':	/* extract metadata */
-				target_meta_key = strdup(optarg);
-				break;
-			
-			case '?':	/* long handles */
-				break;
-				
-			case 'a':	/* Accept CriticMarkup changes */
-				extensions = extensions | EXT_CRITIC_ACCEPT;
-				break;
-			
-			case 'r':	/* Reject CriticMarkup changes */
-				extensions = extensions | EXT_CRITIC_REJECT;
-				break;
-			
-			default:
-			fprintf(stderr,"Error parsing options.\n");
-			abort();
-		}
-	}	
-	
-	/* Compatibility mode emulates the behavior of Markdown.pl */
-	if (compatibility_flag) {
-		extensions = 0x000000;
-		extensions = extensions | EXT_COMPATIBILITY | EXT_NO_LABELS | EXT_OBFUSCATE;
-	}
-
-	/* apply extensions from long options*/
-	if (complete_flag)
-		extensions = extensions | EXT_COMPLETE;
-	
-	if (notes_flag)
-		extensions = extensions | EXT_NOTES;
-	
-	if (no_notes_flag)
-		extensions &= ~EXT_NOTES;
-
-	if (typography_flag)
-		extensions = extensions | EXT_SMART;
-
-	if (no_typography_flag)
-		extensions &= ~EXT_SMART;
-
-	if (label_flag)
-		extensions &= ~EXT_NO_LABELS;
-
-	if (no_label_flag)
-		extensions = extensions | EXT_NO_LABELS;
-	
-	if (obfuscate_flag)
-		extensions = extensions | EXT_OBFUSCATE;
-
-	if (no_obfuscate_flag)
-		extensions &= ~EXT_OBFUSCATE;
-
-	if (process_html_flag)
-		extensions = extensions | EXT_PROCESS_HTML;
-
-	/* fix numbering to account for options */
-	argc -= optind;
-	argv += optind;
-	
-	/* We expect argc and argv to still point just one below the start of remaining args */
-	argc++;
-	argv--;
-	
-	/* any filenames */
-	numargs = argc -1;
-
-	if (batch_flag && (numargs != 0)) {
-		/* we have multiple file names -- handle individually */
-		
-		for (i = 0; i < numargs; i++) {
-			inputbuf = g_string_new("");
-			
-			/* Read file */
-			if ((input = fopen(argv[i+1], "r")) == NULL ) {
-				perror(argv[i+1]);
-				g_string_free(inputbuf, true);
-				g_string_free(filename, true);
-				exit(EXIT_FAILURE);
-			}
-			
-			while ((curchar = fgetc(input)) != EOF)
-				g_string_append_c(inputbuf, curchar);
-			fclose(input);
-			
-			/* extract metadata */
-			if (target_meta_key) {
-				if (has_metadata(inputbuf->str, extensions)) {
-					fprintf(stdout, "+ meta\n");
-				} else {
-					fprintf(stdout, "- meta\n");
-				}
-				
-				out = extract_metadata_value(inputbuf->str, extensions, target_meta_key);
-				if (out != NULL)
-					fprintf(stdout, "%s\n", out);
-				free(out);
-				g_string_free(inputbuf, true);
-				free(target_meta_key);
-				return(EXIT_SUCCESS);
-			}
-			
-			out = markdown_to_string(inputbuf->str,  extensions, output_format);
-			
-			g_string_free(inputbuf, true);
-			
-			/* set up for output */
-			temp = argv[i+1];	/* get current filename */
-			if (strrchr(temp,'.') != NULL) {
-				long count = strrchr(temp,'.') - temp;
-				if (count != 0) {
-					/* truncate string at "." */
-					temp[count] = '\0';
-				}
-			}
-			
-			filename = g_string_new(temp);
-			
-			if (output_format == TEXT_FORMAT) {
-				g_string_append(filename,".txt");
-			} else if (output_format == HTML_FORMAT) {
-				g_string_append(filename,".html");
-			} else if (output_format == LATEX_FORMAT) {
-				g_string_append(filename,".tex");
-			} else if (output_format == BEAMER_FORMAT) {
-				g_string_append(filename,".tex");
-			} else if (output_format == MEMOIR_FORMAT) {
-				g_string_append(filename,".tex");
-			} else if (output_format == ODF_FORMAT) {
-				g_string_append(filename,".fodt");
-			} else if (output_format == OPML_FORMAT) {
-				g_string_append(filename,".opml");
-			} else {
-				/* default extension -- in this case we only have 1 */
-				g_string_append(filename,".txt");
-			}
-			
-			if (!(output = fopen(filename->str, "w"))) {
-				perror(filename->str);
-			} else {
-				fprintf(output, "%s\n",out);
-				fclose(output);
-			}
-			
-			g_string_free(filename,true);
-			
-			if (out != NULL)
-				free(out);
-		}
-	} else {
-		/* get input from stdin or concat all files */
-		inputbuf = g_string_new("");
-		
-		if (numargs == 0) {
-			/* get stdin */
-			while ((curchar = fgetc(stdin)) != EOF)
-				g_string_append_c(inputbuf, curchar);
-			fclose(stdin);
-		} else {
-			/* get files */
-			for (i = 0; i < numargs; i++) {
-				if ((input = fopen(argv[i+1], "r")) == NULL ) {
-					perror(argv[i+1]);
-					g_string_free(inputbuf, true);
-					g_string_free(filename, true);
-					exit(EXIT_FAILURE);
-				}
-				
-				while ((curchar = fgetc(input)) != EOF)
-					g_string_append_c(inputbuf, curchar);
-				fclose(input);
-			}
-		}
-		
-		/* extract metadata */
-		if (target_meta_key) {
-				if (has_metadata(inputbuf->str, extensions)) {
-					fprintf(stdout, "+ meta\n");
-				} else {
-					fprintf(stdout, "- meta\n");
-				}
-			out = extract_metadata_value(inputbuf->str, extensions, target_meta_key);
-			if (out != NULL)
-				fprintf(stdout, "%s\n", out);
-			free(out);
-			g_string_free(inputbuf, true);
-			free(target_meta_key);
-			return(EXIT_SUCCESS);
-		}
-
-		out = markdown_to_string(inputbuf->str, extensions, output_format);
-		
-		g_string_free(inputbuf, true);
-		
-		/* did we specify an output filename; "-" equals stdout */
-		if ((filename == NULL) || (strcmp(filename->str, "-") == 0)) {
-			output = stdout;
-		} else if (!(output = fopen(filename->str, "w"))) {
-			perror(filename->str);
-			if (out != NULL)
-				free(out);
-			g_string_free(filename, true);
-			return 1;
-		}
-		
-		fprintf(output, "%s\n",out);
-		fclose(output);
-		
-		g_string_free(filename, false);
-		
-		if (out != NULL)
-			free(out);
-	}
-	
-	return(EXIT_SUCCESS);
-}
-
-
-
-#endif

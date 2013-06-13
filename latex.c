@@ -67,6 +67,7 @@ void print_latex_node(GString *out, node *n, scratch_pad *scratch) {
 	char *width = NULL;
 	char *height = NULL;
 	GString *temp_str;
+	GString *raw_str;
 	int i;
 	double temp_float;
 
@@ -300,11 +301,20 @@ void print_latex_node(GString *out, node *n, scratch_pad *scratch) {
 			break;
 		case MATHSPAN:
 			if (n->str[0] == '$') {
-				if (strncmp(&n->str[1],"\\begin",5) == 0) {
-					n->str[strlen(n->str)-1] = '\0';
-					g_string_append_printf(out, "%s",&n->str[1]);
+				if (n->str[1] == '$') {
+					if (strncmp(&n->str[2],"\\begin",5) == 0) {
+						n->str[strlen(n->str)-2] = '\0';
+						g_string_append_printf(out, "%s",&n->str[1]);
+					} else {
+						g_string_append_printf(out, "%s",n->str);
+					}
 				} else {
-					g_string_append_printf(out, "%s",n->str);
+					if (strncmp(&n->str[1],"\\begin",5) == 0) {
+						n->str[strlen(n->str)-1] = '\0';
+						g_string_append_printf(out, "%s",&n->str[1]);
+					} else {
+						g_string_append_printf(out, "%s",n->str);
+					}
 				}
 			} else if (strncmp(&n->str[2],"\\begin",5) == 0) {
 				/* trim */
@@ -390,26 +400,33 @@ void print_latex_node(GString *out, node *n, scratch_pad *scratch) {
 			}
 			temp_str = g_string_new("");
 			print_latex_node_tree(temp_str, n->children, scratch);
+			raw_str = g_string_new("");
+			print_raw_node_tree(raw_str, n->children);
 			
 			if ((n->link_data->source != NULL) && (n->link_data->source[0] == '#' )) {
 				/* link to anchor within the document */
 				if (strlen(temp_str->str) > 0) {
-					g_string_append_printf(out, "%s (\\autoref{%s})", temp_str->str, n->link_data->label);
-				} else {
-					if (n->link_data->label == NULL) {
-						if ((n->link_data->source !=  NULL) && (strncmp(n->link_data->source,"#",1) == 0)) {
-							/* This link was specified as [](#bar) */
-							g_string_append_printf(out, "\\autoref{%s}", n->link_data->source + 1);
-						} else {
-							g_string_append_printf(out, "\\href{%s}{}", n->link_data->source);
-						}
-					} else {
-						g_string_append_printf(out, "\\autoref{%s}", n->link_data->label);
-					}
+					/* We have text before the link */
+					g_string_append_printf(out, "%s (", temp_str->str);
 				}
-			} else if (1 == 2){
+				
+				if (n->link_data->label == NULL) {
+					if ((n->link_data->source !=  NULL) && (strncmp(n->link_data->source,"#",1) == 0)) {
+						/* This link was specified as [](#bar) */
+						g_string_append_printf(out, "\\autoref{%s}", n->link_data->source + 1);
+					} else {
+						g_string_append_printf(out, "\\href{%s}{}", n->link_data->source);
+					}
+				} else {
+					g_string_append_printf(out, "\\autoref{%s}", n->link_data->label);
+				}
+				if (strlen(temp_str->str) > 0) {
+					g_string_append_printf(out, ")", temp_str->str);
+				}
+			} else if (strcmp(raw_str->str, n->link_data->source) == 0){
 				/* This is a <link> */
-			} else if (strcmp(temp_str->str,&n->link_data->source[7]) == 0) {
+				g_string_append_printf(out, "\\href{%s}{%s}", n->link_data->source, temp_str->str);
+			} else if (strcmp(raw_str->str,&n->link_data->source[7]) == 0) {
 				/*This is a <mailto> */
 				g_string_append_printf(out, "\\href{%s}{%s}", n->link_data->source, temp_str->str);
 			} else {
@@ -426,6 +443,7 @@ void print_latex_node(GString *out, node *n, scratch_pad *scratch) {
 				}
 			}
 			g_string_free(temp_str, true);
+			g_string_free(raw_str, true);
 			n->link_data->attr = NULL;
 			break;
 		case ATTRKEY:
@@ -796,7 +814,7 @@ void print_latex_node(GString *out, node *n, scratch_pad *scratch) {
 
 /* print_latex_endnotes */
 void print_latex_endnotes(GString *out, scratch_pad *scratch) {
-	scratch->used_notes = reverse(scratch->used_notes);
+	scratch->used_notes = reverse_list(scratch->used_notes);
 	node *note = scratch->used_notes;
 #ifdef DEBUG_ON
 	fprintf(stderr, "start endnotes\n");

@@ -1,0 +1,9 @@
+Title:	Installer Welcome Message
+
+This custom installer will install **MultiMarkdown** and several convenience scripts to serve as shortcuts for using MultiMarkdown from the command line.
+
+
+For more information, please check out the MultiMarkdown [web
+site](http://fletcherpenney.net/multimarkdown/).
+
+You will be guided through the steps necessary to install this software.

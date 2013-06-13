@@ -1,4 +1,4 @@
-# This makefile works on Mac OS, Ubuntu, and presumably other *.nix'es
+# This makefile works on Mac OS, Ubuntu, Fedora, and presumably other *.nix'es
 # Feel free to submit pull requests if you have a proposed change.
 # Please explain your change so I'll understand what you need, and why - 
 # I don't claim to be an expert at this aspect! 
@@ -6,9 +6,9 @@
 
 CFLAGS ?= -Wall -g -O3 -include GLibFacade.h
 PROGRAM = multimarkdown
-VERSION = 4.0b2
+VERSION = 4.1.1
 
-OBJS= parse_utilities.o parser.o GLibFacade.o writer.o text.o html.o latex.o memoir.o beamer.o opml.o odf.o critic.o
+OBJS= multimarkdown.o parse_utilities.o parser.o GLibFacade.o writer.o text.o html.o latex.o memoir.o beamer.o opml.o odf.o critic.o
 
 GREG= greg/greg
 
