@@ -892,6 +892,8 @@ bool is_latex_complete_doc(node *meta) {
 			(strcmp(step->str, "htmlheaderlevel")  != 0) &&
 			(strcmp(step->str, "latexheaderlevel") != 0) &&
 			(strcmp(step->str, "odfheaderlevel")   != 0) &&
+			(strcmp(step->str, "xhtmlheader")      != 0) &&
+			(strcmp(step->str, "htmlheader")       != 0) &&
 			(strcmp(step->str, "quoteslanguage")   != 0))
 			{ return TRUE;}
 		step = step->next;
