@@ -159,7 +159,9 @@ void print_latex_node(GString *out, node *n, scratch_pad *scratch) {
 		case METADATA:
 			/* print the metadata */
 			print_latex_node_tree(out,n->children, scratch);
-			scratch->extensions = scratch->extensions | EXT_COMPLETE;
+			if (is_latex_complete_doc(n)) {
+				scratch->extensions = scratch->extensions | EXT_COMPLETE;
+			}
 			break;
 		case METAKEY:
 			/* reformat the key */
