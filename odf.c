@@ -677,6 +677,9 @@ void print_odf_node(GString *out, node *n, scratch_pad *scratch) {
 			break;
 		case TABLECELL:
 			temp = scratch->table_alignment;
+			if (strncmp(&temp[scratch->table_column],"h",1) == 0) {
+				scratch->table_column++;
+			}
 			lev = scratch->table_column;
 			g_string_append_printf(out, "<table:table-cell");
 			if ((n->children != NULL) && (n->children->key == CELLSPAN)) {

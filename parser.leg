@@ -1083,31 +1083,34 @@ EmptyCell = <Sp> CellDivider
 SeparatorLine = a:StartList 
 		&(TableLine)
 		CellDivider?
-		( AlignmentCell { a = cons($$, a);})+ Sp Newline
+		( &HeaderAlignmentCell AlignmentCell { a = cons(str("h"), a); a = cons($$, a);}
+		| AlignmentCell { a = cons($$, a); })+ Sp Newline
 		{
 			$$ = mk_str_from_list(a,false);
 			$$->key = TABLESEPARATOR;
 		}
 
+HeaderAlignmentCell = Sp ':'? '='+
+
 AlignmentCell = Sp (!CellDivider ( LeftAlignWrap | CenterAlignWrap | RightAlignWrap | LeftAlign | CenterAlign | RightAlign))
 		Sp ( CellDivider )?
 
-LeftAlignWrap = ':'? '-'+ '+' &(!'-' !':')
+LeftAlignWrap = ':'? ('-'+ | '='+) '+' &(!'-' !'=' !':')
 		{ $$ = mk_str("L");}
 
-LeftAlign = ':'? '-'+ &(!'-' !':')
+LeftAlign = ':'? ('-'+ | '='+) &(!'-' !':')
 		{ $$ = mk_str("l");}
 
-CenterAlignWrap = ':' '-'* '+' ':' &(!'-' !':')
+CenterAlignWrap = ':' ('-'* | '='*) '+' ':' &(!'-' !'=' !':')
 		{ $$ = mk_str("C");}
 
-CenterAlign = ':' '-'* ':' &(!'-' !':')
+CenterAlign = ':' ('-'* | '='*) ':' &(!'-' !'=' !':')
 		{ $$ = mk_str("c");}
 
-RightAlignWrap = '-'+ ':' '+' &(!'-' !':')
+RightAlignWrap = ('-'+ | '='+) ':' '+' &(!'-' !'=' !':')
 		{ $$ = mk_str("R");}
 
-RightAlign = '-'+ ':' &(!'-' !':')
+RightAlign = ('-'+ | '='+)':' &(!'-' !'=' !':')
 		{ $$ = mk_str("r");}
 
 CellDivider = '|'

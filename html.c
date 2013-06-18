@@ -37,6 +37,7 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 	node *temp_node;
 	char *temp;
 	int lev;
+	char temp_type;
 	char *width = NULL;
 	char *height = NULL;
 	GString *temp_str;
@@ -664,17 +665,23 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 			break;
 		case TABLECELL:
 			temp = scratch->table_alignment;
+			if (strncmp(&temp[scratch->table_column],"h",1) == 0) {
+				temp_type = 'h';
+				scratch->table_column++;
+			} else {
+				temp_type = scratch->cell_type;
+			}
 			lev = scratch->table_column;
 			if ( strncmp(&temp[lev],"r",1) == 0) {
-				g_string_append_printf(out, "\t<t%c style=\"text-align:right;\"", scratch->cell_type);
+				g_string_append_printf(out, "\t<t%c style=\"text-align:right;\"", temp_type);
 			} else if ( strncmp(&temp[lev],"R",1) == 0) {
-				g_string_append_printf(out, "\t<t%c style=\"text-align:right;\"", scratch->cell_type);
+				g_string_append_printf(out, "\t<t%c style=\"text-align:right;\"", temp_type);
 			} else if ( strncmp(&temp[lev],"c",1) == 0) {
-				g_string_append_printf(out, "\t<t%c style=\"text-align:center;\"", scratch->cell_type);
+				g_string_append_printf(out, "\t<t%c style=\"text-align:center;\"", temp_type);
 			} else if ( strncmp(&temp[lev],"C",1) == 0) {
-				g_string_append_printf(out, "\t<t%c style=\"text-align:center;\"", scratch->cell_type);
+				g_string_append_printf(out, "\t<t%c style=\"text-align:center;\"", temp_type);
 			} else {
-				g_string_append_printf(out, "\t<t%c style=\"text-align:left;\"", scratch->cell_type);
+				g_string_append_printf(out, "\t<t%c style=\"text-align:left;\"", temp_type);
 			}
 			if ((n->children != NULL) && (n->children->key == CELLSPAN)) {
 				g_string_append_printf(out, " colspan=\"%d\"",(int)strlen(n->children->str)+1);
@@ -682,7 +689,7 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 			g_string_append_printf(out, ">");
 			scratch->padded = 2;
 			print_html_node_tree(out, n->children, scratch);
-			g_string_append_printf(out, "</t%c>\n", scratch->cell_type);
+			g_string_append_printf(out, "</t%c>\n", temp_type);
 			scratch->table_column++;
 			break;
 		case CELLSPAN:
