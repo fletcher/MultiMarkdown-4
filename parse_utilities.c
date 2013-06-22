@@ -564,6 +564,12 @@ char * metavalue_for_key(char *key, node *list) {
 
 /* Trim spaces at end of string */
 void trim_trailing_whitespace(char *str) {
+	if (str == NULL)
+		return;
+	
+	if (strlen(str) < 1)
+		return;
+	
 	while ( ( str[strlen(str)-1] == ' ' ) ||
 		( str[strlen(str)-1] == '\n' ) || 
 		( str[strlen(str)-1] == '\r' ) || 
@@ -574,6 +580,12 @@ void trim_trailing_whitespace(char *str) {
 
 /* Trim spaces at end of string */
 void trim_trailing_newlines(char *str) {
+	if (str == NULL)
+		return;
+	
+	if (strlen(str) < 1)
+		return;
+	
 	while ( ( str[strlen(str)-1] == '\n' ) || 
 	( str[strlen(str)-1] == '\r' ) ) {
 		str[strlen(str)-1] = '\0';
