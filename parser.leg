@@ -49,15 +49,15 @@ void yy_input_func(char *buf, int *result, int max_size, parser_data *data)
 %}
 
 Doc =  BOM? a:StartList b:StartList
-	( &{ !ext(EXT_COMPATIBILITY) && !ext(EXT_NO_METADATA) }
-		&( MetaDataKey Sp ':' Sp (!Newline)) MetaData
-			{ a = cons($$, a); b = node(FOOTER); } )?
-	( Block { a = cons($$, a); } )*
-	BlankLine*	# TODO: Why do we need this when we didn't before? 
-	{
-		if (b!= NULL) a = cons(b,a);
-		((parser_data *)G->data)->result = reverse_list(a);
-	}
+		( &{ !ext(EXT_COMPATIBILITY) && !ext(EXT_NO_METADATA) }
+			&( MetaDataKey Sp ':' Sp (!Newline)) MetaData
+				{ a = cons($$, a); b = node(FOOTER); } )?
+		( Block { a = cons($$, a); } )*
+		BlankLine*
+		{
+			if (b!= NULL) a = cons(b,a);
+			((parser_data *)G->data)->result = reverse_list(a);
+		}
 
 MetaData = a:StartList !([A-Za-z]+ "://") !SetextHeading
 		(MetaDataKeyValue { a = cons($$, a); })+
@@ -78,16 +78,29 @@ MetaDataKey = < !([A-Za-z]+ "://") AlphanumericAscii ( Sp ( AlphanumericAscii | 
 SingleLineMetaKeyValue = MetaDataKey Sp ':' Sp (!Newline .)*
 
 MetaDataValue = a:StartList
-	((< (!Newline .)* > { a = cons(str(yytext), a); })
-	((Newline &(!BlankLine !SingleLineMetaKeyValue Sp RawLine))
-		{ a = cons(str("\n"), a); } | Newline)
-	(!BlankLine !SingleLineMetaKeyValue Sp RawLine
-		{ a = cons(str(yytext), a); } )* )
-	{
-		/* TODO: Need to grab start/stop range from the list */
-		$$ = mk_str_from_list(a, false);
-		$$->key = METAVALUE;
-	}
+		((< (!Newline .)* > { a = cons(str(yytext), a); })
+		((Newline &(!BlankLine !SingleLineMetaKeyValue Sp RawLine))
+			{ a = cons(str("\n"), a); } | Newline)
+		(!BlankLine !SingleLineMetaKeyValue Sp RawLine
+			{ a = cons(str(yytext), a); } )* )
+		{
+			$$ = mk_str_from_list(a, false);
+			$$->key = METAVALUE;
+		}
+
+DocForMetaDataOnly = BOM? a:StartList
+		( &( MetaDataKey Sp ':' Sp (!Newline)) MetaData
+			{ a = cons($$, a); } )?
+		( SkipBlock )*
+		BlankLine*
+		{
+			((parser_data *)G->data)->result = reverse_list(a);
+		}
+
+SkipBlock = HtmlBlock
+		| ( !'#' !SetextBottom1 !SetextBottom2 !BlankLine RawLine )+ BlankLine*
+		| BlankLine+
+		| RawLine
 
 Block =	BlankLine*
 		( BlockQuote
@@ -1154,7 +1167,7 @@ DocForOPML = BOM? a:StartList
 		( &{ !ext(EXT_COMPATIBILITY) }
 		&( MetaDataKey Sp ':' Sp (!Newline)) MetaData { a = cons($$, a); })?
 		( OPMLBlock { a = cons($$, a); } )*
-		BlankLine*	# TODO: Why do we need this when we didn't before? 
+		BlankLine*
 		{ ((parser_data *)G->data)->result = reverse_list(a); }
 
 OPMLBlock = BlankLine* ( OPMLHeadingSection | OPMLPlain )
@@ -1352,21 +1365,20 @@ char * markdown_to_string(char * source, int extensions, int format) {
 
 /* has_metadata -- determine whether metadata exists or not */
 bool has_metadata(char *source, int extensions) {
-    char *formatted;
-    GREG g;
-    yyinit(&g);
-    node *result;
-    bool answer = FALSE;
+	char *formatted;
+	GREG g;
+	yyinit(&g);
+	node *result;
+	bool answer = FALSE;
+	
+	formatted = preformat_text(source);
+	g.data = mk_parser_data(formatted, extensions);
     
-    formatted = preformat_text(source);
-    g.data = mk_parser_data(formatted, extensions);
-    
-    /* TODO: change this to parse only the metadata for speed */
-    while (yyparse(&g));
+	while (yyparse_from(&g, yy_DocForMetaDataOnly));	/* We want simpler version */
 
-    result = ((parser_data *)g.data)->result;
+	result = ((parser_data *)g.data)->result;
 
-    if ((result != NULL) && (result->key == METADATA)) {
+	if ((result != NULL) && (result->key == METADATA)) {
 		answer = TRUE;
     }
 
@@ -1388,7 +1400,7 @@ char * extract_metadata_value(char *source, int extensions, char *key) {
 	formatted = preformat_text(source);
 	g.data = mk_parser_data(formatted,extensions);
 	
-	while (yyparse(&g));       /* parse */
+	while (yyparse_from(&g, yy_DocForMetaDataOnly));	/* We want simpler version */
 
 	if (((parser_data *)g.data)->parse_aborted) {
 		out = strdup("MultiMarkdown was unable to parse this file.");
