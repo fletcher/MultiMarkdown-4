@@ -722,6 +722,16 @@ void print_odf_node(GString *out, node *n, scratch_pad *scratch) {
 			break;
 		case NOTELABEL:
 			break;
+		case SUPERSCRIPT:
+			g_string_append_printf(out, "<text:span text:style-name=\"MMD-Superscript\">");
+			print_html_string(out,n->str, scratch);
+			g_string_append_printf(out, "</text:span>");
+			break;
+		case SUBSCRIPT:
+			g_string_append_printf(out, "<text:span text:style-name=\"MMD-Subscript\">");
+			print_html_string(out,n->str, scratch);
+			g_string_append_printf(out, "</text:span>");
+			break;
 		case KEY_COUNTER:
 			break;
 		default:
@@ -967,6 +977,12 @@ void print_odf_header(GString *out){
     "   <style:style style:name=\"MMD-Bold\" style:family=\"text\">\n" \
     "      <style:text-properties fo:font-weight=\"bold\" style:font-weight-asian=\"bold\"\n" \
     "                             style:font-weight-complex=\"bold\"/>\n" \
+    "   </style:style>\n" \
+    "   <style:style style:name=\"MMD-Superscript\" style:family=\"text\">\n" \
+    "      <style:text-properties style:text-position=\"super 58%\"/>\n" \
+    "   </style:style>\n" \
+    "   <style:style style:name=\"MMD-Subscript\" style:family=\"text\">\n" \
+    "      <style:text-properties style:text-position=\"sub 58%\"/>\n" \
     "   </style:style>\n" \
     "<style:style style:name=\"MMD-Table\" style:family=\"paragraph\" style:parent-style-name=\"Standard\">\n" \
     "   <style:paragraph-properties fo:margin-top=\"0in\" fo:margin-bottom=\"0.05in\"/>\n" \

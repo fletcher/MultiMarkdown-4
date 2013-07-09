@@ -98,6 +98,7 @@ enum keys {
 	BLOCKQUOTEMARKER,
 	RAW,
 	VERBATIM,
+	VERBATIMTYPE,
 	DEFLIST,
 	TERM,
 	DEFINITION,
@@ -132,6 +133,8 @@ enum keys {
 	CRITICSUBSTITUTION,
 	CRITICHIGHLIGHT,
 	CRITICCOMMENT,
+	SUPERSCRIPT,
+	SUBSCRIPT,
 	KEY_COUNTER                      /* This *MUST* be the last item in the list */
 };
 

@@ -98,7 +98,15 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 			break;
 		case VERBATIM:
 			pad(out, 2, scratch);
-			g_string_append_printf(out, "%s", "<pre><code>");
+			if ((n->children != NULL) && (n->children->key == VERBATIMTYPE)) {
+				trim_trailing_whitespace(n->children->str);
+				if (strlen(n->children->str) > 0)
+					g_string_append_printf(out, "<pre><code class=\"%s\">", n->children->str);
+				else
+					g_string_append_printf(out, "%s", "<pre><code>");
+			} else {
+				g_string_append_printf(out, "%s", "<pre><code>");
+			}
 			print_html_string(out, n->str, scratch);
 			g_string_append_printf(out, "%s", "</code></pre>");
 			scratch->padded = 0;
@@ -705,6 +713,12 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 			fprintf(stderr,"SOURCEBRANCH\n");
 			break;
 		case NOTELABEL:
+			break;
+		case SUPERSCRIPT:
+			g_string_append_printf(out, "<sup>%s</sup>",n->str);
+			break;
+		case SUBSCRIPT:
+			g_string_append_printf(out, "<sub>%s</sub>",n->str);
 			break;
 		case KEY_COUNTER:
 			break;

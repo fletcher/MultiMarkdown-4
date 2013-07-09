@@ -807,6 +807,12 @@ void print_latex_node(GString *out, node *n, scratch_pad *scratch) {
 			break;
 		case NOTELABEL:
 			break;
+		case SUPERSCRIPT:
+			g_string_append_printf(out, "\\textsuperscript{%s}",n->str);
+			break;
+		case SUBSCRIPT:
+			g_string_append_printf(out, "\\textsubscript{%s}",n->str);
+			break;
 		case KEY_COUNTER:
 			break;
 		default:

@@ -104,6 +104,7 @@ SkipBlock = HtmlBlock
 
 Block =	BlankLine*
 		( BlockQuote
+		| &{ !ext(EXT_COMPATIBILITY) } Fenced
 		| Verbatim
 		| &{ !ext(EXT_COMPATIBILITY) } DefinitionList
 		| &{ !ext(EXT_COMPATIBILITY) } Glossary
@@ -123,6 +124,7 @@ Block =	BlankLine*
 
 HeadingSectionBlock = BlankLine* !Heading
 		( BlockQuote
+		| &{ !ext(EXT_COMPATIBILITY) } Fenced
 		| Verbatim
 		| &{ !ext(EXT_COMPATIBILITY) } DefinitionList
 		| &{ !ext(EXT_COMPATIBILITY) } Glossary
@@ -194,6 +196,7 @@ Newline =		'\n' | '\r' '\n'?
 Line =  RawLine
 	{ $$ = str(yytext); }
 RawLine =		( < (!'\r' !'\n' .)* Newline > | < .+ > Eof )
+NonMatchingRawLine = ( (!'\r' !'\n' .)* Newline | .+ Eof )
 BlankLine =		Sp Newline
 Sp =			Spacechar*
 Spnl =          Sp (Newline Sp)?
@@ -203,7 +206,10 @@ NormalChar =	!( SpecialChar | Spacechar | Newline ) .
 SpecialChar =   '*' | '_' | '`' | '&' | '[' | ']' | '(' | ')' | '<' | '!' | '#' | '\\' | '\'' | '"' | ExtendedSpecialChar
 ExtendedSpecialChar = &{ ext(EXT_SMART) } ('.' | '-' | '\'' | '"')
 		| &{ ext(EXT_NOTES) } ( '^' )
-		| &{ ext(EXT_CRITIC) } ( '{')
+		| &{ ext(EXT_CRITIC) } ( '{' )
+		| &{ !ext(EXT_COMPATIBILITY) } ( '~' )
+Punctuation = '.' | ',' | '?' | ';' | ':'
+NonPunctuation = !(Punctuation | SpecialChar | Spacechar | Newline) .
 
 Quoted =        '"' (!'"' .)* '"' | '\'' (!'\'' .)* '\''
 HtmlAttribute = (AlphanumericAscii | '-')+ Spnl ('=' Spnl (Quoted | (!'>' Nonspacechar)+))? Spnl
@@ -274,6 +280,8 @@ Inline = #&{ check_timeout((parser_data *)G->data) }
 		| Entity
 		| EscapedChar
 		| Smart
+		| Superscript
+		| Subscript
 		| Symbol
 
 
@@ -309,6 +317,12 @@ StrChunk = < (NormalChar | '_'+ &Alphanumeric)+ > { $$ = str(yytext); } |
 
 AposChunk = &{ ext(EXT_SMART) } '\'' &Alphanumeric
 		{ $$ = node(APOSTROPHE); }
+
+Superscript = '^' < (((!'^' Nonspacechar)+ &'^') | (!'^' NonPunctuation)+ ) > '^'?
+		{ $$ = str(yytext); $$->key = SUPERSCRIPT; }
+
+Subscript = '~' < (((!'~' Nonspacechar)+ &'~') | (!'~' NonPunctuation)+ ) > '~'?
+		{ $$ = str(yytext); $$->key = SUBSCRIPT; }
 
 StartList = &.
 	{ $$ = NULL; }
@@ -606,6 +620,18 @@ Code = ( Ticks1 Sp < ( ( !'`' Nonspacechar )+ | !Ticks1 '`'+ | !( Sp Ticks1 ) ( 
        | Ticks5 Sp < ( ( !'`' Nonspacechar )+ | !Ticks5 '`'+ | !( Sp Ticks5 ) ( Spacechar | Newline !BlankLine ) )+ > Sp Ticks5
        )
        { $$ = str(yytext); $$->key = CODE; }
+
+FenceType = Sp Line
+		{ $$ = str(yytext); $$->key = VERBATIMTYPE; }
+
+Fenced = (( Ticks3 a:FenceType < ( (!Ticks3 NonMatchingRawLine)* ) > Ticks3 Newline ) |
+		( Ticks4 a:FenceType < ( (!Ticks4 NonMatchingRawLine)* ) > Ticks4 Newline ) |
+		( Ticks5 a:FenceType < ( (!Ticks5 NonMatchingRawLine)* ) > Ticks5 Newline ) )
+	{
+		$$ = str(yytext); $$->key = VERBATIM;
+		$$->children = a;
+	}
+
 
 Smart = &{ ext(EXT_SMART) }
         ( Ellipsis | Dash | SingleQuoted | DoubleQuoted | Apostrophe )
