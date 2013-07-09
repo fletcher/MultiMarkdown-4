@@ -208,7 +208,7 @@ ExtendedSpecialChar = &{ ext(EXT_SMART) } ('.' | '-' | '\'' | '"')
 		| &{ ext(EXT_NOTES) } ( '^' )
 		| &{ ext(EXT_CRITIC) } ( '{' )
 		| &{ !ext(EXT_COMPATIBILITY) } ( '~' )
-Punctuation = '.' | ',' | '?' | ';' | ':'
+Punctuation = '.' | ',' | '?' | '!' | ';' | ':'
 NonPunctuation = !(Punctuation | SpecialChar | Spacechar | Newline) .
 
 Quoted =        '"' (!'"' .)* '"' | '\'' (!'\'' .)* '\''
