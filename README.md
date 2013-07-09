@@ -1,7 +1,6 @@
 Title:	MultiMarkdown 4.0 ReadMe  
 Author:	Fletcher T. Penney  
 Base Header Level:	2  
-Version:	4.0b
 
 Introduction
 ===============
