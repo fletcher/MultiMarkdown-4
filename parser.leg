@@ -262,6 +262,7 @@ Inline = #&{ check_timeout((parser_data *)G->data) }
 		| Endline
 		| UlOrStarLine
 		| Space
+		| StrongAndEmph
 		| Strong
 		| Emph
 		| &{ !ext(EXT_COMPATIBILITY) } CitationReference
@@ -379,6 +380,26 @@ StrongUl = "__" !Whitespace
 		( !"__" b:Inline { a = cons(b, a); })+
 		<"__">
 		{ $$ = list(STRONG, a); }
+
+StrongAndEmph = StrongAndEmphStar | StrongAndEmphUl
+
+StrongAndEmphStar = "***" !Whitespace
+		a:StartList
+		( !"***" !"**" !"*" b:Inline { a = cons(b, a); })+
+		<"***">
+		{
+			$$ = list(EMPH, a); 
+			$$ = list(STRONG, $$);
+		}
+
+StrongAndEmphUl = "___" !Whitespace
+		a:StartList
+		( !"___" b:Inline { a = cons(b, a); })+
+		<"___">
+		{
+			$$ = list(EMPH, a); 
+			$$ = list(STRONG, $$);
+		}
 
 Link = ExplicitLink | ReferenceLink | AutoLink
 
