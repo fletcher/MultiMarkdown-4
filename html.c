@@ -209,9 +209,11 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 				g_string_append_printf(out, "<h%1d>", lev);
 				print_html_node_tree(out, n->children, scratch);
 			} else if (n->children->key == AUTOLABEL) {
+				temp = label_from_string(n->children->str);
 				/* use label for header since one was specified (MMD)*/
-				g_string_append_printf(out, "<h%d id=\"%s\">", lev,n->children->str);
+				g_string_append_printf(out, "<h%d id=\"%s\">", lev,temp);
 				print_html_node_tree(out, n->children->next, scratch);
+				free(temp);
 			} else if ( scratch->extensions & EXT_NO_LABELS ) {
 				/* Don't generate a label */
 				g_string_append_printf(out, "<h%1d>", lev);

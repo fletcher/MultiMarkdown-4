@@ -244,9 +244,11 @@ void print_odf_node(GString *out, node *n, scratch_pad *scratch) {
 			g_string_append_printf(out, "<text:h text:outline-level=\"%d\">", lev);
 			if (n->children->key == AUTOLABEL) {
 				/* use label for header since one was specified (MMD)*/
-				g_string_append_printf(out, "<text:bookmark text:name=\"%s\"/>", n->children->str);
+				temp = label_from_string(n->children->str);
+				g_string_append_printf(out, "<text:bookmark text:name=\"%s\"/>", temp);
 				print_odf_node_tree(out, n->children->next, scratch);
-				g_string_append_printf(out, "<text:bookmark-end text:name=\"%s\"/>", n->children->str);
+				g_string_append_printf(out, "<text:bookmark-end text:name=\"%s\"/>", temp);
+				free(temp);
 			} else {
 				/* generate a label by default for MMD */
 				temp = label_from_node_tree(n->children);
