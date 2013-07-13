@@ -264,8 +264,10 @@ void print_latex_node(GString *out, node *n, scratch_pad *scratch) {
 			scratch->no_latex_footnote = TRUE;
 			if (n->children->key == AUTOLABEL) {
 				/* use label for header since one was specified (MMD)*/
+				temp = label_from_string(n->children->str);
 				print_latex_node_tree(out, n->children->next, scratch);
-				g_string_append_printf(out, "}\n\\label{%s}",n->children->str);
+				g_string_append_printf(out, "}\n\\label{%s}",temp);
+				free(temp);
 			} else {
 				/* generate a label by default for MMD */
 				print_latex_node_tree(out, n->children, scratch);
@@ -806,6 +808,12 @@ void print_latex_node(GString *out, node *n, scratch_pad *scratch) {
 			fprintf(stderr,"SOURCEBRANCH\n");
 			break;
 		case NOTELABEL:
+			break;
+		case SUPERSCRIPT:
+			g_string_append_printf(out, "\\textsuperscript{%s}",n->str);
+			break;
+		case SUBSCRIPT:
+			g_string_append_printf(out, "\\textsubscript{%s}",n->str);
 			break;
 		case KEY_COUNTER:
 			break;

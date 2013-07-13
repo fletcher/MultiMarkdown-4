@@ -102,8 +102,10 @@ void print_beamer_node(GString *out, node *n, scratch_pad *scratch) {
 				don't allow footnotes since invalid here */
 			scratch->no_latex_footnote = TRUE;
 			if (n->children->key == AUTOLABEL) {
+				temp = label_from_string(n->children->str);
 				print_latex_node_tree(out, n->children->next, scratch);
-				g_string_append_printf(out, "}\n\\label{%s}", n->children->str);
+				g_string_append_printf(out, "}\n\\label{%s}", temp);
+				free(temp);
 			} else {
 				print_latex_node_tree(out, n->children, scratch);
 				temp = label_from_node_tree(n->children);

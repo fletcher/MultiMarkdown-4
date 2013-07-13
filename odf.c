@@ -244,9 +244,11 @@ void print_odf_node(GString *out, node *n, scratch_pad *scratch) {
 			g_string_append_printf(out, "<text:h text:outline-level=\"%d\">", lev);
 			if (n->children->key == AUTOLABEL) {
 				/* use label for header since one was specified (MMD)*/
-				g_string_append_printf(out, "<text:bookmark text:name=\"%s\"/>", n->children->str);
+				temp = label_from_string(n->children->str);
+				g_string_append_printf(out, "<text:bookmark text:name=\"%s\"/>", temp);
 				print_odf_node_tree(out, n->children->next, scratch);
-				g_string_append_printf(out, "<text:bookmark-end text:name=\"%s\"/>", n->children->str);
+				g_string_append_printf(out, "<text:bookmark-end text:name=\"%s\"/>", temp);
+				free(temp);
 			} else {
 				/* generate a label by default for MMD */
 				temp = label_from_node_tree(n->children);
@@ -722,6 +724,16 @@ void print_odf_node(GString *out, node *n, scratch_pad *scratch) {
 			break;
 		case NOTELABEL:
 			break;
+		case SUPERSCRIPT:
+			g_string_append_printf(out, "<text:span text:style-name=\"MMD-Superscript\">");
+			print_html_string(out,n->str, scratch);
+			g_string_append_printf(out, "</text:span>");
+			break;
+		case SUBSCRIPT:
+			g_string_append_printf(out, "<text:span text:style-name=\"MMD-Subscript\">");
+			print_html_string(out,n->str, scratch);
+			g_string_append_printf(out, "</text:span>");
+			break;
 		case KEY_COUNTER:
 			break;
 		default:
@@ -967,6 +979,12 @@ void print_odf_header(GString *out){
     "   <style:style style:name=\"MMD-Bold\" style:family=\"text\">\n" \
     "      <style:text-properties fo:font-weight=\"bold\" style:font-weight-asian=\"bold\"\n" \
     "                             style:font-weight-complex=\"bold\"/>\n" \
+    "   </style:style>\n" \
+    "   <style:style style:name=\"MMD-Superscript\" style:family=\"text\">\n" \
+    "      <style:text-properties style:text-position=\"super 58%\"/>\n" \
+    "   </style:style>\n" \
+    "   <style:style style:name=\"MMD-Subscript\" style:family=\"text\">\n" \
+    "      <style:text-properties style:text-position=\"sub 58%\"/>\n" \
     "   </style:style>\n" \
     "<style:style style:name=\"MMD-Table\" style:family=\"paragraph\" style:parent-style-name=\"Standard\">\n" \
     "   <style:paragraph-properties fo:margin-top=\"0in\" fo:margin-bottom=\"0.05in\"/>\n" \

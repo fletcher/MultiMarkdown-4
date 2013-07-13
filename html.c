@@ -98,7 +98,15 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 			break;
 		case VERBATIM:
 			pad(out, 2, scratch);
-			g_string_append_printf(out, "%s", "<pre><code>");
+			if ((n->children != NULL) && (n->children->key == VERBATIMTYPE)) {
+				trim_trailing_whitespace(n->children->str);
+				if (strlen(n->children->str) > 0)
+					g_string_append_printf(out, "<pre><code class=\"%s\">", n->children->str);
+				else
+					g_string_append_printf(out, "%s", "<pre><code>");
+			} else {
+				g_string_append_printf(out, "%s", "<pre><code>");
+			}
 			print_html_string(out, n->str, scratch);
 			g_string_append_printf(out, "%s", "</code></pre>");
 			scratch->padded = 0;
@@ -201,9 +209,11 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 				g_string_append_printf(out, "<h%1d>", lev);
 				print_html_node_tree(out, n->children, scratch);
 			} else if (n->children->key == AUTOLABEL) {
+				temp = label_from_string(n->children->str);
 				/* use label for header since one was specified (MMD)*/
-				g_string_append_printf(out, "<h%d id=\"%s\">", lev,n->children->str);
+				g_string_append_printf(out, "<h%d id=\"%s\">", lev,temp);
 				print_html_node_tree(out, n->children->next, scratch);
+				free(temp);
 			} else if ( scratch->extensions & EXT_NO_LABELS ) {
 				/* Don't generate a label */
 				g_string_append_printf(out, "<h%1d>", lev);
@@ -705,6 +715,12 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 			fprintf(stderr,"SOURCEBRANCH\n");
 			break;
 		case NOTELABEL:
+			break;
+		case SUPERSCRIPT:
+			g_string_append_printf(out, "<sup>%s</sup>",n->str);
+			break;
+		case SUBSCRIPT:
+			g_string_append_printf(out, "<sub>%s</sub>",n->str);
 			break;
 		case KEY_COUNTER:
 			break;
