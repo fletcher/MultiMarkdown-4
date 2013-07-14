@@ -127,6 +127,14 @@ void print_latex_node(GString *out, node *n, scratch_pad *scratch) {
 			break;
 		case VERBATIM:
 			pad(out, 2, scratch);
+			if ((n->children != NULL) && (n->children->key == VERBATIMTYPE)) {
+				trim_trailing_whitespace(n->children->str);
+				if (strlen(n->children->str) > 0) {
+					g_string_append_printf(out, "\\begin{lstlisting}[language=%s]\n%s\\end{lstlisting}", n->children->str,n->str);
+					scratch->padded = 0;
+					break;
+				}
+			}
 			g_string_append_printf(out, "\\begin{verbatim}\n%s\\end{verbatim}",n->str);
 			scratch->padded = 0;
 			break;

@@ -39,6 +39,16 @@ void print_memoir_node(GString *out, node *n, scratch_pad *scratch) {
 	switch (n->key) {
 		case VERBATIM:
 			pad(out, 2, scratch);
+			if ((n->children != NULL) && (n->children->key == VERBATIMTYPE)) {
+				trim_trailing_whitespace(n->children->str);
+				if (strlen(n->children->str) > 0) {
+					g_string_append_printf(out, "\\begin{adjustwidth}{2.5em}{2.5em}\n\\begin{lstlisting}[language=%s]\n", n->children->str);
+					print_raw_node(out, n);
+					g_string_append_printf(out, "\n\\end{lstlisting}\n\\end{adjustwidth}");					
+					scratch->padded = 0;
+					break;
+				}
+			}
 			g_string_append_printf(out, "\\begin{adjustwidth}{2.5em}{2.5em}\n\\begin{verbatim}\n\n");
 			print_raw_node(out, n);
 			g_string_append_printf(out, "\n\\end{verbatim}\n\\end{adjustwidth}");
