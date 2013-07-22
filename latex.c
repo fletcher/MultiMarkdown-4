@@ -571,8 +571,11 @@ void print_latex_node(GString *out, node *n, scratch_pad *scratch) {
 					print_latex_node_tree(out, n->children, scratch);
 					g_string_append_printf(out, "}");
 				}
-				if (n->link_data->label != NULL)
-					g_string_append_printf(out, "\n\\label{%s}", n->link_data->label);
+				if (n->link_data->label != NULL) {
+					temp = label_from_string(n->link_data->label);
+					g_string_append_printf(out, "\n\\label{%s}",temp);
+					free(temp);
+				}
 				g_string_append_printf(out, "\n\\end{figure}");
 				scratch->padded = 0;
 			}
