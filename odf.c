@@ -981,10 +981,10 @@ void print_odf_header(GString *out){
     "                             style:font-weight-complex=\"bold\"/>\n" \
     "   </style:style>\n" \
     "   <style:style style:name=\"MMD-Superscript\" style:family=\"text\">\n" \
-    "      <style:text-properties style:text-position=\"super 58%\"/>\n" \
+    "      <style:text-properties style:text-position=\"super 58%%\"/>\n" \
     "   </style:style>\n" \
     "   <style:style style:name=\"MMD-Subscript\" style:family=\"text\">\n" \
-    "      <style:text-properties style:text-position=\"sub 58%\"/>\n" \
+    "      <style:text-properties style:text-position=\"sub 58%%\"/>\n" \
     "   </style:style>\n" \
     "<style:style style:name=\"MMD-Table\" style:family=\"paragraph\" style:parent-style-name=\"Standard\">\n" \
     "   <style:paragraph-properties fo:margin-top=\"0in\" fo:margin-bottom=\"0.05in\"/>\n" \
