@@ -406,8 +406,11 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 				g_string_append_printf(out, " alt=\"%s\"",n->link_data->title);
 			}
 			if (!(scratch->extensions & EXT_COMPATIBILITY)) {
-				if (n->link_data->label != NULL)
-					g_string_append_printf(out, " id=\"%s\"",n->link_data->label);
+				if (n->link_data->label != NULL) {
+					temp = label_from_string(n->link_data->label);
+					g_string_append_printf(out, " id=\"%s\"",temp);
+					free(temp);
+				}
 			}
 			if ((n->link_data->title != NULL) && (strlen(n->link_data->title) > 0)) {
 				g_string_append_printf(out, " title=\"");
