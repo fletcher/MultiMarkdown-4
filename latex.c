@@ -533,7 +533,7 @@ void print_latex_node(GString *out, node *n, scratch_pad *scratch) {
 						width[strlen(width)-1] = '\0';
 						temp_float = strtod(width, NULL);
 						temp_float = temp_float/100;
-						g_string_append_printf(out, "width=$.4f\\textwidth,", temp_float);
+						g_string_append_printf(out, "width=%.4f\\textwidth,", temp_float);
 					} else {
 						g_string_append_printf(out, "width=%s,",width);
 					}
@@ -546,7 +546,7 @@ void print_latex_node(GString *out, node *n, scratch_pad *scratch) {
 						height[strlen(height)-1] = '\0';
 						temp_float = strtod(height, NULL);
 						temp_float = temp_float/100;
-						g_string_append_printf(out, "height=$.4f\\textheight", temp_float);
+						g_string_append_printf(out, "height=%.4f\\textheight", temp_float);
 					} else {
 						g_string_append_printf(out, "height=%s",height);
 					}
