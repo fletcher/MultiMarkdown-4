@@ -56,7 +56,7 @@ Once installed, you simply do something like the following:
 
 # Notes #
 
-If you get an error that `greg` fails to build try `touch greg\greg.c`.  I had an issue where the timestamp on that file might have been too old, which caused the build to fail.
+If you get an error that `greg` fails to build try `touch greg/greg.c`.  I had an issue where the timestamp on that file might have been too old, which caused the build to fail.
 
 [peg-markdown]:	https://github.com/jgm/peg-markdown
 [Markdown]:	http://daringfireball.net/projects/markdown/
