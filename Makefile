@@ -81,7 +81,15 @@ test-xslt: $(PROGRAM)
 	./MarkdownTest.pl --Script=/bin/cat --testdir=MemoirTests \
 	--TrailFlags="| ../Support/bin/mmd2tex-xslt" --ext=".tex"; \
 
-test-all: $(PROGRAM) test test-mmd test-compat test-latex test-beamer test-memoir test-opml test-odf
+test-critic-accept: $(PROGRAM)
+	cd MarkdownTest; \
+	./MarkdownTest.pl --Script=../$(PROGRAM) --testdir=CriticMarkup --Flags="-a" --ext=".htmla"
+
+test-critic-reject: $(PROGRAM)
+	cd MarkdownTest; \
+	./MarkdownTest.pl --Script=../$(PROGRAM) --testdir=CriticMarkup --Flags="-r" --ext=".htmlr"
+	
+test-all: $(PROGRAM) test test-mmd test-compat test-latex test-beamer test-memoir test-opml test-odf test-critic-accept test-critic-reject
 
 enumMap.txt: parser.h
 	./enumsToPerl.pl libMultiMarkdown.h enumMap.txt
