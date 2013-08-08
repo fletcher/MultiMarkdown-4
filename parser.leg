@@ -208,6 +208,7 @@ ExtendedSpecialChar = &{ ext(EXT_SMART) } ('.' | '-' | '\'' | '"')
 		| &{ ext(EXT_NOTES) } ( '^' )
 		| &{ ext(EXT_CRITIC) } ( '{' )
 		| &{ !ext(EXT_COMPATIBILITY) } ( '~' )
+		| &{ !ext(EXT_COMPATIBILITY) } ( '|' )
 Punctuation = '.' | ',' | '?' | '!' | ';' | ':'
 NonPunctuation = !(Punctuation | SpecialChar | Spacechar | Newline) .
 
@@ -1127,12 +1128,7 @@ ExtendedCell = (EmptyCell | FullCell) <CellDivider+>
 		$$->children = span;
     }
 
-
-CellStr = < (!CellDivider NormalChar) (!CellDivider NormalChar | '_'+ &Alphanumeric)* >
-		{ $$ = str(yytext); }
-
-
-FullCell = Sp a:StartList  ((!CellDivider CellStr | !Newline !Endline !CellDivider !Str !(Sp &CellDivider) Inline ) { a = cons($$,a)})+
+FullCell = s:LocMarker Sp a:StartList  ((!Newline !Endline !CellDivider !(Sp &CellDivider) Inline ) { a = cons($$,a)})+
     <Sp> ( CellDivider )?
 		{ $$ = list(TABLECELL,a); }
 
