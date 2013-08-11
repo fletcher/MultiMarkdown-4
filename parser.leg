@@ -993,6 +993,15 @@ HtmlBlockOpenHead = '<' Spnl ("head" | "HEAD") Spnl HtmlAttribute* '>'
 HtmlBlockCloseHead = '<' Spnl '/' ("head" | "HEAD") Spnl '>'
 HtmlBlockHead = HtmlBlockOpenHead (!HtmlBlockCloseHead .)* HtmlBlockCloseHead
 
+HtmlBlockOpenMain = '<' Spnl ("main" | "MAIN") Spnl HtmlAttribute* '>'
+HtmlBlockCloseMain = '<' Spnl '/' ("main" | "MAIN") Spnl '>'
+HtmlBlockMain = HtmlBlockOpenMain (!HtmlBlockCloseMain .)* HtmlBlockCloseMain
+
+HtmlBlockOpenNav = '<' Spnl ("nav" | "NAV") Spnl HtmlAttribute* '>'
+HtmlBlockCloseNav = '<' Spnl '/' ("nav" | "NAV") Spnl '>'
+HtmlBlockNav = HtmlBlockOpenNav (!HtmlBlockCloseNav .)* HtmlBlockCloseNav
+
+
 HtmlBlockInTags = HtmlBlockAddress
 		| HtmlBlockArticle
 		| HtmlBlockAside
@@ -1037,6 +1046,8 @@ HtmlBlockInTags = HtmlBlockAddress
 		| HtmlBlockTr
 		| HtmlBlockScript
 		| HtmlBlockHead
+		| HtmlBlockMain
+		| HtmlBlockNav
 
 HtmlBlock = !MarkdownHtmlTagOpen < ( HtmlBlockInTags | HtmlComment | HtmlBlockSelfClosing ) >
 		BlankLine+
@@ -1128,7 +1139,7 @@ ExtendedCell = (EmptyCell | FullCell) <CellDivider+>
 		$$->children = span;
     }
 
-FullCell = s:LocMarker Sp a:StartList  ((!Newline !Endline !CellDivider !(Sp &CellDivider) Inline ) { a = cons($$,a)})+
+FullCell = Sp a:StartList  ((!Newline !Endline !CellDivider !(Sp &CellDivider) Inline ) { a = cons($$,a)})+
     <Sp> ( CellDivider )?
 		{ $$ = list(TABLECELL,a); }
 
