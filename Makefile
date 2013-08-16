@@ -15,16 +15,16 @@ GREG= greg/greg
 ALL : $(PROGRAM) enumMap.txt
 
 %.o : %.c parser.h
-	gcc -c $(CFLAGS) -o $@ $<
+	$(CC) -c $(CFLAGS) -o $@ $<
 
 parser.c : parser.leg greg/greg parser.h
 	greg/greg -o parser.c parser.leg
 
 $(GREG): greg
-	CC=gcc $(MAKE) -C greg
+	$(MAKE) -C greg
 
 $(PROGRAM) : $(OBJS)
-	gcc $(CFLAGS) -o $@ $(OBJS)
+	$(CC) $(CFLAGS) -o $@ $(OBJS)
 
 clean:
 	rm -f $(PROGRAM) $(OBJS) parser.c enumMap.txt speed*.txt; \
