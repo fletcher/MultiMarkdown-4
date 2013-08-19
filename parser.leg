@@ -341,14 +341,14 @@ MathSpan = '\\' < (
 
 SingleDollarMathStart = '$' !(Spacechar | Newline | '$' )
 
-SingleDollarMathEnd = (!'\\' !'$' Nonspacechar) '$' !Nonspacechar
+SingleDollarMathEnd = (!'\\' !'$' Nonspacechar) '$' !NonPunctuation
 
 SingleDollarMath = < SingleDollarMathStart (!SingleDollarMathEnd !(BlankLine BlankLine) .)*  SingleDollarMathEnd >
 		{ $$ = str(yytext); $$->key = MATHSPAN; }
 
 DoubleDollarMathStart = '$' '$' !(Spacechar | Newline)
 
-DoubleDollarMathEnd = (!'\\' Nonspacechar) '$' '$' !Nonspacechar
+DoubleDollarMathEnd = (!'\\' Nonspacechar) '$' '$' !NonPunctuation
 
 DoubleDollarMath = < DoubleDollarMathStart (!DoubleDollarMathEnd !(BlankLine BlankLine) .)*  DoubleDollarMathEnd >
 		{ $$ = str(yytext); $$->key = MATHSPAN; }
