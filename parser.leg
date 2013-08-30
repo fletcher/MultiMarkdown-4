@@ -613,7 +613,7 @@ NoteReference = &{ ext(EXT_NOTES) } ( "[^" ) < ( !Newline !']' . )+ > ']'
 		
 		$$->children = source;
 
-		g_string_free(original, false);
+		g_string_free(original, true);
 	}
 
 Glossary =  &{ ext(EXT_NOTES) }
