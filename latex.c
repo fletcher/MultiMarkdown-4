@@ -588,7 +588,7 @@ void print_latex_node(GString *out, node *n, scratch_pad *scratch) {
 	fprintf(stderr, "finish image\n");
 #endif
 		case NOTEREFERENCE:
-			lev = note_number_for_label(n->str, scratch);
+			lev = note_number_for_node(n, scratch);
 			temp_node = node_for_count(scratch->used_notes, lev);
 			scratch->padded = 2;
 			if (temp_node->key == GLOSSARYSOURCE) {

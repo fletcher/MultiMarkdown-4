@@ -461,7 +461,7 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 	fprintf(stderr, "finish image\n");
 #endif
 		case NOTEREFERENCE:
-			lev = note_number_for_label(n->str, scratch);
+			lev = note_number_for_node(n, scratch);
 			temp_node = node_for_count(scratch->used_notes, lev);
 			if (temp_node->key == GLOSSARYSOURCE) {
 				if (lev > scratch->max_footnote_num) {

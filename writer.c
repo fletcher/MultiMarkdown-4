@@ -339,6 +339,25 @@ int note_number_for_label(char *text, scratch_pad *scratch) {
 		return 0;
 }
 
+/* note_number_for_node -- given a note reference to match, determine number to be used*/
+int note_number_for_node(node *ref, scratch_pad *scratch) {
+	char *label = ref->str;
+	node *n = NULL;
+	int num = 0;
+	
+	num = note_number_for_label(label, scratch);
+	
+	if (num > 0)
+		return num;
+	
+	/* None found, so treat as inline note */
+	n = ref->children;
+	use_inline_footnote(ref, scratch);
+	
+	return count_node_from_end(n);
+}
+
+
 /* node_matching_label -- given a string, return the node matching the string */
 node * node_matching_label(char *label, node *n) {
 	while (n != NULL) {
@@ -422,6 +441,12 @@ void move_note_to_used(node *list, scratch_pad *scratch) {
 		last = n;
 		n = n->next;
 	}
+}
+
+/* use_inline_footnote -- create a new note definition from inline footnote */
+void use_inline_footnote(node *ref, scratch_pad *scratch) {
+	scratch->used_notes = cons(ref->children, scratch->used_notes);
+	ref->children = NULL;
 }
 
 /* find attribute, if present */

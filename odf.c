@@ -481,7 +481,7 @@ void print_odf_node(GString *out, node *n, scratch_pad *scratch) {
 		case NOTEREFERENCE:
 			old_type = scratch->odf_para_type;
 			scratch->odf_para_type = NOTEREFERENCE;
-			lev = note_number_for_label(n->str, scratch);
+			lev = note_number_for_node(n, scratch);
 			temp_node = node_for_count(scratch->used_notes, lev);
 			scratch->padded = 2;
 			if (temp_node->key == GLOSSARYSOURCE) {

@@ -594,10 +594,27 @@ AutoLabel = '[' < (!Newline !'^' !'#' . )( !Newline !']' . )+ > ']' &(!(Sp ('(' 
 	ref->key = LINKREFERENCE;
 }
 
-
-# NoteReference = &{ ext(EXT_NOTES) } ( "[^" | "[#" ) < ( !Newline !']' . )+ > ']'
 NoteReference = &{ ext(EXT_NOTES) } ( "[^" ) < ( !Newline !']' . )+ > ']'
-		{ $$ = str(yytext); $$->key = NOTEREFERENCE; }
+	{
+		/* Copy entire label, and ensure we are treated as a paragraph */
+		GString *original = g_string_new(yytext);
+		g_string_append_c(original,'\n');
+		g_string_append_c(original,'\n');
+
+		/* Create a note reference */
+		$$ = str(yytext);
+		$$->key = NOTEREFERENCE;
+		
+		/* Include RAW version for parsing in case this is an inline footnote */
+		node *raw = str(original->str);
+		raw->key = RAW;
+		node *source = list(NOTESOURCE, raw);
+		source->str = strdup("");
+		
+		$$->children = source;
+
+		g_string_free(original, false);
+	}
 
 Glossary =  &{ ext(EXT_NOTES) }
 		a:StartList
