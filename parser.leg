@@ -498,7 +498,7 @@ AutoLinkEmail = '<' ( "mailto:" )? < [-A-Za-z0-9+_./!%~$]+ '@' ( !Newline !'>' .
 LinkReference = a:StartList NonindentSpace !"[]" l:Label ':' Spnl s:RefSrc
 		t:RefTitle
 		( &{ !ext(EXT_COMPATIBILITY) } <Attributes { a = reverse_list($$); } )?>
-		BlankLine+	# TODO: Can I get rid of this to allow sequential references?
+		BlankLine+
 		{ 
 			/* Get label for referencing */
 			GString *text = g_string_new("");
