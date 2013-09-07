@@ -150,6 +150,7 @@ void   print_raw_node(GString *out, node *n);
 void   print_raw_node_tree(GString *out, node*n);
 
 char * correct_dimension_units(char *original);
+char * metadata_keys(node *list);
 node * metadata_for_key(char *key, node *list);
 char * metavalue_for_key(char *key, node *list);
 

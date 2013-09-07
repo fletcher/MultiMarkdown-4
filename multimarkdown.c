@@ -39,6 +39,7 @@ int main(int argc, char **argv)
 	static int obfuscate_flag = 0;
 	static int no_obfuscate_flag = 0;
 	static int process_html_flag = 0;
+	bool list_meta_keys = 0;
 	char *target_meta_key = FALSE;
 		
 	static struct option long_options[] = {
@@ -58,6 +59,7 @@ int main(int argc, char **argv)
 		{"process-html", no_argument, &process_html_flag, 1},      /* process Markdown inside HTML */
 		{"accept", no_argument, 0, 'a'},                           /* Accept all proposed CriticMarkup changes */
 		{"reject", no_argument, 0, 'r'},                           /* Reject all proposed CriticMarkup changes */
+		{"metadata-keys", no_argument, 0, 'm'},                    /* List all metadata keys */
 		{"extract", required_argument, 0, 'e'},                    /* show value of specified metadata */
 		{"version", no_argument, 0, 'v'},                          /* display version information */
 		{"help", no_argument, 0, 'h'},                             /* display usage information */
@@ -82,7 +84,7 @@ int main(int argc, char **argv)
 	while (1) {
 		int option_index = 0;
 
-		c = getopt_long (argc, argv, "vhco:bft:e:ar", long_options, &option_index);
+		c = getopt_long (argc, argv, "vhco:bft:me:ar", long_options, &option_index);
 		
 		if (c == -1)
 			break;
@@ -125,6 +127,7 @@ int main(int argc, char **argv)
 				"    -c, --compatibility    Markdown compatibility mode\n"
 				"    -f, --full             Force a complete document\n"
 				"    --process-html         Process Markdown inside of raw HTML\n"
+				"    -m, --metadata-keys	List all metadata keys\n"
 				"    -e, --extract          Extract specified metadata\n"
 				"    -a, --accept           Accept all CriticMarkup changes\n"
 				"    -r, --reject           Reject all CriticMarkup changes\n"
@@ -164,6 +167,10 @@ int main(int argc, char **argv)
 				extensions = extensions | EXT_COMPLETE;
 				break;
 			
+			case 'm':	/* list metadata */
+				list_meta_keys = 1;
+				break;
+
 			case 'e':	/* extract metadata */
 				target_meta_key = strdup(optarg);
 				break;
@@ -251,14 +258,20 @@ int main(int argc, char **argv)
 				g_string_append_c(inputbuf, curchar);
 			fclose(input);
 			
+			/* list metadata keys */
+			if (list_meta_keys) {
+				out = extract_metadata_keys(inputbuf->str, extensions);
+				if (out != NULL) {
+					fprintf(stdout, "%s", out);
+					free(out);
+					g_string_free(inputbuf, true);
+					free(target_meta_key);
+					return(EXIT_SUCCESS);
+				}
+			}
+			
 			/* extract metadata */
 			if (target_meta_key) {
-				if (has_metadata(inputbuf->str, extensions)) {
-					fprintf(stdout, "+ meta\n");
-				} else {
-					fprintf(stdout, "- meta\n");
-				}
-				
 				out = extract_metadata_value(inputbuf->str, extensions, target_meta_key);
 				if (out != NULL)
 					fprintf(stdout, "%s\n", out);
@@ -340,6 +353,18 @@ int main(int argc, char **argv)
 			}
 		}
 		
+		/* list metadata keys */
+		if (list_meta_keys) {
+			out = extract_metadata_keys(inputbuf->str, extensions);
+			if (out != NULL) {
+				fprintf(stdout, "%s", out);
+				free(out);
+				g_string_free(inputbuf, true);
+				free(target_meta_key);
+				return(EXIT_SUCCESS);
+			}
+		}
+
 		/* extract metadata */
 		if (target_meta_key) {
 			out = extract_metadata_value(inputbuf->str, extensions, target_meta_key);

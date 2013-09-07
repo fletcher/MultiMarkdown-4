@@ -20,8 +20,9 @@
 /* Main API commands */
 
 char * markdown_to_string(char * source, int extensions, int format);
-char * extract_metadata_value(char *source, int extensions, char *key);
 bool   has_metadata(char *source, int extensions);
+char * extract_metadata_keys(char *source, int extensions);
+char * extract_metadata_value(char *source, int extensions, char *key);
 char * mmd_version(void);
 
 

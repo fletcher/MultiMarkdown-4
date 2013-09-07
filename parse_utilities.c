@@ -515,6 +515,37 @@ bool tree_contains_key(node *list, int key) {
 	return FALSE;
 }
 
+/* list all metadata keys, if present */
+char * metadata_keys(node *list) {
+	node *step = NULL;
+	step = list;
+	GString *out = g_string_new("");
+	char *temp;
+		
+	while (step != NULL) {
+		if (step->key == METADATA) {
+			/* search METAKEY children */
+			step = step->children;
+			while ( step != NULL) {
+				temp = label_from_string(step->str);
+				g_string_append_printf(out,"%s\n",temp);
+				free(temp);
+				step = step->next;
+			}
+			
+			temp = out->str;
+			g_string_free(out, false);
+
+			return temp;
+		}
+		step = step->next;
+	}
+	temp = out->str;
+	g_string_free(out, false);
+
+	return temp;
+}
+
 /* find specified metadata key, if present */
 node * metadata_for_key(char *key, node *list) {
 	node *step = NULL;

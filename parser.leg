@@ -1459,6 +1459,32 @@ bool has_metadata(char *source, int extensions) {
 	return answer;
 }
 
+/* extract_metadata_keys -- return list of metadata keys as "\n" separated list */
+char * extract_metadata_keys(char *source, int extensions) {
+	char *out;
+	char *formatted;
+	GREG g;
+	yyinit(&g);
+	
+	/* don't preformat if doing syntax highlighting */
+	formatted = preformat_text(source);
+	g.data = mk_parser_data(formatted,extensions);
+	
+	while (yyparse_from(&g, yy_DocForMetaDataOnly));	/* We want simpler version */
+
+	if (((parser_data *)g.data)->parse_aborted) {
+		out = strdup("MultiMarkdown was unable to parse this file.");
+	} else {
+		out = metadata_keys(((parser_data *)g.data)->result);
+	}
+	
+	free_parser_data((parser_data *)g.data);
+	yydeinit(&g);
+	
+	free(formatted);
+	return out;
+}
+
 /* extract_metadata_value -- find the value and return it */
 char * extract_metadata_value(char *source, int extensions, char *key) {
 	char *out;
