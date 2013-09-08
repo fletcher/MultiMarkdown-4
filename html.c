@@ -138,6 +138,12 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 			scratch->padded = 0;
 			break;
 		case METADATA:
+			/* Not if snippet only */
+			if (scratch->extensions & EXT_SNIPPET) {
+				print_html_node_tree(out,n->children, scratch);
+				break;
+			}
+			
 			if (!(scratch->extensions & EXT_COMPLETE) && (is_html_complete_doc(n))) {
 				/* We have metadata to include, and didn't already force complete */
 				g_string_append_printf(out,
@@ -154,6 +160,30 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 			}
 			break;
 		case METAKEY:
+			if (strcmp(n->str, "baseheaderlevel") == 0) {
+				scratch->baseheaderlevel = atoi(n->children->str);
+				break;
+			} else if (strcmp(n->str, "xhtmlheaderlevel") == 0) {
+				scratch->baseheaderlevel = atoi(n->children->str);
+				break;
+			} else if (strcmp(n->str, "htmlheaderlevel") == 0) {
+				scratch->baseheaderlevel = atoi(n->children->str);
+				break;
+			} else if (strcmp(n->str, "quoteslanguage") == 0) {
+				temp = label_from_node_tree(n->children);
+				if ((strcmp(temp, "nl") == 0) || (strcmp(temp, "dutch") == 0)) { scratch->language = DUTCH; }   else 
+				if ((strcmp(temp, "de") == 0) || (strcmp(temp, "german") == 0)) { scratch->language = GERMAN; } else 
+				if (strcmp(temp, "germanguillemets") == 0) { scratch->language = GERMANGUILL; } else 
+				if ((strcmp(temp, "fr") == 0) || (strcmp(temp, "french") == 0)) { scratch->language = FRENCH; } else 
+				if ((strcmp(temp, "sv") == 0) || (strcmp(temp, "swedish") == 0)) { scratch->language = SWEDISH; }
+				free(temp);
+				break;
+			}
+			
+			/* Don't handle other metadata if we're snippet only */
+			if (scratch->extensions & EXT_SNIPPET)
+				break;
+			
 			if (strcmp(n->str, "title") == 0) {
 				g_string_append_printf(out, "\t<title>");
 				print_html_node(out, n->children, scratch);
@@ -170,20 +200,6 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 				trim_trailing_whitespace(n->children->str);
 				print_raw_node(out, n->children);
 				g_string_append_printf(out, "\n");
-			} else if (strcmp(n->str, "baseheaderlevel") == 0) {
-				scratch->baseheaderlevel = atoi(n->children->str);
-			} else if (strcmp(n->str, "xhtmlheaderlevel") == 0) {
-				scratch->baseheaderlevel = atoi(n->children->str);
-			} else if (strcmp(n->str, "htmlheaderlevel") == 0) {
-				scratch->baseheaderlevel = atoi(n->children->str);
-			} else if (strcmp(n->str, "quoteslanguage") == 0) {
-				temp = label_from_node_tree(n->children);
-				if ((strcmp(temp, "nl") == 0) || (strcmp(temp, "dutch") == 0)) { scratch->language = DUTCH; }   else 
-				if ((strcmp(temp, "de") == 0) || (strcmp(temp, "german") == 0)) { scratch->language = GERMAN; } else 
-				if (strcmp(temp, "germanguillemets") == 0) { scratch->language = GERMANGUILL; } else 
-				if ((strcmp(temp, "fr") == 0) || (strcmp(temp, "french") == 0)) { scratch->language = FRENCH; } else 
-				if ((strcmp(temp, "sv") == 0) || (strcmp(temp, "swedish") == 0)) { scratch->language = SWEDISH; }
-				free(temp);
 			} else {
 				g_string_append_printf(out,"\t<meta name=\"%s\" content=\"",n->str);
 				print_html_node(out,n->children,scratch);

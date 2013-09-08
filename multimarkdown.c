@@ -29,6 +29,7 @@ int main(int argc, char **argv)
 	int i;
 	static int batch_flag = 0;
 	static int complete_flag = 0;
+	static int snippet_flag = 0;
 	static int compatibility_flag = 0;
 	static int notes_flag = 0;
 	static int no_notes_flag = 0;
@@ -46,6 +47,7 @@ int main(int argc, char **argv)
 		{"batch", no_argument, &batch_flag, 1},                    /* process each file separately */
 		{"to", required_argument, 0, 't'},                         /* which output format to use */
 		{"full", no_argument, &complete_flag, 1},                  /* complete document */
+		{"snippet", no_argument, &snippet_flag, 1},                /* snippet only */
 		{"output", required_argument, 0, 'o'},                     /* which output format to use */
 		{"notes", no_argument, &notes_flag, 1},                    /* use footnotes */
 		{"nonotes", no_argument, &no_notes_flag, 1},               /* don't use footnotes */
@@ -84,7 +86,7 @@ int main(int argc, char **argv)
 	while (1) {
 		int option_index = 0;
 
-		c = getopt_long (argc, argv, "vhco:bft:me:ar", long_options, &option_index);
+		c = getopt_long (argc, argv, "vhco:bfst:me:ar", long_options, &option_index);
 		
 		if (c == -1)
 			break;
@@ -126,6 +128,7 @@ int main(int argc, char **argv)
 				"    -b, --batch            Process each file separately\n"
 				"    -c, --compatibility    Markdown compatibility mode\n"
 				"    -f, --full             Force a complete document\n"
+				"    -s, --snippet          Force a snippet\n"
 				"    --process-html         Process Markdown inside of raw HTML\n"
 				"    -m, --metadata-keys	List all metadata keys\n"
 				"    -e, --extract          Extract specified metadata\n"
@@ -167,6 +170,10 @@ int main(int argc, char **argv)
 				extensions = extensions | EXT_COMPLETE;
 				break;
 			
+			case 's':	/* snippet only */
+				extensions = extensions | EXT_SNIPPET;
+				break;
+			
 			case 'm':	/* list metadata */
 				list_meta_keys = 1;
 				break;
@@ -201,6 +208,9 @@ int main(int argc, char **argv)
 	/* apply extensions from long options*/
 	if (complete_flag)
 		extensions = extensions | EXT_COMPLETE;
+	
+	if (snippet_flag)
+		extensions = extensions | EXT_SNIPPET;
 	
 	if (notes_flag)
 		extensions = extensions | EXT_NOTES;
