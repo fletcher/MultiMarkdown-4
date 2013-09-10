@@ -20,8 +20,9 @@
 /* Main API commands */
 
 char * markdown_to_string(char * source, int extensions, int format);
-char * extract_metadata_value(char *source, int extensions, char *key);
 bool   has_metadata(char *source, int extensions);
+char * extract_metadata_keys(char *source, int extensions);
+char * extract_metadata_value(char *source, int extensions, char *key);
 char * mmd_version(void);
 
 
@@ -29,18 +30,19 @@ char * mmd_version(void);
 enum parser_extensions {
 	EXT_COMPATIBILITY   = 1 << 0,    /* Markdown compatibility mode */
 	EXT_COMPLETE        = 1 << 1,    /* Create complete document */
-	EXT_HEAD_CLOSED     = 1 << 2,    /* for use by parser */
-	EXT_SMART           = 1 << 3,    /* Enable Smart quotes */
-	EXT_NOTES           = 1 << 4,    /* Enable Footnotes */
-	EXT_NO_LABELS       = 1 << 5,    /* Don't add anchors to headers, etc. */
-	EXT_FILTER_STYLES   = 1 << 6,    /* Filter out style blocks */
-	EXT_FILTER_HTML     = 1 << 7,    /* Filter out raw HTML */
-	EXT_PROCESS_HTML    = 1 << 8,    /* Process Markdown inside HTML */
-	EXT_NO_METADATA     = 1 << 9,    /* Don't parse Metadata */
-	EXT_OBFUSCATE       = 1 << 10,   /* Mask email addresses */
-	EXT_CRITIC          = 1 << 11,   /* Critic Markup Support */
-	EXT_CRITIC_ACCEPT   = 1 << 12,   /* Accept all proposed changes */
-	EXT_CRITIC_REJECT   = 1 << 13,   /* Reject all proposed changes */
+	EXT_SNIPPET         = 1 << 2,    /* Create snippet only */
+	EXT_HEAD_CLOSED     = 1 << 3,    /* for use by parser */
+	EXT_SMART           = 1 << 4,    /* Enable Smart quotes */
+	EXT_NOTES           = 1 << 5,    /* Enable Footnotes */
+	EXT_NO_LABELS       = 1 << 6,    /* Don't add anchors to headers, etc. */
+	EXT_FILTER_STYLES   = 1 << 7,    /* Filter out style blocks */
+	EXT_FILTER_HTML     = 1 << 8,    /* Filter out raw HTML */
+	EXT_PROCESS_HTML    = 1 << 9,    /* Process Markdown inside HTML */
+	EXT_NO_METADATA     = 1 << 10,    /* Don't parse Metadata */
+	EXT_OBFUSCATE       = 1 << 11,   /* Mask email addresses */
+	EXT_CRITIC          = 1 << 12,   /* Critic Markup Support */
+	EXT_CRITIC_ACCEPT   = 1 << 13,   /* Accept all proposed changes */
+	EXT_CRITIC_REJECT   = 1 << 14,   /* Reject all proposed changes */
 	EXT_FAKE            = 1 << 15,   /* 15 is highest number allowed */
 };
 
