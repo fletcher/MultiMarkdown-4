@@ -101,8 +101,10 @@ void print_odf_node(GString *out, node *n, scratch_pad *scratch) {
 					g_string_append_printf(out, " text:style-name=\"Preformatted Text\"");
 					break;
 				case ORDEREDLIST:
-				case BULLETLIST:
 					g_string_append_printf(out, " text:style-name=\"P2\"");
+					break;
+				case BULLETLIST:
+					g_string_append_printf(out, " text:style-name=\"P1\"");
 					break;
 				case NOTEREFERENCE:
 				case NOTESOURCE:
@@ -154,7 +156,14 @@ void print_odf_node(GString *out, node *n, scratch_pad *scratch) {
 				scratch->odf_list_needs_end_p = false;
 			}
 			pad(out, 2, scratch);
-			g_string_append_printf(out, "<text:list>");
+			switch (n->key) {
+				case BULLETLIST:
+					g_string_append_printf(out, "<text:list text:style-name=\"L1\">");
+					break;
+				case ORDEREDLIST:
+					g_string_append_printf(out, "<text:list text:style-name=\"L2\">");
+					break;
+			}
 			scratch->padded = 1;
 			print_odf_node_tree(out, n->children, scratch);
 			pad(out, 1, scratch);
@@ -166,7 +175,14 @@ void print_odf_node(GString *out, node *n, scratch_pad *scratch) {
 			pad(out, 1, scratch);
 			g_string_append_printf(out, "<text:list-item>\n");
 			if ((n->children->children != NULL) && (n->children->children->key != PARA)) {
-				g_string_append_printf(out, "<text:p text:style-name=\"P2\">");
+				switch (scratch->odf_para_type) {
+					case BULLETLIST:
+						g_string_append_printf(out, "<text:p text:style-name=\"P1\">");
+						break;
+					case ORDEREDLIST:
+						g_string_append_printf(out, "<text:p text:style-name=\"P2\">");
+						break;
+				}
 				scratch->odf_list_needs_end_p = true;
 			}
 			scratch->padded = 2;
@@ -1006,20 +1022,121 @@ void print_odf_header(GString *out){
 	"                             fo:border=\"none\"\n" \
 	"                             style:shadow=\"none\"/>\n" \
 	"</style:style>\n" \
+    "<style:style style:name=\"P1\" style:family=\"paragraph\" style:parent-style-name=\"Standard\"\n" \
+    "             style:list-style-name=\"L1\"/>\n" \
+	"<text:list-style style:name=\"L1\">\n" \
+	"	<text:list-level-style-bullet text:level=\"1\" text:style-name=\"Numbering_20_Symbols\" style:num-suffix=\".\" text:bullet-char=\"\">\n" \
+	"		<style:list-level-properties text:list-level-position-and-space-mode=\"label-alignment\">\n" \
+	"			<style:list-level-label-alignment text:label-followed-by=\"listtab\" text:list-tab-stop-position=\"0.5in\" fo:text-indent=\"-0.25in\" fo:margin-left=\"0.5in\"/>\n" \
+	"		</style:list-level-properties>\n" \
+	"		<style:text-properties fo:font-family=\"starbats\" style:font-charset=\"x-symbol\"/>\n" \
+	"	</text:list-level-style-bullet>\n" \
+	"	<text:list-level-style-bullet text:level=\"2\" text:style-name=\"Numbering_20_Symbols\" style:num-suffix=\".\" text:bullet-char=\"\">\n" \
+	"		<style:list-level-properties text:list-level-position-and-space-mode=\"label-alignment\">\n" \
+	"			<style:list-level-label-alignment text:label-followed-by=\"listtab\" text:list-tab-stop-position=\"0.75in\" fo:text-indent=\"-0.25in\" fo:margin-left=\"0.75in\"/>\n" \
+	"		</style:list-level-properties>\n" \
+	"		<style:text-properties fo:font-family=\"starbats\" style:font-charset=\"x-symbol\"/>\n" \
+	"	</text:list-level-style-bullet>\n" \
+	"	<text:list-level-style-bullet text:level=\"3\" text:style-name=\"Numbering_20_Symbols\" style:num-suffix=\".\" text:bullet-char=\"\">\n" \
+	"		<style:list-level-properties text:list-level-position-and-space-mode=\"label-alignment\">\n" \
+	"			<style:list-level-label-alignment text:label-followed-by=\"listtab\" text:list-tab-stop-position=\"1in\" fo:text-indent=\"-0.25in\" fo:margin-left=\"1in\"/>\n" \
+	"		</style:list-level-properties>\n" \
+	"		<style:text-properties fo:font-family=\"starbats\" style:font-charset=\"x-symbol\"/>\n" \
+	"	</text:list-level-style-bullet>\n" \
+	"	<text:list-level-style-number text:level=\"4\" style:num-suffix=\".\" style:num-format=\"1\">\n" \
+	"		<style:list-level-properties text:list-level-position-and-space-mode=\"label-alignment\">\n" \
+	"			<style:list-level-label-alignment text:label-followed-by=\"listtab\" text:list-tab-stop-position=\"1.25in\" fo:text-indent=\"-0.25in\" fo:margin-left=\"1.25in\"/>\n" \
+	"		</style:list-level-properties>\n" \
+	"	</text:list-level-style-number>\n" \
+	"	<text:list-level-style-number text:level=\"5\" style:num-suffix=\".\" style:num-format=\"1\">\n" \
+	"		<style:list-level-properties text:list-level-position-and-space-mode=\"label-alignment\">\n" \
+	"			<style:list-level-label-alignment text:label-followed-by=\"listtab\" text:list-tab-stop-position=\"1.5in\" fo:text-indent=\"-0.25in\" fo:margin-left=\"1.5in\"/>\n" \
+	"		</style:list-level-properties>\n" \
+	"	</text:list-level-style-number>\n" \
+	"	<text:list-level-style-number text:level=\"6\" style:num-suffix=\".\" style:num-format=\"1\">\n" \
+	"		<style:list-level-properties text:list-level-position-and-space-mode=\"label-alignment\">\n" \
+	"			<style:list-level-label-alignment text:label-followed-by=\"listtab\" text:list-tab-stop-position=\"1.75in\" fo:text-indent=\"-0.25in\" fo:margin-left=\"1.75in\"/>\n" \
+	"		</style:list-level-properties>\n" \
+	"	</text:list-level-style-number>\n" \
+	"	<text:list-level-style-number text:level=\"7\" style:num-suffix=\".\" style:num-format=\"1\">\n" \
+	"		<style:list-level-properties text:list-level-position-and-space-mode=\"label-alignment\">\n" \
+	"			<style:list-level-label-alignment text:label-followed-by=\"listtab\" text:list-tab-stop-position=\"2in\" fo:text-indent=\"-0.25in\" fo:margin-left=\"2in\"/>\n" \
+	"		</style:list-level-properties>\n" \
+	"	</text:list-level-style-number>\n" \
+	"	<text:list-level-style-number text:level=\"8\" style:num-suffix=\".\" style:num-format=\"1\">\n" \
+	"		<style:list-level-properties text:list-level-position-and-space-mode=\"label-alignment\">\n" \
+	"			<style:list-level-label-alignment text:label-followed-by=\"listtab\" text:list-tab-stop-position=\"2.25in\" fo:text-indent=\"-0.25in\" fo:margin-left=\"2.25in\"/>\n" \
+	"		</style:list-level-properties>\n" \
+	"	</text:list-level-style-number>\n" \
+	"	<text:list-level-style-number text:level=\"9\" style:num-suffix=\".\" style:num-format=\"1\">\n" \
+	"		<style:list-level-properties text:list-level-position-and-space-mode=\"label-alignment\">\n" \
+	"			<style:list-level-label-alignment text:label-followed-by=\"listtab\" text:list-tab-stop-position=\"2.5in\" fo:text-indent=\"-0.25in\" fo:margin-left=\"2.5in\"/>\n" \
+	"		</style:list-level-properties>\n" \
+	"	</text:list-level-style-number>\n" \
+	"	<text:list-level-style-number text:level=\"10\" style:num-suffix=\".\" style:num-format=\"1\">\n" \
+	"		<style:list-level-properties text:list-level-position-and-space-mode=\"label-alignment\">\n" \
+	"			<style:list-level-label-alignment text:label-followed-by=\"listtab\" text:list-tab-stop-position=\"2.75in\" fo:text-indent=\"-0.25in\" fo:margin-left=\"2.75in\"/>\n" \
+	"		</style:list-level-properties>\n" \
+	"	</text:list-level-style-number>\n" \
+	"</text:list-style>\n" \
+	"<text:list-style style:name=\"L2\">\n" \
+	"	<text:list-level-style-number text:level=\"1\" text:style-name=\"Standard\" style:num-suffix=\".\" style:num-format=\"1\">\n" \
+	"		<style:list-level-properties text:list-level-position-and-space-mode=\"label-alignment\">\n" \
+	"			<style:list-level-label-alignment text:label-followed-by=\"listtab\" text:list-tab-stop-position=\"0.5in\" fo:text-indent=\"-0.25in\" fo:margin-left=\"0.5in\"/>\n" \
+	"		</style:list-level-properties>\n" \
+	"	</text:list-level-style-number>\n" \
+	"	<text:list-level-style-number text:level=\"2\" text:style-name=\"Standard\" style:num-suffix=\".\" style:num-format=\"1\">\n" \
+	"		<style:list-level-properties text:list-level-position-and-space-mode=\"label-alignment\">\n" \
+	"			<style:list-level-label-alignment text:label-followed-by=\"listtab\" text:list-tab-stop-position=\"0.75in\" fo:text-indent=\"-0.25in\" fo:margin-left=\"0.75in\"/>\n" \
+	"		</style:list-level-properties>\n" \
+	"	</text:list-level-style-number>\n" \
+	"	<text:list-level-style-number text:level=\"3\" text:style-name=\"Standard\" style:num-suffix=\".\" style:num-format=\"1\">\n" \
+	"		<style:list-level-properties text:list-level-position-and-space-mode=\"label-alignment\">\n" \
+	"			<style:list-level-label-alignment text:label-followed-by=\"listtab\" text:list-tab-stop-position=\"1in\" fo:text-indent=\"-0.25in\" fo:margin-left=\"1in\"/>\n" \
+	"		</style:list-level-properties>\n" \
+	"	</text:list-level-style-number>\n" \
+	"	<text:list-level-style-number text:level=\"4\" text:style-name=\"Standard\" style:num-suffix=\".\" style:num-format=\"1\">\n" \
+	"		<style:list-level-properties text:list-level-position-and-space-mode=\"label-alignment\">\n" \
+	"			<style:list-level-label-alignment text:label-followed-by=\"listtab\" text:list-tab-stop-position=\"1.25in\" fo:text-indent=\"-0.25in\" fo:margin-left=\"1.25in\"/>\n" \
+	"		</style:list-level-properties>\n" \
+	"	</text:list-level-style-number>\n" \
+	"	<text:list-level-style-number text:level=\"5\" text:style-name=\"Standard\" style:num-suffix=\".\" style:num-format=\"1\">\n" \
+	"		<style:list-level-properties text:list-level-position-and-space-mode=\"label-alignment\">\n" \
+	"			<style:list-level-label-alignment text:label-followed-by=\"listtab\" text:list-tab-stop-position=\"1.5in\" fo:text-indent=\"-0.25in\" fo:margin-left=\"1.5in\"/>\n" \
+	"		</style:list-level-properties>\n" \
+	"	</text:list-level-style-number>\n" \
+	"	<text:list-level-style-number text:level=\"6\" text:style-name=\"Standard\" style:num-suffix=\".\" style:num-format=\"1\">\n" \
+	"		<style:list-level-properties text:list-level-position-and-space-mode=\"label-alignment\">\n" \
+	"			<style:list-level-label-alignment text:label-followed-by=\"listtab\" text:list-tab-stop-position=\"1.75in\" fo:text-indent=\"-0.25in\" fo:margin-left=\"1.75in\"/>\n" \
+	"		</style:list-level-properties>\n" \
+	"	</text:list-level-style-number>\n" \
+	"	<text:list-level-style-number text:level=\"7\" text:style-name=\"Standard\" style:num-suffix=\".\" style:num-format=\"1\">\n" \
+	"		<style:list-level-properties text:list-level-position-and-space-mode=\"label-alignment\">\n" \
+	"			<style:list-level-label-alignment text:label-followed-by=\"listtab\" text:list-tab-stop-position=\"2in\" fo:text-indent=\"-0.25in\" fo:margin-left=\"2in\"/>\n" \
+	"		</style:list-level-properties>\n" \
+	"	</text:list-level-style-number>\n" \
+	"	<text:list-level-style-number text:level=\"8\" text:style-name=\"Standard\" style:num-suffix=\".\" style:num-format=\"1\">\n" \
+	"		<style:list-level-properties text:list-level-position-and-space-mode=\"label-alignment\">\n" \
+	"			<style:list-level-label-alignment text:label-followed-by=\"listtab\" text:list-tab-stop-position=\"2.25in\" fo:text-indent=\"-0.25in\" fo:margin-left=\"2.25in\"/>\n" \
+	"		</style:list-level-properties>\n" \
+	"	</text:list-level-style-number>\n" \
+	"	<text:list-level-style-number text:level=\"9\" text:style-name=\"Standard\" style:num-suffix=\".\" style:num-format=\"1\">\n" \
+	"		<style:list-level-properties text:list-level-position-and-space-mode=\"label-alignment\">\n" \
+	"			<style:list-level-label-alignment text:label-followed-by=\"listtab\" text:list-tab-stop-position=\"2.5in\" fo:text-indent=\"-0.25in\" fo:margin-left=\"2.5in\"/>\n" \
+	"		</style:list-level-properties>\n" \
+	"	</text:list-level-style-number>\n" \
+	"	<text:list-level-style-number text:level=\"10\" text:style-name=\"Standard\" style:num-suffix=\".\" style:num-format=\"1\">\n" \
+	"		<style:list-level-properties text:list-level-position-and-space-mode=\"label-alignment\">\n" \
+	"			<style:list-level-label-alignment text:label-followed-by=\"listtab\" text:list-tab-stop-position=\"2.75in\" fo:text-indent=\"-0.25in\" fo:margin-left=\"2.75in\"/>\n" \
+	"		</style:list-level-properties>\n" \
+	"	</text:list-level-style-number>\n" \
+	"</text:list-style>\n" \
     "</office:automatic-styles>\n" \
 	" <office:master-styles>\n" \
 	"  <style:master-page style:name=\"Endnote\" >\n" \
 	"    <style:header><text:h text:outline-level=\"2\">Bibliography</text:h></style:header></style:master-page>\n" \
 	"  <style:master-page style:name=\"Footnote\" style:page-layout-name=\"pm2\"/>\n" \
-	" </office:master-styles>\n" \
-    "<style:style style:name=\"P1\" style:family=\"paragraph\" style:parent-style-name=\"Standard\"\n" \
-    "             style:list-style-name=\"L1\"/>\n" \
-    "<text:list-style style:name=\"L1\">\n" \
-    "   <text:list-level-style-bullet />\n" \
-    "</text:list-style>\n" \
-    "<text:list-style style:name=\"L2\">\n" \
-    "   <text:list-level-style-number />\n" \
-    "</text:list-style>\n");
+	" </office:master-styles>\n") ;
 }
 
 void print_odf_footer(GString *out) {
