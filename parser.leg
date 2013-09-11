@@ -740,7 +740,7 @@ DefinitionList =  a:StartList &(TermLine+ Newline? NonindentSpace ':')
 TermLine = !':' !BlankLine (!Newline .)* Newline
 
 Term =  a:StartList !BlankLine !':'
-	(!Newline !Endline Inline {a = cons($$, a);} )+ Newline
+	(!Newline !Endline Inline {a = cons($$, a);} )+ Sp Newline
 	{ $$ = mk_list(TERM,a); }
 
 Definition = (a:StartList b:StartList
