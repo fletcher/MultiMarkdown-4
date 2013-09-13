@@ -284,6 +284,28 @@ Inline = #&{ check_timeout((parser_data *)G->data) }
 		| Smart
 		| Symbol
 
+InlineNoEmph = #&{ check_timeout((parser_data *)G->data) }
+# TODO: the check_timeout function still slows us down -- do we still need it??
+		&{ ext(EXT_CRITIC) } CriticMarkup
+		| &{ !ext(EXT_COMPATIBILITY) } DollarMath
+		| Str
+		| &{ !ext(EXT_COMPATIBILITY) } MathSpan
+		| Endline
+		| UlOrStarLine
+		| Space
+		| Strong
+		| &{ !ext(EXT_COMPATIBILITY) } CitationReference
+		| Image
+		| Link
+		| NoteReference
+		| Code
+		| MarkdownHtmlTagOpen
+		| RawHtml
+		| Entity
+		| EscapedChar
+		| Smart
+		| Symbol
+
 
 Space = Spacechar+
 	{ $$ = str(" "); $$->key = SPACE; }
@@ -370,7 +392,7 @@ EmphStar =  '*' !Whitespace
 		( !'*' b:Inline { a = cons(b, a); }
 			| b:StrongStar  { a = cons(b, a); }
 		)+
-		<'*'>
+		<'*'> 
 		{ $$ = list(EMPH, a); }
 
 EmphUl = '_' !Whitespace
@@ -395,7 +417,7 @@ StrongUl = "__" !Whitespace
 		<"__">
 		{ $$ = list(STRONG, a); }
 
-StrongAndEmph = StrongAndEmphStar | StrongAndEmphUl
+StrongAndEmph = StrongAndEmphStar | StrongAndEmphUl | EmphAndStrongStar
 
 StrongAndEmphStar = "***" !Whitespace
 		a:StartList
@@ -404,6 +426,14 @@ StrongAndEmphStar = "***" !Whitespace
 		{
 			$$ = list(EMPH, a); 
 			$$ = list(STRONG, $$);
+		}
+
+EmphAndStrongStar = "*" &("**")
+		a:StartList 
+		( !('*' !'*') b:InlineNoEmph { a = cons(b, a); })+
+		<"*">
+		{
+			$$ = list(EMPH, a); 
 		}
 
 StrongAndEmphUl = "___" !Whitespace
