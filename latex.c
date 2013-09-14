@@ -194,6 +194,7 @@ void print_latex_node(GString *out, node *n, scratch_pad *scratch) {
 			}
 			
 			/* Don't handle remaining metadata if we're snippet only */
+			
 			if (scratch->extensions & EXT_SNIPPET)
 				break;
 							
@@ -288,8 +289,8 @@ void print_latex_node(GString *out, node *n, scratch_pad *scratch) {
 				free(temp);
 			} else {
 				/* generate a label by default for MMD */
-				print_latex_node_tree(out, n->children, scratch);
 				temp = label_from_node_tree(n->children);
+				print_latex_node_tree(out, n->children, scratch);
 				g_string_append_printf(out, "}\n\\label{%s}",temp);
 				free(temp);
 			}

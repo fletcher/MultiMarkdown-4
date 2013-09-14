@@ -376,6 +376,7 @@ char *label_from_node_tree(node *n) {
 #endif
 	GString *raw = g_string_new("");
 	print_raw_node_tree(raw, n);
+
 #ifdef DEBUG_ON
 		fprintf(stderr, "halfway('%s')\n",raw->str);
 #endif
