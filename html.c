@@ -486,7 +486,7 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 						scratch->max_footnote_num = lev;
 				} else {
 					g_string_append_printf(out, "<a href=\"#fn:%d\" title=\"see footnote\" class=\"footnote glossary\">[%d]</a>",
-						lev, lev, lev);				
+						lev, lev, lev);
 				}
 			} else {
 				if (lev > scratch->max_footnote_num) {
@@ -728,7 +728,7 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 			break;
 		case CITATIONSOURCE:
 		case NOTESOURCE:
-			print_html_node(out, n->children, scratch);
+			print_html_node_tree(out, n->children, scratch);
 			break;
 		case SOURCEBRANCH:
 			fprintf(stderr,"SOURCEBRANCH\n");
