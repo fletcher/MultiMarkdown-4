@@ -248,6 +248,7 @@ scratch_pad * mk_scratch_pad(int extensions) {
 	result->no_latex_footnote = 0;
 	result->latex_footer = NULL;
 	result->odf_list_needs_end_p = FALSE;
+	result->cell_type = 0;
 	
 	return result;
 }

@@ -22,6 +22,7 @@
 #include "html.h"
 
 bool is_html_complete_doc(node *meta);
+void print_col_group(GString *out,scratch_pad *scratch);
 
 
 /* print_html_node_tree -- convert node tree to HTML */
@@ -637,10 +638,14 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 			g_string_append_printf(out, "<table>\n");
 			print_html_node_tree(out, n->children, scratch);
 			g_string_append_printf(out, "</table>\n");
+			scratch->cell_type = 0;
 			scratch->padded = 1;
 			break;
 		case TABLESEPARATOR:
 			scratch->table_alignment = n->str;
+			if (scratch->cell_type == 0)
+				print_col_group(out, scratch);
+			scratch->cell_type = 'd';
 			break;
 		case TABLECAPTION:
 			if ((n->children != NULL) && (n->children->key == TABLELABEL)) {
@@ -657,24 +662,8 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 			break;
 		case TABLEHEAD:
 			/* print column alignment for XSLT processing if needed */
-			g_string_append_printf(out, "<colgroup>\n");
-			temp = scratch->table_alignment;
-			for (lev=0;lev<strlen(temp);lev++) {
-				if ( strncmp(&temp[lev],"r",1) == 0) {
-					g_string_append_printf(out, "<col style=\"text-align:right;\"/>\n");
-				} else if ( strncmp(&temp[lev],"R",1) == 0) {
-					g_string_append_printf(out, "<col style=\"text-align:right;\" class=\"extended\"/>\n");
-				} else if ( strncmp(&temp[lev],"c",1) == 0) {
-					g_string_append_printf(out, "<col style=\"text-align:center;\"/>\n");
-				} else if ( strncmp(&temp[lev],"C",1) == 0) {
-					g_string_append_printf(out, "<col style=\"text-align:center;\" class=\"extended\"/>\n");
-				} else if ( strncmp(&temp[lev],"L",1) == 0) {
-					g_string_append_printf(out, "<col style=\"text-align:left;\" class=\"extended\"/>\n");
-				} else {
-					g_string_append_printf(out, "<col style=\"text-align:left;\"/>\n");
-				}
-			}
-			g_string_append_printf(out, "</colgroup>\n");
+			if (scratch->cell_type == 0)
+				print_col_group(out, scratch);
 			scratch->cell_type = 'h';
 			g_string_append_printf(out, "\n<thead>\n");
 			print_html_node_tree(out, n->children, scratch);
@@ -952,4 +941,28 @@ void print_html_string(GString *out, char *str, scratch_pad *scratch) {
 		}
 		str++;
 	}
+}
+
+/* print_col_group - print column alignment config (used in XSLT processing) */
+void print_col_group(GString *out,scratch_pad *scratch) {
+	char *temp;
+	int lev;
+	g_string_append_printf(out, "<colgroup>\n");
+	temp = scratch->table_alignment;
+	for (lev=0;lev<strlen(temp);lev++) {
+		if ( strncmp(&temp[lev],"r",1) == 0) {
+			g_string_append_printf(out, "<col style=\"text-align:right;\"/>\n");
+		} else if ( strncmp(&temp[lev],"R",1) == 0) {
+			g_string_append_printf(out, "<col style=\"text-align:right;\" class=\"extended\"/>\n");
+		} else if ( strncmp(&temp[lev],"c",1) == 0) {
+			g_string_append_printf(out, "<col style=\"text-align:center;\"/>\n");
+		} else if ( strncmp(&temp[lev],"C",1) == 0) {
+			g_string_append_printf(out, "<col style=\"text-align:center;\" class=\"extended\"/>\n");
+		} else if ( strncmp(&temp[lev],"L",1) == 0) {
+			g_string_append_printf(out, "<col style=\"text-align:left;\" class=\"extended\"/>\n");
+		} else {
+			g_string_append_printf(out, "<col style=\"text-align:left;\"/>\n");
+		}
+	}
+	g_string_append_printf(out, "</colgroup>\n");
 }
