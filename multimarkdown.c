@@ -130,7 +130,7 @@ int main(int argc, char **argv)
 				"    -f, --full             Force a complete document\n"
 				"    -s, --snippet          Force a snippet\n"
 				"    --process-html         Process Markdown inside of raw HTML\n"
-				"    -m, --metadata-keys	List all metadata keys\n"
+				"    -m, --metadata-keys    List all metadata keys\n"
 				"    -e, --extract          Extract specified metadata\n"
 				"    -a, --accept           Accept all CriticMarkup changes\n"
 				"    -r, --reject           Reject all CriticMarkup changes\n"
