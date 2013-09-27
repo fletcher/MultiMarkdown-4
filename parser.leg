@@ -1152,8 +1152,12 @@ StyleBlock  = < InStyleTags >
 
 
 Table = a:StartList b:StartList (TableCaption { b = cons($$, b);})?
-		TableBody { $$->key = TABLEHEAD; a = cons($$, a); }
-		(SeparatorLine { append_list($$,a); } )
+		(TableBody { $$->key = TABLEHEAD; a = cons($$, a); })?
+		(SeparatorLine { 
+			if (a == NULL)
+				a = $$;
+			else
+				append_list($$,a); } )
 		(TableBody { a = cons($$, a);} )
 		(BlankLine !TableCaption TableBody { a = cons($$, a); }
 		&(TableCaption | BlankLine) )*
