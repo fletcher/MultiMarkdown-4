@@ -491,7 +491,7 @@ CitationReferenceSingle =  < (( "[]" Spnl b:RawCitationReference )
 RawCitationReference = "[#" < ( !Newline !']' . )+ > ']'
 		{ $$ = str(yytext); }
 
-ExplicitLink = l:Label '(' Sp s:Source Spnl t:Title Sp <')'>
+ExplicitLink = l:Label Spnl '(' Sp s:Source Spnl t:Title Sp <')'>
 	{
 		$$ = mk_link(l, NULL, s->str, t->str, NULL);
 		free_node_tree(s);
