@@ -142,7 +142,7 @@ test-speed-gruber: speed64.txt
 	time MarkdownTest/Markdown.pl speed64.txt > /dev/null
 
 # Build Mac Installer
-mac-installer: $(PROGRAM)
+mac-installer:
 	mkdir -p mac_installer/Package_Root/usr/local/bin
 	mkdir -p mac_installer/Support_Root/Library/Application\ Support
 	mkdir -p mac_installer/Resources
@@ -175,7 +175,7 @@ mac-installer: $(PROGRAM)
 	cd mac_installer; zip -r MultiMarkdown-Support-Mac-$(VERSION).zip MultiMarkdown-Support-Mac-$(VERSION).pkg	
 
 # Prepare README and other files to create the BitRock installer
-win-prep: $(PROGRAM)
+win-prep: 
 	mkdir -p windows_installer
 	cp multimarkdown.exe windows_installer/
 	cp README.md windows_installer/README.txt
