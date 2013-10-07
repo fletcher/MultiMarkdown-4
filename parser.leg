@@ -214,7 +214,7 @@ NonPunctuation = !(Punctuation | SpecialChar | Spacechar | Newline) .
 
 Quoted =        '"' (!'"' .)* '"' | '\'' (!'\'' .)* '\''
 HtmlAttribute = (AlphanumericAscii | '-')+ Spnl ('=' Spnl (Quoted | (!'>' Nonspacechar)+))? Spnl
-HtmlComment =   "<!--" (!"--" .)* "-->"
+HtmlComment =   "<!--" (!"-->" .)* "-->"
 HtmlTag =       '<' Spnl '/'? AlphanumericAscii+ Spnl HtmlAttribute* '/'? Spnl '>'
 
 
