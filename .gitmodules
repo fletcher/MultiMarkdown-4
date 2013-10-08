@@ -7,3 +7,6 @@
 [submodule "Support"]
 	path = Support
 	url = https://github.com/fletcher/MMD-Support.git
+[submodule "cheat-sheet"]
+	path = cheat-sheet
+	url = https://github.com/fletcher/human-markdown-reference.git
