@@ -597,31 +597,41 @@ char * metavalue_for_key(char *key, node *list) {
 
 /* Trim spaces at end of string */
 void trim_trailing_whitespace(char *str) {
+	int l;
+	
 	if (str == NULL)
 		return;
 	
-	if (strlen(str) < 1)
+	l = strlen(str);
+	
+	if (l < 1)
 		return;
 	
-	while ( ( str[strlen(str)-1] == ' ' ) ||
-		( str[strlen(str)-1] == '\n' ) || 
-		( str[strlen(str)-1] == '\r' ) || 
-		( str[strlen(str)-1] == '\t' ) ) {
-		str[strlen(str)-1] = '\0';
+	while ( (l > 0) && (( str[l - 1] == ' ' ) ||
+		( str[l - 1] == '\n' ) || 
+		( str[l - 1] == '\r' ) || 
+		( str[l - 1] == '\t' )) ) {
+		str[l - 1] = '\0';
+		l = strlen(str);
 	}
 }
 
 /* Trim spaces at end of string */
 void trim_trailing_newlines(char *str) {
+	int l;
+	
 	if (str == NULL)
 		return;
 	
-	if (strlen(str) < 1)
+	l = strlen(str);
+	
+	if (l < 1)
 		return;
 	
-	while ( ( str[strlen(str)-1] == '\n' ) || 
-	( str[strlen(str)-1] == '\r' ) ) {
-		str[strlen(str)-1] = '\0';
+	while ( (l > 0) && (( str[l - 1] == '\n' ) || 
+	( str[l - 1] == '\r' )) ) {
+		str[l - 1] = '\0';
+		l = strlen(str);
 	}
 }
 
