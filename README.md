@@ -21,7 +21,7 @@ MultiMarkdown v4 is basically a complete rewrite of v3.  It uses the same basic 
 * The code is designed to be easier to maintain --- it's divided into separate files on a more logical structure
 * All memory leaks (to my knowledge) have been fixed
 * [greg] is used instead of [peg/leg] to create the parser --- this allows the parser to be thread-safe
-* The [test suite] has been modified to account for several improvements.  MMD should fail one of the basic Markdown tests (see [peg-markdown] for more information).  Currently it fails one of the LaTeX tests --- this is not intentional and I am working on a fix.
+* The [test suite] has been modified to account for several improvements.  MMD should fail one of the basic Markdown tests (see [peg-markdown] for more information).
 * Command line options are *slightly* different.
 
 
@@ -32,7 +32,7 @@ You can compile for yourself, or download a precompiled binary from the [downloa
 * Download the source from the [github] web site using `git`
 * `git submodule init` and then `git submodule update` to download `greg` and the test suite
 * Run `make` to compile.
-* Run `make test-all | less` to verify that the build is correct.  As mentioned 2 tests will fail on Mac.  The email tests will fail on other systems, since they use a different randomization algorithm and the obfuscated emails won't match.  This won't affect functionality
+* Run `make test-all | less` to verify that the build is correct.  As mentioned 1 test is expected to fail on Mac systems.  The email tests will fail on other systems, since they use a different randomization algorithm and the obfuscated emails won't match.  This won't affect functionality
 
 
 # Usage #

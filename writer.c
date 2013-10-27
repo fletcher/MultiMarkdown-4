@@ -170,7 +170,8 @@ void extract_references(node *list, scratch_pad *scratch) {
 				}
 				break;
 			case H1: case H2: case H3: case H4: case H5: case H6:
-				if ((list->children->key != AUTOLABEL) && !(scratch->extensions & EXT_NO_LABELS)) {
+				if ((list->children->key != AUTOLABEL) && !(scratch->extensions & EXT_NO_LABELS)
+				&& !(scratch->extensions & EXT_COMPATIBILITY)) {
 					char *label = label_from_node_tree(list->children);
 
 					/* create a label from header */
