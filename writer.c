@@ -127,7 +127,6 @@ char * export_node_tree(node *list, int format, int extensions) {
    e.g. links, images, citations, footnotes 
    Remove them from main parse tree */
 void extract_references(node *list, scratch_pad *scratch) {
-	/* TODO: Will these all be top level elements?  What about RAW?? */
 	node *temp;
 	node *last = NULL;
 	link_data *l;
@@ -192,6 +191,8 @@ void extract_references(node *list, scratch_pad *scratch) {
 
 				break;
 			case HEADINGSECTION:
+			case RAW:
+			case LIST:
 				extract_references(list->children, scratch);
 				break;
 			default:
