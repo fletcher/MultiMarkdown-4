@@ -38,6 +38,7 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 	node *temp_node;
 	char *temp;
 	int lev;
+	int random;
 	char temp_type;
 	char *width = NULL;
 	char *height = NULL;
@@ -81,7 +82,14 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 			g_string_append_printf(out, "<p>");
 			print_html_node_tree(out,n->children,scratch);
 			if (scratch->footnote_to_print != 0) {
-				g_string_append_printf(out, " <a href=\"#fnref:%d\" title=\"return to article\" class=\"reversefootnote\">&#160;&#8617;</a>", scratch->footnote_to_print);
+				if (scratch->extensions & EXT_RANDOM_FOOT) {
+					srand(scratch->random_seed_base + scratch->footnote_to_print);
+					random = rand() % 99999 + 1;
+				} else {
+					random = scratch->footnote_to_print;
+				}
+				
+				g_string_append_printf(out, " <a href=\"#fnref:%d\" title=\"return to article\" class=\"reversefootnote\">&#160;&#8617;</a>", random);
 				scratch->footnote_to_print = 0;
 			}
 			g_string_append_printf(out, "</p>");
@@ -480,23 +488,31 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 		case NOTEREFERENCE:
 			lev = note_number_for_node(n, scratch);
 			temp_node = node_for_count(scratch->used_notes, lev);
+			
+			if (scratch->extensions & EXT_RANDOM_FOOT) {
+				srand(scratch->random_seed_base + lev);
+				random = rand() % 99999 + 1;
+			} else {
+				random = lev;
+			}
+			
 			if (temp_node->key == GLOSSARYSOURCE) {
 				if (lev > scratch->max_footnote_num) {
 					g_string_append_printf(out, "<a href=\"#fn:%d\" id=\"fnref:%d\" title=\"see footnote\" class=\"footnote glossary\">[%d]</a>",
-						lev, lev, lev);
+						random, random, lev);
 						scratch->max_footnote_num = lev;
 				} else {
 					g_string_append_printf(out, "<a href=\"#fn:%d\" title=\"see footnote\" class=\"footnote glossary\">[%d]</a>",
-						lev, lev, lev);
+						random, lev);
 				}
 			} else {
 				if (lev > scratch->max_footnote_num) {
 					g_string_append_printf(out, "<a href=\"#fn:%d\" id=\"fnref:%d\" title=\"see footnote\" class=\"footnote\">[%d]</a>",
-						lev, lev, lev);
+						random, random, lev);
 						scratch->max_footnote_num = lev;
 				} else {
 					g_string_append_printf(out, "<a href=\"#fn:%d\" title=\"see footnote\" class=\"footnote\">[%d]</a>",
-						lev, lev, lev);
+						random, lev);
 				}
 			}
 			break;
@@ -527,6 +543,13 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 #ifdef DEBUG_ON
 					fprintf(stderr, "matching cite found\n");
 #endif
+					if (scratch->extensions & EXT_RANDOM_FOOT) {
+						srand(scratch->random_seed_base + lev);
+						random = rand() % 99999 + 1;
+					} else {
+						random = lev;
+					}
+					
 					temp_node = node_for_count(scratch->used_notes, lev);
 					/* flag that this is used as a citation */
 					temp_node->key = CITATIONSOURCE;
@@ -534,10 +557,10 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 						scratch->max_footnote_num = lev;
 					}
 					if (n->key == NOCITATION) {
-						g_string_append_printf(out, "<span class=\"notcited\" id=\"%d\">",lev);
+						g_string_append_printf(out, "<span class=\"notcited\" id=\"%d\">",random);
 					} else {
 						g_string_append_printf(out, "<a class=\"citation\" href=\"#fn:%d\" title=\"Jump to citation\">[",
-							lev);
+							random);
 							if (n->children != NULL) {
 								g_string_append_printf(out, "<span class=\"locator\">");
 								print_html_node(out, n->children, scratch);
@@ -741,6 +764,8 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 /* print_html_endnotes */
 void print_html_endnotes(GString *out, scratch_pad *scratch) {
 	int counter = 0;
+	int random;
+	
 	scratch->used_notes = reverse_list(scratch->used_notes);
 	node *note = scratch->used_notes;
 #ifdef DEBUG_ON
@@ -765,12 +790,21 @@ void print_html_endnotes(GString *out, scratch_pad *scratch) {
 		counter++;
 		pad(out, 1, scratch);
 		
+		if (scratch->extensions & EXT_RANDOM_FOOT) {
+			srand(scratch->random_seed_base + counter);
+			random = rand() % 99999 + 1;
+		} else {
+			random = counter;
+		}
+		
 		if (note->key == CITATIONSOURCE) {
 			g_string_append_printf(out, "<li id=\"fn:%d\" class=\"citation\"><span class=\"citekey\" style=\"display:none\">%s</span>", 
-				counter, note->str);
+				random, note->str);
 		} else {
-			g_string_append_printf(out, "<li id=\"fn:%d\">\n", counter);
+			g_string_append_printf(out, "<li id=\"fn:%d\">\n", random);
 		}
+		
+		
 		scratch->padded = 2;
 		if ((note->key == NOTESOURCE) || (note->key == GLOSSARYSOURCE))
 			scratch->footnote_to_print = counter;

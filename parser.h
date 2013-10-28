@@ -74,6 +74,7 @@ typedef struct {
 	bool  no_latex_footnote;    /* can't use footnotes in some places */
 	int   odf_para_type;        /* what type of paragraph do we need? */
 	bool  odf_list_needs_end_p; /* is there a <p> that need to be closed */
+	int   random_seed_base;     /* Allow random footnotes */
 } scratch_pad;
 
 /* Define smart typography languages -- first in list is default */
@@ -120,12 +121,12 @@ void   append_list(node *new, node *list);
 node    * mk_str_from_list(node *list, bool extra_newline);
 GString * concat_string_list(node *list);
 
-parser_data * mk_parser_data(char *charbuf, int extensions);
+parser_data * mk_parser_data(char *charbuf, unsigned long extensions);
 void   free_parser_data(parser_data *data);
 
 char * preformat_text(char *text);
 
-scratch_pad * mk_scratch_pad(int extensions);
+scratch_pad * mk_scratch_pad(unsigned long extensions);
 void   free_scratch_pad(scratch_pad *scratch);
 
 link_data * mk_link_data(char *label, char *source, char *title, node *attr);
@@ -135,7 +136,7 @@ node * mk_autolink(char *text);
 
 void   extract_references(node *list, scratch_pad *scratch);
 
-bool   extension(int ext, int extensions);
+bool   extension(int ext, unsigned long extensions);
 
 /* export utilities */
 void   trim_trailing_whitespace(char *str);

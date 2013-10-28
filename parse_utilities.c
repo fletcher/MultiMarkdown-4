@@ -204,7 +204,7 @@ void append_list(node *new, node *list) {
 
 /* Create parser data - this is where you stash stuff to communicate 
 	into and out of the parser */
-parser_data * mk_parser_data(char *charbuf, int extensions) {
+parser_data * mk_parser_data(char *charbuf, unsigned long extensions) {
 	clock_t start = clock();
 
 	parser_data *result = (parser_data *)malloc(sizeof(parser_data));
@@ -231,7 +231,7 @@ void free_parser_data(parser_data *data) {
 }
 
 /* mk_scratch_pad -- store stuff here while exporting the result tree */
-scratch_pad * mk_scratch_pad(int extensions) {
+scratch_pad * mk_scratch_pad(unsigned long extensions) {
 	scratch_pad *result = (scratch_pad *)malloc(sizeof(scratch_pad));
 	result->extensions = extensions;
 	result->language = 0;
@@ -249,6 +249,13 @@ scratch_pad * mk_scratch_pad(int extensions) {
 	result->latex_footer = NULL;
 	result->odf_list_needs_end_p = FALSE;
 	result->cell_type = 0;
+
+	if (extensions & EXT_RANDOM_FOOT) {
+	    srand (time(NULL));
+		result->random_seed_base = rand() % 32000;
+	} else {
+		result->random_seed_base = 0;
+	}
 	
 	return result;
 }
@@ -307,7 +314,7 @@ void free_link_data(link_data *l) {
 }
 
 /* Check if the specified extension is flagged */
-bool extension(int ext, int extensions) {
+bool extension(int ext, unsigned long extensions) {
 	return (extensions & ext);
 }
 

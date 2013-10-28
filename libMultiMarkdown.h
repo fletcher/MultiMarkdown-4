@@ -19,10 +19,10 @@
 
 /* Main API commands */
 
-char * markdown_to_string(char * source, int extensions, int format);
-bool   has_metadata(char *source, int extensions);
-char * extract_metadata_keys(char *source, int extensions);
-char * extract_metadata_value(char *source, int extensions, char *key);
+char * markdown_to_string(char * source, unsigned long extensions, int format);
+bool   has_metadata(char *source, unsigned long extensions);
+char * extract_metadata_keys(char *source, unsigned long extensions);
+char * extract_metadata_value(char *source, unsigned long extensions, char *key);
 char * mmd_version(void);
 
 
@@ -43,7 +43,8 @@ enum parser_extensions {
 	EXT_CRITIC          = 1 << 12,   /* Critic Markup Support */
 	EXT_CRITIC_ACCEPT   = 1 << 13,   /* Accept all proposed changes */
 	EXT_CRITIC_REJECT   = 1 << 14,   /* Reject all proposed changes */
-	EXT_FAKE            = 1 << 15,   /* 15 is highest number allowed */
+	EXT_RANDOM_FOOT     = 1 << 15,   /* Use random numbers for footnote links */
+	EXT_FAKE            = 1 << 31,   /* 31 is highest number allowed */
 };
 
 /* Define output formats we support -- first in list is default */

@@ -9,7 +9,7 @@
 #include "odf.h"
 #include "critic.h"
 
-char * export_node_tree(node *list, int format, int extensions);
+char * export_node_tree(node *list, int format, unsigned long extensions);
 
 void extract_references(node *list, scratch_pad *scratch);
 link_data * extract_link_data(char *label, scratch_pad *scratch);

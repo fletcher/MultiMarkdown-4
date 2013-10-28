@@ -40,6 +40,7 @@ int main(int argc, char **argv)
 	static int obfuscate_flag = 0;
 	static int no_obfuscate_flag = 0;
 	static int process_html_flag = 0;
+	static int random_footnotes_flag = 0;
 	bool list_meta_keys = 0;
 	char *target_meta_key = FALSE;
 		
@@ -59,6 +60,7 @@ int main(int argc, char **argv)
 		{"nolabels", no_argument, &no_label_flag, 1},              /* don't generate labels */
 		{"compatibility", no_argument, &compatibility_flag, 1},    /* compatibility mode */
 		{"process-html", no_argument, &process_html_flag, 1},      /* process Markdown inside HTML */
+		{"random", no_argument, &random_footnotes_flag, 1},        /* Use random numbers for footnote links */
 		{"accept", no_argument, 0, 'a'},                           /* Accept all proposed CriticMarkup changes */
 		{"reject", no_argument, 0, 'r'},                           /* Reject all proposed CriticMarkup changes */
 		{"metadata-keys", no_argument, 0, 'm'},                    /* List all metadata keys */
@@ -79,7 +81,7 @@ int main(int argc, char **argv)
 	
 	/* set up my data for the parser */
 	int output_format = 0;
-	int extensions = 0;
+	unsigned long extensions = 0;
 	extensions = extensions | EXT_SMART | EXT_NOTES | EXT_OBFUSCATE;
 	
 	/* process options */
@@ -132,6 +134,8 @@ int main(int argc, char **argv)
 				"    --process-html         Process Markdown inside of raw HTML\n"
 				"    -m, --metadata-keys    List all metadata keys\n"
 				"    -e, --extract          Extract specified metadata\n"
+				"    --random               Use random numbers for footnote anchors\n"
+				"\n"
 				"    -a, --accept           Accept all CriticMarkup changes\n"
 				"    -r, --reject           Reject all CriticMarkup changes\n"
 				"\n"
@@ -238,6 +242,9 @@ int main(int argc, char **argv)
 
 	if (process_html_flag)
 		extensions = extensions | EXT_PROCESS_HTML;
+	
+	if (random_footnotes_flag)
+		extensions = extensions | EXT_RANDOM_FOOT;
 
 	/* fix numbering to account for options */
 	argc -= optind;

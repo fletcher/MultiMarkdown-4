@@ -23,7 +23,7 @@
 #include "writer.h"
 
 /* export_node_tree -- given a tree, export as specified format */
-char * export_node_tree(node *list, int format, int extensions) {
+char * export_node_tree(node *list, int format, unsigned long extensions) {
 	char *output;
 	GString *out = g_string_new("");
 	scratch_pad *scratch = mk_scratch_pad(extensions);

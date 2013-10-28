@@ -1343,7 +1343,7 @@ RawString = < (!( "{++" | "{--" | "{~~" | "{==" | "{>>" ) .)+ >
 
 /* process_raw_blocks -- follow the tree and process any RAW nodes and insert them
 	into the tree */
-node * process_raw_blocks(node * n, int extensions) {
+node * process_raw_blocks(node * n, unsigned long extensions) {
 	/* from the parser data we get the parent node and pointer to reference list */
 	node *current = NULL;
 	node *last_child = NULL;
@@ -1393,7 +1393,7 @@ node * process_raw_blocks(node * n, int extensions) {
 	return n;
 }
 
-char * markdown_to_string(char * source, int extensions, int format) {
+char * markdown_to_string(char * source, unsigned long extensions, int format) {
 	char *out;
 	char *formatted;
 	char *critic_resolved;
@@ -1468,7 +1468,7 @@ char * markdown_to_string(char * source, int extensions, int format) {
 }
 
 /* has_metadata -- determine whether metadata exists or not */
-bool has_metadata(char *source, int extensions) {
+bool has_metadata(char *source, unsigned long extensions) {
 	char *formatted;
 	GREG g;
 	yyinit(&g);
@@ -1494,7 +1494,7 @@ bool has_metadata(char *source, int extensions) {
 }
 
 /* extract_metadata_keys -- return list of metadata keys as "\n" separated list */
-char * extract_metadata_keys(char *source, int extensions) {
+char * extract_metadata_keys(char *source, unsigned long extensions) {
 	char *out;
 	char *formatted;
 	GREG g;
@@ -1520,7 +1520,7 @@ char * extract_metadata_keys(char *source, int extensions) {
 }
 
 /* extract_metadata_value -- find the value and return it */
-char * extract_metadata_value(char *source, int extensions, char *key) {
+char * extract_metadata_value(char *source, unsigned long extensions, char *key) {
 	char *out;
 	char *formatted;
 	GREG g;
