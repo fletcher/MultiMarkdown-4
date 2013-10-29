@@ -46,7 +46,7 @@ typedef struct {
 	char *charbuf;              /* Input buffer */
 	char *original;             /* Original input buffer */
 	node *result;               /* Resulting parse tree */
-	int   extensions;           /* Extension bitfield */
+	unsigned long extensions;   /* Extension bitfield */
 	node *autolabels;           /* Store for later retrieval */
 	bool  parse_aborted;        /* We got bogged down - fail parse */
 	clock_t stop_time;          /* Note the deadline to complete parsing */
@@ -55,7 +55,7 @@ typedef struct {
 /* A "scratch pad" for storing data when writing output 
 	The structure will vary based on what you need */
 typedef struct {
-	int   extensions;           /* Store copy of extensions for retrieval */
+	unsigned long extensions;   /* Store copy of extensions for retrieval */
 	int   padded;               /* Track newlines */
 	int   baseheaderlevel;      /* Increase header levels when outputting */
 	int   language;             /* For smart quotes */
