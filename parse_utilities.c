@@ -319,28 +319,36 @@ bool extension(int ext, unsigned long extensions) {
 }
 
 /* label_from_string -- convert raw string into format suitable for use as label */
+/* As of HTML 5, any character is valid, but no space.  Must be HTML escaped.
+   But since we also use in LaTeX, ODF, will be a bit more strict.
+   It *looks* like UTF-8 characters are ok in ODF, and don't break LaTeX any more than
+   having those characters in the original string.  Will still limit the ASCII characters
+   however, to avoid trouble.
+
+   NOTE: This is still a bit experimental, and will be removed if it breaks things.
+*/
 char *label_from_string(char *str) {
-	bool valid = FALSE;
 	GString *out = g_string_new("");
 	char *label;
+	char *next_char;
 
 	while (*str != '\0') {
-		if (valid) {
-			/* can relax on following characters */
-			if ((*str >= '0' && *str <= '9') || (*str >= 'A' && *str <= 'Z')
-				|| (*str >= 'a' && *str <= 'z') || (*str == '.') || (*str== '_')
-				|| (*str== '-') || (*str== ':'))
-			{
-				g_string_append_c(out, tolower(*str));
-			}           
-		} else {
-			/* need alpha as first character */
-			if ((*str >= 'A' && *str <= 'Z') || (*str >= 'a' && *str <= 'z'))
-			{
-				g_string_append_c(out, tolower(*str));
-				valid = TRUE;
-			}
+		next_char = str;
+		next_char++;
+		/* Is this a multibyte character? */
+		if ((*next_char & 0xC0) == 0x80) {
+			g_string_append_c(out, *str);
+			str++;
+			g_string_append_c(out, *str);
 		}
+		
+		/* can relax on following characters */
+		else if ((*str >= '0' && *str <= '9') || (*str >= 'A' && *str <= 'Z')
+			|| (*str >= 'a' && *str <= 'z') || (*str == '.') || (*str== '_')
+			|| (*str== '-') || (*str== ':'))
+		{
+			g_string_append_c(out, tolower(*str));
+		}           
 		str++;
 	}
 	label = out->str;
