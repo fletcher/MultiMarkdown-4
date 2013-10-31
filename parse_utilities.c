@@ -251,7 +251,7 @@ scratch_pad * mk_scratch_pad(unsigned long extensions) {
 	result->cell_type = 0;
 
 	if (extensions & EXT_RANDOM_FOOT) {
-	    srand (time(NULL));
+	    srand ((int)time(NULL));
 		result->random_seed_base = rand() % 32000;
 	} else {
 		result->random_seed_base = 0;
