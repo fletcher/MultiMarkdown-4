@@ -612,7 +612,7 @@ char * metavalue_for_key(char *key, node *list) {
 
 /* Trim spaces at end of string */
 void trim_trailing_whitespace(char *str) {
-	int l;
+	unsigned long l;
 	
 	if (str == NULL)
 		return;
@@ -633,7 +633,7 @@ void trim_trailing_whitespace(char *str) {
 
 /* Trim spaces at end of string */
 void trim_trailing_newlines(char *str) {
-	int l;
+	unsigned long l;
 	
 	if (str == NULL)
 		return;
