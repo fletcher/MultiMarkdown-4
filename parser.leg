@@ -1348,6 +1348,7 @@ node * process_raw_blocks(node * n, unsigned long extensions) {
 	node *current = NULL;
 	node *last_child = NULL;
 	char *contents;
+	char *saveptr;
 	GREG g;
 
 	current = n;
@@ -1357,7 +1358,7 @@ node * process_raw_blocks(node * n, unsigned long extensions) {
 			/* Process this RAW block */
 			
 			yyinit(&g);
-			contents = strtok(current->str, "\001");
+			contents = strtok_r(current->str, "\001", &saveptr);
 			current->key = LIST;
 			g.data = mk_parser_data(contents, (extensions | EXT_NO_METADATA ));
 			
@@ -1370,7 +1371,7 @@ node * process_raw_blocks(node * n, unsigned long extensions) {
 			yydeinit(&g);
 			
 			last_child = current->children;
-			while ((contents = strtok(NULL, "\001"))) {
+			while ((contents = strtok_r(NULL, "\001", &saveptr))) {
 				while (last_child->next != NULL) 
 					last_child = last_child->next;
 					
