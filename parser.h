@@ -14,8 +14,6 @@
 
 #define TABSTOP 4
 
-#define MMD_VERSION "4.3.1"
-
 #define MMD_COPYRIGHT \
 	"Copyright (c) 2013 Fletcher T. Penney.\n\n" \
 	"portions based on peg-markdown - Copyright (c) 2008-2009 John MacFarlane.\n" \
