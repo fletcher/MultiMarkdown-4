@@ -811,7 +811,7 @@ ListLoose = a:StartList
 
 ListItem = < ( Bullet | Enumerator )>
 		a:StartList
-		ListBlock { a = cons($$, a); }
+		FirstListBlock { a = cons($$, a); }
 		( ListContinuationBlock { a = cons($$, a); } )*
 		{
 			node *raw;
@@ -823,7 +823,7 @@ ListItem = < ( Bullet | Enumerator )>
 
 ListItemTight = ( Bullet | Enumerator )
 		a:StartList
-		ListBlock { a = cons($$, a); }
+		FirstListBlock { a = cons($$, a); }
 		( !BlankLine
 		ListContinuationBlock { a = cons($$, a); } )*
 		!ListContinuationBlock
@@ -834,6 +834,11 @@ ListItemTight = ( Bullet | Enumerator )
 			$$ = node(LISTITEM);
 			$$->children = raw;
 		}
+
+FirstListBlock = a:StartList
+		Line { a = cons($$, a); }
+		( ListBlockLine { a = cons($$, a); } )*
+		{ $$ = mk_str_from_list(a, false); }
 
 ListBlock = a:StartList
 		!BlankLine Line { a = cons($$, a); }
