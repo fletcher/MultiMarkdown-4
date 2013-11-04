@@ -172,9 +172,12 @@ void print_odf_node(GString *out, node *n, scratch_pad *scratch) {
 			scratch->odf_para_type = old_type;
 			break;
 		case LISTITEM:
+#ifdef DEBUG_ON
+	fprintf(stderr, "print list item\n");
+#endif
 			pad(out, 1, scratch);
 			g_string_append_printf(out, "<text:list-item>\n");
-			if ((n->children->children != NULL) && (n->children->children->key != PARA)) {
+			if ((n->children != NULL) && (n->children->children != NULL) && (n->children->children->key != PARA)) {
 				switch (scratch->odf_para_type) {
 					case BULLETLIST:
 						g_string_append_printf(out, "<text:p text:style-name=\"P1\">");
@@ -188,13 +191,19 @@ void print_odf_node(GString *out, node *n, scratch_pad *scratch) {
 			scratch->padded = 2;
 			print_odf_node_tree(out, n->children, scratch);
 			scratch->odf_list_needs_end_p = false;
+#ifdef DEBUG_ON
+	fprintf(stderr, "print list tree\n");
+#endif
 			if (!(tree_contains_key(n->children, BULLETLIST)) && 
 				!(tree_contains_key(n->children, ORDEREDLIST))) {
-				if (n->children->children->key != PARA)
+				if ((n->children != NULL) && (n->children->children != NULL) && (n->children->children->key != PARA))
 					g_string_append_printf(out, "</text:p>");
 			}
 			g_string_append_printf(out, "</text:list-item>\n");
 			scratch->padded = 1;
+#ifdef DEBUG_ON
+	fprintf(stderr, "finish print list item\n");
+#endif
 			break;
 		case METADATA:
 			g_string_append_printf(out, "<office:meta>\n");
@@ -756,6 +765,11 @@ void print_odf_node(GString *out, node *n, scratch_pad *scratch) {
 			fprintf(stderr, "print_odf_node encountered unknown node key = %d\n",n->key);
 			exit(EXIT_FAILURE);
 	}
+	
+#ifdef DEBUG_ON
+	fprintf(stderr, "finish print_odf_node: %d\n",n->key);
+#endif
+
 }
 
 /* print_odf_string - print string, escaping for odf */
