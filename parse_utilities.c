@@ -338,8 +338,12 @@ char *label_from_string(char *str) {
 		/* Is this a multibyte character? */
 		if ((*next_char & 0xC0) == 0x80) {
 			g_string_append_c(out, *str);
-			str++;
-			g_string_append_c(out, *str);
+			while ((*next_char & 0xC0) == 0x80) {
+				str++;
+				/* fprintf(stderr, "multibyte\n"); */
+				g_string_append_c(out, *str);
+				next_char++;
+			}
 		}
 		
 		/* can relax on following characters */
