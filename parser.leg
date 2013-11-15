@@ -790,12 +790,14 @@ Definition = (a:StartList b:StartList
 
 Bullet = !HorizontalRule NonindentSpace ('+' | '*' | '-') Spacechar+
 
+BulletNoSpace = !HorizontalRule NonindentSpace ('+' | '*' | '-')
+
 BulletList = &Bullet (ListTight | ListLoose)
 		{ $$->key = BULLETLIST; }
 
 ListTight = a:StartList
 		( ListItemTight { a = cons($$, a); } )+
-		BlankLine* !(Bullet | Enumerator)
+		BlankLine* !(Bullet | Enumerator | BulletNoSpace &EmptyList | EnumeratorNoSpace &EmptyList )
 		{ $$ = list(LIST, a); }
 
 ListLoose = a:StartList
@@ -809,7 +811,7 @@ ListLoose = a:StartList
 		} )+
 		{ $$ = list(LIST, a); }
 
-ListItem = < ( Bullet | Enumerator )>
+ListItem = < ( Bullet | Enumerator | BulletNoSpace &EmptyList | EnumeratorNoSpace &EmptyList )>
 		a:StartList
 		( EmptyList { a = cons($$, a); } |
 		( ListBlock { a = cons($$, a); }
@@ -822,7 +824,7 @@ ListItem = < ( Bullet | Enumerator )>
 			$$->children = raw;
 		}
 
-ListItemTight = ( Bullet | Enumerator )
+ListItemTight = ( Bullet | Enumerator | BulletNoSpace &EmptyList | EnumeratorNoSpace &EmptyList )
 		a:StartList
 		( EmptyList { a = cons($$, a); } |
 		( ListBlock { a = cons($$, a); }
@@ -858,11 +860,13 @@ ListContinuationBlock = a:StartList
 
 Enumerator = NonindentSpace [0-9]+ '.' Spacechar+
 
+EnumeratorNoSpace = NonindentSpace [0-9]+ '.'
+
 OrderedList = &Enumerator (ListTight | ListLoose)
 		{ $$->key = ORDEREDLIST; }
 
 ListBlockLine = !BlankLine
-		!( Indent? (Bullet | Enumerator) )
+		!( Indent? (Bullet | Enumerator | BulletNoSpace &EmptyList | EnumeratorNoSpace &EmptyList ) )
 		!HorizontalRule
 		OptionallyIndentedLine
 
