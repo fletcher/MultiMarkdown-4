@@ -756,7 +756,7 @@ HorizontalRule = NonindentSpace
 		( '*' Sp '*' Sp '*' (Sp '*')*
 		| '-' Sp '-' Sp '-' (Sp '-')*
 		| '_' Sp '_' Sp '_' (Sp '_')*)
-		Sp Newline BlankLine+
+		Sp Newline BlankLine*
 		{ $$ = mk_node(HRULE); }
 
 DefinitionList =  a:StartList &(TermLine+ Newline? NonindentSpace ':')
