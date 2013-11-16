@@ -174,13 +174,15 @@ SetextHeading2 =  &(RawLine SetextBottom2)
 BlockQuote = a:BlockQuoteRaw
 	{ $$ = list(BLOCKQUOTE,a); }
 
-BlockQuoteRaw =  a:StartList
-		(( b:BlockQuoteMarker Line { a = cons($$, a); } )
+BlockQuoteRaw =  a:StartList x:StartList
+		(( b:BlockQuoteMarker Line { a = cons($$, a); x = cons(b, x); } )
 		( !'>' !BlankLine Line { a = cons($$, a); } )*
 		( BlankLine { a = cons(mk_str("\n"), a); } )*
 		)+
 		{
-			$$ = b;
+			$$ = x;
+			free_node_tree(x->next);
+			$$->next = NULL;
 			node *raw;
 			raw = mk_str_from_list(a, true);
 			raw->key = RAW;
