@@ -81,16 +81,19 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 			pad(out, 2, scratch);
 			g_string_append_printf(out, "<p>");
 			print_html_node_tree(out,n->children,scratch);
-			if (scratch->footnote_to_print != 0) {
-				if (scratch->extensions & EXT_RANDOM_FOOT) {
-					srand(scratch->random_seed_base + scratch->footnote_to_print);
-					random = rand() % 99999 + 1;
-				} else {
-					random = scratch->footnote_to_print;
-				}
+			if (scratch->footnote_to_print != 0){
+				scratch->footnote_para_counter --;
+				if (scratch->footnote_para_counter == 0) {
+					if (scratch->extensions & EXT_RANDOM_FOOT) {
+						srand(scratch->random_seed_base + scratch->footnote_to_print);
+						random = rand() % 99999 + 1;
+					} else {
+						random = scratch->footnote_to_print;
+					}
 				
-				g_string_append_printf(out, " <a href=\"#fnref:%d\" title=\"return to article\" class=\"reversefootnote\">&#160;&#8617;</a>", random);
-				scratch->footnote_to_print = 0;
+					g_string_append_printf(out, " <a href=\"#fnref:%d\" title=\"return to article\" class=\"reversefootnote\">&#160;&#8617;</a>", random);
+					scratch->footnote_to_print = 0;
+				}
 			}
 			g_string_append_printf(out, "</p>");
 			scratch->padded = 0;
@@ -808,6 +811,7 @@ void print_html_endnotes(GString *out, scratch_pad *scratch) {
 		scratch->padded = 2;
 		if ((note->key == NOTESOURCE) || (note->key == GLOSSARYSOURCE))
 			scratch->footnote_to_print = counter;
+		scratch->footnote_para_counter = tree_contains_key_count(note->children,PARA);
 		print_html_node(out, note, scratch);
 		pad(out, 1, scratch);
 		g_string_append_printf(out, "</li>");

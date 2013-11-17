@@ -55,26 +55,27 @@ typedef struct {
 /* A "scratch pad" for storing data when writing output 
 	The structure will vary based on what you need */
 typedef struct {
-	unsigned long extensions;   /* Store copy of extensions for retrieval */
-	int   padded;               /* Track newlines */
-	int   baseheaderlevel;      /* Increase header levels when outputting */
-	int   language;             /* For smart quotes */
-	char *table_alignment;      /* Hold the alignment string while parsing table */
-	int   table_column;         /* Track the current column number */
-	char  cell_type;            /* What sort of cell type are we in? */
-	node *notes;                /* Store reference notes */
-	node *links;                /* ... links */
-	node *glossary;             /* ... glossary */
-	node *citations;            /* ... citations */
-	node *used_notes;           /* notes that have been referenced */
-	int   footnote_to_print;    /* set while we are printing so we can reverse link */
-	int   max_footnote_num;     /* so we know if current note is new or repeat */
-	bool  obfuscate;            /* flag that we need to mask email addresses */
-	char *latex_footer;         /* store for appending at the end */
-	bool  no_latex_footnote;    /* can't use footnotes in some places */
-	int   odf_para_type;        /* what type of paragraph do we need? */
-	bool  odf_list_needs_end_p; /* is there a <p> that need to be closed */
-	int   random_seed_base;     /* Allow random footnotes */
+	unsigned long extensions;    /* Store copy of extensions for retrieval */
+	int   padded;                /* Track newlines */
+	int   baseheaderlevel;       /* Increase header levels when outputting */
+	int   language;              /* For smart quotes */
+	char *table_alignment;       /* Hold the alignment string while parsing table */
+	int   table_column;          /* Track the current column number */
+	char  cell_type;             /* What sort of cell type are we in? */
+	node *notes;                 /* Store reference notes */
+	node *links;                 /* ... links */
+	node *glossary;              /* ... glossary */
+	node *citations;             /* ... citations */
+	node *used_notes;            /* notes that have been referenced */
+	int   footnote_to_print;     /* set while we are printing so we can reverse link */
+	int   footnote_para_counter; /* so we know which para is last */
+	int   max_footnote_num;      /* so we know if current note is new or repeat */
+	bool  obfuscate;             /* flag that we need to mask email addresses */
+	char *latex_footer;          /* store for appending at the end */
+	bool  no_latex_footnote;     /* can't use footnotes in some places */
+	int   odf_para_type;         /* what type of paragraph do we need? */
+	bool  odf_list_needs_end_p;  /* is there a <p> that need to be closed */
+	int   random_seed_base;      /* Allow random footnotes */
 } scratch_pad;
 
 /* Define smart typography languages -- first in list is default */
@@ -156,6 +157,7 @@ node * metadata_for_key(char *key, node *list);
 char * metavalue_for_key(char *key, node *list);
 
 bool tree_contains_key(node *list, int key);
+int tree_contains_key_count(node *list, int key);
 
 bool check_timeout();
 

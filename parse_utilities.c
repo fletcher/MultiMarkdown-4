@@ -243,6 +243,7 @@ scratch_pad * mk_scratch_pad(unsigned long extensions) {
 	result->citations  = mk_node(KEY_COUNTER);
 	result->padded     = 2;
 	result->footnote_to_print = 0;
+	result->footnote_para_counter = 0;
 	result->max_footnote_num = 0;
 	result->obfuscate  = 0;
 	result->no_latex_footnote = 0;
@@ -536,6 +537,24 @@ bool tree_contains_key(node *list, int key) {
 	return FALSE;
 }
 
+/* Count number of matches of type */
+int tree_contains_key_count(node *list, int key) {
+	node *step = NULL;
+	int counter = 0;
+
+	step = list;
+	while ( step != NULL ) {
+		if (step->key == key) {
+			counter++;
+		}
+		if (step->children != NULL) {
+			counter += tree_contains_key_count(step->children, key);
+		}
+		step = step->next;
+	}
+	return counter;
+}
+
 /* list all metadata keys, if present */
 char * metadata_keys(node *list) {
 	node *step = NULL;
@@ -669,3 +688,4 @@ void debug_node(node *n) {
 		n = n->next;
 	}
 }
+
