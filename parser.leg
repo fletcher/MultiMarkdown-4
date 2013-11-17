@@ -1359,7 +1359,7 @@ node * process_raw_blocks(node * n, unsigned long extensions) {
 	node *current = NULL;
 	node *last_child = NULL;
 	char *contents;
-	char *saveptr;
+	char *saveptr = NULL;
 	GREG g;
 
 	current = n;
