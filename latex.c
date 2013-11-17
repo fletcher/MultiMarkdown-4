@@ -449,7 +449,8 @@ void print_latex_node(GString *out, node *n, scratch_pad *scratch) {
 			} else if (strcmp(raw_str->str, n->link_data->source) == 0){
 				/* This is a <link> */
 				g_string_append_printf(out, "\\href{%s}{%s}", n->link_data->source, temp_str->str);
-			} else if (strcmp(raw_str->str,&n->link_data->source[7]) == 0) {
+			} else if ((strlen(n->link_data->source) > 7) &&
+				(strcmp(raw_str->str,&n->link_data->source[7]) == 0)) {
 				/*This is a <mailto> */
 				g_string_append_printf(out, "\\href{%s}{%s}", n->link_data->source, temp_str->str);
 			} else {
