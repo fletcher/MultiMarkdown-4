@@ -249,6 +249,7 @@ scratch_pad * mk_scratch_pad(unsigned long extensions) {
 	result->no_latex_footnote = 0;
 	result->latex_footer = NULL;
 	result->odf_list_needs_end_p = FALSE;
+	result->odf_para_type = PARA;
 	result->cell_type = 0;
 
 	if (extensions & EXT_RANDOM_FOOT) {
