@@ -315,7 +315,7 @@ Space = Spacechar+
 Endline =   LineBreak | TerminalEndline | NormalEndline
 
 NormalEndline =   Sp Newline !BlankLine !'>' !AtxStart
-		!(Line ('='+ | '-'+) Newline)
+		!(RawLine ('='+ | '-'+) Newline)
 		{
 			$$ = str("\n");
 			$$->key = SPACE; 
@@ -330,7 +330,7 @@ LineBreak = "  " a:NormalEndline
 voidEndline = ("  " voidNormalEndline) | (Sp Newline Eof) | voidNormalEndline
 
 voidNormalEndline = Sp Newline !BlankLine !'>' !AtxStart
-		!(Line ('='+ | '-'+) Newline)
+		!(RawLine ('='+ | '-'+) Newline)
 
 Str = 	a:StartList < NormalChar+ > { a = cons(str(yytext), a); }
 		( StrChunk { a = cons($$, a); } )*
@@ -691,7 +691,7 @@ Code = ( Ticks1 Sp < ( ( !'`' Nonspacechar )+ | !Ticks1 '`'+ | !( Sp Ticks1 ) ( 
        )
        { $$ = str(yytext); $$->key = CODE; }
 
-FenceType = Sp Line
+FenceType = Sp RawLine
 		{ $$ = str(yytext); $$->key = VERBATIMTYPE; }
 
 Fenced = (( Ticks3 a:FenceType < ( (!Ticks3 NonMatchingRawLine)* ) > Ticks3 Newline ) |
@@ -780,7 +780,7 @@ Definition = (a:StartList b:StartList
 		( NonindentSpace ':' Sp RawLine { a = cons(mk_str(yytext), a);}) 
 		( !':' !BlankLine RawLine { a = cons(mk_str(yytext), a);})*
 		( BlankLine {a = cons(mk_str("\n"),a);}
-			(IndentedLine { a = cons(mk_str(yytext),a);})+ 
+			(IndentedLine { a = cons($$,a);})+ 
 			{ a = cons(mk_str("\n"),a);}
 		)*  )
 		{
