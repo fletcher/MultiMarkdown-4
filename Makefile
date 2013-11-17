@@ -94,6 +94,12 @@ test-all: $(PROGRAM) test test-mmd test-compat test-latex test-beamer test-memoi
 test-memory: $(PROGRAM)
 	valgrind --leak-check=full ./$(PROGRAM) MarkdownTest/Tests/*.text MarkdownTest/MultiMarkdownTests/*.text > /dev/null
 
+test-memory-latex: $(PROGRAM)
+	valgrind --leak-check=full ./$(PROGRAM) -t latex MarkdownTest/Tests/*.text MarkdownTest/MultiMarkdownTests/*.text > /dev/null
+
+test-memory-odf: $(PROGRAM)
+	valgrind --leak-check=full ./$(PROGRAM) -t odf MarkdownTest/Tests/*.text MarkdownTest/MultiMarkdownTests/*.text > /dev/null
+
 enumMap.txt: parser.h
 	./enumsToPerl.pl libMultiMarkdown.h enumMap.txt
 
