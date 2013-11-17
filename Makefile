@@ -91,6 +91,9 @@ test-critic-reject: $(PROGRAM)
 	
 test-all: $(PROGRAM) test test-mmd test-compat test-latex test-beamer test-memoir test-opml test-odf test-critic-accept test-critic-reject
 
+test-memory: $(PROGRAM)
+	valgrind --leak-check=full ./$(PROGRAM) MarkdownTest/Tests/*.text MarkdownTest/MultiMarkdownTests/*.text > /dev/null
+
 enumMap.txt: parser.h
 	./enumsToPerl.pl libMultiMarkdown.h enumMap.txt
 
