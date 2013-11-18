@@ -88,7 +88,7 @@ test-critic-accept: $(PROGRAM)
 test-critic-reject: $(PROGRAM)
 	cd MarkdownTest; \
 	./MarkdownTest.pl --Script=../$(PROGRAM) --testdir=CriticMarkup --Flags="-r" --ext=".htmlr"
-	
+
 test-all: $(PROGRAM) test test-mmd test-compat test-latex test-beamer test-memoir test-opml test-odf test-critic-accept test-critic-reject
 
 test-memory: $(PROGRAM)
