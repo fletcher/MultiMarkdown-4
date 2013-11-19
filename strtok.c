@@ -12,6 +12,10 @@
 /* This file is only included since MINGW doesn't have strtok_r, so I can't
    compile for Windows without this */
 
+/* Also, fixed by Fletcher T. Penney --- added the "return NULL" when *nextp == NULL */
+
+/* This fix is also in the public domain */
+
 #include "strtok.h"
 
 char* strtok_r(
@@ -25,6 +29,10 @@ char* strtok_r(
     {
         str = *nextp;
     }
+
+	if (str == NULL) {
+		return NULL;
+	}
 
     str += strspn(str, delim);
 
