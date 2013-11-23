@@ -231,6 +231,7 @@ void free_parser_data(parser_data *data) {
 }
 
 /* mk_scratch_pad -- store stuff here while exporting the result tree */
+void ran_start(long seed);
 scratch_pad * mk_scratch_pad(unsigned long extensions) {
 	scratch_pad *result = (scratch_pad *)malloc(sizeof(scratch_pad));
 	result->extensions = extensions;
