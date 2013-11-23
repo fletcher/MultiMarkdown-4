@@ -949,6 +949,8 @@ void print_html_localized_typography(GString *out, int character, scratch_pad *s
 }
 
 /* print_html_string - print string, escaping for HTML */
+long ran_num_next();	/* Use Knuth's pseudo random generator */
+
 void print_html_string(GString *out, char *str, scratch_pad *scratch) {
 	if (str == NULL)
 		return;
@@ -969,7 +971,7 @@ void print_html_string(GString *out, char *str, scratch_pad *scratch) {
 			default:
 				if ((scratch->obfuscate == true) && (extension(EXT_OBFUSCATE, scratch->extensions))
 					&& ((int) *str == (((int) *str) & 127))) { 
-					if (rand() % 2 == 0)
+						if (ran_num_next() % 2 == 0)
 						g_string_append_printf(out, "&#%d;", (int) *str);
 					else
 						g_string_append_printf(out, "&#x%x;", (unsigned int) *str);
