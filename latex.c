@@ -695,6 +695,15 @@ void print_latex_node(GString *out, node *n, scratch_pad *scratch) {
 		fprintf(stderr, "finish cite\n");
 #endif
 			break;
+		case VARIABLE:
+			temp = metavalue_for_key(n->str,scratch->result_tree);
+			if (temp == NULL) {
+				g_string_append_printf(out, "[%%%s]",n->str);
+			} else {
+				g_string_append_printf(out, temp);
+				free(temp);
+			}
+			break;
 		case GLOSSARYTERM:
 			if ((n->next != NULL) && (n->next->key == GLOSSARYSORTKEY) ) {
 				g_string_append_printf(out, "sort={");

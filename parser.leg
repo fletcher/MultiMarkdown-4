@@ -275,6 +275,7 @@ Inline = #&{ check_timeout((parser_data *)G->data) }
 		| Strong
 		| Emph
 		| &{ !ext(EXT_COMPATIBILITY) } CitationReference
+		| &{ !ext(EXT_COMPATIBILITY) } Variable
 		| Image
 		| Link
 		| NoteReference
@@ -297,6 +298,7 @@ InlineNoEmph = #&{ check_timeout((parser_data *)G->data) }
 		| Space
 		| Strong
 		| &{ !ext(EXT_COMPATIBILITY) } CitationReference
+		| &{ !ext(EXT_COMPATIBILITY) } Variable
 		| Image
 		| Link
 		| NoteReference
@@ -492,6 +494,12 @@ CitationReferenceSingle =  < (( "[]" Spnl b:RawCitationReference )
 
 RawCitationReference = "[#" < ( !Newline !']' . )+ > ']'
 		{ $$ = str(yytext); }
+
+Variable = "[%" < (!Newline !']' .)+ > ']'
+	{
+		$$ = str(yytext);
+		$$->key = VARIABLE;
+	}
 
 ExplicitLink = l:Label Spnl '(' Sp s:Source Spnl t:Title Sp <')'>
 	{

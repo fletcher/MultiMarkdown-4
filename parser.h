@@ -67,6 +67,7 @@ typedef struct {
 	node *glossary;              /* ... glossary */
 	node *citations;             /* ... citations */
 	node *used_notes;            /* notes that have been referenced */
+	node *result_tree;           /* reference to entire result tree */
 	int   footnote_to_print;     /* set while we are printing so we can reverse link */
 	int   footnote_para_counter; /* so we know which para is last */
 	int   max_footnote_num;      /* so we know if current note is new or repeat */

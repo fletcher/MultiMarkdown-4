@@ -602,6 +602,15 @@ void print_odf_node(GString *out, node *n, scratch_pad *scratch) {
 		fprintf(stderr, "finish cite\n");
 #endif
 			break;
+		case VARIABLE:
+			temp = metavalue_for_key(n->str,scratch->result_tree);
+			if (temp == NULL) {
+				g_string_append_printf(out, "[%%%s]",n->str);
+			} else {
+				g_string_append_printf(out, temp);
+				free(temp);
+			}
+			break;
 		case GLOSSARYTERM:
 			g_string_append_printf(out,"<text:p text:style-name=\"Glossary\">");
 			print_odf_string(out, n->children->str);

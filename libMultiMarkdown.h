@@ -138,6 +138,7 @@ enum keys {
 	CRITICCOMMENT,
 	SUPERSCRIPT,
 	SUBSCRIPT,
+	VARIABLE,
 	KEY_COUNTER                      /* This *MUST* be the last item in the list */
 };
 

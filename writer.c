@@ -27,6 +27,7 @@ char * export_node_tree(node *list, int format, unsigned long extensions) {
 	char *output;
 	GString *out = g_string_new("");
 	scratch_pad *scratch = mk_scratch_pad(extensions);
+	scratch->result_tree = list;  /* Pointer to result tree to use later */
 
 #ifdef DEBUG_ON
 	fprintf(stderr, "export_node_tree\n");
