@@ -21,6 +21,8 @@
 		5A60F8E3172C07E200EFBF5B /* odf.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A89852C17297DFB00D1D72D /* odf.c */; };
 		5A60F8E4172C07E200EFBF5B /* opml.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A2534F3172768A8003D1A91 /* opml.c */; };
 		5A60F8E5172C07E200EFBF5B /* parser.c in Sources */ = {isa = PBXBuildFile; fileRef = 5AD6CB211718CCD90085E51D /* parser.c */; };
+		5ABBCFCB18442416005F519F /* rng.c in Sources */ = {isa = PBXBuildFile; fileRef = 5ABBCFCA18442416005F519F /* rng.c */; };
+		5ABBCFCC18442416005F519F /* rng.c in Sources */ = {isa = PBXBuildFile; fileRef = 5ABBCFCA18442416005F519F /* rng.c */; };
 		5AE4484C1769F0EA0055DD27 /* multimarkdown.c in Sources */ = {isa = PBXBuildFile; fileRef = 5AE4484B1769F0EA0055DD27 /* multimarkdown.c */; };
 		5AE59DB5172A14D600401A65 /* GLibFacade.c in Sources */ = {isa = PBXBuildFile; fileRef = 5AD6CB0A1718CB560085E51D /* GLibFacade.c */; };
 		5AE59DB7172A14D600401A65 /* parser.c in Sources */ = {isa = PBXBuildFile; fileRef = 5AD6CB211718CCD90085E51D /* parser.c */; };
@@ -84,6 +86,7 @@
 		5A60F8FF172C099100EFBF5B /* libMultiMarkdown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libMultiMarkdown.h; sourceTree = "<group>"; };
 		5A89852C17297DFB00D1D72D /* odf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = odf.c; sourceTree = "<group>"; };
 		5A89852D17297DFB00D1D72D /* odf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = odf.h; sourceTree = "<group>"; };
+		5ABBCFCA18442416005F519F /* rng.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = rng.c; sourceTree = "<group>"; };
 		5AD6CB091718CB560085E51D /* glib.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = glib.h; sourceTree = "<group>"; };
 		5AD6CB0A1718CB560085E51D /* GLibFacade.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = GLibFacade.c; sourceTree = "<group>"; };
 		5AD6CB0B1718CB560085E51D /* GLibFacade.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GLibFacade.h; sourceTree = "<group>"; };
@@ -142,6 +145,7 @@
 				5A2534F4172768A8003D1A91 /* opml.h */,
 				5A116B561734545700DB0DE6 /* critic.c */,
 				5A116B571734545700DB0DE6 /* critic.h */,
+				5ABBCFCA18442416005F519F /* rng.c */,
 				5AD6CB231718CCDE0085E51D /* Generated Files */,
 				5AD6CB151718CB9A0085E51D /* Products */,
 			);
@@ -302,6 +306,7 @@
 				5A60F8DF172C07E200EFBF5B /* html.c in Sources */,
 				5A60F8E0172C07E200EFBF5B /* beamer.c in Sources */,
 				5A60F8E1172C07E200EFBF5B /* latex.c in Sources */,
+				5ABBCFCC18442416005F519F /* rng.c in Sources */,
 				5A60F8E2172C07E200EFBF5B /* memoir.c in Sources */,
 				5A60F8E3172C07E200EFBF5B /* odf.c in Sources */,
 				5A60F8E4172C07E200EFBF5B /* opml.c in Sources */,
@@ -327,6 +332,7 @@
 				5A60F8B4172BFE4700EFBF5B /* parse_utilities.c in Sources */,
 				5A116B581734545700DB0DE6 /* critic.c in Sources */,
 				5AE4484C1769F0EA0055DD27 /* multimarkdown.c in Sources */,
+				5ABBCFCB18442416005F519F /* rng.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
