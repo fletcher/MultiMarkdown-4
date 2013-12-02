@@ -7,6 +7,7 @@
 #include "beamer.h"
 #include "opml.h"
 #include "odf.h"
+#include "rtf.h"
 #include "critic.h"
 
 char * export_node_tree(node *list, int format, unsigned long extensions);

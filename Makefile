@@ -6,9 +6,9 @@
 
 CFLAGS ?= -Wall -g -O3 -include GLibFacade.h
 PROGRAM = multimarkdown
-VERSION = 4.4.1
+VERSION = 4.4.2
 
-OBJS= multimarkdown.o parse_utilities.o parser.o GLibFacade.o writer.o text.o html.o latex.o memoir.o beamer.o opml.o odf.o critic.o rng.o
+OBJS= multimarkdown.o parse_utilities.o parser.o GLibFacade.o writer.o text.o html.o latex.o memoir.o beamer.o opml.o odf.o critic.o rng.o rtf.o
 
 GREG= greg/greg
 
