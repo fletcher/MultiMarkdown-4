@@ -163,6 +163,8 @@ int main(int argc, char **argv)
 					output_format = OPML_FORMAT;
 				else if (strcmp(optarg, "odf") == 0)
 					output_format = ODF_FORMAT;
+				else if (strcmp(optarg, "rtf") == 0)
+					output_format = RTF_FORMAT;
 				else {
 					/* no valid format specified */
 					fprintf(stderr, "%s: Unknown output format '%s'\n",argv[0], optarg);

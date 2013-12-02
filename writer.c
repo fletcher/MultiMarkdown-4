@@ -100,6 +100,14 @@ char * export_node_tree(node *list, int format, unsigned long extensions) {
 			print_odf_node_tree(out, list, scratch);
 			end_odf_output(out, list, scratch);
 			break;
+		case RTF_FORMAT:
+#ifdef DEBUG_ON
+	fprintf(stderr, "export RTF\n");
+#endif
+			begin_rtf_output(out, list, scratch);
+			print_rtf_node_tree(out, list, scratch);
+			end_rtf_output(out, list, scratch);
+			break;
 		case CRITIC_ACCEPT_FORMAT:
 			print_critic_accept_node_tree(out, list, scratch);
 			break;
