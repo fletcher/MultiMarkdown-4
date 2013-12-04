@@ -3,7 +3,7 @@
  *	MultiMarkdown
  *	
  *	Created by Daniel Jalkut on 7/26/11.
- *	Modified by Fletcher T. Penney on 9/15/11.
+ *  Modified by Fletcher T. Penney on 9/15/11 and 12/3/13.
  *	Modified by Dan Lowe on 1/3/12.
  *
  *	License for original code by Daniel Jalkut:
