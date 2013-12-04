@@ -198,6 +198,36 @@ void g_string_prepend(GString* baseString, char* prependedString)
 	}
 }
 
+void g_string_insert(GString* baseString, size_t pos, char * insertedString)
+{
+	if ((insertedString != NULL) && (strlen(insertedString) > 0))
+	{
+		size_t insertedStringLength = strlen(insertedString);
+		size_t newStringLength = baseString->currentStringLength + insertedStringLength;
+		ensureStringBufferCanHold(baseString, newStringLength);
+		
+		/* Shift following string to 'right' */
+		memmove(baseString->str + pos + insertedStringLength, baseString->str + pos, baseString->currentStringLength - pos);
+		strncpy(baseString->str + pos, insertedString, insertedStringLength);
+		baseString->currentStringLength = newStringLength;
+		baseString->str[baseString->currentStringLength] = '\0';
+	}
+}
+
+void g_string_insert_c(GString* baseString, size_t pos, char insertedCharacter)
+{	
+	size_t newSizeNeeded = baseString->currentStringLength + 1;
+	ensureStringBufferCanHold(baseString, newSizeNeeded);
+	
+	/* Shift following string to 'right' */
+	memmove(baseString->str + pos + 1, baseString->str + pos, baseString->currentStringLength - pos);
+	
+	baseString->str[pos] = insertedCharacter;
+	baseString->currentStringLength++;	
+	baseString->str[baseString->currentStringLength] = '\0';
+}
+
+
 /* GSList */
 
 void g_slist_free(GSList* ripList)
