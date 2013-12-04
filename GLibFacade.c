@@ -231,12 +231,11 @@ void g_string_erase(GString* baseString, size_t pos, size_t len)
 {
 	if (len == -1) {
 		baseString->currentStringLength = pos;
-		baseString->str[baseString->currentStringLength] = '\0';
 	} else {
 		memmove(baseString->str + pos, baseString->str + pos + len, baseString->currentStringLength - pos - len);
 		baseString->currentStringLength -= len;
-		baseString->str[baseString->currentStringLength] = '\0';
 	}
+	baseString->str[baseString->currentStringLength] = '\0';
 }
 
 /* GSList */
