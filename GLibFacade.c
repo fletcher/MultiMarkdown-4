@@ -202,6 +202,9 @@ void g_string_insert(GString* baseString, size_t pos, char * insertedString)
 {
 	if ((insertedString != NULL) && (strlen(insertedString) > 0))
 	{
+		if (pos > baseString->currentStringLength)
+			pos = baseString->currentStringLength;
+		
 		size_t insertedStringLength = strlen(insertedString);
 		size_t newStringLength = baseString->currentStringLength + insertedStringLength;
 		ensureStringBufferCanHold(baseString, newStringLength);
@@ -216,6 +219,9 @@ void g_string_insert(GString* baseString, size_t pos, char * insertedString)
 
 void g_string_insert_c(GString* baseString, size_t pos, char insertedCharacter)
 {	
+	if (pos > baseString->currentStringLength)
+		pos = baseString->currentStringLength;
+	
 	size_t newSizeNeeded = baseString->currentStringLength + 1;
 	ensureStringBufferCanHold(baseString, newSizeNeeded);
 	
@@ -229,6 +235,12 @@ void g_string_insert_c(GString* baseString, size_t pos, char insertedCharacter)
 
 void g_string_erase(GString* baseString, size_t pos, size_t len)
 {
+	if (pos > baseString->currentStringLength)
+		return;
+	
+	if ((pos + len) >= baseString->currentStringLength) 
+		len = -1;
+	
 	if (len == -1) {
 		baseString->currentStringLength = pos;
 	} else {
