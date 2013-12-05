@@ -616,7 +616,7 @@ Label = < "[" !'[' ( !'^' !'#' &{ ext(EXT_NOTES) } | &. &{ !ext(EXT_NOTES) } )
 			']'>
 	{ $$ = list(LIST, a); }
 
-AutoLabel = '[' < (!Newline !'^' !'#' . )( !Newline !']' . )+ > ']' &(!(Sp ('(' | '[')))
+AutoLabel = '[' < (!Newline !'^' !'#' !'%' . )( !Newline !']' . )+ > ']' &(!(Sp ('(' | '[')))
 {
 	node *ref;
 	$$ = str(yytext);
