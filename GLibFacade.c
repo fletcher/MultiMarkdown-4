@@ -235,7 +235,7 @@ void g_string_insert_c(GString* baseString, size_t pos, char insertedCharacter)
 
 void g_string_erase(GString* baseString, size_t pos, size_t len)
 {
-	if (pos > baseString->currentStringLength)
+	if ((pos > baseString->currentStringLength) || (len <= 0))
 		return;
 	
 	if ((pos + len) >= baseString->currentStringLength) 

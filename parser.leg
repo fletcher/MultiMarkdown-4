@@ -111,7 +111,8 @@ Block =	BlankLine*
 		| Note
 		| LinkReference
 		| HorizontalRule
-		| HeadingSection
+		| &{ ext(EXT_HEADINGSECTION) } HeadingSection
+		| Heading
 		| OrderedList
 		| BulletList
 		| HtmlBlock

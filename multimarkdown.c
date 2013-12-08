@@ -248,6 +248,10 @@ int main(int argc, char **argv)
 	if (random_footnotes_flag)
 		extensions = extensions | EXT_RANDOM_FOOT;
 
+	/* Enable HEADINGSECTION for certain formats */
+	if ((output_format == OPML_FORMAT) || (output_format == BEAMER_FORMAT))
+		extensions = extensions | EXT_HEADINGSECTION;
+	
 	/* fix numbering to account for options */
 	argc -= optind;
 	argv += optind;
