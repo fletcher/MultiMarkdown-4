@@ -830,11 +830,13 @@ void print_latex_node(GString *out, node *n, scratch_pad *scratch) {
 		case CELLSPAN:
 			break;
 		case GLOSSARYSOURCE:
-			print_latex_node_tree(out, n->children, scratch);
+			if (scratch->printing_notes)
+				print_latex_node_tree(out, n->children, scratch);
 			break;
 		case CITATIONSOURCE:
 		case NOTESOURCE:
-			print_latex_node(out, n->children, scratch);
+			if (scratch->printing_notes)
+				print_latex_node(out, n->children, scratch);
 			break;
 		case SOURCEBRANCH:
 			fprintf(stderr,"SOURCEBRANCH\n");
@@ -858,6 +860,8 @@ void print_latex_node(GString *out, node *n, scratch_pad *scratch) {
 /* print_latex_endnotes */
 void print_latex_endnotes(GString *out, scratch_pad *scratch) {
 	scratch->used_notes = reverse_list(scratch->used_notes);
+	scratch->printing_notes = 1;
+
 	node *note = scratch->used_notes;
 #ifdef DEBUG_ON
 	fprintf(stderr, "start endnotes\n");

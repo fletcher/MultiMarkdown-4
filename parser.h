@@ -62,6 +62,7 @@ typedef struct {
 	char *table_alignment;       /* Hold the alignment string while parsing table */
 	int   table_column;          /* Track the current column number */
 	char  cell_type;             /* What sort of cell type are we in? */
+	bool  printing_notes;        /* Are we printing notes/glossary/etc.? */
 	node *notes;                 /* Store reference notes */
 	node *links;                 /* ... links */
 	node *glossary;              /* ... glossary */
@@ -115,6 +116,7 @@ node * mk_pos_list(int key, node *list, unsigned int start, unsigned int stop);
 void   free_node(node *n);
 void   free_node_tree(node * n);
 void   print_node_tree(node * n);
+node * copy_node_tree(node *n);
 
 node * cons(node *new, node *list);
 node * reverse_list(node *list);

@@ -237,6 +237,7 @@ scratch_pad * mk_scratch_pad(unsigned long extensions) {
 	result->extensions = extensions;
 	result->language = 0;
 	result->baseheaderlevel = 1;
+	result->printing_notes = 0;
 	result->notes       = mk_node(KEY_COUNTER);		/* Need empty need for trimming later */
 	result->used_notes  = mk_node(KEY_COUNTER);
 	result->links       = mk_node(KEY_COUNTER);
@@ -694,3 +695,27 @@ void debug_node(node *n) {
 	}
 }
 
+node * copy_node_tree(node *n) {
+	if (n == NULL)
+		return NULL;
+	else {
+		node *m = (node *) malloc(sizeof(node));
+
+		*m = *n;
+
+		if (n->str != NULL)
+			m->str = strdup(n->str);
+
+		if (n->link_data != NULL) {
+			m->link_data = mk_link_data(n->link_data->label, n->link_data->source, n->link_data->title, copy_node_tree(n->link_data->attr));
+		}
+
+		if (n->children != NULL)
+			m->children = copy_node_tree(n->children);
+
+		if (n->next != NULL)
+			m->next = copy_node_tree(n->next);
+	
+		return m;
+	}
+}

@@ -36,6 +36,7 @@ void print_html_node_tree(GString *out, node *list, scratch_pad *scratch) {
 /* print_html_node -- convert given node to HTML and append */
 void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 	node *temp_node;
+	link_data *temp_link_data = NULL;
 	char *temp;
 	int lev;
 	int random;
@@ -314,6 +315,10 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 #ifdef DEBUG_ON
 	fprintf(stderr, "print html link: '%s'\n",n->str);
 #endif
+			/* Stash a copy of the link data */
+			if (n->link_data != NULL)
+				temp_link_data = mk_link_data(n->link_data->label, n->link_data->source, n->link_data->title, n->link_data->attr);
+
 			/* Do we have proper info? */
 			if ((n->link_data->label == NULL) &&
 			(n->link_data->source == NULL)) {
@@ -327,7 +332,10 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 			/* Load reference data */
 			if (n->link_data->label != NULL) {
 				temp = strdup(n->link_data->label);
+
+				n->link_data->attr = NULL;
 				free_link_data(n->link_data);
+
 				n->link_data = extract_link_data(temp, scratch);
 				if (n->link_data == NULL) {
 					/* replace original text since no definition found */
@@ -344,7 +352,12 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 					} else {
 						g_string_append_printf(out, "[%s]",temp);
 					}
+					
 					free(temp);
+
+					/* Restore stashed copy */
+					n->link_data = temp_link_data;
+
 					break;
 				}
 				free(temp);
@@ -368,8 +381,13 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 			if (n->children != NULL)
 				print_html_node_tree(out,n->children,scratch);
 			g_string_append_printf(out, "</a>");
-			n->link_data->attr = NULL;	/* We'll delete these elsewhere */
 			scratch->obfuscate = 0;
+
+			/* Restore stashed copy */
+			n->link_data->attr = NULL;
+			free_link_data(n->link_data);
+			n->link_data = temp_link_data;
+
 			break;
 		case ATTRKEY:
 			if ( (strcmp(n->str,"height") == 0) || (strcmp(n->str, "width") == 0)) {
@@ -388,6 +406,10 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 #ifdef DEBUG_ON
 	fprintf(stderr, "print image\n");
 #endif
+			/* Stash a copy of the link data */
+			if (n->link_data != NULL)
+				temp_link_data = mk_link_data(n->link_data->label, n->link_data->source, n->link_data->title, n->link_data->attr);
+
 			if (n->key == IMAGEBLOCK)
 				g_string_append_printf(out, "<figure>\n");
 			/* Do we have proper info? */
@@ -406,13 +428,22 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 			/* Load reference data */
 			if (n->link_data->label != NULL) {
 				temp = strdup(n->link_data->label);
+
+				n->link_data->attr = NULL;
 				free_link_data(n->link_data);
+
 				n->link_data = extract_link_data(temp, scratch);
+				
 				if (n->link_data == NULL) {
 					g_string_append_printf(out, "![");
 					print_html_node_tree(out, n->children, scratch);
 					g_string_append_printf(out,"][%s]",temp);
+
+					/* Restore stashed copy */
+					n->link_data = temp_link_data;
+
 					free(temp);
+
 					break;
 				}
 				free(temp);
@@ -483,7 +514,12 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 				g_string_append_printf(out,"</figure>");
 				scratch->padded = 0;
 			}
-			n->link_data->attr = NULL;	/* We'll delete these elsewhere */
+
+			/* Restore stashed copy */
+			n->link_data->attr = NULL;
+			free_link_data(n->link_data);
+			n->link_data = temp_link_data;
+
 			break;
 #ifdef DEBUG_ON
 	fprintf(stderr, "finish image\n");
@@ -748,11 +784,13 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 		case CELLSPAN:
 			break;
 		case GLOSSARYSOURCE:
-			print_html_node_tree(out, n->children, scratch);
+			if (scratch->printing_notes)
+				print_html_node_tree(out, n->children, scratch);
 			break;
 		case CITATIONSOURCE:
 		case NOTESOURCE:
-			print_html_node_tree(out, n->children, scratch);
+			if (scratch->printing_notes)
+				print_html_node_tree(out, n->children, scratch);
 			break;
 		case SOURCEBRANCH:
 			fprintf(stderr,"SOURCEBRANCH\n");
@@ -779,6 +817,8 @@ void print_html_endnotes(GString *out, scratch_pad *scratch) {
 	int random;
 	
 	scratch->used_notes = reverse_list(scratch->used_notes);
+	scratch->printing_notes = 1;
+	
 	node *note = scratch->used_notes;
 #ifdef DEBUG_ON
 	fprintf(stderr, "start endnotes\n");

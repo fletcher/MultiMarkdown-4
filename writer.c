@@ -134,7 +134,7 @@ char * export_node_tree(node *list, int format, unsigned long extensions) {
 
 /* extract_references -- go through node tree and find elements we need to reference;
    e.g. links, images, citations, footnotes 
-   Remove them from main parse tree */
+   Copy them from main parse tree */
 void extract_references(node *list, scratch_pad *scratch) {
 	node *temp;
 	node *last = NULL;
@@ -145,38 +145,16 @@ void extract_references(node *list, scratch_pad *scratch) {
 			case LINKREFERENCE:
 				l = list->link_data;
 				temp = mk_link(list->children, l->label, l->source, l->title, l->attr);
-				
+				temp->link_data->attr = copy_node_tree(l->attr);
+
 				/* store copy of link reference */
 				scratch->links = cons(temp, scratch->links);
 				
-				/* Disconnect from children so not duplicated */
-				l->attr = NULL;
-				
-				if (last != NULL) {
-					/* remove this node from tree */
-					last->next = list->next;
-					free_link_data(list->link_data);
-					free(list);
-					list = last->next;
-					continue;
-				} else {
-				}
 				break;
 			case NOTESOURCE:
-				if (last != NULL) {
-					last->next = list->next;
-					scratch->notes = cons(list, scratch->notes);
-					list = last->next;
-					continue;
-				}
-				break;
 			case GLOSSARYSOURCE:
-				if (last != NULL) {
-					last->next = list->next;
-					scratch->notes = cons(list, scratch->notes);
-					list = last->next;
-					continue;
-				}
+				temp = copy_node_tree(list);
+				scratch->notes = cons(temp, scratch->notes);
 				break;
 			case H1: case H2: case H3: case H4: case H5: case H6:
 				if ((list->children->key != AUTOLABEL) && !(scratch->extensions & EXT_NO_LABELS)
