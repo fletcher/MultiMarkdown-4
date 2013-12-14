@@ -163,6 +163,9 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 				"<!DOCTYPE html>\n<html>\n<head>\n\t<meta charset=\"utf-8\"/>\n");
 				/* either way, now we need to be a complete doc */
 				scratch->extensions = scratch->extensions | EXT_COMPLETE;
+			} else {
+				/* Ensure we lowercase metadata */
+				is_html_complete_doc(n);
 			}
 			/* print the metadata */
 			scratch->extensions = scratch->extensions | EXT_HEAD_CLOSED;
