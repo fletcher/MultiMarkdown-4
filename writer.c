@@ -84,6 +84,9 @@ char * export_node_tree(node *list, int format, unsigned long extensions) {
 		case BEAMER_FORMAT:
 			print_beamer_node_tree(out, list, scratch);
 			break;
+		case LYX_FORMAT:
+			perform_lyx_output(out,list,scratch);
+			break;
 		case OPML_FORMAT:
 #ifdef DEBUG_ON
 	fprintf(stderr, "export OPML\n");

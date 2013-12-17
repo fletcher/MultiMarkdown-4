@@ -5,6 +5,8 @@
 #include "latex.h"
 #include "memoir.h"
 #include "beamer.h"
+#include "lyx.h"
+#include "lyxbeamer.h"
 #include "opml.h"
 #include "odf.h"
 #include "rtf.h"

@@ -8,7 +8,7 @@ CFLAGS ?= -Wall -g -O3 -include GLibFacade.h
 PROGRAM = multimarkdown
 VERSION = 4.4.2
 
-OBJS= multimarkdown.o parse_utilities.o parser.o GLibFacade.o writer.o text.o html.o latex.o memoir.o beamer.o opml.o odf.o critic.o rng.o rtf.o
+OBJS= multimarkdown.o parse_utilities.o parser.o GLibFacade.o writer.o text.o html.o latex.o memoir.o beamer.o lyx.o lyxbeamer.o opml.o odf.o critic.o rng.o rtf.o
 
 GREG= greg/greg
 
@@ -64,6 +64,14 @@ test-memoir: $(PROGRAM)
 	cd MarkdownTest; \
 	./MarkdownTest.pl --Script=../$(PROGRAM) --testdir=MemoirTests --Flags="-t memoir" --ext=".tex"
 
+test-lyx: $(PROGRAM)
+	cd MarkdownTest; \
+	./MarkdownTest.pl --Script=../$(PROGRAM) --testdir=MultiMarkdownTests --Flags="-t lyx" --ext=".lyx"
+
+test-lyx-beamer: $(PROGRAM)
+	cd MarkdownTest; \
+	./MarkdownTest.pl --Script=../$(PROGRAM) --testdir=BeamerTests --Flags="-t lyx" --ext=".lyx"
+
 test-opml: $(PROGRAM)
 	cd MarkdownTest; \
 	./MarkdownTest.pl --Script=../$(PROGRAM) --testdir=MultiMarkdownTests --Flags="-t opml" --ext=".opml"
@@ -89,7 +97,7 @@ test-critic-reject: $(PROGRAM)
 	cd MarkdownTest; \
 	./MarkdownTest.pl --Script=../$(PROGRAM) --testdir=CriticMarkup --Flags="-r" --ext=".htmlr"
 
-test-all: $(PROGRAM) test test-mmd test-compat test-latex test-beamer test-memoir test-opml test-odf test-critic-accept test-critic-reject
+test-all: $(PROGRAM) test test-mmd test-compat test-latex test-beamer test-memoir test-opml test-odf test-critic-accept test-critic-reject test-lyx test-lyx-beamer
 
 test-memory: $(PROGRAM)
 	valgrind --leak-check=full ./$(PROGRAM) MarkdownTest/Tests/*.text MarkdownTest/MultiMarkdownTests/*.text > /dev/null
@@ -102,6 +110,9 @@ test-memory-beamer: $(PROGRAM)
 
 test-memory-memoir: $(PROGRAM)
 	valgrind --leak-check=full ./$(PROGRAM) -t memoir MarkdownTest/Tests/*.text MarkdownTest/MultiMarkdownTests/*.text > /dev/null
+
+test-memory-lyx: $(PROGRAM)
+	valgrind --leak-check=full ./$(PROGRAM) -t lyx MarkdownTest/Tests/*.text MarkdownTest/MultiMarkdownTests/*.text MarkdownTest/BeamerTests/*.text > /dev/null
 
 test-memory-odf: $(PROGRAM)
 	valgrind --leak-check=full ./$(PROGRAM) -t odf MarkdownTest/Tests/*.text MarkdownTest/MultiMarkdownTests/*.text > /dev/null

@@ -78,6 +78,22 @@ typedef struct {
 	int   odf_para_type;         /* what type of paragraph do we need? */
 	bool  odf_list_needs_end_p;  /* is there a <p> that need to be closed */
 	int   random_seed_base;      /* Allow random footnotes */
+	int   table_row;             /* CRC - Track the current row number */
+	int   lyx_para_type;         /* CRC - the type of paragraph being processed */
+	int   lyx_level;             /* CRC - nesting level */
+	bool  no_lyx_footnote;       /* CRC - Can't use footnotes in some places */
+	bool  lyx_number_headers;    /* CRC - Whether to number headers (with or without *) */
+	bool  lyx_definition_hit;    /* CRC  - True when a definition has been encountered */
+	bool  lyx_definition_open;   /* CRC - Have not completed a definition list entry */
+	bool  lyx_in_header;         /* CRC - In a table header */
+	bool  lyx_fragile;           /* CRC - in a beamer fragile frame */
+	bool  lyx_beamerbullet;      /* CRC - beamer bullet list (add <+->) */
+	int   lyx_debug_nest;        /* CRC - nesting level for enhanced debugging */
+	bool  lyx_table_need_line;   /* CRC - need a line at the top */
+	int   lyx_table_total_rows;  /* CRC - The total number of rows in the table */
+	int   lyx_table_total_cols;  /* CRC - The total number of columns in the table */
+	node *lyx_table_caption;     /* CRC - Hold the table caption */
+	GString *lyx_debug_pad;      /* CRC - padding to indent debugging informaiton */
 } scratch_pad;
 
 /* Define smart typography languages -- first in list is default */

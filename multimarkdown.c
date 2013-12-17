@@ -144,7 +144,8 @@ int main(int argc, char **argv)
 				"    --labels, --nolabels   Disable id attributes for headers\n"
 				"    --mask, --nomask       Mask email addresses in HTML\n"
 				
-				"\nAvailable FORMATs: html(default), latex, beamer, memoir, odf, opml\n\n\n"
+				"\nAvailable FORMATs: html(default), latex, beamer, memoir, odf, opml, lyx\n\n"
+				"NOTE: The lyx output format was created by Charles R. Cowan and is provided as is.\n\n\n"
 				);
 				return(EXIT_SUCCESS);
 			
@@ -165,6 +166,8 @@ int main(int argc, char **argv)
 					output_format = ODF_FORMAT;
 				else if (strcmp(optarg, "rtf") == 0)
 					output_format = RTF_FORMAT;
+				else if (strcmp(optarg, "lyx") == 0)
+					output_format = LYX_FORMAT;
 				else {
 					/* no valid format specified */
 					fprintf(stderr, "%s: Unknown output format '%s'\n",argv[0], optarg);
@@ -249,7 +252,7 @@ int main(int argc, char **argv)
 		extensions = extensions | EXT_RANDOM_FOOT;
 
 	/* Enable HEADINGSECTION for certain formats */
-	if ((output_format == OPML_FORMAT) || (output_format == BEAMER_FORMAT))
+	if ((output_format == OPML_FORMAT) || (output_format == BEAMER_FORMAT) || (output_format == LYX_FORMAT))
 		extensions = extensions | EXT_HEADINGSECTION;
 	
 	/* fix numbering to account for options */
@@ -334,6 +337,8 @@ int main(int argc, char **argv)
 				g_string_append(filename,".fodt");
 			} else if (output_format == OPML_FORMAT) {
 				g_string_append(filename,".opml");
+			} else if (output_format == LYX_FORMAT) {
+				g_string_append(filename,".lyx");
 			} else {
 				/* default extension -- in this case we only have 1 */
 				g_string_append(filename,".txt");

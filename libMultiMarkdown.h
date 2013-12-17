@@ -62,6 +62,7 @@ enum export_formats {
 	CRITIC_ACCEPT_FORMAT,
 	CRITIC_REJECT_FORMAT,
 	CRITIC_HTML_HIGHLIGHT_FORMAT,
+	LYX_FORMAT,
 };
 
 /* These are the identifiers for node types */
