@@ -137,14 +137,13 @@ char * export_node_tree(node *list, int format, unsigned long extensions) {
    Copy them from main parse tree */
 void extract_references(node *list, scratch_pad *scratch) {
 	node *temp;
-	node *last = NULL;
 	link_data *l;
 	
 	while (list != NULL) {
 		switch (list->key) {
 			case LINKREFERENCE:
 				l = list->link_data;
-				temp = mk_link(list->children, l->label, l->source, l->title, l->attr);
+				temp = mk_link(list->children, l->label, l->source, l->title, NULL);
 				temp->link_data->attr = copy_node_tree(l->attr);
 
 				/* store copy of link reference */
@@ -153,7 +152,7 @@ void extract_references(node *list, scratch_pad *scratch) {
 				break;
 			case NOTESOURCE:
 			case GLOSSARYSOURCE:
-				temp = copy_node_tree(list);
+				temp = copy_node(list);
 				scratch->notes = cons(temp, scratch->notes);
 				break;
 			case H1: case H2: case H3: case H4: case H5: case H6:
@@ -186,7 +185,6 @@ void extract_references(node *list, scratch_pad *scratch) {
 			default:
 				break;
 		}
-		last = list;
 		list = list->next;
 	}
 }

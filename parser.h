@@ -116,6 +116,7 @@ node * mk_pos_list(int key, node *list, unsigned int start, unsigned int stop);
 void   free_node(node *n);
 void   free_node_tree(node * n);
 void   print_node_tree(node * n);
+node * copy_node(node *n);
 node * copy_node_tree(node *n);
 
 node * cons(node *new, node *list);

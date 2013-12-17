@@ -695,7 +695,7 @@ void debug_node(node *n) {
 	}
 }
 
-node * copy_node_tree(node *n) {
+node * copy_node(node *n) {
 	if (n == NULL)
 		return NULL;
 	else {
@@ -713,6 +713,16 @@ node * copy_node_tree(node *n) {
 		if (n->children != NULL)
 			m->children = copy_node_tree(n->children);
 
+		return m;
+	}
+}
+
+node * copy_node_tree(node *n) {
+	if (n == NULL)
+		return NULL;
+	else {
+		node *m = copy_node(n);
+		
 		if (n->next != NULL)
 			m->next = copy_node_tree(n->next);
 	
