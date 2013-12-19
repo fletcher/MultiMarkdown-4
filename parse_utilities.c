@@ -264,6 +264,20 @@ scratch_pad * mk_scratch_pad(unsigned long extensions) {
 	}
 	ran_start(310952L);
 	
+	result->lyx_para_type = PARA;             /* CRC - Simple paragraph */
+	result->lyx_level = 0;                    /* CRC - out outside level */
+	result->no_lyx_footnote = 0;              /* CRC  */
+	result->lyx_number_headers = FALSE;       /* CRC - default is not to number */
+	result->lyx_debug_nest = 0;               /* CRC - initialize debug formatting */
+	result->lyx_debug_pad = g_string_new(""); /* CRC - initally, no indent */
+	result->lyx_definition_hit = TRUE;        /* CRC - initialize to have hit it (closed) */
+	result->lyx_definition_open = FALSE;      /* CRC - don't have an open definition */
+	result->lyx_fragile = FALSE;              /* CRC - not in a fragile section */
+	result->lyx_beamerbullet = FALSE;         /* CRC - not in a beamer bullet */
+	result->lyx_debug_nest = 0;               /* CRC - no nesting yet */
+	result->lyx_table_need_line = FALSE;      /* CRC - No table yet */
+	result->lyx_table_total_rows = 0;         /* CRC - No rows */
+	result->lyx_table_total_cols = 0;         /* CRC - No Columns */
 	return result;
 }
 
@@ -277,6 +291,8 @@ void free_scratch_pad(scratch_pad *scratch) {
 	free_node_tree(scratch->links);
 	free_node_tree(scratch->glossary);
 	free_node_tree(scratch->citations);
+	
+	g_string_free(scratch->lyx_debug_pad);    /* CRC - initally, no indent */
 	
 	if (scratch->latex_footer != NULL)
 		free(scratch->latex_footer);
