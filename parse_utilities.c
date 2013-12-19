@@ -292,7 +292,7 @@ void free_scratch_pad(scratch_pad *scratch) {
 	free_node_tree(scratch->glossary);
 	free_node_tree(scratch->citations);
 	
-	g_string_free(scratch->lyx_debug_pad);    /* CRC - initally, no indent */
+	g_string_free(scratch->lyx_debug_pad, true);    /* CRC - initally, no indent */
 	
 	if (scratch->latex_footer != NULL)
 		free(scratch->latex_footer);
