@@ -50,7 +50,7 @@ void yy_input_func(char *buf, int *result, int max_size, parser_data *data)
 
 Doc =  BOM? a:StartList b:StartList
 		( &{ !ext(EXT_COMPATIBILITY) && !ext(EXT_NO_METADATA) }
-			&( MetaDataKey Sp ':' Sp (!Newline)) MetaData
+			&( (YAMLStart)? MetaDataKey Sp ':' Sp (!Newline)) MetaData
 				{ a = cons($$, a); b = node(FOOTER); } )?
 		( Block { a = cons($$, a); } )*
 		BlankLine*
@@ -59,9 +59,10 @@ Doc =  BOM? a:StartList b:StartList
 			((parser_data *)G->data)->result = reverse_list(a);
 		}
 
-MetaData = a:StartList !([A-Za-z]+ "://") !SetextHeading
+MetaData = a:StartList (YAMLStart)? !([A-Za-z]+ "://") !SetextHeading
 		(MetaDataKeyValue { a = cons($$, a); })+
 		{ $$ = list(METADATA, a); }
+		(YAMLStop)?
 
 MetaDataKeyValue = a:MetaDataKey Sp ':' Sp b:MetaDataValue
 	{
@@ -81,12 +82,16 @@ MetaDataValue = a:StartList
 		((< (!Newline .)* > { a = cons(str(yytext), a); })
 		((Newline &(!BlankLine !SingleLineMetaKeyValue Sp RawLine))
 			{ a = cons(str("\n"), a); } | Newline)
-		(!BlankLine !SingleLineMetaKeyValue Sp RawLine
+		(!BlankLine !SingleLineMetaKeyValue !YAMLStop Sp RawLine
 			{ a = cons(str(yytext), a); } )* )
 		{
 			$$ = mk_str_from_list(a, false);
 			$$->key = METAVALUE;
 		}
+
+YAMLStart = "---" BlankLine
+
+YAMLStop = ("---"|"...") BlankLine
 
 DocForMetaDataOnly = BOM? a:StartList
 		( &( MetaDataKey Sp ':' Sp (!Newline)) MetaData
