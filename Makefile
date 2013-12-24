@@ -29,7 +29,8 @@ $(PROGRAM) : $(OBJS)
 clean:
 	rm -f $(PROGRAM) $(OBJS) parser.c enumMap.txt speed*.txt; \
 	rm -rf mac_installer/Package_Root/usr/local/bin mac_installer/Support_Root mac_installer/*.pkg; \
-	rm -f mac_installer/Resources/*.html
+	rm -f mac_installer/Resources/*.html; \
+	rm -rf build
 
 # Build for windows on a *nix machine with MinGW installed
 windows: parser.c
@@ -176,12 +177,12 @@ xcode:
 	cp build/Release/multimarkdown .
 
 # Build Mac Installer
-mac-installer:
+mac-installer: xcode
 	mkdir -p mac_installer/Package_Root/usr/local/bin
 	mkdir -p mac_installer/Support_Root/Library/Application\ Support
 	mkdir -p mac_installer/Resources
 	rm -rf mac_installer/Support_Root
-	cp multimarkdown scripts/mmd* mac_installer/Package_Root/usr/local/bin/
+	cp build/Release/multimarkdown scripts/mmd* mac_installer/Package_Root/usr/local/bin/
 	./multimarkdown README.md > mac_installer/Resources/README.html
 	./multimarkdown mac_installer/Resources/Welcome.txt > mac_installer/Resources/Welcome.html
 	./multimarkdown LICENSE > mac_installer/Resources/License.html
