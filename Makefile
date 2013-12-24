@@ -170,6 +170,11 @@ test-speed-gruber: speed64.txt
 	time ./$(PROGRAM) -c speed64.txt > /dev/null
 	time MarkdownTest/Markdown.pl speed64.txt > /dev/null
 
+# Build using Xcode (more compatible across legacy OS/Hardware)
+xcode: 
+	xcodebuild
+	cp build/Release/multimarkdown .
+
 # Build Mac Installer
 mac-installer:
 	mkdir -p mac_installer/Package_Root/usr/local/bin
