@@ -20,6 +20,7 @@
 */
 
 #include "parser.h"
+#include <libgen.h>
 
 #pragma mark - Parse Tree
 
