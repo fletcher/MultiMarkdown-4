@@ -103,6 +103,9 @@ void transclude_source(GString *source, char *basedir, char *stack) {
 		stop = strstr(start,"}}");
 		if (stop == NULL)
 			break;
+
+		// TODO: Need to check that we found something reasonable 
+
 		strncpy(real,start+2,stop-start-2);
 		real[stop-start-2] = '\0';
 
@@ -139,6 +142,8 @@ void transclude_source(GString *source, char *basedir, char *stack) {
 			stackstring = g_string_new(stack);
 			g_string_append_printf(stackstring,"%s\n",filename->str);
 
+
+			/* Recursively transclude files */
 			transclude_source(filebuffer, folder->str, stackstring->str);
 
 			temp = source_without_metadata(filebuffer->str, 0x000000);
