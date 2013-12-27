@@ -77,7 +77,6 @@ int main(int argc, char **argv)
 	FILE *output;
 	int curchar;
 	GString *filename = NULL;
-	char *temp;
 	
 	char *out;
 	
@@ -273,11 +272,11 @@ int main(int argc, char **argv)
 		
 		for (i = 0; i < numargs; i++) {
 			inputbuf = g_string_new("");
-			char full[1000];
+			char *temp;
 			char *folder;
 
-			realpath(argv[i+1],full);
-			folder = dirname(full);
+			temp = strdup(argv[i+1]);
+			folder = dirname(temp);
 
 			/* Read file */
 			if ((input = fopen(argv[i+1], "r")) == NULL ) {
@@ -314,7 +313,8 @@ int main(int argc, char **argv)
 				return(EXIT_SUCCESS);
 			}
 			
-			transclude_source(inputbuf, folder, NULL);
+			if (!(extensions & EXT_COMPATIBILITY))
+				transclude_source(inputbuf, folder, NULL);
 
 			out = markdown_to_string(inputbuf->str,  extensions, output_format);
 			
@@ -369,7 +369,7 @@ int main(int argc, char **argv)
 		/* get input from stdin or concat all files */
 		inputbuf = g_string_new("");
 		char *folder;
-		char full[1000];
+		char *temp;
 
 		folder = getcwd(0,0);
 
@@ -381,8 +381,8 @@ int main(int argc, char **argv)
 		} else {
 			/* get files */
 			free(folder);
-			realpath(argv[1],full);
-			folder = dirname(full);
+			temp = strdup(argv[1]);
+			folder = dirname(temp);
 
 			for (i = 0; i < numargs; i++) {
 				if ((input = fopen(argv[i+1], "r")) == NULL ) {
@@ -398,7 +398,8 @@ int main(int argc, char **argv)
 			}
 		}
 		
-		transclude_source(inputbuf, folder, NULL);
+		if (!(extensions & EXT_COMPATIBILITY))
+			transclude_source(inputbuf, folder, NULL);
 
 		/* list metadata keys */
 		if (list_meta_keys) {

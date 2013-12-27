@@ -19,6 +19,35 @@
 #include "parser.h"
 
 
+/* Combine directory and filename to create a full path */
+char * path_from_dir_base(char *dir, char *base) {
+#if defined(__WIN32)
+	char sep = '\\';
+#else
+	char sep = '/';
+#endif
+	GString *path = NULL;
+	char *result;
+
+	if ((base != NULL) && (base[0] == sep)) {
+		path = g_string_new(base);
+	} else {
+		path = g_string_new(dir);
+
+		/* Ensure that folder ends in "/" */
+		if (!(path->str[strlen(path->str)-1] == sep) ) {
+			g_string_append_c(path, sep);
+		}
+
+		g_string_append_printf(path, "%s", base);
+	}
+
+	result = path->str;
+	g_string_free(path, false);
+
+	return result;
+}
+
 /* Return pointer to beginning of text without metadata */
 char * source_without_metadata(char * source, unsigned long extensions ) {
 	char *result;
@@ -40,18 +69,18 @@ char * source_without_metadata(char * source, unsigned long extensions ) {
 /* Given a GString containing MMD source, and optional base directory,
 	substitute transclusion references in the source 
 
-	Pass the path to the current folder if available. 
+	Pass the path to the current folder if available -- should be a full path. 
 
-	Keep track of what we're parsing to prevent recursion. */
+	Keep track of what we're parsing to prevent recursion using stack. */
 void transclude_source(GString *source, char *basedir, char *stack) {
-	char *trans_base = strdup(basedir);
-	char *original_dir;
-	char real[1000];
+	char *base = strdup(basedir);
+	char *path = strdup(base);
 	char *start;
 	char *stop;
 	char *temp;
 	int curchar;
 	size_t pos;
+	char real[1000];
 	FILE *input;
 
 	GString *folder = NULL;
@@ -59,32 +88,27 @@ void transclude_source(GString *source, char *basedir, char *stack) {
 	GString *filebuffer = NULL;
 	GString *stackstring = NULL;
 
-	/* Store current directory */
-	original_dir = getcwd(0,0);
-
 	/* Change to file directory */
-	if (basedir != NULL)
-		chdir(basedir);
+	if (base == NULL) {
+		base = strdup("");
+		path = strdup(base);
+	}
 
 	/* Look for override folder inside document */
 	if (has_metadata(source->str, 0x000000)) {
-		free(trans_base);
-		trans_base = extract_metadata_value(source->str, 0x000000, "transcludebase");
-		if (trans_base == NULL)
-			trans_base = strdup(basedir);
+		char *meta = extract_metadata_value(source->str, 0x000000, "transcludebase");
+		if (meta != NULL)
+			path = path_from_dir_base(base, meta);
 	}
 
-	if (trans_base == NULL) {
+	if (path == NULL) {
 		/* We have nowhere to look, so nothing to do */
-		chdir (original_dir);
-		free(trans_base);
-		free(original_dir);
+		free(path);
+		free(base);
 		return;
 	}
 
-	/* Expand the full directory path (not necessary, but improves debugging */
-	realpath(trans_base,real);
-	folder = g_string_new(real);
+	folder = g_string_new(path);
 
 	/* Ensure that folder ends in "/" */
 	/* TODO: adjust for windows */
@@ -92,8 +116,7 @@ void transclude_source(GString *source, char *basedir, char *stack) {
 		g_string_append_c(folder, '/');
 	}
 
-//	fprintf(stderr, "Transclude using '%s'\n", folder->str);
-	
+	//fprintf(stderr, "Transclude using '%s'\n", folder->str);
 
 	/* Iterate through {{foo.txt}} and substitute contents of file without metadata */
 
@@ -118,7 +141,7 @@ void transclude_source(GString *source, char *basedir, char *stack) {
 		if (stack != NULL) {
 			temp = strstr(stack,filename->str);
 
-			if (temp != NULL) {
+			if ((temp != NULL) && (temp[strlen(filename->str)] == '\n')){
 				start = strstr(source->str + pos,"{{");
 				g_string_free(filename, true);
 				continue;
@@ -159,9 +182,7 @@ void transclude_source(GString *source, char *basedir, char *stack) {
 		g_string_free(filename, true);
 	}
 
-
-	chdir (original_dir);
 	g_string_free(folder, true);
-	free(trans_base);
-	free(original_dir);
+	free(path);
+	free(base);
 }
