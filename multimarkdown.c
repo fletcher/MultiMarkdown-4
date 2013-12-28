@@ -20,7 +20,9 @@
 */
 
 #include <getopt.h>
+#include <libgen.h>
 #include "parser.h"
+#include "transclude.h"
 
 int main(int argc, char **argv)
 {
@@ -75,7 +77,6 @@ int main(int argc, char **argv)
 	FILE *output;
 	int curchar;
 	GString *filename = NULL;
-	char *temp;
 	
 	char *out;
 	
@@ -271,7 +272,9 @@ int main(int argc, char **argv)
 		
 		for (i = 0; i < numargs; i++) {
 			inputbuf = g_string_new("");
-			
+			char *temp = NULL;
+			char *folder = NULL;
+
 			/* Read file */
 			if ((input = fopen(argv[i+1], "r")) == NULL ) {
 				perror(argv[i+1]);
@@ -307,6 +310,14 @@ int main(int argc, char **argv)
 				return(EXIT_SUCCESS);
 			}
 			
+			if (!(extensions & EXT_COMPATIBILITY)) {
+				temp = strdup(argv[i+1]);
+				folder = dirname(temp);
+				transclude_source(inputbuf, folder, NULL);
+				free(temp);
+				// free(folder);
+			}
+
 			out = markdown_to_string(inputbuf->str,  extensions, output_format);
 			
 			g_string_free(inputbuf, true);
@@ -359,7 +370,11 @@ int main(int argc, char **argv)
 	} else {
 		/* get input from stdin or concat all files */
 		inputbuf = g_string_new("");
-		
+		char *folder = NULL;
+		char *temp = NULL;
+
+		folder = getcwd(0,0);
+
 		if (numargs == 0) {
 			/* get stdin */
 			while ((curchar = fgetc(stdin)) != EOF)
@@ -367,11 +382,17 @@ int main(int argc, char **argv)
 			fclose(stdin);
 		} else {
 			/* get files */
+			free(folder);
+			temp = strdup(argv[1]);
+			folder = dirname(temp);
+
 			for (i = 0; i < numargs; i++) {
 				if ((input = fopen(argv[i+1], "r")) == NULL ) {
 					perror(argv[i+1]);
 					g_string_free(inputbuf, true);
 					g_string_free(filename, true);
+					free(folder);
+					free(temp);
 					exit(EXIT_FAILURE);
 				}
 				
@@ -381,6 +402,14 @@ int main(int argc, char **argv)
 			}
 		}
 		
+		if (!(extensions & EXT_COMPATIBILITY))
+			transclude_source(inputbuf, folder, NULL);
+
+		free(temp);
+
+		//if (folder != NULL)
+		//	free(folder);
+
 		/* list metadata keys */
 		if (list_meta_keys) {
 			out = extract_metadata_keys(inputbuf->str, extensions);

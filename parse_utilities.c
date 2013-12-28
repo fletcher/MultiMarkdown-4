@@ -20,6 +20,7 @@
 */
 
 #include "parser.h"
+#include <libgen.h>
 
 #pragma mark - Parse Tree
 
@@ -127,7 +128,11 @@ node * mk_pos_list(int key, node *list, unsigned int start, unsigned int stop) {
 
 /* free just the current node and children*/
 void free_node(node *n) {
-	free(n->str);
+	if (n == NULL)
+		return;
+	
+	if (n->str != NULL)
+		free(n->str);
 	n->str = NULL;
 
 	free_link_data(n->link_data);

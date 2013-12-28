@@ -102,7 +102,7 @@ DocForMetaDataOnly = BOM? a:StartList
 			((parser_data *)G->data)->result = reverse_list(a);
 		}
 
-SkipBlock = HtmlBlock
+SkipBlock = HtmlBlock { free_node_tree($$); }
 		| ( !'#' !SetextBottom1 !SetextBottom2 !BlankLine RawLine )+ BlankLine*
 		| BlankLine+
 		| RawLine

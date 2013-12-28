@@ -15,6 +15,9 @@
 		5A1FF048186A1724002544C0 /* lyxbeamer.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A1FF046186A1724002544C0 /* lyxbeamer.c */; };
 		5A1FF049186A1724002544C0 /* lyxbeamer.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A1FF046186A1724002544C0 /* lyxbeamer.c */; };
 		5A1FF04A186A1724002544C0 /* lyxbeamer.h in Headers */ = {isa = PBXBuildFile; fileRef = 5A1FF047186A1724002544C0 /* lyxbeamer.h */; };
+		5A56E585186CE833004089C0 /* transclude.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A56E583186CE833004089C0 /* transclude.c */; };
+		5A56E586186CE833004089C0 /* transclude.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A56E583186CE833004089C0 /* transclude.c */; };
+		5A56E587186CE833004089C0 /* transclude.h in Headers */ = {isa = PBXBuildFile; fileRef = 5A56E584186CE833004089C0 /* transclude.h */; };
 		5A60F8B4172BFE4700EFBF5B /* parse_utilities.c in Sources */ = {isa = PBXBuildFile; fileRef = 5AD6CB0C1718CB560085E51D /* parse_utilities.c */; };
 		5A60F8DB172C07E200EFBF5B /* GLibFacade.c in Sources */ = {isa = PBXBuildFile; fileRef = 5AD6CB0A1718CB560085E51D /* GLibFacade.c */; };
 		5A60F8DC172C07E200EFBF5B /* parse_utilities.c in Sources */ = {isa = PBXBuildFile; fileRef = 5AD6CB0C1718CB560085E51D /* parse_utilities.c */; };
@@ -94,6 +97,8 @@
 		5A2534F2172768A8003D1A91 /* memoir.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = memoir.h; sourceTree = "<group>"; };
 		5A2534F3172768A8003D1A91 /* opml.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = opml.c; sourceTree = "<group>"; };
 		5A2534F4172768A8003D1A91 /* opml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = opml.h; sourceTree = "<group>"; };
+		5A56E583186CE833004089C0 /* transclude.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = transclude.c; sourceTree = "<group>"; };
+		5A56E584186CE833004089C0 /* transclude.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = transclude.h; sourceTree = "<group>"; };
 		5A60F8D7172C07D100EFBF5B /* libMultiMarkdown.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMultiMarkdown.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A60F8FF172C099100EFBF5B /* libMultiMarkdown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libMultiMarkdown.h; sourceTree = "<group>"; };
 		5A89852C17297DFB00D1D72D /* odf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = odf.c; sourceTree = "<group>"; };
@@ -164,6 +169,8 @@
 				5A116B571734545700DB0DE6 /* critic.h */,
 				5AE0694318515D1300DFFF33 /* rtf.c */,
 				5ABBCFCA18442416005F519F /* rng.c */,
+				5A56E583186CE833004089C0 /* transclude.c */,
+				5A56E584186CE833004089C0 /* transclude.h */,
 				5AD6CB231718CCDE0085E51D /* Generated Files */,
 				5AD6CB151718CB9A0085E51D /* Products */,
 			);
@@ -194,6 +201,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5A1FF04A186A1724002544C0 /* lyxbeamer.h in Headers */,
+				5A56E587186CE833004089C0 /* transclude.h in Headers */,
 				5A1FF045186A16D3002544C0 /* lyx.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -320,6 +328,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5A60F8DB172C07E200EFBF5B /* GLibFacade.c in Sources */,
+				5A56E586186CE833004089C0 /* transclude.c in Sources */,
 				5A60F8DC172C07E200EFBF5B /* parse_utilities.c in Sources */,
 				5A60F8DD172C07E200EFBF5B /* text.c in Sources */,
 				5A60F8DE172C07E200EFBF5B /* writer.c in Sources */,
@@ -342,6 +351,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A56E585186CE833004089C0 /* transclude.c in Sources */,
 				5AE59DB5172A14D600401A65 /* GLibFacade.c in Sources */,
 				5A1FF048186A1724002544C0 /* lyxbeamer.c in Sources */,
 				5AE59DB7172A14D600401A65 /* parser.c in Sources */,
