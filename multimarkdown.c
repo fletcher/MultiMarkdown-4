@@ -146,7 +146,7 @@ int main(int argc, char **argv)
 				"    --mask, --nomask       Mask email addresses in HTML\n"
 				
 				"\nAvailable FORMATs: html(default), latex, beamer, memoir, odf, opml, lyx\n\n"
-				"NOTE: The lyx output format was created by Charles R. Cowan and is provided as is.\n\n\n"
+				"NOTE: The lyx output format was created by Charles R. Cowan, and \n\tis provided as is.\n\n\n"
 				);
 				return(EXIT_SUCCESS);
 			
