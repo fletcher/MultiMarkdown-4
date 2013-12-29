@@ -112,6 +112,7 @@ void print_rtf_node(GString *out, node *n, scratch_pad *scratch) {
 		case TABLEBODY:
 		case TABLECAPTION:
 			print_rtf_node_tree(out,n->children,scratch);
+			g_string_append_printf(out, "\\\n");
 			break;
 		case TABLEHEAD:
 		case FOOTER:
