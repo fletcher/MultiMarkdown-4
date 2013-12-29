@@ -27,6 +27,9 @@
 #define kH4 "\\s4 \\f1\\fs24\\ql\\sb240\\sa180\\i\\b "
 #define kH5 "\\s5 \\f1\\fs24\\ql\\sb240\\sa180\\b "
 #define kH6 "\\s6 \\f1\\fs22\\ql\\sb240\\sa180\\b "
+#define kQuoteStyle "\\s7 \\qj\\sa180\\f0\\fs24\\li720\\ri720 "
+#define kNoteStyle "\\s7 \\qj\\sa180\\f0\\fs24\\li360\\ri360 "
+#define kCodeStyle "\\s7 \\qj\\sa180\\f2\\fs20\\li360\\ri360 "
 
 /* print_rtf_node_tree -- convert node tree to RTF */
 void print_rtf_node_tree(GString *out, node *list, scratch_pad *scratch) {
@@ -40,17 +43,16 @@ void print_rtf_node_tree(GString *out, node *list, scratch_pad *scratch) {
 void print_rtf_node(GString *out, node *n, scratch_pad *scratch) {
 	int i;
 	int lev;
+	int old_type;
 	char *temp;
 	link_data *temp_link_data;
+	node *temp_node;
 
 	switch (n->key) {
 		case SPACE:
 		case STR:
 		/* TODO: Some of the following need improvements */
 		case MATHSPAN:
-		case VERBATIM:
-		case CODE:
-		case BLOCKQUOTE:
 			print_rtf_string(out, n->str, scratch);
 			break;
 		case METADATA:
@@ -119,9 +121,46 @@ void print_rtf_node(GString *out, node *n, scratch_pad *scratch) {
 			trim_trailing_whitespace(n->str);
 			print_rtf_string(out, n->str, scratch);
 			break;
+		case BLOCKQUOTEMARKER:
+			print_rtf_node_tree(out, n->children, scratch);
+			break;
+		case BLOCKQUOTE:
+			old_type = scratch->odf_para_type;
+			scratch->odf_para_type = BLOCKQUOTE;
+			pad_rtf(out, 2, scratch);
+			print_rtf_node_tree(out,n->children,scratch);
+			scratch->padded = 1;
+			scratch->odf_para_type = old_type;
+			break;
+		case VERBATIM:
+			pad_rtf(out, 2, scratch);
+			g_string_append_printf(out, "{\\pard " kCodeStyle);
+			print_rtf_code_string(out,n->str,scratch);
+			g_string_append_printf(out, "\n\\par}\n");
+			scratch->padded = 0;
+			break;
+		case CODE:
+			print_rtf_node_tree(out,n->children,scratch);
+//			print_rtf_string(out, n->str, scratch);
+			break;
 		case PARA:
 			pad_rtf(out, 2, scratch);
-			g_string_append_printf(out, "{\\pard " kNormalStyle);
+			switch (scratch->odf_para_type) {
+				case BLOCKQUOTE:
+					g_string_append_printf(out, "{\\pard " kQuoteStyle);
+					break;
+				case NOTEREFERENCE:
+				case CITATION:
+					g_string_append_printf(out, "{\\pard " kNoteStyle);
+					break;
+				case CODE:
+				case VERBATIM:
+					g_string_append_printf(out, "{\\pard " kCodeStyle);
+					break;
+				default:
+					g_string_append_printf(out, "{\\pard " kNormalStyle);
+					break;
+			}
 			print_rtf_node_tree(out,n->children,scratch);
 			g_string_append_printf(out, "\n\\par}\n");
 			scratch->padded = 1;
@@ -179,6 +218,7 @@ void print_rtf_node(GString *out, node *n, scratch_pad *scratch) {
 			scratch->cell_type = 'd';
 			break;
 		case TABLEROW:
+			scratch->table_column = 0;
 			g_string_append_printf(out, "\\trowd\\trautofit1\n");
 			for (i=0; i < strlen(scratch->table_alignment); i++) {
 				g_string_append_printf(out, "\\cellx%d\n",i+1);
@@ -187,9 +227,37 @@ void print_rtf_node(GString *out, node *n, scratch_pad *scratch) {
 			g_string_append_printf(out, "\\row\n");
 			break;
 		case TABLECELL:
-			g_string_append_printf(out, "\\intbl{");
+			temp = scratch->table_alignment;
+			if (strncmp(&temp[scratch->table_column],"h",1) == 0) {
+				scratch->table_column++;
+			}
+			lev = scratch->table_column;
+	
+			g_string_append_printf(out, "\\intbl");
+
+			if (scratch->cell_type == 'h') {
+				g_string_append_printf(out, "\\qc{\\b ");
+			} else {
+				if ( strncmp(&temp[lev],"r",1) == 0) {
+					g_string_append_printf(out, "\\qr");
+				} else if ( strncmp(&temp[lev],"R",1) == 0) {
+					g_string_append_printf(out, "\\qr");
+				} else if ( strncmp(&temp[lev],"c",1) == 0) {
+					g_string_append_printf(out, "\\qc");
+				} else if ( strncmp(&temp[lev],"C",1) == 0) {
+					g_string_append_printf(out, "\\qc");
+				} else {
+					g_string_append_printf(out, "\\ql");
+				}
+			}
+			g_string_append_printf(out, " {");
 			print_rtf_node_tree(out, n->children, scratch);
+
+			if (scratch->cell_type == 'h')
+				g_string_append_printf(out, "}");
+
 			g_string_append_printf(out, "}\\cell\n");
+			scratch->table_column++;
 			break;
 		case STRONG:
 			g_string_append_printf(out, "{\\b ");
@@ -252,6 +320,76 @@ void print_rtf_node(GString *out, node *n, scratch_pad *scratch) {
 			g_string_append_printf(out, "{\\listtext \\'95 }");
 			print_rtf_node_tree(out, n->children, scratch);
 			break;
+		case NOTEREFERENCE:
+			lev = note_number_for_node(n, scratch);
+			temp_node = node_for_count(scratch->used_notes, lev);
+			scratch->padded = 2;
+			g_string_append_printf(out, "{\\super\\chftn}{\\footnote\\pard\\plain\\chtfn ");
+			print_rtf_node_tree(out, temp_node->children, scratch);
+			g_string_append_printf(out, "}");
+			scratch->padded = 0;
+			break;
+		case NOCITATION:
+		case CITATION:
+			if ((n->link_data != NULL) && (strncmp(n->link_data->label,"[#",2) == 0)) {
+				/* external citation */
+				g_string_append_printf(out, "%s", n->link_data->label);
+			} else {
+				/* MMD citation, so output as endnote */
+				scratch->printing_notes = 1;
+				lev = 0;
+				if (n->link_data != NULL)
+					lev = note_number_for_label(n->link_data->label, scratch);
+				if (lev != 0) {
+					temp_node = node_for_count(scratch->used_notes, lev);
+					
+					/* flag that this is used as a citation */
+					temp_node->key = CITATIONSOURCE;
+					if (lev > scratch->max_footnote_num) {
+						/* first use of this citation */
+						scratch->max_footnote_num = lev;
+						
+						old_type = scratch->odf_para_type;
+						scratch->odf_para_type = CITATION;
+						
+						/* change to represent cite count only */
+						lev = cite_count_node_from_end(temp_node);
+						g_string_append_printf(out, "{\\super\\chftn}{\\footnote\\ftnalt\\pard\\plain\\chtfn ");
+						scratch->padded = 2;
+						if (temp_node->children != NULL) {
+							print_rtf_node(out, temp_node->children, scratch);
+						}
+						pad(out, 1, scratch);
+						g_string_append_printf(out, "}");
+						scratch->odf_para_type = old_type;
+					} else {
+						/* We are reusing a previous citation */
+
+						/* Change lev to represent cite count only */
+						lev = cite_count_node_from_end(temp_node);
+					
+						g_string_append_printf(out, "REUSE CITATION");
+					}
+				} else {
+					/* not located -- this is external cite */
+
+					if ((n->link_data != NULL) && (n->key == NOCITATION)) {
+						g_string_append_printf(out, "%s", n->link_data->label);
+					} else if (n->link_data != NULL) {
+						g_string_append_printf(out, "[");
+						if (n->children != NULL) {
+							print_rtf_node(out, n->children, scratch);
+							g_string_append_printf(out, "][");
+						}
+						g_string_append_printf(out, "#%s]",n->link_data->label);
+					}
+				}
+			}
+			scratch->printing_notes = 0;
+			if ((n->next != NULL) && (n->next->key == CITATION)) {
+				g_string_append_printf(out, " ");
+			}
+			break;
 		case APOSTROPHE:
 			print_rtf_localized_typography(out, APOS, scratch);
 			break;
@@ -285,7 +423,15 @@ void print_rtf_node(GString *out, node *n, scratch_pad *scratch) {
 			print_rtf_node_tree(out,n->children,scratch);
 			g_string_append_printf(out, "\\\n");
 			break;
+		case NOTELABEL:
 		case FOOTER:
+		case LINKREFERENCE:
+			break;
+		case GLOSSARYSOURCE:
+		case CITATIONSOURCE:
+		case NOTESOURCE:
+			if (scratch->printing_notes)
+				print_html_node_tree(out, n->children, scratch);
 			break;
 		default:
 			fprintf(stderr, "print_rtf_node encountered unknown node key = %d\n",n->key);
@@ -298,8 +444,9 @@ void print_rtf_node(GString *out, node *n, scratch_pad *scratch) {
 
 void begin_rtf_output(GString *out, node* list, scratch_pad *scratch) {
 	g_string_append_printf(out, "{\\rtf1\\ansi\\deff0 {\\fonttbl\n" \
-		"{\\f0\\froman Times;}\n" \
-		"{\\f1\\swiss Arial;}\n" \
+		"{\\f0\\froman Times New Roman;}\n" \
+		"{\\f1\\fswiss Arial;}\n" \
+		"{\\f2\\fmodern Courier New;}\n" \
 		"}\n" \
 		"{\\stylesheet\n" \
 		"{" kNormalStyle "Normal;}\n" \
@@ -309,7 +456,10 @@ void begin_rtf_output(GString *out, node* list, scratch_pad *scratch) {
 		"{" kH4 "Header 4;}\n" \
 		"{" kH5 "Header 5;}\n" \
 		"{" kH6 "Header 6;}\n" \
-		"}\n");
+		"{" kQuoteStyle "Quotation;}\n" \
+		"{" kNoteStyle "Note;}\n" \
+		"}\n" \
+		"\\margt1150\\margb1150\\margl1150\\margr1150\n");
 }
 
 void end_rtf_output(GString *out, node* list, scratch_pad *scratch) {
@@ -427,6 +577,29 @@ void print_rtf_string(GString *out, char *str, scratch_pad *scratch) {
 	}
 }
 
+void print_rtf_code_string(GString *out, char *str, scratch_pad *scratch) {
+	if (str == NULL)
+		return;
+	while (*str != '\0') {
+		switch (*str) {
+			case '\\':
+				g_string_append_printf(out, "\\\\");
+				break;
+			case '{':
+				g_string_append_printf(out, "\\{");
+				break;
+			case '}':
+				g_string_append_printf(out, "\\}");
+				break;
+			case '\n':
+				g_string_append_printf(out, "\\\n");
+				break;
+			default:
+				g_string_append_c(out, *str);
+		}
+		str++;
+	}
+}
 void pad_rtf(GString *out, int num, scratch_pad *scratch) {
 	while (num-- > scratch->padded)
 		g_string_append_printf(out, "\n");
