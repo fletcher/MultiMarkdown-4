@@ -152,12 +152,10 @@ void print_rtf_node(GString *out, node *n, scratch_pad *scratch) {
 					break;
 			}
 			if (n->children->key == AUTOLABEL) {
-				fprintf(stderr, "AUTOLABEL\n");
 				temp = label_from_string(n->children->str);
 				g_string_append_printf(out, "{\\*\\bkmkstart %s}{\\*\\bkmkend %s}",temp, temp);
 				print_rtf_node_tree(out, n->children->next, scratch);
 			} else {
-				fprintf(stderr, "REG\n");
 				temp = label_from_node_tree(n->children);
 				g_string_append_printf(out, "{\\*\\bkmkstart %s}{\\*\\bkmkend %s}",temp,temp);
 				print_rtf_node_tree(out, n->children, scratch);
