@@ -41,6 +41,7 @@ void print_rtf_node(GString *out, node *n, scratch_pad *scratch) {
 	int i;
 	int lev;
 	char *temp;
+	link_data *temp_link_data;
 
 	switch (n->key) {
 		case SPACE:
@@ -63,7 +64,6 @@ void print_rtf_node(GString *out, node *n, scratch_pad *scratch) {
 			temp = label_from_string(n->str);
 			free(n->str);
 			n->str = temp;
-			fprintf(stderr, "%s\n", n->str);
 			if (strcmp(n->str, "baseheaderlevel") == 0) {
 				scratch->baseheaderlevel = atoi(n->children->str);
 				break;
@@ -106,7 +106,11 @@ void print_rtf_node(GString *out, node *n, scratch_pad *scratch) {
 				print_rtf_node(out, n->children, scratch);
 				g_string_append_printf(out, "}\n");
 			} else if (strcmp(n->str, "comment") == 0) {
-				g_string_append_printf(out, "{\\doccom ");
+				g_string_append_printf(out, "{\\doccomm ");
+				print_rtf_node(out, n->children, scratch);
+				g_string_append_printf(out, "}\n");
+			} else if (strcmp(n->str, "subject") == 0) {
+				g_string_append_printf(out, "{\\subject ");
 				print_rtf_node(out, n->children, scratch);
 				g_string_append_printf(out, "}\n");
 			}
@@ -191,6 +195,54 @@ void print_rtf_node(GString *out, node *n, scratch_pad *scratch) {
 		case LINEBREAK:
 			g_string_append_printf(out, "\\line ");
 			break;
+		case LINK:
+			temp_link_data = load_link_data(n, scratch);
+
+			if (temp_link_data == NULL) {
+				/* replace original text since no definition found */
+				g_string_append_printf(out, "[");
+				print_rtf_node(out, n->children, scratch);
+				g_string_append_printf(out,"]");
+				if (n->children->next != NULL) {
+					g_string_append_printf(out, "[");
+					print_rtf_node_tree(out, n->children->next, scratch);
+					g_string_append_printf(out,"]");
+				} else if (n->str != NULL) {
+					/* no title label, so see if we stashed str*/
+					g_string_append_printf(out, "%s", n->str);
+				} else {
+					g_string_append_printf(out, "[%s]",n->link_data->label);
+				}
+
+				free_link_data(temp_link_data);
+				break;
+			}
+
+			/* Insert link */
+			g_string_append_printf(out, "{\\field{\\*\\fldinst{HYPERLINK \"");
+			print_rtf_string(out, temp_link_data->source, scratch);
+			g_string_append_printf(out, "\"}}{\\fldrslt ");
+			if (n->children != NULL)
+				print_rtf_node_tree(out, n->children, scratch);
+			g_string_append_printf(out, "}}");
+
+			free(temp_link_data);
+			break;
+		case BULLETLIST:
+			pad(out, 2, scratch);
+			g_string_append_printf(out, "\\ls1\\ilvl0 ");
+			scratch->padded = 0;
+			print_rtf_node_tree(out, n->children, scratch);
+			break;
+		case ORDEREDLIST:
+			pad(out, 2, scratch);
+			scratch->padded = 0;
+			print_rtf_node_tree(out, n->children, scratch);
+			break;
+		case LISTITEM:
+			g_string_append_printf(out, "{\\listtext \\'95 }");
+			print_rtf_node_tree(out, n->children, scratch);
+			break;
 		case APOSTROPHE:
 			print_rtf_localized_typography(out, APOS, scratch);
 			break;
@@ -220,6 +272,7 @@ void print_rtf_node(GString *out, node *n, scratch_pad *scratch) {
 		/* TODO: Some of the following need improvements */
 		case TABLEBODY:
 		case TABLECAPTION:
+		case PLAIN:
 			print_rtf_node_tree(out,n->children,scratch);
 			g_string_append_printf(out, "\\\n");
 			break;

@@ -30,3 +30,5 @@ void use_inline_footnote(node *ref, scratch_pad *scratch);
 node * node_for_attribute(char *querystring, node *list);
 
 char * dimension_for_attribute(char *querystring, node *list);
+
+link_data * load_link_data(node *n, scratch_pad *scratch);

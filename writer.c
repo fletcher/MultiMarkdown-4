@@ -533,3 +533,42 @@ char * dimension_for_attribute(char *querystring, node *list) {
 #endif
     return(dimension);
 }
+
+
+/* Load available info for a link */
+link_data * load_link_data(node *n, scratch_pad *scratch) {
+	link_data *r = NULL;
+	GString *temp_str = NULL;
+	char *temp;
+
+	r = mk_link_data(n->link_data->label, n->link_data->source, n->link_data->title, n->link_data->attr);
+
+	/* Do we have proper info? */
+	if ((r->label == NULL) &&
+	(r->source == NULL)) {
+		/* we seem to be a [foo][] style link */
+		/* so load a label */
+		temp_str = g_string_new("");
+		print_raw_node_tree(temp_str, n->children);
+		r->label = temp_str->str;
+		g_string_free(temp_str, FALSE);
+	}
+	/* Load data by reference */
+	if (r->label != NULL) {
+		temp = strdup(r->label);
+
+		r->attr = NULL;
+		free_link_data(r);
+
+		r = extract_link_data(temp, scratch);
+		if (r == NULL) {
+			/* return NULL since no definition found */
+			
+			free(temp);
+			return NULL;
+		}
+		free(temp);
+	}
+
+	return r;
+}
