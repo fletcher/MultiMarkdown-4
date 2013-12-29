@@ -204,10 +204,27 @@ void print_rtf_node(GString *out, node *n, scratch_pad *scratch) {
 			scratch->padded = 1;
 			break;
 		case TABLE:
+			if ((n->children != NULL) && (n->children->key == TABLECAPTION)) {
+				if (n->children->children->key == TABLELABEL) {
+					temp = label_from_string(n->children->children->str);
+				} else {
+					temp = label_from_node_tree(n->children->children);
+				}
+				g_string_append_printf(out, "{\\*\\bkmkstart %s}{\\*\\bkmkend %s}",temp,temp);
+				free(temp);
+			}
 			pad_rtf(out, 2, scratch);
 			print_rtf_node_tree(out, n->children, scratch);
+			if ((n->children != NULL) && (n->children->key == TABLECAPTION)) {
+				g_string_append_printf(out, "{\\pard " kNormalStyle "\\qc ");
+				print_rtf_node_tree(out, n->children->children, scratch);
+				g_string_append_printf(out, "\\par}\n");
+			}
 			g_string_append_printf(out, "\\pard\\par\n");
 			scratch->padded = 1;
+			break;
+		case TABLELABEL:
+		case TABLECAPTION:
 			break;
 		case TABLESEPARATOR:
 			scratch->table_alignment = n->str;
@@ -324,10 +341,17 @@ void print_rtf_node(GString *out, node *n, scratch_pad *scratch) {
 			lev = note_number_for_node(n, scratch);
 			temp_node = node_for_count(scratch->used_notes, lev);
 			scratch->padded = 2;
+
 			g_string_append_printf(out, "{\\super\\chftn}{\\footnote\\pard\\plain\\chtfn ");
 			print_rtf_node_tree(out, temp_node->children, scratch);
 			g_string_append_printf(out, "}");
 			scratch->padded = 0;
+			break;
+		case GLOSSARYTERM:
+			print_rtf_string(out, n->children->str, scratch);
+			g_string_append_printf(out, ": ");
+			break;
+		case GLOSSARYSORTKEY:
 			break;
 		case NOCITATION:
 		case CITATION:
@@ -418,7 +442,6 @@ void print_rtf_node(GString *out, node *n, scratch_pad *scratch) {
 			break;
 		/* TODO: Some of the following need improvements */
 		case TABLEBODY:
-		case TABLECAPTION:
 		case PLAIN:
 			print_rtf_node_tree(out,n->children,scratch);
 			g_string_append_printf(out, "\\\n");
@@ -432,6 +455,10 @@ void print_rtf_node(GString *out, node *n, scratch_pad *scratch) {
 		case NOTESOURCE:
 			if (scratch->printing_notes)
 				print_html_node_tree(out, n->children, scratch);
+			break;
+		case IMAGEBLOCK:
+		case IMAGE:
+			g_string_append_printf(out, "IMAGES CANNOT BE INSERTED INTO AN RTF DOCUMENT FROM MULTIMARKDOWN \\\n");
 			break;
 		default:
 			fprintf(stderr, "print_rtf_node encountered unknown node key = %d\n",n->key);
