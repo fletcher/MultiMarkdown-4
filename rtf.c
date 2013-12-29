@@ -27,6 +27,8 @@ void print_rtf_node_tree(GString *out, node *list, scratch_pad *scratch) {
 
 /* print_rtf_node -- convert given node to RTF and append */
 void print_rtf_node(GString *out, node *n, scratch_pad *scratch) {
+	int i;
+
 	switch (n->key) {
 		case SPACE:
 		case STR:
@@ -39,6 +41,7 @@ void print_rtf_node(GString *out, node *n, scratch_pad *scratch) {
 			break;
 		case METADATA:
 			print_text_node_tree(out,n->children,scratch);
+			scratch->padded = 0;
 			break;
 		case METAKEY:
 			print_rtf_string(out, n->str, scratch);
@@ -47,32 +50,40 @@ void print_rtf_node(GString *out, node *n, scratch_pad *scratch) {
 			break;
 		case METAVALUE:
 			print_rtf_string(out, n->str, scratch);
-			pad_rtf(out,1, scratch);
 			break;
 		case PARA:
 			pad_rtf(out, 2, scratch);
 			print_rtf_node_tree(out,n->children,scratch);
-			scratch->padded = 0;
+			g_string_append_printf(out, "\\par\n");
+			scratch->padded = 1;
 			break;
 		case H1: case H2: case H3: case H4: case H5: case H6:
 			pad_rtf(out, 2, scratch);
 			print_rtf_node_tree(out, n->children, scratch);
-			scratch->padded = 0;
+			g_string_append_printf(out, "\\par\n");
+			scratch->padded = 1;
 			break;
 		case TABLE:
 			pad_rtf(out, 2, scratch);
 			print_rtf_node_tree(out, n->children, scratch);
+			g_string_append_printf(out, "\\pard\\par\n");
 			scratch->padded = 1;
 			break;
+		case TABLESEPARATOR:
+			scratch->table_alignment = n->str;
+			break;
 		case TABLEROW:
-			g_string_append_printf(out, "\\trowd\n");
+			g_string_append_printf(out, "\\trowd\\trautofit1\n");
+			for (i=0; i < strlen(scratch->table_alignment); i++) {
+				g_string_append_printf(out, "\\cellx%d\n",i+1);
+			}
 			print_rtf_node_tree(out, n->children, scratch);
 			g_string_append_printf(out, "\\row\n");
 			break;
 		case TABLECELL:
-			g_string_append_printf(out, "\\intbl ");
+			g_string_append_printf(out, "\\intbl{");
 			print_rtf_node_tree(out, n->children, scratch);
-			g_string_append_printf(out, "\\cell\n");
+			g_string_append_printf(out, "}\\cell\n");
 			break;
 		case STRONG:
 			g_string_append_printf(out, "\\b ");
@@ -108,6 +119,8 @@ void print_rtf_node(GString *out, node *n, scratch_pad *scratch) {
 			break;
 		case LIST:
 		case HEADINGSECTION:
+			print_rtf_node_tree(out,n->children,scratch);
+			break;
 		/* TODO: Some of the following need improvements */
 		case TABLEBODY:
 		case TABLECAPTION:
@@ -116,7 +129,6 @@ void print_rtf_node(GString *out, node *n, scratch_pad *scratch) {
 			break;
 		case TABLEHEAD:
 		case FOOTER:
-		case TABLESEPARATOR:
 			break;
 		default:
 			fprintf(stderr, "print_rtf_node encountered unknown node key = %d\n",n->key);
