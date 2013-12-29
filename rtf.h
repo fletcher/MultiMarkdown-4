@@ -11,5 +11,6 @@ void print_rtf_node(GString *out, node *n, scratch_pad *scratch);
 void print_rtf_localized_typography(GString *out, int character, scratch_pad *scratch);
 void print_rtf_string(GString *out, char *str, scratch_pad *scratch);
 void print_rtf_endnotes(GString *out, scratch_pad *scratch);
+void pad_rtf(GString *out, int pad, scratch_pad *scratch);
 
 #endif
