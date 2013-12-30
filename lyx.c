@@ -23,13 +23,12 @@
 */
 
 #include "lyx.h"
-//#include "latex.h"
 
-//#define DEBUG_ON
+/* #define DEBUG_ON */
 
-//#define DUMP_TREES
+/* #define DUMP_TREES */
 
-// allow the user to change the heading levels
+/* allow the user to change the heading levels */
 
 GString *heading_name[7];
 
@@ -128,7 +127,7 @@ void dump_tree(node* n, scratch_pad *scratch)
 	int i;
 	while(n != NULL){
 	   scratch->lyx_debug_nest++;
-       g_string_append(scratch->lyx_debug_pad,"  "); // add a level
+       g_string_append(scratch->lyx_debug_pad,"  "); /* add a level */
 	   fprintf(stderr, "\n\n%sNode: %s",scratch->lyx_debug_pad->str,node_types[n->key]);
 	   fprintf(stderr, "\n%s  str: %s",scratch->lyx_debug_pad->str,n->str);
 	   if (n->link_data != NULL){
@@ -138,8 +137,8 @@ void dump_tree(node* n, scratch_pad *scratch)
 	   }
 	   	  dump_tree(n->children,scratch);
 	   scratch->lyx_debug_nest--;
-	   g_string_free(scratch->lyx_debug_pad,TRUE); // don' see a way to shorten the string
-	   scratch->lyx_debug_pad = g_string_new(""); // so create a new, shorter one
+	   g_string_free(scratch->lyx_debug_pad,TRUE); /* don' see a way to shorten the string */
+	   scratch->lyx_debug_pad = g_string_new(""); /* so create a new, shorter one */
 	   for(i=0;i<scratch->lyx_debug_nest;i++){
 	    g_string_append(scratch->lyx_debug_pad,"  ");
        }
@@ -167,7 +166,7 @@ void perform_lyx_output(GString *out, node* list, scratch_pad *scratch)
 
 #endif
 			
-	// initialize the heading names
+	/* initialize the heading names */
 	heading_name[0] = g_string_new("Part");
 	heading_name[1] = g_string_new("Chapter");
 	heading_name[2] = g_string_new("Section");
@@ -184,6 +183,7 @@ void perform_lyx_output(GString *out, node* list, scratch_pad *scratch)
 	hcount = 0;
 	const char s[2] = ",";
     char *token;
+    char *cleaned;
 	if (tree_contains_key(list, METAKEY)) {
 		headings = metadata_for_key("lyxheadings",list);
 		if (headings != NULL) {
@@ -192,10 +192,12 @@ void perform_lyx_output(GString *out, node* list, scratch_pad *scratch)
 			token = strtok(lyx_headings->str, s);
 			 while( token != NULL )  {
 			   g_string_free(heading_name[hcount],TRUE);
-			   heading_name[hcount] = g_string_new(clean_string(token));
+			   cleaned = clean_string(token);
+			   heading_name[hcount] = g_string_new(cleaned);
+			   free(cleaned);
                token = strtok(NULL, s);
                hcount++;
-			   if (hcount>6){ // only 7 allowed
+			   if (hcount>6){ /* only 7 allowed */
 			     break;
 				 }
              }
@@ -217,11 +219,11 @@ void perform_lyx_output(GString *out, node* list, scratch_pad *scratch)
 	};
 	
 	
-	// add prefixes for LyX references
+	/* add prefixes for LyX references */
 	add_prefixes(list, list, scratch);
 	
 	bool isbeamer;
-	isbeamer = begin_lyx_output(out,list,scratch);             /* get Metadata controls */
+	isbeamer = begin_lyx_output(out,list,scratch);    /* get Metadata controls */
 	if (isbeamer){
 		g_string_free(heading_name[1],TRUE);
 		heading_name[1] = g_string_new("Section");
@@ -231,9 +233,9 @@ void perform_lyx_output(GString *out, node* list, scratch_pad *scratch)
 	} else {
 	print_lyx_node_tree(out,list,scratch,FALSE);  
 	}
-	end_lyx_output(out,list,scratch);                          /* Close the document */
+	end_lyx_output(out,list,scratch);                 /* Close the document */
 	
-	// clean up the heading names
+	/* clean up the heading names */
 	int i;
 	for (i=0;i<=6;i++){
 		g_string_free(heading_name[i],TRUE);   
@@ -262,13 +264,14 @@ bool begin_lyx_output(GString *out, node* list, scratch_pad *scratch) {
 	char *temp;
 	char *token;
 	char *tmp;
-	bool isbeamer;  // beamer has different processing
+	char *cleaned;
+	bool isbeamer;  /* beamer has different processing */
 	
-	isbeamer = FALSE; // only for beamer
+	isbeamer = FALSE; /* only for beamer */
 	
 
 	/* check for numbered versus unnumbered headings */
-	    scratch->lyx_number_headers = TRUE; // default - numbering
+	    scratch->lyx_number_headers = TRUE; /* default - numbering */
 		if (tree_contains_key(list, METAKEY)) {
 		number_headings = metadata_for_key("numberheadings",list);
 		if (number_headings != NULL) {
@@ -347,7 +350,6 @@ bool begin_lyx_output(GString *out, node* list, scratch_pad *scratch) {
                g_string_append_printf(out,"\\usepackage{%s}\n",clean_string(token));
                token = strtok(NULL, s);
              }
-			free(label);
 			free(key);
 			free(tmp);
 		} 
@@ -386,12 +388,12 @@ bool begin_lyx_output(GString *out, node* list, scratch_pad *scratch) {
 		g_string_append(out,"\\bibpunct{(}{)}{,}{a}{,}{,}\n");
 	}
 
-    // set up nice referencing
+    /* set up nice referencing */
     
     if (scratch->lyx_number_headers){
 	    for(i=0;i<7;i++){
 		  strncpy(short_prefix,heading_name[i]->str,5);
-		  short_prefix[5]= '\0'; // no terminator if strncpy ends because of length
+		  short_prefix[5]= '\0'; /* no terminator if strncpy ends because of length */
 		  for(j = 0; short_prefix[j]; j++){
 	    		short_prefix[j] = tolower(short_prefix[j]);
 	      }
@@ -402,7 +404,7 @@ bool begin_lyx_output(GString *out, node* list, scratch_pad *scratch) {
     } else {
     	for(i=0;i<7;i++){
 		  strncpy(short_prefix,heading_name[i]->str,5);
-		  short_prefix[5]= '\0'; // no terminator if strncpy ends because of length
+		  short_prefix[5]= '\0'; /* no terminator if strncpy ends because of length */
 		  for(j = 0; short_prefix[j]; j++){
 	    		short_prefix[j] = tolower(short_prefix[j]);
 	      }
@@ -453,7 +455,9 @@ bool begin_lyx_output(GString *out, node* list, scratch_pad *scratch) {
 			tmp = strdup(key);
 			token = strtok(tmp, s);
 			 while( token != NULL )  {
-               g_string_append_printf(out,"%s\n",clean_string(token));
+			   cleaned = clean_string(token);
+               g_string_append_printf(out,"%s\n",cleaned);
+               free(cleaned);
                token = strtok(NULL, s);
              }
 			free(key);
@@ -580,10 +584,10 @@ void print_lyx_node_tree(GString *out, node *list, scratch_pad *scratch, bool no
 #ifdef DEBUG_ON
     int i;
     scratch->lyx_debug_nest++;
-    g_string_append(scratch->lyx_debug_pad,"  "); // add a level
+    g_string_append(scratch->lyx_debug_pad,"  "); /* add a level */
 	fprintf(stderr, "\n%sStart_print_Node_Tree: %s\n",scratch->lyx_debug_pad->str,node_types[scratch->lyx_para_type]);
 	scratch->lyx_debug_nest++;
-    g_string_append(scratch->lyx_debug_pad,"  "); // add a level
+    g_string_append(scratch->lyx_debug_pad,"  "); /* add a level */
 #endif
 	while (list != NULL) {
 		print_lyx_node(out, list, scratch, no_newline);
@@ -591,14 +595,14 @@ void print_lyx_node_tree(GString *out, node *list, scratch_pad *scratch, bool no
 	}
 #ifdef DEBUG_ON
     scratch->lyx_debug_nest--;
-	g_string_free(scratch->lyx_debug_pad,TRUE); // don' see a way to shorten the string
-	scratch->lyx_debug_pad = g_string_new(""); // so create a new, shorter one
+	g_string_free(scratch->lyx_debug_pad,TRUE); /* don' see a way to shorten the string */
+	scratch->lyx_debug_pad = g_string_new(""); /* so create a new, shorter one */
 	for(i=0;i<scratch->lyx_debug_nest;i++)
 	  g_string_append(scratch->lyx_debug_pad,"  ");
 	fprintf(stderr, "\n%sEnd_print_Node_Tree: %s\n",scratch->lyx_debug_pad->str,node_types[scratch->lyx_para_type]);
 	scratch->lyx_debug_nest--;
-	g_string_free(scratch->lyx_debug_pad,TRUE); // don' see a way to shorten the string
-	scratch->lyx_debug_pad = g_string_new(""); // so create a new, shorter one
+	g_string_free(scratch->lyx_debug_pad,TRUE); /* don' see a way to shorten the string */
+	scratch->lyx_debug_pad = g_string_new(""); /* so create a new, shorter one */
 	for(i=0;i<scratch->lyx_debug_nest;i++)
 	  g_string_append(scratch->lyx_debug_pad,"  ");
 #endif	
@@ -613,7 +617,6 @@ void print_lyx_node(GString *out, node *n, scratch_pad *scratch, bool no_newline
 	int lev;
 	char *width = NULL;
 	char *height = NULL;
-	GString *typeref;
 	GString *temp_str;
 	GString *raw_str;
 	char char_temp;
@@ -645,30 +648,30 @@ void print_lyx_node(GString *out, node *n, scratch_pad *scratch, bool no_newline
 		case SPACE:
 			if (strncmp(n->str,"\n",1)==0){
 			  if (no_newline){
-			  	g_string_append(out," "); // just a space
+			  	g_string_append(out," "); /* just a space */
 			  } else{
-			    g_string_append_printf(out,"%s ",n->str); // lyx needs the space
+			    g_string_append_printf(out,"%s ",n->str); /* lyx needs the space */
 		      }
 			}else{
 			  g_string_append_printf(out,"%s",n->str);
 			}
 			break;
-		case PLAIN: // act as if all items are wrapped in a paragraph
+		case PLAIN: /* act as if all items are wrapped in a paragraph */
 		case PARA:
 			#ifdef DEBUG_ON
 	        fprintf(stderr, "\n%sprint_lyx_paragraph: %s\n",scratch->lyx_debug_pad->str,node_types[scratch->lyx_para_type]);
 	        fprintf(stderr,"%scontent: %s\n",scratch->lyx_debug_pad->str,n->str);
             #endif
-			// definition list special case, must append first definition to the term
+			/* definition list special case, must append first definition to the term */
 			if (scratch -> lyx_para_type == DEFINITION){
-				  if (!scratch->lyx_definition_open){ // first definition after a term
+				  if (!scratch->lyx_definition_open){ /* first definition after a term */
 				    g_string_append(out,"\n ");
-				    print_lyx_node_tree(out,n->children,scratch, FALSE); // stick on the end of the term
+				    print_lyx_node_tree(out,n->children,scratch, FALSE); /* stick on the end of the term */
 			        g_string_append(out,"\n\\end_layout\n");
-				    scratch->lyx_definition_open = TRUE; // first definition after a term hit    
+				    scratch->lyx_definition_open = TRUE; /* first definition after a term hit */
 				    } else{
 				    g_string_append(out,"\n\n\\begin_deeper\n");  // second (or nth definition)
-				    g_string_append(out, "\n\\begin_layout Standard\n"); // treat it as a paragraph	
+				    g_string_append(out, "\n\\begin_layout Standard\n"); /* treat it as a paragraph */
 				    print_lyx_node_tree(out,n->children,scratch, FALSE);
 			        g_string_append(out, "\n\\end_layout\n");
 			        g_string_append(out,"\n\\end_deeper\n");
@@ -702,7 +705,7 @@ void print_lyx_node(GString *out, node *n, scratch_pad *scratch, bool no_newline
 					break;
 				case NOTESOURCE:
 			    case CITATIONSOURCE:
-			    	break; // no enclosure by an environment
+			    	break; /* no enclosure by an environment */
 			    case GLOSSARYSOURCE:
 			    	g_string_append(out,"\ndescription \"");
 			    	break;
@@ -767,7 +770,7 @@ void print_lyx_node(GString *out, node *n, scratch_pad *scratch, bool no_newline
 		       }
 			g_string_append(out,"inline false\n");
 			g_string_append(out,"status collapsed\n");
-			print_lyx_string(out, n->str, scratch,LYX_PLAIN); // it is not children - just \n separated lines
+			print_lyx_string(out, n->str, scratch,LYX_PLAIN); /* it is not children - just \n separated lines */
 			g_string_append(out,"\n\\end_inset\n");
 			g_string_append(out,"\\end_layout\n");
 			 scratch->lyx_level--;
@@ -802,42 +805,38 @@ void print_lyx_node(GString *out, node *n, scratch_pad *scratch, bool no_newline
 	          fprintf(stderr, "\nStart List Item\n");
             #endif
             i = 0;
-			temp_node = n-> children; // should be a list node
-			if (temp_node->key != LIST){
-				fprintf(stderr,"\nUnanticipated List Item Format");
-				exit(EXIT_FAILURE);
-			} else {
-				if(temp_node->children == NULL) {
-					g_string_append(out,"\n\\begin_layout Itemize\n\\end_layout\n"); // empty list item
-				}
-				else { 
-					i = 0;
-					temp_node = temp_node-> children; // process the list
-					// the first paragraph is the list item's first paragraph
-					print_lyx_node(out,temp_node,scratch,no_newline);
-					// now process any other content, including additiona lists
-						temp_node = temp_node-> next;
-						while ((temp_node != NULL) && (temp_node->key != BULLETLIST)
-						       && (temp_node->key != ORDEREDLIST) && (temp_node->key != DEFLIST)){
-						  i++;
-						  if (i == 1){
-						    g_string_append(out,"\n\\begin_deeper\n");
-						    old_type = scratch->lyx_para_type;
-						    scratch->lyx_para_type = PARA; // and make it a paragraph, not a list item
-						  }
-						  print_lyx_node(out, temp_node, scratch, no_newline);
-		       		      temp_node = temp_node->next;
-		       		    }
-				    if (i>0){
-				      i--;
-				      scratch->lyx_para_type = old_type; // reset the paragraph type
-				      g_string_append(out,"\n\\end_deeper\n");
-			   	    } 
-			        if (temp_node != NULL){ // have hid an imbedded list
-				      print_lyx_node(out,temp_node,scratch,no_newline);
-				    }
-	    	    }  
-	        }
+            old_type = scratch->lyx_para_type;
+			temp_node = n-> children; /* should be a list node */
+			if(temp_node->children == NULL) {
+				g_string_append(out,"\n\\begin_layout Itemize\n\\end_layout\n"); /* empty list item */
+			}
+			else { 
+				i = 0;
+				temp_node = temp_node-> children; /* process the list */
+				/* the first paragraph is the list item's first paragraph */
+				print_lyx_node(out,temp_node,scratch,no_newline);
+				/* now process any other content, including additional lists */
+					temp_node = temp_node-> next;
+					while ((temp_node != NULL) && (temp_node->key != BULLETLIST)
+					       && (temp_node->key != ORDEREDLIST) && (temp_node->key != DEFLIST)){
+					  i++;
+					  if (i == 1){
+					    g_string_append(out,"\n\\begin_deeper\n");
+					    old_type = scratch->lyx_para_type;
+					    scratch->lyx_para_type = PARA; /* and make it a paragraph, not a list item */
+					  }
+					  print_lyx_node(out, temp_node, scratch, no_newline);
+	       		      temp_node = temp_node->next;
+	       		    }
+			    if (i>0){
+			      i--;
+			      scratch->lyx_para_type = old_type; /* reset the paragraph type */
+			      g_string_append(out,"\n\\end_deeper\n");
+		   	    } 
+		        if (temp_node != NULL){ /* have hid an imbedded list */
+			      print_lyx_node(out,temp_node,scratch,no_newline);
+			    }
+    	    }  
 			#ifdef DEBUG_ON
 	          fprintf(stderr, "\nEnd List Item\n");
             #endif
@@ -862,15 +861,16 @@ void print_lyx_node(GString *out, node *n, scratch_pad *scratch, bool no_newline
 			if (lev > 7)
 				lev = 7;	/* Max at level 7 */
 			GString *environment = g_string_new("\n\\begin_layout ");			
-			g_string_append(environment,heading_name[lev-1]->str); // get the (possibly user modified) section name
+			g_string_append(environment,heading_name[lev-1]->str); /* get the (possibly user modified) section name */
 			
 				if (!scratch->lyx_number_headers){
-				g_string_append(environment,"*\n");} // mark as unnumbered
+				g_string_append(environment,"*\n");} /* mark as unnumbered */
 				else{	
 				g_string_append(environment,"\n");
 		     	};
 			/* Begin the environment */
 			    g_string_append_printf(out,"%s",environment->str);
+			g_string_free(environment,true);
 			/* Don't allow footnotes */
 			scratch->no_lyx_footnote = TRUE;
 			if (n->children->key == AUTOLABEL) {
@@ -973,9 +973,6 @@ void print_lyx_node(GString *out, node *n, scratch_pad *scratch, bool no_newline
 	fprintf(stderr, "print LyX link: '%s'\n",n->str);
 #endif
            
-       // since we are providing formatting strings, we will always use formatted
-            typeref = g_string_new("formatted");
-
 			/* Do we have proper info? */
 
 			if (n->link_data == NULL) {
@@ -1061,7 +1058,7 @@ void print_lyx_node(GString *out, node *n, scratch_pad *scratch, bool no_newline
 					if ((n->link_data->source !=  NULL) && (n->link_data->source[0] == '#' )) {
 						/* This link was specified as [](#bar) */
 						g_string_append(out,"\n\\begin_inset CommandInset ref");
-						g_string_append_printf(out,"\nLatexCommand %s",typeref->str);
+						g_string_append_printf(out,"\nLatexCommand formatted");
 						g_string_append_printf(out,"\nreference \"%s\"\n",n->link_data->source + 1);
 						g_string_append(out,"\n\\end_inset\n");
 
@@ -1072,7 +1069,7 @@ void print_lyx_node(GString *out, node *n, scratch_pad *scratch, bool no_newline
 					}
 				} else {
 					g_string_append(out,"\n\\begin_inset CommandInset ref");
-					g_string_append_printf(out,"\nLatexCommand %s",typeref->str);
+					g_string_append_printf(out,"\nLatexCommand formatted");
 					g_string_append_printf(out,"\nreference \"%s\"\n",n->link_data->source + 1);
 					g_string_append(out,"\n\\end_inset\n");
 				}
@@ -1111,7 +1108,6 @@ void print_lyx_node(GString *out, node *n, scratch_pad *scratch, bool no_newline
 			g_string_free(temp_str, TRUE);
 			g_string_free(raw_str, true);
 			n->link_data->attr = NULL;
-			g_string_free(typeref,TRUE);
 			break;
 		case ATTRKEY:
 			g_string_append_printf(out, " %s=\"%s\"", n->str,
@@ -1164,7 +1160,7 @@ void print_lyx_node(GString *out, node *n, scratch_pad *scratch, bool no_newline
 			}
 			
 			if (n->key == IMAGEBLOCK){
-				g_string_append(out,"\n\\begin_layout Standard"); // needs to be in an environment
+				g_string_append(out,"\n\\begin_layout Standard"); /* needs to be in an environment */
 				g_string_append(out,"\n\\begin_inset Float figure");
 				g_string_append(out,"\nwide false");
 				g_string_append(out,"\nsideways false");
@@ -1392,7 +1388,7 @@ void print_lyx_node(GString *out, node *n, scratch_pad *scratch, bool no_newline
 		case BLOCKQUOTEMARKER:  					
 		    print_lyx_node_tree(out, n->children, scratch, FALSE);
 			break;
-		case BLOCKQUOTE: // can be nested - make it work like lists
+		case BLOCKQUOTE: /* can be nested - make it work like lists */
 		    old_type = scratch->lyx_para_type;
 			scratch->lyx_para_type = n->key;
 			scratch->lyx_level++;
@@ -1441,15 +1437,15 @@ void print_lyx_node(GString *out, node *n, scratch_pad *scratch, bool no_newline
 			}
 			break;
 		case TERM:
-			scratch->lyx_definition_open = FALSE; // and it is closed
+			scratch->lyx_definition_open = FALSE; /* and it is closed */
 			old_type = scratch->lyx_para_type;
 			scratch->lyx_para_type = n->key;
 			if (scratch->lyx_definition_hit){	
 			  g_string_append(out,"\n\\begin_layout Labeling");
 			  g_string_append(out,"\n\\labelwidthstring 00.00.0000\n");
 			  g_string_append(out,"\n\\series bold\n");
-			  scratch -> lyx_definition_hit = FALSE; // waiting for it to start a new set of terms
-		    } else { // multiple terms, join with commas
+			  scratch -> lyx_definition_hit = FALSE; /* waiting for it to start a new set of terms */
+		    } else { /* multiple terms, join with commas */
 		      	g_string_append(out,",");
 		      	g_string_append(out,"\n\\begin_inset space ~\n\\end_inset\n");
 		    }
@@ -1470,9 +1466,9 @@ void print_lyx_node(GString *out, node *n, scratch_pad *scratch, bool no_newline
 			break;
 		case DEFINITION:
 			if (!scratch -> lyx_definition_hit){
-				g_string_append(out,"\n\\series default\n"); // close bolding
+				g_string_append(out,"\n\\series default\n"); /* close bolding */
 			}
-			scratch -> lyx_definition_hit = TRUE;  // have hit the definiton thus we can start a new one
+			scratch -> lyx_definition_hit = TRUE;  /* have hit the definiton thus we can start a new one */
 			old_type = scratch->lyx_para_type;
 			scratch->lyx_para_type = n->key;
 			print_lyx_node_tree(out, n->children, scratch, FALSE);
@@ -1490,7 +1486,7 @@ void print_lyx_node(GString *out, node *n, scratch_pad *scratch, bool no_newline
 			lyx_get_table_dimensions(n->children,&rows,&cols,scratch);
 			scratch->lyx_table_total_rows = rows;
 			if (scratch->lyx_table_caption != NULL){
-				rows++; // caption goes on the first row
+				rows++; /* caption goes on the first row */
 			}
 			scratch->lyx_table_total_cols = cols;
 			g_string_append(out,"\n\\begin_layout Standard");
@@ -1498,7 +1494,7 @@ void print_lyx_node(GString *out, node *n, scratch_pad *scratch, bool no_newline
 			g_string_append_printf(out,"\n<lyxtabular version=\"3\" rows=\"%d\" columns=\"%d\">",rows, cols);
 			g_string_append(out,"\n<features booktabs=\"true\" tabularvalignment=\"middle\" islongtable=\"true\" longtabularalignment=\"center\">");
 
-			print_lyx_node_tree(out, n->children, scratch, FALSE); // table body
+			print_lyx_node_tree(out, n->children, scratch, FALSE); /* table body */
 			g_string_append(out, "\n</lyxtabular>");
 			g_string_append(out,"\n\\end_inset");
 			g_string_append(out, "\n\\end_layout\n");
@@ -1529,12 +1525,12 @@ void print_lyx_node(GString *out, node *n, scratch_pad *scratch, bool no_newline
 			}
 			break;
 		case TABLECAPTION:
-	        // handled above
+	        /* handled above */
 			break;
 		case TABLELABEL:
 			break;
 		case TABLEHEAD:
-			if (scratch-> lyx_table_caption != NULL){ // if there is a caption
+			if (scratch-> lyx_table_caption != NULL){ /* if there is a caption */
 			  g_string_append(out,"\n<row caption=\"true\">");
 			  g_string_append(out,"\n<cell multicolumn=\"1\" alignment=\"left\" valignment=\"top\" usebox=\"none\">");
 			  g_string_append(out,"\n\\begin_inset Text\n");
@@ -1565,11 +1561,12 @@ void print_lyx_node(GString *out, node *n, scratch_pad *scratch, bool no_newline
 			  	g_string_append(out,"\n</cell>");
 			  }
 			  g_string_append(out,"\n</row>");
+			  free(temp); 
 			}
 			scratch->lyx_table_need_line = TRUE;
 			scratch->lyx_in_header = TRUE;
 			print_lyx_node_tree(out, n->children, scratch, FALSE);
-			scratch->lyx_in_header = FALSE;
+			scratch->lyx_in_header = FALSE;		
 			break;
 		case TABLEBODY:
 			scratch->lyx_table_need_line = TRUE;
@@ -1642,9 +1639,9 @@ void print_lyx_node(GString *out, node *n, scratch_pad *scratch, bool no_newline
 			break;
 		case CELLSPAN:
 			break;
-		case GLOSSARYSOURCE: // handled inline
+		case GLOSSARYSOURCE: /* handled inline */
 			break;
-		case NOTESOURCE: // handled inline
+		case NOTESOURCE: /* handled inline */
 		    break;
 		case CITATIONSOURCE:
 			scratch->lyx_para_type = n-> key;
@@ -1678,7 +1675,7 @@ void print_lyx_endnotes(GString *out, scratch_pad *scratch) {
 	fprintf(stderr, "start endnotes\n");
 #endif
 
-    	    // Handle Glossary
+    	    /* Handle Glossary */
     temp_node = note;
     while (temp_node != NULL){
     	if(temp_node->key == GLOSSARYSOURCE){
@@ -1842,19 +1839,19 @@ void print_lyx_string(GString *out, char *str, scratch_pad *scratch, short envir
 	   g_string_append(out,"\n\\begin_layout Plain Layout\n\n");
     }   
 	while (*str != '\0') {
-		// first look for unicode so it doesn't get caught in the "smart quote" processing
-		// will use a huristic of looking for a sequence that begins with two bytes of
-		// the format 11xxxxxx 10xxxxxxxx to indicate a unicode sting 
-		// this is Ok if the second byte is the terminator ('\0') because it is all zeros and won't match
-		if ((((unsigned char)*str & 0xc0) == 0xc0) && ((((unsigned char)*(str+1))  & 0xc0) == 0x80)) { // hit unicode (huristic 
+		/* first look for unicode so it doesn't get caught in the "smart quote" processing */
+		/* will use a huristic of looking for a sequence that begins with two bytes of */
+		/* the format 11xxxxxx 10xxxxxxxx to indicate a unicode sting */
+		/* this is Ok if the second byte is the terminator ('\0') because it is all zeros and won't match */
+		if ((((unsigned char)*str & 0xc0) == 0xc0) && ((((unsigned char)*(str+1))  & 0xc0) == 0x80)) { /* hit unicode (huristic */
 		   g_string_append_c(out, *str);
 		   str++;
 		   while ((((unsigned char)*str != '\0')) && (((unsigned char)*str & 0xc0) == 0x80)){
-		   	g_string_append_c(out,*str); // send out the other bytes
+		   	g_string_append_c(out,*str); /* send out the other bytes */
 		   	str++;
 		   }
 		} else {
-		switch ((unsigned char)*str) {  // cast to handle the "smart quotes" outside the ASCII range - they are in there
+		switch ((unsigned char)*str) {  /* cast to handle the "smart quotes" outside the ASCII range - they are in there */
 			case '\\':
 				g_string_append(out,"\n\\backslash\n\n");
 				break;
@@ -1867,7 +1864,7 @@ void print_lyx_string(GString *out, char *str, scratch_pad *scratch, short envir
 				break;
 			case '\n':
 				 if(environment == LYX_PLAIN) {
-					if (*(str+1) == '\0'){ // skip last new line
+					if (*(str+1) == '\0'){ /* skip last new line */
 					break;
 					}
 				    g_string_append(out,"\n\\end_layout\n\n\\begin_layout Plain Layout\n\n");
@@ -1877,13 +1874,13 @@ void print_lyx_string(GString *out, char *str, scratch_pad *scratch, short envir
 					if (*tmp == ' ') {
 						g_string_append(out,"\n");
 					} else {
-						g_string_append(out, "\n "); // add a space
+						g_string_append(out, "\n "); /* add a space */
 					}
 			    }
 				break;
-			case '<': //  look for HTML comment LaTeX escape
+			case '<': /* look for HTML comment LaTeX escape */
 			    if ( (environment != LYX_CODE) && (environment != LYX_PLAIN) && (strncmp(str,"<!--",4) == 0)){
-			       str+=4; // move past delimeter
+			       str+=4; /* move past delimeter */
 			       	g_string_append(out, "\n\\begin_inset ERT\nstatus collapsed\n\n\\begin_layout Plain Layout\n\n");
                     while(strncmp(str,"-->",3) !=0){
                     	switch (*str){
@@ -1898,14 +1895,14 @@ void print_lyx_string(GString *out, char *str, scratch_pad *scratch, short envir
                     }
                     	str++;
                     }
-                    str+=2; // and past the end delimeter
+                    str+=2; /* and past the end delimeter */
 				    g_string_append(out,"\n\n\\end_layout\n\\end_inset\n");
 			    }
 			    else {
 			    	g_string_append_c(out, *str);	
 			    }
 			    break;
-			// handle "smart Quotes" and other "non ASCII" characters
+			/* handle "smart Quotes" and other "non ASCII" characters */
 			case 0x91:
 			case 0x92:
 			case 0x93:
@@ -1995,14 +1992,14 @@ void add_prefixes(node *list, node *root, scratch_pad *scratch) {
 					label = label_from_string(list->children->str);
 				}
 				
-					// update any links in the tree
+					/* update any links in the tree */
 				
 				pound_label = g_string_new("#");
                 g_string_append(pound_label,label);
 				update_link_source(pound_label->str,heading_name[lev-1]->str,root);
 				
 				
-				// and any in the "links" list
+				/* and any in the "links" list */
 					
 				update_links(pound_label->str,heading_name[lev-1]->str,scratch);
 				
@@ -2093,23 +2090,23 @@ char *prefix_label(char *prefix, char *label, bool pound) {
 	char short_prefix[6];
 	int i;
 	strncpy(short_prefix,prefix,5);
-	short_prefix[5]= '\0'; // no terminator if strncpy ends because of length
+	short_prefix[5]= '\0'; /* no terminator if strncpy ends because of length */
 	for(i = 0; short_prefix[i]; i++){
   		short_prefix[i] = tolower(short_prefix[i]);
 	}
 	GString *result = g_string_new("");
 	if (label[0]== '#'){
-		g_string_append(result,label+1);  // drop the pound
+		g_string_append(result,label+1);  /* drop the pound */
 	} else{
 		g_string_append(result,label);
 	}
-	g_string_prepend(result,":"); // prefix colon
-	g_string_prepend(result,short_prefix); // add the prefix
+	g_string_prepend(result,":"); /* prefix colon */
+	g_string_prepend(result,short_prefix); /* add the prefix */
 	if (pound){
-		g_string_prepend(result,"#"); // add back in the pound if needed
+		g_string_prepend(result,"#"); /* add back in the pound if needed */
 	}
 	function_result = result->str;
-	g_string_free(result,FALSE); // sending back the string
+	g_string_free(result,FALSE); /* sending back the string */
 	return function_result;
 }
 
