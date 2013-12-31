@@ -32,3 +32,9 @@ windows_installer/multimarkdown.exe
 windows_installer/*.zip
 windows_installer/MMD*.exe
 .Sync*
+
+# Windows Compile
+*.layout
+Makefile.win
+*.dev
+
