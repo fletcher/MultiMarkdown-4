@@ -32,7 +32,7 @@ You can compile for yourself, or download a precompiled binary from the [downloa
 * Download the source from the [github] web site using `git`
 * `git submodule init` and then `git submodule update` to download `greg` and the test suite
 * Run `make` to compile.
-* Run `make test-all | less` to verify that the build is correct.  As mentioned 1 test is expected to fail on Mac systems.  The email tests will fail on other systems, since they use a different randomization algorithm and the obfuscated emails won't match.  This won't affect functionality
+* Run `make test-all | less` to verify that the build is correct.  As mentioned 1 test is expected to fail on Mac systems.  
 
 
 # Usage #
