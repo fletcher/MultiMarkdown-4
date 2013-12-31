@@ -72,7 +72,7 @@ char * source_without_metadata(char * source, unsigned long extensions ) {
 	Pass the path to the current folder if available -- should be a full path. 
 
 	Keep track of what we're parsing to prevent recursion using stack. */
-void transclude_source(GString *source, char *basedir, char *stack) {
+void transclude_source(GString *source, char *basedir, char *stack, int output_format) {
 	char *base = strdup(basedir);
 	char *path = strdup(base);
 	char *start;
@@ -135,6 +135,33 @@ void transclude_source(GString *source, char *basedir, char *stack) {
 		filename = g_string_new(folder->str);
 		g_string_append_printf(filename, "%s",real);
 
+		/* Adjust for wildcard extensions */
+		if (strncmp(&filename->str[strlen(filename->str) - 2],".*",2) == 0) {
+			g_string_erase(filename, strlen(filename->str) - 2, 2);
+			if (output_format == TEXT_FORMAT) {
+				g_string_append(filename,".txt");
+			} else if (output_format == HTML_FORMAT) {
+				g_string_append(filename,".html");
+			} else if (output_format == LATEX_FORMAT) {
+				g_string_append(filename,".tex");
+			} else if (output_format == BEAMER_FORMAT) {
+				g_string_append(filename,".tex");
+			} else if (output_format == MEMOIR_FORMAT) {
+				g_string_append(filename,".tex");
+			} else if (output_format == ODF_FORMAT) {
+				g_string_append(filename,".fodt");
+			} else if (output_format == OPML_FORMAT) {
+				g_string_append(filename,".opml");
+			} else if (output_format == LYX_FORMAT) {
+				g_string_append(filename,".lyx");
+			} else if (output_format == RTF_FORMAT) {
+				g_string_append(filename,".rtf");
+			} else {
+				/* default extension -- in this case we only have 1 */
+				g_string_append(filename,".txt");
+			}
+		}
+
 		pos = stop - source->str;
 
 		/* Don't reparse ourselves */
@@ -167,7 +194,7 @@ void transclude_source(GString *source, char *basedir, char *stack) {
 
 
 			/* Recursively transclude files */
-			transclude_source(filebuffer, folder->str, stackstring->str);
+			transclude_source(filebuffer, folder->str, stackstring->str, output_format);
 
 			temp = source_without_metadata(filebuffer->str, 0x000000);
 

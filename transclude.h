@@ -23,4 +23,4 @@
 #include "GLibFacade.h"
 
 char *	source_without_metadata(char * source, unsigned long extensions);
-void	transclude_source(GString *source, char *basedir, char *stack);
+void	transclude_source(GString *source, char *basedir, char *stack, int format);

@@ -313,7 +313,7 @@ int main(int argc, char **argv)
 			if (!(extensions & EXT_COMPATIBILITY)) {
 				temp = strdup(argv[i+1]);
 				folder = dirname(temp);
-				transclude_source(inputbuf, folder, NULL);
+				transclude_source(inputbuf, folder, NULL, output_format);
 				free(temp);
 				// free(folder);
 			}
@@ -405,7 +405,7 @@ int main(int argc, char **argv)
 		}
 		
 		if (!(extensions & EXT_COMPATIBILITY))
-			transclude_source(inputbuf, folder, NULL);
+			transclude_source(inputbuf, folder, NULL, output_format);
 
 		free(temp);
 
