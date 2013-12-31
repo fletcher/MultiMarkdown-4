@@ -460,6 +460,15 @@ void print_rtf_node(GString *out, node *n, scratch_pad *scratch) {
 		case IMAGE:
 			g_string_append_printf(out, "IMAGES CANNOT BE INSERTED INTO AN RTF DOCUMENT FROM MULTIMARKDOWN \\\n");
 			break;
+		case VARIABLE:
+			temp = metavalue_for_key(n->str,scratch->result_tree);
+			if (temp == NULL) {
+				g_string_append_printf(out, "[%%%s]",n->str);
+			} else {
+				g_string_append_printf(out, temp);
+				free(temp);
+			}
+			break;
 		default:
 			fprintf(stderr, "print_rtf_node encountered unknown node key = %d\n",n->key);
 			g_string_append_printf(out, "%s",n->str);
