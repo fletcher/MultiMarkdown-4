@@ -606,6 +606,8 @@ void print_rtf_string(GString *out, char *str, scratch_pad *scratch) {
 			case '}':
 				g_string_append_printf(out, "\\}");
 				break;
+			case '\n':
+				g_string_append_printf(out, " \n");
 			default:
 				g_string_append_c(out, *str);
 		}
