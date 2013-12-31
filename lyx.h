@@ -4,11 +4,11 @@
 #include "parser.h"
 #include "writer.h"
 
-// allow the user to change the heading levels
+/* allow the user to change the heading levels */
 
 extern GString *heading_name[7];
 
-// Lyx likes to wrap strings in "environments"
+/* Lyx likes to wrap strings in "environments" */
 enum lyx_environment{
   LYX_NONE,
   LYX_STANDARD,

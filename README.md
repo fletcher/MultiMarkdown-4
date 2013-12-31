@@ -32,7 +32,7 @@ You can compile for yourself, or download a precompiled binary from the [downloa
 * Download the source from the [github] web site using `git`
 * `git submodule init` and then `git submodule update` to download `greg` and the test suite
 * Run `make` to compile.
-* Run `make test-all | less` to verify that the build is correct.  As mentioned 1 test is expected to fail on Mac systems.  
+* Run `make test-all | less` to verify that the build is correct.  As mentioned, one of the tests is expected to fail; the rest should pass on all systems.  
 
 
 # Usage #
