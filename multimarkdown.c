@@ -339,6 +339,8 @@ int main(int argc, char **argv)
 				g_string_append(filename,".opml");
 			} else if (output_format == LYX_FORMAT) {
 				g_string_append(filename,".lyx");
+			} else if (output_format == RTF_FORMAT) {
+				g_string_append(filename,".rtf");
 			} else {
 				/* default extension -- in this case we only have 1 */
 				g_string_append(filename,".txt");
