@@ -60,7 +60,7 @@ void print_rtf_node(GString *out, node *n, scratch_pad *scratch) {
 				break; 			
 			g_string_append_printf(out, "{\\info\n");
 			print_rtf_node_tree(out,n->children,scratch);
-			g_string_append_printf(out, "}\n");
+		 	g_string_append_printf(out, "}\n");
 			scratch->padded = 0;
 			break;
 		case METAKEY:
