@@ -56,6 +56,8 @@ void print_rtf_node(GString *out, node *n, scratch_pad *scratch) {
 			print_rtf_string(out, n->str, scratch);
 			break;
 		case METADATA:
+			if (scratch->extensions & EXT_SNIPPET)
+				break; 			
 			g_string_append_printf(out, "{\\info\n");
 			print_rtf_node_tree(out,n->children,scratch);
 			g_string_append_printf(out, "}\n");
