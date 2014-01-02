@@ -56,10 +56,8 @@ char * source_without_metadata(char * source, unsigned long extensions ) {
 		/* If we have metadata, then return just the body */
 		result = strstr(source, "\n\n");
 
-		if (result == NULL)
-			return source;
-		else 
-			return result;
+		if (result != NULL)
+			return result+2;
 	}
 
 	/* No metadata, so return original pointer */
