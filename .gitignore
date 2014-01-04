@@ -1,0 +1,40 @@
+# MMD
+multimarkdown
+parser.c
+*.o
+enumMap.txt
+speed*.txt
+
+# Xcode
+.DS_Store
+build/
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+*.xcworkspace
+!default.xcworkspace
+xcuserdata
+profile
+*.moved-aside
+DerivedData
+.idea/
+
+mac_installer/MultiMarkdown*.zip
+multimarkdown.exe
+windows_installer/LICENSE.html
+windows_installer/README.txt
+windows_installer/multimarkdown.exe
+windows_installer/*.zip
+windows_installer/MMD*.exe
+.Sync*
+
+# Windows Compile
+*.layout
+Makefile.win
+*.dev
+

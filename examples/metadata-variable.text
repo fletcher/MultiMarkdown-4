@@ -1,0 +1,6 @@
+foo:	foo-test
+bar:	bar-test
+
+# A Variable in a Heading [%foo] #
+
+A variable in the body [%bar].
