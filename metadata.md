@@ -104,7 +104,7 @@ formats so that you can specify a different header level for different output
 formats --- e.g. `LaTeX Header Level`, `HTML Header Level`, and `ODF Header
 Level`.
 
-If you are doing something interesting with [Transclusion], you can also use a
+If you are doing something interesting with [File Transclusion], you can also use a
 negative number here.  Since metadata is not used when a file is "transcluded",
 this allows you to use a different level of headings when a file is processed on
 its own.
@@ -225,7 +225,7 @@ Self-explanatory.
 
 ### Transclude Base ###
 
-When using the transclusion features to "link" to other documents inside a MultiMarkdown document, this metadata specifies a folder that contains the files being linked to.  If omitted, the default is the folder containing the file in question.  This can be a relative path or a complete path.
+When using the [File Transclusion] feature to "link" to other documents inside a MultiMarkdown document, this metadata specifies a folder that contains the files being linked to.  If omitted, the default is the folder containing the file in question.  This can be a relative path or a complete path.
 
 This metadata can be particularly useful when using MultiMarkdown to parse a text string that does not exist as a file on the computer, and therefore does not have a parent folder (when using `stdin` or another application that offers MultiMarkdown support).  In this case, the path must be a complete path.
 

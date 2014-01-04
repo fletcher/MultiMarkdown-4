@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<meta name="latexinput" content="mmd-article-header"/>
+	<title>Raw Source</title>
+	<meta name="author" content="Fletcher T. Penney"/>
+	<meta name="version" content="4.5"/>
+	<meta name="revised" content="2013-12-31"/>
+	<link type="text/css" rel="stylesheet" href="http://fletcher.github.io/MultiMarkdown-4/css/document.css"/>
+	<meta name="latexmode" content="memoir"/>
+	<meta name="latexinput" content="mmd-article-begin-doc"/>
+	<meta name="latexfooter" content="mmd-memoir-footer"/>
+</head>
+<body>
+
+<h2 id="rawhtml">Raw HTML</h2>
+
+<p>You can include raw (X)HTML within your document. Exactly what happens with
+these portions depends on the output format. You can also use the <code>markdown</code>
+attribute to indicate that MultiMarkdown processing should be applied within
+the block level HTML tag. This is in addition to the <code>--process-html</code> command
+line option that causes MultiMarkdown processing to occur within <em>all</em> block
+level HTML tags.</p>
+
+<p>For example:</p>
+
+<pre><code>&lt;div&gt;This is *not* MultiMarkdown&lt;/div&gt;
+
+&lt;div markdown=1&gt;This *is* MultiMarkdown&lt;/div&gt;
+</code></pre>
+
+<p>will produce the following without <code>--process-html</code>:</p>
+
+<pre><code>&lt;div&gt;This is *not* MultiMarkdown&lt;/div&gt;
+
+&lt;div&gt;This &lt;em&gt;is&lt;/em&gt; MultiMarkdown&lt;/div&gt;
+</code></pre>
+
+<p>and with <code>--process-html</code>:</p>
+
+<pre><code>&lt;div&gt;This is &lt;em&gt;not&lt;/em&gt; MultiMarkdown&lt;/div&gt;
+
+&lt;div&gt;This &lt;em&gt;is&lt;/em&gt; MultiMarkdown&lt;/div&gt;
+</code></pre>
+
+<p>However, the results may be different than anticipated when outputting to
+LaTeX or other formats. Normally, block level HTML will be ignored when
+outputting to LaTeX or ODF. The example above would produce the following,
+leaving out the first <code>&lt;div&gt;</code> entirely:</p>
+
+<pre><code>This \emph{is} MultiMarkdown
+</code></pre>
+
+<p>And this with <code>--process-html</code>:</p>
+
+<pre><code>This is \emph{not} MultiMarkdown
+This \emph{is} MultiMarkdown
+</code></pre>
+
+<p>You will also notice that the line breaks are different when outputting to
+LaTeX or ODF, and this can cause the contents of two <code>&lt;div&gt;</code> tags to be placed
+into a single paragraph.</p>
+
+<h2 id="rawlatexopendocumentetc.">Raw LaTeX/OpenDocument/etc.</h2>
+
+<p>You can use HTML comments to include additional text that will be included in the exported file without being changed. This can be used for any export format, which means that each document can only be configured for one export format at a time. In other words, it is highly unlikely that valid raw LaTeX will also be valid OpenDocument source code.</p>
+
+<pre><code>This will be processed by *MultiMarkdown*.
+&lt;!-- This will not be processed by *MultiMarkdown --&gt;
+</code></pre>
+
+</body>
+</html>

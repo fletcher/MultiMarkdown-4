@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<meta name="latexinput" content="mmd-article-header"/>
+	<title>Math</title>
+	<meta name="author" content="Fletcher T. Penney"/>
+	<meta name="version" content="4.5"/>
+	<meta name="revised" content="2013-12-31"/>
+	<link type="text/css" rel="stylesheet" href="http://fletcher.github.io/MultiMarkdown-4/css/document.css"/>
+	<meta name="latexmode" content="memoir"/>
+	<meta name="latexinput" content="mmd-article-begin-doc"/>
+	<meta name="latexfooter" content="mmd-memoir-footer"/>
+</head>
+<body>
+
+<h2 id="math">Math</h2>
+
+<p>MultiMarkdown 2.0 used [ASCIIMathML] to typeset mathematical equations. There
+were benefits to using ASCIIMathML, but also some disadvantages.</p>
+
+<p>When rewriting for MultiMarkdown 3.0, there was no straightforward way to
+implement ASCIIMathML which lead me to look for alternatives. I settled on
+using [MathJax]. The advantage here is that the same syntax is supported by
+MathJax in browsers, and in LaTeX. </p>
+
+<p>This does mean that math will need to be entered into MultiMarkdown documents
+using the LaTeX syntax, rather than ASCIIMathML.</p>
+
+<p>To enable MathJax support in web pages, you have to include a link to an
+active MathJax installation &#8212; setting this up is beyond the scope of this
+document, but it&#8217;s not too hard.</p>
+
+<p>Here&#8217;s an example of the metadata setup, and some math:</p>
+
+<pre><code>latex input:    mmd-article-header  
+Title:          MultiMarkdown Math Example  
+latex input:    mmd-article-begin-doc  
+latex footer:   mmd-memoir-footer  
+HTML header:    &lt;script type=&quot;text/javascript&quot;
+    src=&quot;http://example.net/mathjax/MathJax.js&quot;&gt;
+    &lt;/script&gt;
+
+
+An example of math within a paragraph --- \\({e}^{i\pi }+1=0\\)
+--- easy enough.
+
+And an equation on it's own:
+
+\\[ {x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a} \\]
+
+That's it.
+</code></pre>
+
+<p>Here&#8217;s what it looks like in action (if you&#8217;re viewing this document in a
+supported format):</p>
+
+<blockquote>
+<p>An example of math within a paragraph &#8212; <span class="math">\({e}^{i\pi }+1=0\)</span>
+&#8212; easy enough.</p>
+
+<p>And an equation on it&#8217;s own:</p>
+
+<p><span class="math">\[ {x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a} \]</span></p>
+
+<p>That&#8217;s it.</p>
+</blockquote>
+
+</body>
+</html>

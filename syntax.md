@@ -23,6 +23,5 @@ latex footer:	mmd-memoir-footer
 {{glossary.md}}
 {{criticmarkup.md}}
 {{raw.md}}
-{{variables.md}}
 {{transclusion.md}}
 

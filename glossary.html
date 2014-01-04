@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<meta name="latexinput" content="mmd-article-header"/>
+	<title>Gloassaries</title>
+	<meta name="author" content="Fletcher T. Penney"/>
+	<meta name="version" content="4.5"/>
+	<meta name="revised" content="2013-12-31"/>
+	<link type="text/css" rel="stylesheet" href="http://fletcher.github.io/MultiMarkdown-4/css/document.css"/>
+	<meta name="latexmode" content="memoir"/>
+	<meta name="latexinput" content="mmd-article-begin-doc"/>
+	<meta name="latexfooter" content="mmd-memoir-footer"/>
+</head>
+<body>
+
+<h2 id="glossary">Glossary</h2>
+
+<p>MultiMarkdown has a feature that allows footnotes to be specified as glossary
+terms. It doesn&#8217;t do much for XHTML documents, but the XSLT file that converts
+the document into LaTeX is designed to convert these special footnotes into
+glossary entries.</p>
+
+<p>The glossary format for the footnotes is:</p>
+
+<pre><code>[^glossaryfootnote]: glossary: term (optional sort key)
+    The actual definition belongs on a new line, and can continue on
+    just as other footnotes.
+</code></pre>
+
+<p>The <code>term</code> is the item that belongs in the glossary. The <code>sort key</code> is
+optional, and is used to specify that the term should appear somewhere else in
+the glossary (which is sorted in alphabetical order).</p>
+
+<p>Unfortunately, it takes an extra step to generate the glossary when creating a
+pdf from a latex file:</p>
+
+<ol>
+<li><p>You need to have the <code>basic.gst</code> file installed, which comes with the
+memoir class.</p></li>
+<li><p>You need to run a special makeindex command to generate the <code>.glo</code> file:
+ <code>makeindex -s `kpsewhich basic.gst` -o &quot;filename.gls&quot; &quot;filename.glo&quot;</code></p></li>
+<li><p>Then you run the usual pdflatex command again a few times.</p></li>
+</ol>
+
+<p>Alternatively, you can use the code below to create an engine file for TeXShop
+(it belongs in <code>~/Library/TeXShop/Engines</code>). You can name it something like
+<code>MemoirGlossary.engine</code>. Then, when processing a file that needs a glossary,
+you typeset your document once with this engine, and then continue to process
+it normally with the usual LaTeX engine. Your glossary should be compiled
+appropriately. If you use <a href="http://www.uoregon.edu/~koch/texshop/" title="TeXShop Homepage">TeXShop</a>, this is the way to go.</p>
+
+<p><strong>Note</strong>: <em>Getting glossaries to work is a slightly more advanced LaTeX
+feature, and might take some trial and error the first few times.</em></p>
+
+<pre><code>#!/bin/ 
+
+set path = ($path /usr/local/teTeX/bin/powerpc-apple-darwin-current 
+    /usr/local/bin) # This is actually a continuation of the line above
+
+set basefile = `basename &quot;$1&quot; .tex`
+
+makeindex -s `kpsewhich basic.gst` -o &quot;${basefile}.gls&quot; &quot;${basefile}.glo&quot;
+</code></pre>
+
+</body>
+</html>

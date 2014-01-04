@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<meta name="latexinput" content="mmd-article-header"/>
+	<title>Definition Lists</title>
+	<meta name="author" content="Fletcher T. Penney"/>
+	<meta name="version" content="4.5"/>
+	<meta name="revised" content="2013-12-31"/>
+	<link type="text/css" rel="stylesheet" href="http://fletcher.github.io/MultiMarkdown-4/css/document.css"/>
+	<meta name="latexmode" content="memoir"/>
+	<meta name="latexinput" content="mmd-article-begin-doc"/>
+	<meta name="latexfooter" content="mmd-memoir-footer"/>
+</head>
+<body>
+
+<h2 id="definitionlists">Definition Lists</h2>
+
+<p>MultiMarkdown has support for definition lists using the same syntax used in
+<a href="http://www.michelf.com/projects/php-markdown/extra/">PHP Markdown Extra</a>. Specifically:</p>
+
+<pre><code>Apple
+:   Pomaceous fruit of plants of the genus Malus in 
+    the family Rosaceae.
+:   An american computer company.
+
+Orange
+:   The fruit of an evergreen tree of the genus Citrus.
+</code></pre>
+
+<p>becomes:</p>
+
+<blockquote>
+<dl>
+<dt>Apple</dt>
+<dd>Pomaceous fruit of plants of the genus Malus in
+ the family Rosaceae.</dd>
+
+<dd>An american computer company.</dd>
+
+<dt>Orange</dt>
+<dd>The fruit of an evergreen tree of the genus Citrus.</dd>
+</dl>
+</blockquote>
+
+<p>You can have more than one term per definition by placing each term on a
+separate line. Each definition starts with a colon, and you can have more than
+one definition per term. You may optionally have a blank line between the last
+term and the first definition.</p>
+
+<p>Definitions may contain other block level elements, such as lists,
+blockquotes, or other definition lists.</p>
+
+<p>Unlike PHP Markdown Extra, all definitions are wrapped in <code>&lt;p&gt;</code> tags. First, I
+was unable to get Markdown <em>not</em> to create paragraphs. Second, I didn&#8217;t see
+where it mattered - the only difference seems to be aesthetic, and I actually
+prefer the <code>&lt;p&gt;</code> tags in place. Let me know if this is a problem.</p>
+
+<p>See the <a href="http://www.michelf.com/projects/php-markdown/extra/">PHP Markdown Extra</a> page for more information.</p>
+
+</body>
+</html>

@@ -109,7 +109,7 @@ formats so that you can specify a different header level for different output
 formats &#8212; e.g. <code>LaTeX Header Level</code>, <code>HTML Header Level</code>, and <code>ODF Header
 Level</code>.</p>
 
-<p>If you are doing something interesting with [Transclusion], you can also use a
+<p>If you are doing something interesting with <a href="#filetransclusion">File Transclusion</a>, you can also use a
 negative number here. Since metadata is not used when a file is &#8220;transcluded&#8221;,
 this allows you to use a different level of headings when a file is processed on
 its own.</p>
@@ -221,7 +221,7 @@ working &#8212; MultiMarkdown just copies it verbatim to the output.</p>
 
 <h3 id="transcludebase">Transclude Base</h3>
 
-<p>When using the transclusion features to &#8220;link&#8221; to other documents inside a MultiMarkdown document, this metadata specifies a folder that contains the files being linked to. If omitted, the default is the folder containing the file in question. This can be a relative path or a complete path.</p>
+<p>When using the <a href="#filetransclusion">File Transclusion</a> feature to &#8220;link&#8221; to other documents inside a MultiMarkdown document, this metadata specifies a folder that contains the files being linked to. If omitted, the default is the folder containing the file in question. This can be a relative path or a complete path.</p>
 
 <p>This metadata can be particularly useful when using MultiMarkdown to parse a text string that does not exist as a file on the computer, and therefore does not have a parent folder (when using <code>stdin</code> or another application that offers MultiMarkdown support). In this case, the path must be a complete path.</p>
 
@@ -251,7 +251,52 @@ header, then the defined anchor takes precedence.</p>
 <p>In addition to headers within the document, you can provide labels for images
 and tables which can then be used for cross-references as well.</p>
 
-<p>{{attributes.md}}</p>
+<h2 id="linkandimageattributes">Link and Image Attributes</h2>
+
+<p>Adding attributes to links and images has been requested for a long time on
+the Markdown discussion list. I was fairly opposed to this, as most of the
+proposals really disrupted the readability of the syntax. I consider myself a
+&#8220;Markdown purist&#8221;, meaning that I took John&#8217;s introduction to heart:</p>
+
+<blockquote>
+<p>The overriding design goal for Markdown&#8217;s formatting syntax is to make
+it as readable as possible. The idea is that a Markdown-formatted
+document should be publishable as-is, as plain text, without looking
+like it&#8217;s been marked up with tags or formatting instructions. While
+Markdown&#8217;s syntax has been influenced by several existing text-to-HTML
+filters, the single biggest source of inspiration for Markdown&#8217;s
+syntax is the format of plain text email.</p>
+</blockquote>
+
+<p>Because there was not a syntax proposal that I felt fit this goal, I was generally opposed to the idea.</p>
+
+<p>Then, Choan C. Gálvez <a href="http://six.pairlist.net/pipermail/markdown-discuss/2005-October/001578.html">proposed</a> a brilliantly simple syntax that
+stayed out of the way. By simply appending the attributes to the link
+reference information, which is already removed from the text itself, it
+doesn&#8217;t disturb the readability.</p>
+
+<p>For example:</p>
+
+<pre><code>This is a formatted ![image][] and a [link][] with attributes.
+
+[image]: http://path.to/image &quot;Image title&quot; width=40px height=400px
+[link]:  http://path.to/link.html &quot;Some Link&quot; class=external
+         style=&quot;border: solid black 1px;&quot;
+</code></pre>
+
+<p>This will generate width and height attributes for the image, and a border
+around the link. And while it can be argued that it does look &#8220;like it&#8217;s been
+marked up with tags [and] formatting instructions&#8221;, even I can&#8217;t argue too
+strongly against it. The link and the title in quotes already look like some
+form of markup, and the the additional tags are hardly that intrusive, and
+they offer a great deal of functionality. They might even be useful in further
+functions (citations?).</p>
+
+<p>The attributes must continue after the other link/image data, and may contain
+newlines, but must start at the beginning of the line. The format is
+<code>attribute=value</code> or <code>attribute=&quot;multi word value&quot;</code>. Currently, MultiMarkdown
+does not attempt to interpret or make any use of any of these attributes.
+Also, you can&#8217;t have a multiword attribute span a newline.</p>
 
 <h2 id="tables">Tables</h2>
 
@@ -358,11 +403,276 @@ the beginning of the line</li>
 <li><p>Native RTF support for tables is <em>very</em> limited. If you need more complex tables, I recommend using the OpenDocument format, and then using <a href="http://www.libreoffice.org/">LibreOffice</a> to convert your document to RTF.</p></li>
 </ul>
 
-<p>{{footnotes.md}}
-{{citations.md}}
-{{definitionlists.md}}
-{{math.md}}
-{{glossary.md}}</p>
+<p>I have added support for footnotes to MultiMarkdown, using the syntax proposed
+by John Gruber. Note that there is no official support for footnotes yet, so
+the output format may change, but the input format sounds fairly stable.</p>
+
+<p>To create a footnote, enter something like the following:</p>
+
+<pre><code>Here is some text containing a footnote.[^somesamplefootnote]
+
+[^somesamplefootnote]: Here is the text of the footnote itself.
+
+[somelink]:http://somelink.com
+</code></pre>
+
+<p>The footnote itself must be at the start of a line, just like links by
+reference. If you want a footnote to have multiple paragraphs, lists, etc.,
+then the subsequent paragraphs need an extra tab preceding them. You may have
+to experiment to get this just right, and please let me know of any issues you
+find.</p>
+
+<p>This is what the final result looks like:</p>
+
+<blockquote>
+<p>Here is some text containing a footnote.<a href="#fn:1" id="fnref:1" title="see footnote" class="footnote">[1]</a></p>
+</blockquote>
+
+<h2 id="citations">Citations</h2>
+
+<p>I have included support for <em>basic</em> bibliography features in this version of
+MultiMarkdown. Please give me feedback on ways to improve this but keep the
+following in mind:</p>
+
+<ol>
+<li><p>Bibliography support in MultiMarkdown is rudimentary. The goal is to offer
+a basic standalone feature, that can be changed using the tool of your choice
+to a more robust format (e.g. BibTeX, CiteProc). My XSLT files demonstrate how
+to make this format compatible with BibTeX, but I am not planning on
+personally providing compatibility with other tools. Feel free to post your
+ideas and tools to the wiki.</p></li>
+<li><p>Those needing more detailed function sets for their bibliographies may need
+customized tools to provide those services. This is a basic tool that should
+work for most people. Reference librarians will probably not be satisfied
+however.</p></li>
+</ol>
+
+<p>To use citations in MultiMarkdown, you use a syntax much like that for
+anchors:</p>
+
+<pre><code>This is a statement that should be attributed to
+its source[p. 23][#Doe:2006].
+
+And following is the description of the reference to be
+used in the bibliography.
+
+[#Doe:2006]: John Doe. *Some Big Fancy Book*.  Vanity Press, 2006.
+</code></pre>
+
+<p>In HTML output, citations are indistinguishable from footnotes.</p>
+
+<p>You are not required to use a locator (e.g. p. 23), and there are
+no special rules on what can be used as a locator if you choose
+to use one. If you prefer to omit the locator, just use an empty
+set of square brackets before the citation:</p>
+
+<pre><code>This is a statement that should be attributed to its 
+source[][#Doe:2006].
+</code></pre>
+
+<p>There are no rules on the citation key format that you use (e.g. <code>Doe:2006</code>),
+but it must be preceded by a <code>#</code>, just like footnotes use <code>^</code>.</p>
+
+<p>As for the reference description, you can use Markup code within this section,
+and I recommend leaving a blank line afterwards to prevent concatenation of
+several references. Note that there is no way to reformat these references in
+different bibliography styles; for this you need a program designed for that
+purpose (e.g. BibTeX).</p>
+
+<p>If you want to include a source in your bibliography that was not cited, you
+may use the following:</p>
+
+<pre><code>[Not cited][#citekey]
+</code></pre>
+
+<p>The <code>Not cited</code> bit is not case sensitive.</p>
+
+<p>If you are creating a LaTeX document, the citations will be included, and
+natbib will be used by default. If you are not using BibTeX and are getting
+errors about your citations not being compatible with &#8216;Author-Year&#8217;, you can
+add the following to your documents metadata:</p>
+
+<pre><code>latex input:        mmd-natbib-plain
+</code></pre>
+
+<p>This changes the citation style in natbib to avoid these errors, and is useful
+when you include your citations in the MultiMarkdown document itself.</p>
+
+<h2 id="bibtex">BibTeX</h2>
+
+<p>If you are creating a LaTeX document, and need a bibliography, then you should
+definitely look into <a href="http://www.bibtex.org/">BibTeX</a> and
+<a href="http://merkel.zoneo.net/Latex/natbib.php">natbib</a>. It is beyond the scope of
+this document to describe how these two packages work, but it is possible to
+combine them with MultiMarkdown.</p>
+
+<p>To use BibTeX in a MultiMarkdown document, you need to use the <a href="#bibtex"><code>BibTeX</code>
+metadata</a> to specify where your citations are stored.</p>
+
+<p>Since <code>natbib</code> is enabled by default, you have a choice between using the
+<code>\citep</code> and <code>\citet</code> commands. The following shows how this relates to the
+MultiMarkdown syntax used.</p>
+
+<pre><code>[#citekey]    =&gt; ~\citep{citekey}
+[#citekey][]  =&gt; ~\citep{citekey}
+
+[foo][#citekey] =&gt; ~\citep[foo]{citekey}
+
+[foo\]\[bar][#citekey] =&gt; ~\citep[foo][bar]{citekey}
+
+
+[#citekey;]    =&gt; \citet{citekey}
+[#citekey;][]  =&gt; \citet{citekey}
+
+[foo][#citekey;] =&gt; \citet[foo]{citekey}
+
+[foo\]\[bar][#citekey;] =&gt; \citet[foo][bar]{citekey}
+</code></pre>
+
+<h2 id="definitionlists">Definition Lists</h2>
+
+<p>MultiMarkdown has support for definition lists using the same syntax used in
+<a href="http://www.michelf.com/projects/php-markdown/extra/">PHP Markdown Extra</a>. Specifically:</p>
+
+<pre><code>Apple
+:   Pomaceous fruit of plants of the genus Malus in 
+    the family Rosaceae.
+:   An american computer company.
+
+Orange
+:   The fruit of an evergreen tree of the genus Citrus.
+</code></pre>
+
+<p>becomes:</p>
+
+<blockquote>
+<dl>
+<dt>Apple</dt>
+<dd>Pomaceous fruit of plants of the genus Malus in
+ the family Rosaceae.</dd>
+
+<dd>An american computer company.</dd>
+
+<dt>Orange</dt>
+<dd>The fruit of an evergreen tree of the genus Citrus.</dd>
+</dl>
+</blockquote>
+
+<p>You can have more than one term per definition by placing each term on a
+separate line. Each definition starts with a colon, and you can have more than
+one definition per term. You may optionally have a blank line between the last
+term and the first definition.</p>
+
+<p>Definitions may contain other block level elements, such as lists,
+blockquotes, or other definition lists.</p>
+
+<p>Unlike PHP Markdown Extra, all definitions are wrapped in <code>&lt;p&gt;</code> tags. First, I
+was unable to get Markdown <em>not</em> to create paragraphs. Second, I didn&#8217;t see
+where it mattered - the only difference seems to be aesthetic, and I actually
+prefer the <code>&lt;p&gt;</code> tags in place. Let me know if this is a problem.</p>
+
+<p>See the <a href="http://www.michelf.com/projects/php-markdown/extra/">PHP Markdown Extra</a> page for more information.</p>
+
+<h2 id="math">Math</h2>
+
+<p>MultiMarkdown 2.0 used <a href="http://www1.chapman.edu/~jipsen/mathml/asciimath.html">ASCIIMathML</a> to typeset mathematical equations. There
+were benefits to using ASCIIMathML, but also some disadvantages.</p>
+
+<p>When rewriting for MultiMarkdown 3.0, there was no straightforward way to
+implement ASCIIMathML which lead me to look for alternatives. I settled on
+using <a href="http://www.mathjax.org/">MathJax</a>. The advantage here is that the same syntax is supported by
+MathJax in browsers, and in LaTeX. </p>
+
+<p>This does mean that math will need to be entered into MultiMarkdown documents
+using the LaTeX syntax, rather than ASCIIMathML.</p>
+
+<p>To enable MathJax support in web pages, you have to include a link to an
+active MathJax installation &#8212; setting this up is beyond the scope of this
+document, but it&#8217;s not too hard.</p>
+
+<p>Here&#8217;s an example of the metadata setup, and some math:</p>
+
+<pre><code>latex input:    mmd-article-header  
+Title:          MultiMarkdown Math Example  
+latex input:    mmd-article-begin-doc  
+latex footer:   mmd-memoir-footer  
+HTML header:    &lt;script type=&quot;text/javascript&quot;
+    src=&quot;http://example.net/mathjax/MathJax.js&quot;&gt;
+    &lt;/script&gt;
+
+
+An example of math within a paragraph --- \\({e}^{i\pi }+1=0\\)
+--- easy enough.
+
+And an equation on it's own:
+
+\\[ {x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a} \\]
+
+That's it.
+</code></pre>
+
+<p>Here&#8217;s what it looks like in action (if you&#8217;re viewing this document in a
+supported format):</p>
+
+<blockquote>
+<p>An example of math within a paragraph &#8212; <span class="math">\({e}^{i\pi }+1=0\)</span>
+&#8212; easy enough.</p>
+
+<p>And an equation on it&#8217;s own:</p>
+
+<p><span class="math">\[ {x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a} \]</span></p>
+
+<p>That&#8217;s it.</p>
+</blockquote>
+
+<h2 id="glossary">Glossary</h2>
+
+<p>MultiMarkdown has a feature that allows footnotes to be specified as glossary
+terms. It doesn&#8217;t do much for XHTML documents, but the XSLT file that converts
+the document into LaTeX is designed to convert these special footnotes into
+glossary entries.</p>
+
+<p>The glossary format for the footnotes is:</p>
+
+<pre><code>[^glossaryfootnote]: glossary: term (optional sort key)
+    The actual definition belongs on a new line, and can continue on
+    just as other footnotes.
+</code></pre>
+
+<p>The <code>term</code> is the item that belongs in the glossary. The <code>sort key</code> is
+optional, and is used to specify that the term should appear somewhere else in
+the glossary (which is sorted in alphabetical order).</p>
+
+<p>Unfortunately, it takes an extra step to generate the glossary when creating a
+pdf from a latex file:</p>
+
+<ol>
+<li><p>You need to have the <code>basic.gst</code> file installed, which comes with the
+memoir class.</p></li>
+<li><p>You need to run a special makeindex command to generate the <code>.glo</code> file:
+ <code>makeindex -s `kpsewhich basic.gst` -o &quot;filename.gls&quot; &quot;filename.glo&quot;</code></p></li>
+<li><p>Then you run the usual pdflatex command again a few times.</p></li>
+</ol>
+
+<p>Alternatively, you can use the code below to create an engine file for TeXShop
+(it belongs in <code>~/Library/TeXShop/Engines</code>). You can name it something like
+<code>MemoirGlossary.engine</code>. Then, when processing a file that needs a glossary,
+you typeset your document once with this engine, and then continue to process
+it normally with the usual LaTeX engine. Your glossary should be compiled
+appropriately. If you use <a href="http://www.uoregon.edu/~koch/texshop/" title="TeXShop Homepage">TeXShop</a>, this is the way to go.</p>
+
+<p><strong>Note</strong>: <em>Getting glossaries to work is a slightly more advanced LaTeX
+feature, and might take some trial and error the first few times.</em></p>
+
+<pre><code>#!/bin/ 
+
+set path = ($path /usr/local/teTeX/bin/powerpc-apple-darwin-current 
+    /usr/local/bin) # This is actually a continuation of the line above
+
+set basefile = `basename &quot;$1&quot; .tex`
+
+makeindex -s `kpsewhich basic.gst` -o &quot;${basefile}.gls&quot; &quot;${basefile}.glo&quot;
+</code></pre>
 
 <h1 id="criticmarkup">CriticMarkup</h1>
 
@@ -415,9 +725,103 @@ the beginning of the line</li>
 <pre><code>This is a test{&gt;&gt;What is it a test of?&lt;&lt;}.
 </code></pre>
 
-<p>{{raw.md}}
-{{variables.md}}
-{{transclusion.md}}</p>
+<h2 id="rawhtml">Raw HTML</h2>
+
+<p>You can include raw (X)HTML within your document. Exactly what happens with
+these portions depends on the output format. You can also use the <code>markdown</code>
+attribute to indicate that MultiMarkdown processing should be applied within
+the block level HTML tag. This is in addition to the <code>--process-html</code> command
+line option that causes MultiMarkdown processing to occur within <em>all</em> block
+level HTML tags.</p>
+
+<p>For example:</p>
+
+<pre><code>&lt;div&gt;This is *not* MultiMarkdown&lt;/div&gt;
+
+&lt;div markdown=1&gt;This *is* MultiMarkdown&lt;/div&gt;
+</code></pre>
+
+<p>will produce the following without <code>--process-html</code>:</p>
+
+<pre><code>&lt;div&gt;This is *not* MultiMarkdown&lt;/div&gt;
+
+&lt;div&gt;This &lt;em&gt;is&lt;/em&gt; MultiMarkdown&lt;/div&gt;
+</code></pre>
+
+<p>and with <code>--process-html</code>:</p>
+
+<pre><code>&lt;div&gt;This is &lt;em&gt;not&lt;/em&gt; MultiMarkdown&lt;/div&gt;
+
+&lt;div&gt;This &lt;em&gt;is&lt;/em&gt; MultiMarkdown&lt;/div&gt;
+</code></pre>
+
+<p>However, the results may be different than anticipated when outputting to
+LaTeX or other formats. Normally, block level HTML will be ignored when
+outputting to LaTeX or ODF. The example above would produce the following,
+leaving out the first <code>&lt;div&gt;</code> entirely:</p>
+
+<pre><code>This \emph{is} MultiMarkdown
+</code></pre>
+
+<p>And this with <code>--process-html</code>:</p>
+
+<pre><code>This is \emph{not} MultiMarkdown
+This \emph{is} MultiMarkdown
+</code></pre>
+
+<p>You will also notice that the line breaks are different when outputting to
+LaTeX or ODF, and this can cause the contents of two <code>&lt;div&gt;</code> tags to be placed
+into a single paragraph.</p>
+
+<h2 id="rawlatexopendocumentetc.">Raw LaTeX/OpenDocument/etc.</h2>
+
+<p>You can use HTML comments to include additional text that will be included in the exported file without being changed. This can be used for any export format, which means that each document can only be configured for one export format at a time. In other words, it is highly unlikely that valid raw LaTeX will also be valid OpenDocument source code.</p>
+
+<pre><code>This will be processed by *MultiMarkdown*.
+&lt;!-- This will not be processed by *MultiMarkdown --&gt;
+</code></pre>
+
+<h2 id="filetransclusion">File Transclusion</h2>
+
+<p>File transclusion is the ability to tell MultiMarkdown to insert the contents of another file inside the current file being processed. For example:</p>
+
+<pre><code>This is some text.
+
+{{some_other_file.txt}}
+
+Another paragraph
+</code></pre>
+
+<p>If a file named <code>some_other_file.txt</code> exists, its contents will be inserted inside of this document <em>before</em> being processed by MultiMarkdown. This means that the contents of the file can also MultiMarkdown.</p>
+
+<p>If you want to display the <em>contents</em> of the file without processing it, you can include it in a code block (you may need to remove trailing newlines at the end of the document to be included):</p>
+
+<pre><code>This is some text
+
+```
+{{relative/path/to/some_other_file.txt}}
+```
+
+Another paragraph
+</code></pre>
+
+<p>Transclusion is recursive, so the file being inserted will be scanned to see if it references any other files.</p>
+
+<p>Metadata in the file being inserted will be ignored. This means that the file can contain certain metadata when viewed alone that will not be included when the file is transcluded by another file.</p>
+
+<p>You can use the <a href="#transcludebase">Transclude Base</a> metadata to specify where MultiMarkdown should look for the files to be included. All files must be in this folder. If this folder is not specified, then MultiMarkdown will look in the same folder as the parent file.</p>
+
+<div class="footnotes">
+<hr />
+<ol>
+
+<li id="fn:1">
+<p>Here is the text of the footnote itself. <a href="#fnref:1" title="return to article" class="reversefootnote">&#160;&#8617;</a></p>
+</li>
+
+</ol>
+</div>
+
 
 </body>
 </html>
