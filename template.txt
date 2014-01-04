@@ -4,7 +4,7 @@ Author:	Fletcher T. Penney
 Version:	{{version.txt}}
 Revised:	2013-12-31 
 Base Header Level:	1
-CSS:	http://fletcherpenney.net/css/document.css
+CSS:	{{css.txt}}
 latex mode:	memoir
 latex input:	mmd-article-begin-doc
 latex footer:	mmd-memoir-footer

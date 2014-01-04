@@ -5,7 +5,7 @@ Version:	{{version.txt}}
 Revised:	2013-12-31 
 Keywords:	MultiMarkdown, Markdown, LaTeX, PDF, RTF, LyX, HTML
 Base Header Level:	2
-CSS:	http://fletcherpenney.net/css/document.css
+CSS:	{{css.txt}}
 latex mode:	memoir
 latex input:	mmd-memoir-begin-doc
 latex footer:	mmd-memoir-footer

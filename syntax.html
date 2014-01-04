@@ -7,7 +7,7 @@
 	<meta name="author" content="Fletcher T. Penney"/>
 	<meta name="version" content="4.5"/>
 	<meta name="revised" content="2013-12-31"/>
-	<link type="text/css" rel="stylesheet" href="http://fletcherpenney.net/css/document.css"/>
+	<link type="text/css" rel="stylesheet" href="http://fletcher.github.io/MultiMarkdown-4/css/document.css"/>
 	<meta name="latexmode" content="memoir"/>
 	<meta name="latexinput" content="mmd-article-begin-doc"/>
 	<meta name="latexfooter" content="mmd-memoir-footer"/>
@@ -225,8 +225,33 @@ working &#8212; MultiMarkdown just copies it verbatim to the output.</p>
 
 <p>This metadata can be particularly useful when using MultiMarkdown to parse a text string that does not exist as a file on the computer, and therefore does not have a parent folder (when using <code>stdin</code> or another application that offers MultiMarkdown support). In this case, the path must be a complete path.</p>
 
-<p>{{cross-references.md}}
-{{attributes.md}}</p>
+<h2 id="cross-references">Cross-References</h2>
+
+<p>An oft-requested feature was the ability to have Markdown automatically handle
+within-document links as easily as it handled external links. To this aim, I
+added the ability to interpret <code>[Some Text][]</code> as a cross-link, if a header
+named &#8220;Some Text&#8221; exists.</p>
+
+<p>As an example, <code>[Metadata][]</code> will take you to the
+<a href="#metadata">section describing metadata</a>.</p>
+
+<p>Alternatively, you can include an optional label of your choosing to help
+disambiguate cases where multiple headers have the same title:</p>
+
+<pre><code>### Overview [MultiMarkdownOverview] ##
+</code></pre>
+
+<p>This allows you to use <code>[MultiMarkdownOverview]</code> to refer to this section
+specifically, and not another section named <code>Overview</code>. This works with atx-
+or settext-style headers.</p>
+
+<p>If you have already defined an anchor using the same id that is used by a
+header, then the defined anchor takes precedence.</p>
+
+<p>In addition to headers within the document, you can provide labels for images
+and tables which can then be used for cross-references as well.</p>
+
+<p>{{attributes.md}}</p>
 
 <h2 id="tables">Tables</h2>
 

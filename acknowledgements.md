@@ -1,6 +1,6 @@
 Title:	Acknowledgements
 Author:	Fletcher T. Penney
-CSS:	http://fletcherpenney.net/css/document.css
+CSS:	{{css.txt}}
 Version:	{{version.txt}}
 Revised:	2013-12-31 
 Base Header Level:	1

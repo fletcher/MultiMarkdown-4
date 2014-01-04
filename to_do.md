@@ -1,6 +1,6 @@
 Title:	To Do
 Author:	Fletcher T. Penney
-CSS:	http://fletcherpenney.net/css/document.css
+CSS:	{{css.txt}}
 Version:	{{version.txt}}
 Revision:	2013-12-31
 Base Header Level:	1

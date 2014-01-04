@@ -1198,8 +1198,33 @@ working &#8212; MultiMarkdown just copies it verbatim to the output.</text:p>
 
 <text:p text:style-name="Standard">This metadata can be particularly useful when using MultiMarkdown to parse a text string that does not exist as a file on the computer, and therefore does not have a parent folder (when using <text:span text:style-name="Source_20_Text">stdin</text:span> or another application that offers MultiMarkdown support). In this case, the path must be a complete path.</text:p>
 
-<text:p text:style-name="Standard">{{cross-references.md}}
-{{attributes.md}}</text:p>
+<text:h text:outline-level="3"><text:bookmark text:name="cross-references"/>Cross-References<text:bookmark-end text:name="cross-references"/></text:h>
+
+<text:p text:style-name="Standard">An oft-requested feature was the ability to have Markdown automatically handle
+within-document links as easily as it handled external links. To this aim, I
+added the ability to interpret <text:span text:style-name="Source_20_Text">[Some Text][]</text:span> as a cross-link, if a header
+named &#8220;Some Text&#8221; exists.</text:p>
+
+<text:p text:style-name="Standard">As an example, <text:span text:style-name="Source_20_Text">[Metadata][]</text:span> will take you to the
+<text:a xlink:type="simple" xlink:href="#metadata">section describing metadata</text:a>.</text:p>
+
+<text:p text:style-name="Standard">Alternatively, you can include an optional label of your choosing to help
+disambiguate cases where multiple headers have the same title:</text:p>
+
+<text:p text:style-name="Preformatted Text">### Overview [MultiMarkdownOverview] ##<text:line-break/></text:p>
+
+
+<text:p text:style-name="Standard">This allows you to use <text:span text:style-name="Source_20_Text">[MultiMarkdownOverview]</text:span> to refer to this section
+specifically, and not another section named <text:span text:style-name="Source_20_Text">Overview</text:span>. This works with atx-
+or settext-style headers.</text:p>
+
+<text:p text:style-name="Standard">If you have already defined an anchor using the same id that is used by a
+header, then the defined anchor takes precedence.</text:p>
+
+<text:p text:style-name="Standard">In addition to headers within the document, you can provide labels for images
+and tables which can then be used for cross-references as well.</text:p>
+
+<text:p text:style-name="Standard">{{attributes.md}}</text:p>
 
 <text:h text:outline-level="3"><text:bookmark text:name="tables"/>Tables<text:bookmark-end text:name="tables"/></text:h>
 
