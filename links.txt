@@ -1,3 +1,5 @@
+[ASCIIMathML]:	http://www1.chapman.edu/~jipsen/mathml/asciimath.html
+[bundle]:	https://github.com/fletcher/markdown.tmbundle
 [composer-download]:	http://multimarkdown.com/download/
 [CriticMarkup]:	http://criticmarkup.com/
 [discussion list]:	https://groups.google.com/forum/#!forum/multimarkdown
@@ -15,6 +17,7 @@
 [MacPorts]:	http://www.macports.org/
 [Markdown]:	http://daringfireball.net/projects/markdown/
 [MMD-4]:	http://github.com/fletcher/MultiMarkdown-4
+[MathJax]:	http://www.mathjax.org/
 [MultiMarkdown]:	http://fletcherpenney.net/multimarkdown/
 [MultiMarkdown Composer]:	http://multimarkdown.com/
 [OpenDocument]:	http://en.wikipedia.org/wiki/OpenDocument
@@ -25,7 +28,10 @@
 [PHP Markdown Extra]:	http://www.michelf.com/projects/php-markdown/extra/
 [RTF]:	http://en.wikipedia.org/wiki/Rich_Text_Format
 [Sample Gallery]:	https://github.com/fletcher/MultiMarkdown-Gallery
+[Scrivener]:	http://www.literatureandlatte.com/
 [support site]:	http://support.fletcherpenney.net/
 [test suite]:	https://github.com/fletcher/MMD-Test-Suite
+[TeXShop]:	http://www.uoregon.edu/~koch/texshop/ "TeXShop Homepage"
+[TextMate]:	http://macromates.com/
 [wiki]:	https://github.com/fletcher/peg-multimarkdown/wiki/User's-Manual
 [YAML]:	http://www.yaml.org/

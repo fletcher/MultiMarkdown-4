@@ -59,12 +59,4 @@ feature, and might take some trial and error the first few times.*
 	makeindex -s `kpsewhich basic.gst` -o "${basefile}.gls" "${basefile}.glo"
 
 
-[TeXShop]: http://www.uoregon.edu/~koch/texshop/ "TeXShop Homepage"
-
-[LaTeX Support]: https://github.com/fletcher/peg-multimarkdown-latex-support
-[ASCIIMathML]: http://www1.chapman.edu/~jipsen/mathml/asciimath.html
-[MathJax]: http://www.mathjax.org/
-
-
-
 {{links.txt}}

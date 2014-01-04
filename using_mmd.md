@@ -265,8 +265,8 @@ install my MultiMarkdown [bundle]. This is a modified version of the original
 Markdown bundle for TextMate that includes better support for MultiMarkdown.
 
 This bundle will work with MultiMarkdown 2, or with MultiMarkdown 3/4 if you
-install the MultiMarkdown-Support files (available from the downloads
-[page][downloads]).
+install the Mac Support Installer files (available from the downloads
+[page][download]).
 
 
 ### Using MultiMarkdown with Scrivener ###
@@ -275,15 +275,15 @@ install the MultiMarkdown-Support files (available from the downloads
 [Scrivener] is a great program for writers using Mac OS X. It includes built
 in support for MultiMarkdown. If you want to use MultiMarkdown 3/4 with
 Scrivener, you need to install the Support files in `~/Library/Application
-Support/MultiMarkdown`. The MultiMarkdown-Support installer is available from
-the downloads [page][downloads] and will install these files for you.
+Support/MultiMarkdown`. The Mac Support Installer is available from
+the downloads [page][download] and will install these files for you.
 
 
 ### Drag and Drop ###
 
 You can use the Mac OS X drag and drop applications to allow you to convert
 MultiMarkdown to other formats by dragging and dropping files in the Finder.
-They are available from the [downloads] page, or by running `make drop` from
+They are available from the [download] page, or by running `make drop` from
 the command line in the `multimarkdown` source directory.
 
 
@@ -331,7 +331,7 @@ it:
 	<!-- \input{somefile} -->
 
 If you have questions about LaTeX itself, I can't help. You're welcome to send
-your question to the [MultiMarkdown Discussion List], and perhaps someone will
+your question to the MultiMarkdown [discussion list], and perhaps someone will
 be able to offer some assistance. But you would be better off asking a group
 dedicated to LaTeX instead.
 
@@ -426,6 +426,7 @@ That said, Charles Cowan has contributed code to the MultiMarkdown project that 
 
 See [his page](http://crcowan.github.io/MultiMarkdown-4-LyX-Maintenance/) for more information.
 
+*Note*: Because the LyX exporter is not maintained by me, it may take some time for new features to be supported when exporting to LyX.
 
 ### Advanced Use ###
 
@@ -452,13 +453,6 @@ There are several limitations to the OpenDocument Flat Text format:
 * math features are not supported, though I hope to be able to implement this
   at some point in the future
 
-
-[TextMate]: http://macromates.com/
-[bundle]: https://github.com/fletcher/markdown.tmbundle
-[Scrivener]: http://www.literatureandlatte.com/
-[downloads]: https://github.com/fletcher/peg-multimarkdown/downloads/
-[LaTeX]: http://en.wikipedia.org/wiki/LaTeX
-[MultiMarkdown Discussion List]: http://groups.google.com/group/multimarkdown/
 
 
 {{links.txt}}

@@ -35,6 +35,7 @@ Or as a set of web pages for individual sections:
 	* [Footnotes](footnotes)
 	* [Citations](citations)
 	* [Definition Lists](definitionlists)
+	* [Fenced Code Blocks](fences)
 	* [Math](math)
 	* [Glossaries](glossary)
 	* [CriticMarkup](criticmarkup)

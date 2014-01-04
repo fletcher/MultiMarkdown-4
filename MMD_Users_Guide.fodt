@@ -798,22 +798,22 @@ install my MultiMarkdown <text:a xlink:type="simple" xlink:href="https://github.
 Markdown bundle for TextMate that includes better support for MultiMarkdown.</text:p>
 
 <text:p text:style-name="Standard">This bundle will work with MultiMarkdown 2, or with MultiMarkdown 3/4 if you
-install the MultiMarkdown-Support files (available from the downloads
-<text:a xlink:type="simple" xlink:href="https://github.com/fletcher/peg-multimarkdown/downloads/">page</text:a>).</text:p>
+install the Mac Support Installer files (available from the downloads
+<text:a xlink:type="simple" xlink:href="http://fletcherpenney.net/multimarkdown/download/">page</text:a>).</text:p>
 
 <text:h text:outline-level="4"><text:bookmark text:name="usingmultimarkdownwithscrivener"/>Using MultiMarkdown with Scrivener<text:bookmark-end text:name="usingmultimarkdownwithscrivener"/></text:h>
 
 <text:p text:style-name="Standard"><text:a xlink:type="simple" xlink:href="http://www.literatureandlatte.com/">Scrivener</text:a> is a great program for writers using Mac OS X. It includes built
 in support for MultiMarkdown. If you want to use MultiMarkdown 3/4 with
 Scrivener, you need to install the Support files in <text:span text:style-name="Source_20_Text">~/Library/Application
-Support/MultiMarkdown</text:span>. The MultiMarkdown-Support installer is available from
-the downloads <text:a xlink:type="simple" xlink:href="https://github.com/fletcher/peg-multimarkdown/downloads/">page</text:a> and will install these files for you.</text:p>
+Support/MultiMarkdown</text:span>. The Mac Support Installer is available from
+the downloads <text:a xlink:type="simple" xlink:href="http://fletcherpenney.net/multimarkdown/download/">page</text:a> and will install these files for you.</text:p>
 
 <text:h text:outline-level="4"><text:bookmark text:name="draganddrop"/>Drag and Drop<text:bookmark-end text:name="draganddrop"/></text:h>
 
 <text:p text:style-name="Standard">You can use the Mac OS X drag and drop applications to allow you to convert
 MultiMarkdown to other formats by dragging and dropping files in the Finder.
-They are available from the <text:a xlink:type="simple" xlink:href="https://github.com/fletcher/peg-multimarkdown/downloads/">downloads</text:a> page, or by running <text:span text:style-name="Source_20_Text">make drop</text:span> from
+They are available from the <text:a xlink:type="simple" xlink:href="http://fletcherpenney.net/multimarkdown/download/">download</text:a> page, or by running <text:span text:style-name="Source_20_Text">make drop</text:span> from
 the command line in the <text:span text:style-name="Source_20_Text">multimarkdown</text:span> source directory.</text:p>
 
 <text:h text:outline-level="4"><text:bookmark text:name="multimarkdownandfinderquicklook"/>MultiMarkdown and Finder &#8220;Quick Look&#8221;<text:bookmark-end text:name="multimarkdownandfinderquicklook"/></text:h>
@@ -860,7 +860,7 @@ it:</text:p>
 
 
 <text:p text:style-name="Standard">If you have questions about LaTeX itself, I can&#8217;t help. You&#8217;re welcome to send
-your question to the <text:a xlink:type="simple" xlink:href="http://groups.google.com/group/multimarkdown/">MultiMarkdown Discussion List</text:a>, and perhaps someone will
+your question to the MultiMarkdown <text:a xlink:type="simple" xlink:href="https://groups.google.com/forum/#!forum/multimarkdown">discussion list</text:a>, and perhaps someone will
 be able to offer some assistance. But you would be better off asking a group
 dedicated to LaTeX instead.</text:p>
 
@@ -952,6 +952,8 @@ Package&#8230;&#8221; button to import the downloaded <text:span text:style-name
 <text:p text:style-name="Standard">That said, Charles Cowan has contributed code to the MultiMarkdown project that enables exporting of LyX documents directly. If you have any trouble getting this to work, please use the MultiMarkdown <text:a xlink:type="simple" xlink:href="https://github.com/fletcher/MultiMarkdown-4/issues">issues page</text:a> to get help.</text:p>
 
 <text:p text:style-name="Standard">See <text:a xlink:type="simple" xlink:href="http://crcowan.github.io/MultiMarkdown-4-LyX-Maintenance/">his page</text:a> for more information.</text:p>
+
+<text:p text:style-name="Standard"><text:span text:style-name="MMD-Italic">Note</text:span>: Because the LyX exporter is not maintained by me, it may take some time for new features to be supported when exporting to LyX.</text:p>
 
 <text:h text:outline-level="4"><text:bookmark text:name="advanceduse"/>Advanced Use<text:bookmark-end text:name="advanceduse"/></text:h>
 
@@ -1547,6 +1549,20 @@ prefer the <text:span text:style-name="Source_20_Text">&lt;p&gt;</text:span> tag
 
 <text:p text:style-name="Standard">See the <text:a xlink:type="simple" xlink:href="http://www.michelf.com/projects/php-markdown/extra/">PHP Markdown Extra</text:a> page for more information.</text:p>
 
+<text:h text:outline-level="2"><text:bookmark text:name="fencedcodeblocks"/>Fenced Code Blocks<text:bookmark-end text:name="fencedcodeblocks"/></text:h>
+
+<text:p text:style-name="Standard">In addition to the regular indented code block that Markdown uses, you can use &#8220;fenced&#8221; code blocks in MultiMarkdown. These code blocks do not have to be indented, and can also be configured to be compatible with a third party syntax highlighter. These code blocks should begin with 3 to 5 backticks, an optional language specifier (if using a syntax highlighter), and should end with the same number of backticks you started with:</text:p>
+
+<text:p text:style-name="Preformatted Text"># Demonstrate Syntax Highlighting if you link to highlight.js #<text:line-break/># http://softwaremaniacs.org/soft/highlight/en/<text:line-break/>print &quot;Hello, world!\n&quot;;<text:line-break/>$a = 0;<text:line-break/>while ($a &lt; 10) {<text:line-break/>print &quot;$a...\n&quot;;<text:line-break/>$a++;<text:line-break/>}<text:line-break/></text:p>
+
+
+<text:p text:style-name="Standard">I don&#8217;t recommend any specific syntax highlighter, but have used the following metadata to set things up. It may or may not work for you:</text:p>
+
+<text:p text:style-name="Preformatted Text">html header:<text:tab/>&lt;link rel=&quot;stylesheet&quot; href=&quot;http://yandex.st/highlightjs/7.3/styles/default.min.css&quot;&gt;<text:line-break/><text:tab/>&lt;script src=&quot;http://yandex.st/highlightjs/7.3/highlight.min.js&quot;&gt;&lt;/script&gt;<text:line-break/><text:tab/>&lt;script&gt;hljs.initHighlightingOnLoad();&lt;/script&gt;<text:line-break/></text:p>
+
+
+<text:p text:style-name="Standard">Fenced code blocks are particularly useful when included another file (<text:a xlink:type="simple" xlink:href="#filetransclusion">File Transclusion</text:a>), and you want to show the <text:span text:style-name="MMD-Italic">source</text:span> of the file, not what the file looks like when processed by MultiMarkdown.</text:p>
+
 <text:h text:outline-level="3"><text:bookmark text:name="math"/>Math<text:bookmark-end text:name="math"/></text:h>
 
 <text:p text:style-name="Standard">MultiMarkdown 2.0 used <text:a xlink:type="simple" xlink:href="http://www1.chapman.edu/~jipsen/mathml/asciimath.html">ASCIIMathML</text:a> to typeset mathematical equations. There
@@ -1566,7 +1582,7 @@ document, but it&#8217;s not too hard.</text:p>
 
 <text:p text:style-name="Standard">Here&#8217;s an example of the metadata setup, and some math:</text:p>
 
-<text:p text:style-name="Preformatted Text">latex input:<text:tab/>mmd-article-header  <text:line-break/>Title:<text:tab/><text:tab/>  MultiMarkdown Math Example  <text:line-break/>latex input:<text:tab/>mmd-article-begin-doc  <text:line-break/>latex footer:   mmd-memoir-footer  <text:line-break/>HTML header:<text:tab/>&lt;script type=&quot;text/javascript&quot;<text:line-break/><text:tab/>src=&quot;http://example.net/mathjax/MathJax.js&quot;&gt;<text:line-break/><text:tab/>&lt;/script&gt;<text:line-break/><text:line-break/><text:line-break/>An example of math within a paragraph --- \\({e}^{i\pi }+1=0\\)<text:line-break/>--- easy enough.<text:line-break/><text:line-break/>And an equation on it's own:<text:line-break/><text:line-break/>\\[ {x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a} \\]<text:line-break/><text:line-break/>That's it.<text:line-break/></text:p>
+<text:p text:style-name="Preformatted Text">latex input:<text:tab/>mmd-article-header  <text:line-break/>Title:<text:tab/><text:tab/>  MultiMarkdown Math Example  <text:line-break/>latex input:<text:tab/>mmd-article-begin-doc  <text:line-break/>latex footer:   mmd-memoir-footer  <text:line-break/>HTML header:<text:tab/>&lt;script type=&quot;text/javascript&quot;<text:line-break/><text:tab/><text:tab/><text:tab/><text:tab/>src=&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot;&gt;<text:line-break/><text:tab/><text:tab/><text:tab/><text:tab/>&lt;/script&gt;<text:line-break/><text:line-break/><text:line-break/>An example of math within a paragraph --- \\({e}^{i\pi }+1=0\\)<text:line-break/>--- easy enough.<text:line-break/><text:line-break/>And an equation on it's own:<text:line-break/><text:line-break/>\\[ {x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a} \\]<text:line-break/><text:line-break/>That's it.<text:line-break/></text:p>
 
 
 <text:p text:style-name="Standard">Here&#8217;s what it looks like in action (if you&#8217;re viewing this document in a
@@ -1580,6 +1596,33 @@ supported format):</text:p>
 <text:p text:style-name="Quotations"><text:span text:style-name="math">\[ {x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a} \]</text:span></text:p>
 
 <text:p text:style-name="Quotations">That&#8217;s it.</text:p>
+
+<text:p text:style-name="Standard">In addition to the <text:span text:style-name="Source_20_Text">\\[ \\]</text:span> and <text:span text:style-name="Source_20_Text">\\( \\)</text:span> syntax, you can use LaTeX style &#8220;dollar sign&#8221; delimiters:</text:p>
+
+<text:p text:style-name="Preformatted Text">An example of math within a paragraph --- ${e}^{i\pi }+1=0$<text:line-break/>--- easy enough.<text:line-break/><text:line-break/>And an equation on it's own:<text:line-break/><text:line-break/>$${x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a}$$<text:line-break/><text:line-break/>That's it.<text:line-break/></text:p>
+
+
+<text:p text:style-name="Standard">In order to be correctly parsed as math, there must not be any space between the <text:span text:style-name="Source_20_Text">$</text:span> and the actual math on the inside of the delimiter, and there <text:span text:style-name="MMD-Italic">must</text:span> be space on the outside.</text:p>
+
+<text:h text:outline-level="3"><text:bookmark text:name="superscriptsandsubscripts"/>Superscripts and Subscripts<text:bookmark-end text:name="superscriptsandsubscripts"/></text:h>
+
+<text:p text:style-name="Standard">You can easily include superscripts and subscripts in MultiMarkdown as well:</text:p>
+
+<text:p text:style-name="Preformatted Text">This apartment has an area of 100m^2<text:line-break/>One must consider the value of x~z<text:line-break/></text:p>
+
+
+<text:p text:style-name="Standard">becomes</text:p>
+
+<text:p text:style-name="Quotations">This apartment has an area of 100m<text:span text:style-name="MMD-Superscript">2</text:span><text:line-break/>One must consider the value of x<text:span text:style-name="MMD-Subscript">z</text:span></text:p>
+
+<text:p text:style-name="Standard">The subscript must not contain any whitespace or punctuation.</text:p>
+
+<text:p text:style-name="Standard">More complicated exponents and subscripts can be delimited like this:</text:p>
+
+<text:p text:style-name="Preformatted Text">y^(a+b)^<text:line-break/>x~y,z~<text:line-break/></text:p>
+
+
+<text:p text:style-name="Quotations">y<text:span text:style-name="MMD-Superscript">(a+b)</text:span><text:line-break/>x<text:span text:style-name="MMD-Subscript">y,z</text:span></text:p>
 
 <text:h text:outline-level="3"><text:bookmark text:name="glossary"/>Glossary<text:bookmark-end text:name="glossary"/></text:h>
 

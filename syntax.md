@@ -19,6 +19,7 @@ latex footer:	mmd-memoir-footer
 {{footnotes.md}}
 {{citations.md}}
 {{definitionlists.md}}
+{{fences.md}}
 {{math.md}}
 {{glossary.md}}
 {{criticmarkup.md}}

@@ -8,6 +8,9 @@
 	<meta name="version" content="4.5"/>
 	<meta name="revised" content="2013-12-31"/>
 	<link type="text/css" rel="stylesheet" href="http://fletcher.github.io/MultiMarkdown-4/css/document.css"/>
+<script type="text/javascript"
+src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
 	<meta name="latexmode" content="memoir"/>
 	<meta name="latexinput" content="mmd-article-begin-doc"/>
 	<meta name="latexfooter" content="mmd-memoir-footer"/>
@@ -16,12 +19,12 @@
 
 <h2 id="math">Math</h2>
 
-<p>MultiMarkdown 2.0 used [ASCIIMathML] to typeset mathematical equations. There
+<p>MultiMarkdown 2.0 used <a href="http://www1.chapman.edu/~jipsen/mathml/asciimath.html">ASCIIMathML</a> to typeset mathematical equations. There
 were benefits to using ASCIIMathML, but also some disadvantages.</p>
 
 <p>When rewriting for MultiMarkdown 3.0, there was no straightforward way to
 implement ASCIIMathML which lead me to look for alternatives. I settled on
-using [MathJax]. The advantage here is that the same syntax is supported by
+using <a href="http://www.mathjax.org/">MathJax</a>. The advantage here is that the same syntax is supported by
 MathJax in browsers, and in LaTeX. </p>
 
 <p>This does mean that math will need to be entered into MultiMarkdown documents
@@ -38,8 +41,8 @@ Title:          MultiMarkdown Math Example
 latex input:    mmd-article-begin-doc  
 latex footer:   mmd-memoir-footer  
 HTML header:    &lt;script type=&quot;text/javascript&quot;
-    src=&quot;http://example.net/mathjax/MathJax.js&quot;&gt;
-    &lt;/script&gt;
+                src=&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot;&gt;
+                &lt;/script&gt;
 
 
 An example of math within a paragraph --- \\({e}^{i\pi }+1=0\\)
@@ -64,6 +67,48 @@ supported format):</p>
 <p><span class="math">\[ {x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a} \]</span></p>
 
 <p>That&#8217;s it.</p>
+</blockquote>
+
+<p>In addition to the <code>\\[ \\]</code> and <code>\\( \\)</code> syntax, you can use LaTeX style &#8220;dollar sign&#8221; delimiters:</p>
+
+<pre><code>An example of math within a paragraph --- ${e}^{i\pi }+1=0$
+--- easy enough.
+
+And an equation on it's own:
+
+$${x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a}$$
+
+That's it.
+</code></pre>
+
+<p>In order to be correctly parsed as math, there must not be any space between the <code>$</code> and the actual math on the inside of the delimiter, and there <em>must</em> be space on the outside.</p>
+
+<h2 id="superscriptsandsubscripts">Superscripts and Subscripts</h2>
+
+<p>You can easily include superscripts and subscripts in MultiMarkdown as well:</p>
+
+<pre><code>This apartment has an area of 100m^2
+One must consider the value of x~z
+</code></pre>
+
+<p>becomes</p>
+
+<blockquote>
+<p>This apartment has an area of 100m<sup>2</sup><br/>
+One must consider the value of x<sub>z</sub></p>
+</blockquote>
+
+<p>The subscript must not contain any whitespace or punctuation.</p>
+
+<p>More complicated exponents and subscripts can be delimited like this:</p>
+
+<pre><code>y^(a+b)^
+x~y,z~
+</code></pre>
+
+<blockquote>
+<p>y<sup>(a+b)</sup><br/>
+x<sub>y,z</sub></p>
 </blockquote>
 
 </body>

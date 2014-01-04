@@ -573,6 +573,29 @@ prefer the <code>&lt;p&gt;</code> tags in place. Let me know if this is a proble
 
 <p>See the <a href="http://www.michelf.com/projects/php-markdown/extra/">PHP Markdown Extra</a> page for more information.</p>
 
+<h1 id="fencedcodeblocks">Fenced Code Blocks</h1>
+
+<p>In addition to the regular indented code block that Markdown uses, you can use &#8220;fenced&#8221; code blocks in MultiMarkdown. These code blocks do not have to be indented, and can also be configured to be compatible with a third party syntax highlighter. These code blocks should begin with 3 to 5 backticks, an optional language specifier (if using a syntax highlighter), and should end with the same number of backticks you started with:</p>
+
+<pre><code class="perl"># Demonstrate Syntax Highlighting if you link to highlight.js #
+# http://softwaremaniacs.org/soft/highlight/en/
+print &quot;Hello, world!\n&quot;;
+$a = 0;
+while ($a &lt; 10) {
+print &quot;$a...\n&quot;;
+$a++;
+}
+</code></pre>
+
+<p>I don&#8217;t recommend any specific syntax highlighter, but have used the following metadata to set things up. It may or may not work for you:</p>
+
+<pre><code>html header:    &lt;link rel=&quot;stylesheet&quot; href=&quot;http://yandex.st/highlightjs/7.3/styles/default.min.css&quot;&gt;
+    &lt;script src=&quot;http://yandex.st/highlightjs/7.3/highlight.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script&gt;hljs.initHighlightingOnLoad();&lt;/script&gt;
+</code></pre>
+
+<p>Fenced code blocks are particularly useful when included another file (<a href="#filetransclusion">File Transclusion</a>), and you want to show the <em>source</em> of the file, not what the file looks like when processed by MultiMarkdown.</p>
+
 <h2 id="math">Math</h2>
 
 <p>MultiMarkdown 2.0 used <a href="http://www1.chapman.edu/~jipsen/mathml/asciimath.html">ASCIIMathML</a> to typeset mathematical equations. There
@@ -597,8 +620,8 @@ Title:          MultiMarkdown Math Example
 latex input:    mmd-article-begin-doc  
 latex footer:   mmd-memoir-footer  
 HTML header:    &lt;script type=&quot;text/javascript&quot;
-    src=&quot;http://example.net/mathjax/MathJax.js&quot;&gt;
-    &lt;/script&gt;
+                src=&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot;&gt;
+                &lt;/script&gt;
 
 
 An example of math within a paragraph --- \\({e}^{i\pi }+1=0\\)
@@ -623,6 +646,48 @@ supported format):</p>
 <p><span class="math">\[ {x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a} \]</span></p>
 
 <p>That&#8217;s it.</p>
+</blockquote>
+
+<p>In addition to the <code>\\[ \\]</code> and <code>\\( \\)</code> syntax, you can use LaTeX style &#8220;dollar sign&#8221; delimiters:</p>
+
+<pre><code>An example of math within a paragraph --- ${e}^{i\pi }+1=0$
+--- easy enough.
+
+And an equation on it's own:
+
+$${x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a}$$
+
+That's it.
+</code></pre>
+
+<p>In order to be correctly parsed as math, there must not be any space between the <code>$</code> and the actual math on the inside of the delimiter, and there <em>must</em> be space on the outside.</p>
+
+<h2 id="superscriptsandsubscripts">Superscripts and Subscripts</h2>
+
+<p>You can easily include superscripts and subscripts in MultiMarkdown as well:</p>
+
+<pre><code>This apartment has an area of 100m^2
+One must consider the value of x~z
+</code></pre>
+
+<p>becomes</p>
+
+<blockquote>
+<p>This apartment has an area of 100m<sup>2</sup><br/>
+One must consider the value of x<sub>z</sub></p>
+</blockquote>
+
+<p>The subscript must not contain any whitespace or punctuation.</p>
+
+<p>More complicated exponents and subscripts can be delimited like this:</p>
+
+<pre><code>y^(a+b)^
+x~y,z~
+</code></pre>
+
+<blockquote>
+<p>y<sup>(a+b)</sup><br/>
+x<sub>y,z</sub></p>
 </blockquote>
 
 <h2 id="glossary">Glossary</h2>
