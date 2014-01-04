@@ -12,6 +12,9 @@ latex footer:	mmd-memoir-footer
 
 #  [%title] #
 
+> MultiMarkdown Version [%version]  
+> Last Revised [%revised]
+
 You can view the MultiMarkdown User's Guide as a **single document**:
 
 * [HTML](MMD_Users_Guide.html)
