@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<meta name="latexinput" content="mmd-article-header"/>
+	<title>The Philosophy Behind MultiMarkdown</title>
+	<meta name="author" content="Fletcher T. Penney"/>
+	<meta name="version" content="4.5"/>
+	<meta name="revised" content="2013-12-31"/>
+	<link type="text/css" rel="stylesheet" href="http://fletcherpenney.net/css/document.css"/>
+	<meta name="latexmode" content="memoir"/>
+	<meta name="latexinput" content="mmd-article-begin-doc"/>
+	<meta name="latexfooter" content="mmd-memoir-footer"/>
+</head>
+<body>
+
+<h1 id="thephilosophybehindmultimarkdown">The Philosophy Behind MultiMarkdown</h1>
+
+<p>My vision for MultiMarkdown was inspired by my understanding of what made Markdown so wonderful. Markdown is simple. It&#8217;s easy to remember. It&#8217;s intuitive to read. Markdown avoids the &#8220;everything but the kitchen sink&#8221; problem.</p>
+
+<p>My goal for MultiMarkdown is that it should be useable for 80% of the documents that 80% of people write. Obviously that is not a precise estimate, but the idea is that <em>most</em> people can write <em>most</em> of their documents using it. Some people can write all everything in MMD. Some people can write very little in MMD. MultiMarkdown (by itself) would not be very good for writing a comic book, for example. It&#8217;s perfect for writing a novel.</p>
+
+<p>A central tenet of MultiMarkdown is that the focus is on <em>content</em>, not <em>presentation</em>. I honestly couldn&#8217;t care whether you want to use Arial, Helvetica, or Comic Sans for your masterpiece. The presentation/styling/appearance is for you to decide. You pick the fonts. You pick the colors. What I care about with MultiMarkdown is that most (not necessarily all) of the <em>meaning</em> of the document is represented &#8212; this is a list, that is a table, this is a top-level heading, etc.</p>
+
+<p>A well written MultiMarkdown document will look reasonably good whether you output to HTML, LaTeX, OpenDocument, etc. It might not look perfect. A page might break at an inopportune place. The title page of a LaTeX document doesn&#8217;t have an exact analogy in HTML. HTML doesn&#8217;t handle page breaks well. </p>
+
+<p>If you&#8217;re writing your thesis, publishing a book, or submitting a document to the board of directors &#8212; by all means write in MultiMarkdown. Focus on the content and overall structure. And when you&#8217;re ready, convert to your desired output format. Proofread. And when you&#8217;re sure that you like what you&#8217;ve got, then focus on the aesthetics. Insert a page break. Tweak fonts. Go wild. But do it in a tool appropriate for the format you&#8217;re using. This might be a good programmer&#8217;s text editor for HTML and CSS. It might be <a href="http://www.lyx.org/">LyX</a>. It might be <a href="http://www.libreoffice.org/">LibreOffice</a>.</p>
+
+<h2 id="featurerequests">Feature Requests</h2>
+
+<p>I often get feature requests. Some requests are really good ideas and I implement them. Some or really good ideas and I don&#8217;t implement them. Some, however, miss the point of MultiMarkdown entirely.</p>
+
+<p>I completely understand that somewhere out there, somebody&#8217;s life would be complete if MultiMarkdown had a feature that drew a picture of a bunny after every 15th word of a MultiMarkdown document. But that feature would be absolutely useless to everyone else on the planet. Add enough of those sorts of features, and you end up with Microsoft Word. Which I am sure is the only application that some people are able to use because it draws bunnies, and even lets you choose which color and breed of bunny to use. And whether the bunny is left- or right-pawed.</p>
+
+<p>I am not going to program MultiMarkdown to draw bunnies.</p>
+
+<p>Instead, if there is something that you wish MultiMarkdown would do, consider the following:</p>
+
+<ol>
+<li><p>First, make sure it doesn&#8217;t already have the feature you want. Read the documentation. Look at the <a href="https://github.com/fletcher/MultiMarkdown-Gallery">Sample Gallery</a>.</p></li>
+<li><p>If it&#8217;s not there, consider whether you can &#8220;hijack&#8221; an existing feature. For example, I needed to create a PDF to print a book of poetry. MMD didn&#8217;t have a &#8220;poetry&#8221; feature. But it did have code blocks, which are essentially the same thing, except poetry doesn&#8217;t usual use monospaced fonts. Voila, I used code blocks for all of the poems, and then changed the LaTeX output to refrain from using monospaced fonts when displaying code.</p></li>
+<li><p>Still stuck? &#8212; ask for help. The <a href="https://groups.google.com/forum/#!forum/multimarkdown">discussion list</a> is a great place to get help, as is the <a href="http://support.fletcherpenney.net/">support site</a>.</p></li>
+<li><p>But before requesting a new feature, honestly ask yourself how many other people need it. Ask yourself why, if it&#8217;s such a great idea, it hasn&#8217;t been implemented yet. </p></li>
+<li><p>If your idea isn&#8217;t really useful to other people, then that makes it the <em>perfect</em> opportunity to develop some new skills. Grab a copy of the MultiMarkdown source, and start hacking away to add what you want. Test it out. If it&#8217;s really great, share it on the discussion list to let others use it. Convince everyone that it simply <em>must</em> be added to the core source.</p></li>
+</ol>
+
+</body>
+</html>

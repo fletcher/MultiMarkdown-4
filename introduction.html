@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<title>Introduction to MultiMarkdown Composer</title>
+	<meta name="author" content="Fletcher T. Penney"/>
+	<link type="text/css" rel="stylesheet" href="http://fletcherpenney.net/css/document.css"/>
+	<meta name="version" content="4.5"/>
+	<meta name="revision" content="2013-12-31"/>
+</head>
+<body>
+
+<h1 id="introduction">Introduction</h1>
+
+<blockquote>
+<p>As the world goes multi-platform with all of the new mobile operating systems, MultiMarkdown provides an easy way to share formatting between all of my devices. It&#8217;s easy to learn (even for us mortals) and immediately useful.</p>
+
+<blockquote>
+<p>&#8212; David Sparks, <a href="http://MacSparky.com/">MacSparky.com</a></p>
+</blockquote>
+</blockquote>
+
+<h2 id="whatismarkdown">What is Markdown?</h2>
+
+<p>To understand what MultiMarkdown is, you first should be familiar with
+<a href="http://daringfireball.net/projects/markdown/" title="Daring Fireball:
+Markdown">Markdown</a>. The best description of what Markdown is comes from John Gruber&#8217;s
+Markdown web site:</p>
+
+<blockquote>
+<p>Markdown is a text-to-HTML conversion tool for web writers. Markdown
+allows you to write using an easy-to-read, easy-to-write plain text
+format, then convert it to structurally valid XHTML (or HTML).</p>
+
+<p>Thus, &#8220;Markdown&#8221; is two things: (1) a plain text formatting
+syntax; and (2) a software tool, written in Perl, that converts
+the plain text formatting to HTML. See the Syntax page for details
+pertaining to Markdown&#8217;s formatting syntax. You can try it out,
+right now, using the online Dingus.</p>
+
+<p>The overriding design goal for Markdown&#8217;s formatting syntax is to
+make it as readable as possible. The idea is that a Markdown-formatted
+document should be publishable as-is, as plain text, without looking
+like it&#8217;s been marked up with tags or formatting instructions. While
+Markdown&#8217;s syntax has been influenced by several existing
+text-to-HTML filters, the single biggest source of inspiration for
+Markdown&#8217;s syntax is the format of plain text email. &#8212; <a href="http://daringfireball.net/projects/markdown/" title="Daring Fireball: Markdown">John Gruber</a></p>
+</blockquote>
+
+<h2 id="whatismultimarkdown">What is MultiMarkdown?</h2>
+
+<p>Markdown is great, but it lacked a few features that would allow it to work
+with documents, rather than just pieces of a web page.</p>
+
+<p>I wrote MultiMarkdown in order to leverage Markdown&#8217;s syntax, but to extend it
+to work with complete documents that could ultimately be converted from text
+into other formats, including complete HTML documents, LaTeX, PDF, ODF, or
+even (shudder) Microsoft Word documents.</p>
+
+<p>In addition to the ability to work with complete documents and conversion to
+other formats, the Markdown syntax was lacking a few other things. Michel
+Fortin added a few additional syntax features when writing <a href="http://www.michelf.com/projects/php-markdown/extra/">PHP Markdown
+Extra</a>. Some of his ideas were implemented and expanded on in MultiMarkdown,
+in addition to including features not available in other Markdown
+implementations. These features include tables, footnotes, citation support,
+image and link attributes, cross-references, math support, and more.</p>
+
+<p>John Gruber may disagree with me, but I really did try to stick with his
+proclaimed vision whenever I added a new syntax format to MultiMarkdown. The
+quality that attracted me to Markdown the most was its clean format. Reading a
+plain text document written in Markdown is <em>easy</em>. It makes sense, and it
+looks like it was designed for people, not computers. To the extent possible,
+I tried to keep this same concept in mind when working on MultiMarkdown.</p>
+
+<p>I may or may not have succeeded in this&#8230;.</p>
+
+<p>In the vein of Markdown&#8217;s multiple definitions, you can think of MultiMarkdown
+as:</p>
+
+<ol>
+<li><p>A program to convert plain text to a fully formatted document.</p></li>
+<li><p>The syntax used in the plain text to describe how to convert it to a
+ complete document.</p></li>
+</ol>
+
+<h2 id="whyshouldiusemultimarkdown">Why should I use MultiMarkdown?</h2>
+
+<p>Writing with MultiMarkdown allows you to separate the content and structure of
+your document from the formatting. You focus on the actual writing, without
+having to worry about making the styles of your chapter headers match, or
+ensuring the proper spacing between paragraphs. And with a little forethought,
+a single plain text document can easily be converted into multiple output
+formats without having to rewrite the entire thing or format it by hand. Even
+better, you don&#8217;t have to write in &#8220;computer-ese&#8221; to create well formatted
+HTML or LaTeX commands. You just write, MultiMarkdown takes care of the rest.</p>
+
+<p>For example, instead of writing:</p>
+
+<pre><code>&lt;p&gt;In order to create valid 
+&lt;a href=&quot;http://en.wikipedia.org/wiki/HTML&quot;&gt;HTML&lt;/a&gt;, you 
+need properly coded syntax that can be cumbersome for 
+&amp;#8220;non-programmers&amp;#8221; to write. Sometimes, you
+just want to easily make certain words &lt;strong&gt;bold
+&lt;/strong&gt;, and certain words &lt;em&gt;italicized&lt;/em&gt; without
+having to remember the syntax. Additionally, for example,
+creating lists:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;should be easy&lt;/li&gt;
+&lt;li&gt;should not involve programming&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+
+<p>You simply write:</p>
+
+<pre><code>In order to create valid [HTML], you need properly
+coded syntax that can be cumbersome for 
+&quot;non-programmers&quot; to write. Sometimes, you just want
+to easily make certain words **bold**, and certain 
+words *italicized* without having to remember the 
+syntax. Additionally, for example, creating lists:
+
+* should be easy
+* should not involve programming
+
+[HTML]: http://en.wikipedia.org/wiki/HTML
+</code></pre>
+
+<p>Additionally, you can write a MultiMarkdown document in any text editor, on
+any operating system, and know that it will be compatible with MultiMarkdown
+on any other operating system and processed into the same output. As a plain
+text format, your documents will be safe no matter how many times you switch
+computers, operating systems, or favorite applications. You will always be
+able to open and edit your documents, even when the version of the software
+you originally wrote them in is long gone.</p>
+
+<p>These features have prompted several people to use MultiMarkdown in the
+process of writing their books, theses, and countless other documents.</p>
+
+<p>There are many other reasons to use MultiMarkdown, but I won&#8217;t get into all of
+them here.</p>
+
+<p><em>By the way</em> &#8212; the MultiMarkdown web site is, of course, created using
+MultiMarkdown. To view the MMD source for any page, add <code>.txt</code> to the end of
+the URL. If the URL ends with <code>/</code>, then add <code>index.txt</code> to the end instead.
+The main MultiMarkdown page, for example, would be
+<a href="http://fletcherpenney.net/multimarkdown/index.txt">http://fletcherpenney.net/multimarkdown/index.txt</a>.</p>
+
+<h2 id="whatarethedifferentversionsofmultimarkdown">What Are the Different Versions of MultiMarkdown?</h2>
+
+<p>The first real version of MultiMarkdown was version 2. It was a modification of the original <code>Markdown.pl</code> script. It worked fine, but was slow when parsing longer documents. The plain text was converted to HTML, and then XSLT was used to convert the HTML to other formats (primarily LaTeX). Over time, maintaining the complicated nest of regular expressions became more difficult, and a better approach was needed.</p>
+
+<p>MultiMarkdown 3 (aka <code>peg-multimarkdown</code>) was built using John MacFarlane&#8217;s <a href="https://github.com/jgm/peg-markdown">peg-markdown</a> as a base. It was <em>much</em> faster than version 2, and the underlying PEG (parsing expression grammar) made things more reliable. There were still issues and limitations (some inherited from peg-markdown, but most were my errors), which lead to the development of version 4.</p>
+
+<p><a href="http://github.com/fletcher/MultiMarkdown-4">MultiMarkdown 4</a> was a complete rewrite, keeping only the PEG and a few utility routines from MMD v3. This release fixed memory leaks and other problems from earlier MMD releases; it is safe to use in multithreaded applications and adds many new features. By far, it&#8217;s the best version to date!</p>
+
+<h2 id="whereisthisguidekept">Where is this Guide Kept?</h2>
+
+<p>This guide has been rewritten with the following changes:</p>
+
+<ul>
+<li>The source is now in the <code>gh_pages</code> branch of the <a href="https://github.com/fletcher/MultiMarkdown-4">MultiMarkdown project</a>. You can submit changes as a pull request, or by writing me.</li>
+<li>You can access this information on the web at <a href="http://fletcher.github.io/MultiMarkdown-4">http://fletcher.github.io/MultiMarkdown-4</a></li>
+<li>The source itself is a collection of MultiMarkdown text documents that use the transclusion features to create a master document from the individual source files. These documents can be viewed in the browser as HTML, or downloaded as PDF or OpenDocument files.</li>
+</ul>
+
+</body>
+</html>

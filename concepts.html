@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<meta name="latexinput" content="mmd-article-header"/>
+	<title>Basic Concepts of MultiMarkdown</title>
+	<meta name="author" content="Fletcher T. Penney"/>
+	<meta name="version" content="4.5"/>
+	<meta name="revised" content="2013-12-31"/>
+	<link type="text/css" rel="stylesheet" href="http://fletcherpenney.net/css/document.css"/>
+	<meta name="latexmode" content="memoir"/>
+	<meta name="latexinput" content="mmd-article-begin-doc"/>
+	<meta name="latexfooter" content="mmd-memoir-footer"/>
+</head>
+<body>
+
+<h1 id="basicconceptsofmultimarkdown">Basic Concepts of MultiMarkdown</h1>
+
+<h2 id="howdoicreateamultimarkdowndocument">How do I create a MultiMarkdown document?</h2>
+
+<p>The general concept in MultiMarkdown is that it should be easy for someone to
+type a plain text file that is human-readable, and then use the MultiMarkdown
+program to convert that text file into a more complicated computer language
+such as HTML or LaTeX. This allows you to create high quality output without
+having to spend hours and hours fiddling with font sizes, margins, etc.</p>
+
+<p>The first step in learning to use MultiMarkdown is to learn how to use
+<a href="http://daringfireball.net/projects/markdown/">Markdown</a>. MultiMarkdown is an
+extension to Markdown, and builds off of the basic fundamentals used in
+Markdown.</p>
+
+<p>I recommend starting by familiarizing yourself with the Markdown <a href="http://daringfireball.net/projects/markdown/basics">basics</a> and
+<a href="http://daringfireball.net/projects/markdown/syntax">syntax</a> pages.</p>
+
+<p>Once you&#8217;re familiar with the basics of Markdown, it will be relatively easy
+to pick up the advanced features included in MultiMarkdown.</p>
+
+<h2 id="completedocumentsvssnippets">Complete documents vs &#8220;snippets&#8221;</h2>
+
+<p>In order to include metadata information such as a title, the HTML document
+created by MultiMarkdown must be &#8220;complete.&#8221; This means that it starts with
+something that looks like (for HTML):</p>
+
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot; ?&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
+&lt;head&gt;
+</code></pre>
+
+<p>If you include metadata in your document (with a few exceptions), then you will
+generate a complete document. If you don&#8217;t include metadata, then you will
+instead generate a &#8220;snippet.&#8221; The snippet will just include the relevant
+portion of HTML, but will not include the <code>&lt;head&gt;</code> or <code>&lt;body&gt;</code> elements.</p>
+
+<p>Metadata that is only intended to affect the way MultiMarkdown processes the
+output will not trigger a complete document. Currently, this means you can use
+<code>Base Header Level</code> or <code>Quotes Language</code> and still output a snippet if you
+don&#8217;t include any other metadata.</p>
+
+<p>Additionally, if you include (via [Transclusion]) a file that contains MultiMarkdown metadata, the metadata is stripped before being inserted into the parent document. This is slightly different than the idea of a snippet, but the effect of ignoring the metadata is similar.</p>
+
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<meta name="latexinput" content="mmd-article-header"/>
+	<title>Tables</title>
+	<meta name="author" content="Fletcher T. Penney"/>
+	<meta name="version" content="4.5"/>
+	<meta name="revised" content="2013-12-31"/>
+	<link type="text/css" rel="stylesheet" href="http://fletcherpenney.net/css/document.css"/>
+	<meta name="latexmode" content="memoir"/>
+	<meta name="latexinput" content="mmd-article-begin-doc"/>
+	<meta name="latexfooter" content="mmd-memoir-footer"/>
+</head>
+<body>
+
+<h2 id="tables">Tables</h2>
+
+<h3 id="tablebasics">Table Basics</h3>
+
+<p>MultiMarkdown has a special syntax for creating tables. It is generally compatible with the syntax used by Michael Fortin for <a href="http://www.michelf.com/projects/php-markdown/extra/">PHP Markdown Extra</a></p>
+
+<p>Basically, it allows you to turn:</p>
+
+<pre><code>|             |          Grouping           ||
+First Header  | Second Header | Third Header |
+ ------------ | :-----------: | -----------: |
+Content       |          *Long Cell*        ||
+Content       |   **Cell**    |         Cell |
+
+New section   |     More      |         Data |
+And more      | With an escaped '\|'         ||  
+[Prototype table]
+</code></pre>
+
+<p>into the following <a href="#prototypetable">table</a>.</p>
+
+<table>
+<caption id="prototypetable">Prototype table</caption>
+<colgroup>
+<col style="text-align:left;"/>
+<col style="text-align:center;"/>
+<col style="text-align:right;"/>
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"></th>
+	<th style="text-align:center;" colspan="2">Grouping</th>
+</tr>
+<tr>
+	<th style="text-align:left;">First Header</th>
+	<th style="text-align:center;">Second Header</th>
+	<th style="text-align:right;">Third Header</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">Content</td>
+	<td style="text-align:center;" colspan="2"><em>Long Cell</em></td>
+</tr>
+<tr>
+	<td style="text-align:left;">Content</td>
+	<td style="text-align:center;"><strong>Cell</strong></td>
+	<td style="text-align:right;">Cell</td>
+</tr>
+</tbody>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">New section</td>
+	<td style="text-align:center;">More</td>
+	<td style="text-align:right;">Data</td>
+</tr>
+<tr>
+	<td style="text-align:left;">And more</td>
+	<td style="text-align:center;" colspan="2">With an escaped &#8216;|&#8217;</td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="tablerules">Table Rules</h3>
+
+<p>The requirements are:</p>
+
+<ul>
+<li>There must be at least one <code>|</code> per line</li>
+<li>The &#8220;separator&#8221; line between headers and table content must contain only <code>|</code>,<code>-</code>, <code>=</code>, <code>:</code>,<code>.</code>, <code>+</code>, or spaces</li>
+<li>Cell content must be on one line only</li>
+<li>Columns are separated by <code>|</code></li>
+<li>The first line of the table, and the alignment/divider line, must start at
+the beginning of the line</li>
+</ul>
+
+<p>Other notes:</p>
+
+<ul>
+<li><p>It is optional whether you have <code>|</code> characters at the beginning and end of lines.</p></li>
+<li><p>The &#8220;separator&#8221; line uses <code>----</code> or <code>====</code> to indicate the line between a header and cell. The length of the line doesn&#8217;t matter, but must have at least one character per cell.</p></li>
+<li><p>To set alignment, you can use a colon to designate left or right alignment, or a colon at each end to designate center alignment, as above. If no colon is present, the default alignment of your system is selected (left in most cases). If the separator line ends with <code>+</code>, then cells in that column will be wrapped when exporting to LaTeX if they are long enough.</p></li>
+<li><p>To indicate that a cell should span multiple columns, then simply add additional pipes (<code>|</code>) at the end of the cell, as shown in the example. If the cell in question is at the end of the row, then of course that means that pipes are not optional at the end of that row&#8230;. The number of pipes equals the number of columns the cell should span.</p></li>
+<li><p>You can use normal Markdown markup within the table cells.</p></li>
+<li><p>Captions are optional, but if present must be at the beginning of the line
+ immediately preceding or following the table, start with <code>[</code>, and end with
+ <code>]</code>. If you have a caption before and after the table, only the first match
+ will be used.</p></li>
+<li><p>If you have a caption, you can also have a label, allowing you to create
+ anchors pointing to the table. If there is no label, then the caption acts
+ as the label</p></li>
+<li><p>Cells can be empty.</p></li>
+<li><p>You can create multiple <code>&lt;tbody&gt;</code> tags (for HTML) within a table by having a <strong>single</strong> empty line between rows of the table. This allows your CSS to place horizontal borders to emphasize different sections of the table. This feature doesn&#8217;t work in all output formats (e.g. RTF and OpenDocument).</p></li>
+</ul>
+
+<h3 id="limitationsoftables">Limitations of Tables</h3>
+
+<ul>
+<li><p>MultiMarkdown table support is designed to handle <em>most</em> tables for <em>most</em> people; it doesn&#8217;t cover <em>all</em> tables for <em>all</em> people. If you need complex tables you will need to create them by hand or with a tool specifically designed for your output format. At some point, however, you should consider whether a table is really the best approach if you find MultiMarkdown tables too limiting.</p></li>
+<li><p>Native RTF support for tables is <em>very</em> limited. If you need more complex tables, I recommend using the OpenDocument format, and then using <a href="http://www.libreoffice.org/">LibreOffice</a> to convert your document to RTF.</p></li>
+</ul>
+
+</body>
+</html>

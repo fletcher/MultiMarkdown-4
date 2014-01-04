@@ -9,9 +9,9 @@ Base Header Level:	1
 
 For more information about MultiMarkdown, visit the following sites:
 
-<http://fletcherpenney.net/multimarkdown/>  
-<https://github.com/fletcher/MultiMarkdown-4/>  
-<https://groups.google.com/forum/#!forum/multimarkdown>  
+* <http://fletcherpenney.net/multimarkdown/>
+* <https://github.com/fletcher/MultiMarkdown-4/>
+* <https://groups.google.com/forum/#!forum/multimarkdown>
 
 
 {{links.txt}}

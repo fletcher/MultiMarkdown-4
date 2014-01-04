@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<meta name="latexinput" content="mmd-article-header"/>
+	<title>Metadata</title>
+	<meta name="author" content="Fletcher T. Penney"/>
+	<meta name="version" content="4.5"/>
+	<meta name="revised" content="2013-12-31"/>
+	<link type="text/css" rel="stylesheet" href="http://fletcherpenney.net/css/document.css"/>
+	<meta name="latexmode" content="memoir"/>
+	<meta name="latexinput" content="mmd-article-begin-doc"/>
+	<meta name="latexfooter" content="mmd-memoir-footer"/>
+</head>
+<body>
+
+<h2 id="metadata">Metadata</h2>
+
+<p>It is possible to include special metadata at the top of a MultiMarkdown
+document, such as title, author, etc. This information can then be used to
+control how MultiMarkdown processes the document, or can be used in certain
+output formats in special ways. For example:</p>
+
+<pre><code>Title:    A Sample MultiMarkdown Document  
+Author:   Fletcher T. Penney  
+Date:     February 9, 2011  
+Comment:  This is a comment intended to demonstrate  
+          metadata that spans multiple lines, yet  
+          is treated as a single value.  
+CSS:      http://example.com/standard.css
+</code></pre>
+
+<p>The syntax for including metadata is simple.</p>
+
+<ul>
+<li><p>The metadata must begin at the very top of the document - no blank lines can precede it. There can optionally be a <code>---</code> on the line before and after the metadata. The line after the metadata can also be <code>...</code>. This is to provide better compatibility with <a href="http://www.yaml.org/">YAML</a>, though MultiMarkdown doesn&#8217;t support all YAML metadata.</p></li>
+<li><p>Metadata consists of the two parts - the <code>key</code> and the <code>value</code></p></li>
+<li><p>The metadata key must begin at the beginning of the line. It must start with
+ an ASCII letter or a number, then the following characters can consist of ASCII letters, numbers, spaces, hyphens, or underscore characters.</p></li>
+<li><p>The end of the metadata key is specified with a colon (&#8216;:&#8217;)</p></li>
+<li><p>After the colon comes the metadata value, which can consist of pretty much
+ any characters (including new lines). To keep multiline metadata values from
+ being confused with additional metadata, I recommend indenting each new line
+ of metadata. If your metadata value includes a colon, it <em>must</em> be indented
+ to keep it from being treated as a new key-value pair.</p></li>
+<li><p>While not required, I recommend using two spaces at the end of each line of
+ metadata. This will improve the appearance of the metadata section if your
+ document is processed by Markdown instead of MultiMarkdown.</p></li>
+<li><p>Metadata keys are case insensitive and stripped of all spaces during
+ processing. This means that <code>Base Header Level</code>, <code>base headerlevel</code>, and
+ <code>baseheaderlevel</code> are all the same.</p></li>
+<li><p>Metadata is processed as plain text, so it should <em>not</em> include
+ MultiMarkdown markup. It is possible to create customized XSLT files that
+ apply certain processing to the metadata value, but this is not the default
+ behavior.</p></li>
+<li><p>After the metadata is finished, a blank line triggers the beginning of the
+ rest of the document.</p></li>
+</ul>
+
+<h2 id="metadatavariables">Metadata &#8220;Variables&#8221;</h2>
+
+<p>You can substitute the <code>value</code> for a metadata <code>key</code> in the body of a document using the following format, where <code>foo</code> and <code>bar</code> are the <code>key</code>s of the desired metadata.</p>
+
+<pre><code># A Variable in a Heading [%foo] #
+
+A variable in the body [%bar].
+</code></pre>
+
+<h2 id="standardmetadatakeys">&#8220;Standard&#8221; Metadata keys</h2>
+
+<p>There are a few metadata keys that are standardized in MultiMarkdown. You can
+use any other keys that you desire, but you have to make use of them yourself.</p>
+
+<p>My goal is to keep the list of &#8220;standard&#8221; metadata keys as short as possible.</p>
+
+<h3 id="author">Author</h3>
+
+<p>This value represents the author of the document and is used in LaTeX, ODF, and RTF
+documents to generate the title information.</p>
+
+<h3 id="affiliation">Affiliation</h3>
+
+<p>This is used to enter further information about the author &#8212; a link to a
+website, the name of an employer, academic affiliation, etc.</p>
+
+<h3 id="baseheaderlevel">Base Header Level</h3>
+
+<p>This is used to change the top level of organization of the document. For example:</p>
+
+<pre><code>Base Header Level: 2
+
+# Introduction #
+</code></pre>
+
+<p>Normally, the Introduction would be output as <code>&lt;h1&gt;</code> in HTML, or <code>\part{}</code> in
+LaTeX. If you&#8217;re writing a shorter document, you may wish for the largest
+division in the document to be <code>&lt;h2&gt;</code> or <code>\chapter{}</code>. The <code>Base Header Level</code>
+metadata tells MultiMarkdown to change the largest division level to the
+specified value.</p>
+
+<p>This can also be useful when combining multiple documents.</p>
+
+<p><code>Base Header Level</code> does not trigger a complete document.</p>
+
+<p>Additionally, there are &#8220;flavors&#8221; of this metadata key for various output
+formats so that you can specify a different header level for different output
+formats &#8212; e.g. <code>LaTeX Header Level</code>, <code>HTML Header Level</code>, and <code>ODF Header
+Level</code>.</p>
+
+<p>If you are doing something interesting with [Transclusion], you can also use a
+negative number here. Since metadata is not used when a file is &#8220;transcluded&#8221;,
+this allows you to use a different level of headings when a file is processed on
+its own.</p>
+
+<h3 id="bibliostyle">Biblio Style</h3>
+
+<p>This metadata specifies the name of the BibTeX style to be used, if you are
+not using natbib.</p>
+
+<h3 id="bibtex">BibTeX</h3>
+
+<p>This metadata specifies the name of the BibTeX file used to store citation
+information. Do not include the trailing &#8216;.bib&#8217;.</p>
+
+<h3 id="copyright">Copyright</h3>
+
+<p>This can be used to provide a copyright string.</p>
+
+<h3 id="css">CSS</h3>
+
+<p>This metadata specifies a URL to be used as a CSS file for the produced
+document. Obviously, this is only useful when outputting to HTML.</p>
+
+<h3 id="date">Date</h3>
+
+<p>Specify a date to be associated with the document.</p>
+
+<h3 id="htmlheader">HTML Header</h3>
+
+<p>You can include raw HTML information to be included in the header.
+MultiMarkdown doesn&#8217;t perform any validation on this data &#8212; it just copies
+it as is.</p>
+
+<p>As an example, this can be useful to link your document to a working MathJax
+installation (not provided by me):</p>
+
+<pre><code>HTML header:  &lt;script type=&quot;text/javascript&quot;
+    src=&quot;http://example.net/mathjax/MathJax.js&quot;&gt;
+    &lt;/script&gt;
+</code></pre>
+
+<h3 id="quoteslanguage">Quotes Language</h3>
+
+<p>This is used to specify which style of &#8220;smart&#8221; quotes to use in the output document. The available options are:</p>
+
+<ul>
+<li>dutch (or <code>nl</code>)</li>
+<li>english</li>
+<li>french (<code>fr</code>)</li>
+<li>german (<code>de</code>)</li>
+<li>germanguillemets</li>
+<li>swedish (<code>sv</code>)</li>
+</ul>
+
+<p>The default is <code>english</code> if not specified. This affects HTML output. To
+change the language of a document in LaTeX is up to the individual.</p>
+
+<p><code>Quotes Language</code> does not trigger a complete document.</p>
+
+<h3 id="latexfooter">LaTeX Footer</h3>
+
+<p>A special case of the <code>LaTeX Input</code> metadata below. This file will be linked
+to at the very end of the document.</p>
+
+<h3 id="latexinput">LaTeX Input</h3>
+
+<p>When outputting a LaTeX document it is necessary to include various directions
+that specify how the document should be formatted. These are not included in
+the MultiMarkdown document itself &#8212; instead they should be stored separately
+and linked to with <code>\input{file}</code> commands.</p>
+
+<p>These links can be included in the metadata section. The metadata is processed
+in order, so I generally break my directives into a group that need to go
+before my metadata, a group that goes after the metadata but before the
+document itself, and a separate group that goes at the end of the document,
+for example:</p>
+
+<pre><code>latex input:        mmd-memoir-header
+Title:              MultiMarkdown Example
+Base Header Level:  2
+latex mode:         memoir
+latex input:        mmd-memoir-begin-doc
+latex footer:       mmd-memoir-footer
+</code></pre>
+
+<p>You can download the <a href="https://github.com/fletcher/peg-multimarkdown-latex-support">LaTeX Support Files</a> if you want to output documents
+using the default MultiMarkdown styles. You can then use these as examples to
+create your own customized LaTeX output.</p>
+
+<p>This function should allow you to do almost anything you could do using the
+XSLT features from MultiMarkdown 2.0. More importantly, it means that advanced
+LaTeX users do not have to learn XSLT to customize their code as desired.</p>
+
+<h3 id="latexmode">LaTeX Mode</h3>
+
+<p>When outputting a document to LaTeX, there are two special options that change
+the output slightly &#8212; <code>memoir</code> and <code>beamer</code>. These options are designed to
+be compatible with the LaTeX classes of the same names.</p>
+
+<h3 id="odfheader">ODF Header</h3>
+
+<p>You can include raw XML to be included in the header of a file output in
+OpenDocument format. It&#8217;s up to you to properly format your XML and get it
+working &#8212; MultiMarkdown just copies it verbatim to the output.</p>
+
+<h3 id="title">Title</h3>
+
+<p>Self-explanatory.</p>
+
+<h3 id="transcludebase">Transclude Base</h3>
+
+<p>When using the transclusion features to &#8220;link&#8221; to other documents inside a MultiMarkdown document, this metadata specifies a folder that contains the files being linked to. If omitted, the default is the folder containing the file in question. This can be a relative path or a complete path.</p>
+
+<p>This metadata can be particularly useful when using MultiMarkdown to parse a text string that does not exist as a file on the computer, and therefore does not have a parent folder (when using <code>stdin</code> or another application that offers MultiMarkdown support). In this case, the path must be a complete path.</p>
+
+</body>
+</html>

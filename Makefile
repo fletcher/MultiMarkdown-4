@@ -34,6 +34,8 @@ pdf: MMD_Users_Guide.tex
 	latexmk MMD_Users_Guide.tex
 	latexmk -c MMD_Users_Guide.tex
 
+odf: MMD_Users_Guide.fodt
+
 %.html: %.md
 	./multimarkdown -b -t html $*.md
 
