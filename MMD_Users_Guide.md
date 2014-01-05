@@ -6,6 +6,9 @@ Revised:	2014-01-04
 Keywords:	MultiMarkdown, Markdown, LaTeX, PDF, RTF, LyX, HTML
 Base Header Level:	2
 CSS:	{{css.txt}}
+HTML header:	<script type="text/javascript"
+	src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+	</script>
 latex mode:	memoir
 latex input:	mmd-memoir-begin-doc
 latex footer:	mmd-memoir-footer
