@@ -2,7 +2,7 @@ latex input:	mmd-article-header
 Title:	File Transclusion
 Author:	Fletcher T. Penney
 Version:	{{version.txt}}
-Revised:	2014-01-04 
+Revised:	2014-01-05 
 Base Header Level:	1
 CSS:	{{css.txt}}
 latex mode:	memoir
@@ -36,5 +36,12 @@ Transclusion is recursive, so the file being inserted will be scanned to see if 
 Metadata in the file being inserted will be ignored.  This means that the file can contain certain metadata when viewed alone that will not be included when the file is transcluded by another file.
 
 You can use the [Transclude Base] metadata to specify where MultiMarkdown should look for the files to be included.  All files must be in this folder.  If this folder is not specified, then MultiMarkdown will look in the same folder as the parent file.
+
+### Wildcard Extensions ###
+
+Sometimes you may wish to transclude alternate versions of a file depending on your output format.  Simply use the extension ".*" to have MMD choose the proper version of the file (e.g. `foo.tex`, `foo.fodt`, `foo.html`, etc.)
+
+	Insert a different version of a file here based on export format:
+	{{foo.*}}
 
 {{links.txt}}

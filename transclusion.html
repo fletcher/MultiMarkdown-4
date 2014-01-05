@@ -6,7 +6,7 @@
 	<title>File Transclusion</title>
 	<meta name="author" content="Fletcher T. Penney"/>
 	<meta name="version" content="4.5"/>
-	<meta name="revised" content="2014-01-04"/>
+	<meta name="revised" content="2014-01-05"/>
 	<link type="text/css" rel="stylesheet" href="http://fletcher.github.io/MultiMarkdown-4/css/document.css"/>
 	<meta name="latexmode" content="memoir"/>
 	<meta name="latexinput" content="mmd-article-begin-doc"/>
@@ -43,6 +43,14 @@ Another paragraph
 <p>Metadata in the file being inserted will be ignored. This means that the file can contain certain metadata when viewed alone that will not be included when the file is transcluded by another file.</p>
 
 <p>You can use the [Transclude Base] metadata to specify where MultiMarkdown should look for the files to be included. All files must be in this folder. If this folder is not specified, then MultiMarkdown will look in the same folder as the parent file.</p>
+
+<h3 id="wildcardextensions">Wildcard Extensions</h3>
+
+<p>Sometimes you may wish to transclude alternate versions of a file depending on your output format. Simply use the extension &#8220;.*&#8221; to have MMD choose the proper version of the file (e.g. <code>foo.tex</code>, <code>foo.fodt</code>, <code>foo.html</code>, etc.)</p>
+
+<pre><code>Insert a different version of a file here based on export format:
+{{foo.*}}
+</code></pre>
 
 </body>
 </html>
