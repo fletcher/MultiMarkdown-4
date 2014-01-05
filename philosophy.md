@@ -13,7 +13,7 @@ latex footer:	mmd-memoir-footer
 
 My vision for MultiMarkdown was inspired by my understanding of what made Markdown so wonderful.  Markdown is simple.  It's easy to remember.  It's intuitive to read.  Markdown avoids the "everything but the kitchen sink" problem.
 
-My goal for MultiMarkdown is that it should be useable for 80% of the documents that 80% of people write.  Obviously that is not a precise estimate, but the idea is that *most* people can write *most* of their documents using it.  Some people can write all everything in MMD.  Some people can write very little in MMD.  MultiMarkdown (by itself) would not be very good for writing a comic book, for example.  It's perfect for writing a novel.
+My goal for MultiMarkdown is that it should be useable for 80% of the documents that 80% of people write.  Obviously that is not a precise estimate, but the idea is that *most* people can write *most* of their documents using it.  Some people can write everything in MMD.  Some people can write very little in MMD.  MultiMarkdown (by itself) would not be very good for writing a comic book, for example.  It's perfect for writing a novel.
 
 A central tenet of MultiMarkdown is that the focus is on *content*, not *presentation*.  I  honestly couldn't care whether you want to use Arial, Helvetica, or Comic Sans for your masterpiece.  The presentation/styling/appearance is for you to decide.  You pick the fonts.  You pick the colors.  What I care about with MultiMarkdown is that most (not necessarily all) of the *meaning* of the document is represented --- this is a list, that is a table, this is a top-level heading, etc.
 
