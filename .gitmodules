@@ -10,3 +10,6 @@
 [submodule "cheat-sheet"]
 	path = cheat-sheet
 	url = https://github.com/fletcher/human-markdown-reference.git
+[submodule "documentation"]
+	path = documentation
+	url = https://github.com/fletcher/MultiMarkdown-4.git
