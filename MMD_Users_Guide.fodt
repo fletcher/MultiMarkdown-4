@@ -1788,6 +1788,8 @@ into a single paragraph.</text:p>
 
 <text:p text:style-name="Standard">You can use the <text:a xlink:type="simple" xlink:href="#transcludebase">Transclude Base</text:a> metadata to specify where MultiMarkdown should look for the files to be included. All files must be in this folder. If this folder is not specified, then MultiMarkdown will look in the same folder as the parent file.</text:p>
 
+<text:p text:style-name="Standard"><text:span text:style-name="MMD-Bold">Note:</text:span> Thanks to David Richards for his ideas in developing support for this feature.</text:p>
+
 <text:h text:outline-level="4"><text:bookmark text:name="wildcardextensions"/>Wildcard Extensions<text:bookmark-end text:name="wildcardextensions"/></text:h>
 
 <text:p text:style-name="Standard">Sometimes you may wish to transclude alternate versions of a file depending on your output format. Simply use the extension &#8220;.*&#8221; to have MMD choose the proper version of the file (e.g. <text:span text:style-name="Source_20_Text">foo.tex</text:span>, <text:span text:style-name="Source_20_Text">foo.fodt</text:span>, <text:span text:style-name="Source_20_Text">foo.html</text:span>, etc.)</text:p>
@@ -1989,6 +1991,8 @@ improving Markdown and MultiMarkdown:</text:p>
 <text:p text:style-name="P1">Brett Terpstra</text:p></text:list-item>
 <text:list-item>
 <text:p text:style-name="P1">Charles Cowan</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">David Richards</text:p></text:list-item>
 </text:list>
 
 <text:p text:style-name="Standard">and others I have surely forgotten&#8230;.</text:p>

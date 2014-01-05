@@ -68,6 +68,7 @@ improving Markdown and MultiMarkdown:
 *	Michael Heilemann
 *	Brett Terpstra
 *	Charles Cowan
+*	David Richards
 
 and others I have surely forgotten....
 
