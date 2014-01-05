@@ -453,7 +453,7 @@ int main(int argc, char **argv)
 		fprintf(output, "%s\n",out);
 		fclose(output);
 		
-		g_string_free(filename, false);
+		g_string_free(filename, true);
 		
 		if (out != NULL)
 			free(out);
