@@ -2,7 +2,7 @@ Title:	Introduction to MultiMarkdown Composer
 Author:	Fletcher T. Penney
 CSS:	{{css.txt}}
 Version:	{{version.txt}}
-Revision:	2013-12-31
+Revision:	2014-01-04
 Base Header Level:	1
 
 # Introduction #

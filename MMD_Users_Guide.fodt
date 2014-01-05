@@ -259,14 +259,14 @@
 <dc:title>MultiMarkdown Composer User's Guide</dc:title>
 <meta:user-defined meta:name="Author">Fletcher T. Penney</meta:user-defined>
 <meta:user-defined meta:name="Version">4.5</meta:user-defined>
-<meta:user-defined meta:name="Revised">2013-12-31</meta:user-defined>
+<meta:user-defined meta:name="Revised">2014-01-04</meta:user-defined>
 <meta:keyword>MultiMarkdown, Markdown, LaTeX, PDF, RTF, LyX, HTML</meta:keyword>
 </office:meta>
 <office:body>
 <office:text>
 <text:h text:outline-level="2"><text:bookmark text:name="title"/>MultiMarkdown Composer User's Guide<text:bookmark-end text:name="title"/></text:h>
 
-<text:p text:style-name="Quotations">Version 4.5<text:line-break/>Revised 2013-12-31</text:p>
+<text:p text:style-name="Quotations">Version 4.5<text:line-break/>Revised 2014-01-04</text:p>
 
 <text:h text:outline-level="2"><text:bookmark text:name="introduction"/>Introduction<text:bookmark-end text:name="introduction"/></text:h>
 

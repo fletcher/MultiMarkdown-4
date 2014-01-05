@@ -2,7 +2,7 @@ latex input:	mmd-article-header
 Title:	Fenced Code Blocks
 Author:	Fletcher T. Penney
 Version:	{{version.txt}}
-Revised:	2013-12-31 
+Revised:	2014-01-04 
 Base Header Level:	1
 CSS:	{{css.txt}}
 html header:	<link rel="stylesheet" href="http://yandex.st/highlightjs/7.3/styles/default.min.css">

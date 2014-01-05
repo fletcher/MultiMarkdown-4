@@ -2,7 +2,7 @@ latex input:	mmd-article-header
 Title:	Tables
 Author:	Fletcher T. Penney
 Version:	{{version.txt}}
-Revised:	2013-12-31 
+Revised:	2014-01-04 
 Base Header Level:	1
 CSS:	{{css.txt}}
 latex mode:	memoir
