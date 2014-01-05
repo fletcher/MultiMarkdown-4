@@ -38,28 +38,28 @@ pdf: MMD_Users_Guide.tex
 odf: MMD_Users_Guide.fodt
 
 %.html: %.md
-	./multimarkdown -b -t html $*.md
+	multimarkdown -b -t html $*.md
 
 %.html: %.text
-	./multimarkdown -b -t html $*.text
+	multimarkdown -b -t html $*.text
 
 %.rtf: %.md
-	./multimarkdown -b -t rtf $*.md
+	multimarkdown -b -t rtf $*.md
 
 %.rtf: %.text
-	./multimarkdown -b -t rtf $*.text
+	multimarkdown -b -t rtf $*.text
 
 %.tex: %.md
-	./multimarkdown -b -t latex $*.md
+	multimarkdown -b -t latex $*.md
 
 %.tex: %.text
-	./multimarkdown -b -t latex $*.text
+	multimarkdown -b -t latex $*.text
 
 %.fodt: %.md
-	./multimarkdown -b -t odf $*.md
+	multimarkdown -b -t odf $*.md
 
 %.fodt: %.text
-	./multimarkdown -b -t odf $*.text
+	multimarkdown -b -t odf $*.text
 
 
 examples: $(ex-html) $(ex-rtf) $(ex-tex) $(ex-odf)
