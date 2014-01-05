@@ -61,7 +61,7 @@ If you get an error that `greg` fails to build try `touch greg/greg.c`.  I had a
 
 # LyX Support #
 
-Charles R. Cowan (<https://github.com/crcowan>) added support for conversion to [LyX](http://www.lyx.org/).  Support for this should be considered to be in alpha/beta, and is not guaranteed.  Issues related to LyX can be added to the MultiMarkdown [issues] page on github, but will need to be answered by Charles.  I am happy to include this code in the main MMD repo, but since I don't use LyX I can support it myself.  If this arrangement becomes a problem, then LyX support can be removed and it can be kept as a separate fork.
+Charles R. Cowan (<https://github.com/crcowan>) added support for conversion to [LyX](http://www.lyx.org/).  Support for this should be considered to be in alpha/beta, and is not guaranteed.  Issues related to LyX can be added to the MultiMarkdown [issues] page on github, but will need to be answered by Charles.  I am happy to include this code in the main MMD repo, but since I don't use LyX I can't support it myself.  If this arrangement becomes a problem, then LyX support can be removed and it can be kept as a separate fork.
 
 
 [peg-markdown]:	https://github.com/jgm/peg-markdown
