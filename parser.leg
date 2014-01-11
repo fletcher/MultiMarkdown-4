@@ -1142,7 +1142,7 @@ MarkdownHtmlAttribute = ("markdown" | "MARKDOWN")
 		Spnl '=' Spnl ('"' Spnl)? "1" (Spnl '"')? Spnl
 
 MarkdownHtmlTagOpen = a:StartList '<' {a = cons(mk_str("<"),a);}
-		Spnl <HtmlBlockType> {a = cons(mk_str(yytext),a);} Spnl
+		Spnl <HtmlBlockType> {a = cons(mk_str(yytext),a);} &Spacechar Spnl
 		(!MarkdownHtmlAttribute
 			<HtmlAttribute> {a = cons(mk_str(" "),a);
 				a = cons(mk_str(yytext),a);})*
