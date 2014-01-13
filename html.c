@@ -777,6 +777,7 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 			}
 			if ((n->children != NULL) && (n->children->key == CELLSPAN)) {
 				g_string_append_printf(out, " colspan=\"%d\"",(int)strlen(n->children->str)+1);
+				scratch->table_column += (int)strlen(n->children->str);
 			}
 			g_string_append_printf(out, ">");
 			scratch->padded = 2;

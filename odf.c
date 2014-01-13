@@ -752,6 +752,7 @@ void print_odf_node(GString *out, node *n, scratch_pad *scratch) {
 			g_string_append_printf(out, "<table:table-cell");
 			if ((n->children != NULL) && (n->children->key == CELLSPAN)) {
 				g_string_append_printf(out, " table:number-columns-spanned=\"%d\"", strlen(n->children->str)+1);
+				scratch->table_column += (int)strlen(n->children->str);
 			}
 			g_string_append_printf(out, ">\n<text:p");
 			if (scratch->cell_type == 'h') {
