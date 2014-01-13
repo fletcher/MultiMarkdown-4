@@ -403,7 +403,7 @@ int main(int argc, char **argv)
 					perror(argv[i+1]);
 					g_string_free(inputbuf, true);
 					g_string_free(filename, true);
-					free(folder);
+					// free(folder);
 					free(temp);
 					exit(EXIT_FAILURE);
 				}
