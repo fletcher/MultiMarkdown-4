@@ -33,6 +33,7 @@ You can compile for yourself, or download a precompiled binary from the [downloa
 * `git submodule init` and then `git submodule update` to download `greg` and the test suite
 * Run `make` to compile.
 * Run `make test-all | less` to verify that the build is correct.  As mentioned, one of the tests is expected to fail; the rest should pass on all systems.  
+* Run `sudo make install` and (optionally) `sudo make install-scripts` to install `multimarkdown` and the helper scripts.
 
 
 # Usage #
