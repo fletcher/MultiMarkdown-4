@@ -2,7 +2,7 @@ latex input:	mmd-article-header
 Title:	CriticMarkup  
 Author:	Fletcher T. Penneys
 Version:	{{version.txt}}
-Revised:	2014-01-04 
+Revised:	2014-01-24 
 Base Header Level:	1
 CSS:	{{css.txt}}
 latex mode:	memoir
@@ -23,11 +23,12 @@ The CriticMarkup syntax is fairly straightforward.  The key thing to remember is
 
 When editing in MultiMarkdown Composer, you can have CriticMarkup syntax flagged in the both the editor pane and the preview window.  This will allow you to see changes in the HTML preview.
 
-When using CriticMarkup with MultiMarkdown itself, you have three choices:
+When using CriticMarkup with MultiMarkdown itself, you have four choices:
 
-* Leave the CriticMarkup syntax in place
+* Leave the CriticMarkup syntax in place (`multimarkdown foo.txt`)
 * Accept all changes, giving you the "new" document (`multimarkdown -a foo.txt`)
 * Reject all changes, giving you the "original" document (`multimarkdown -r foo.txt`)
+* Attempt to show the changes as highlights.  This only works in HTML, and to use it you ask for the new and original document at the same time (`multimarkdown -a -r foo.txt`)
 
 CriticMarkup comments and highlighting are ignored when processing.
 

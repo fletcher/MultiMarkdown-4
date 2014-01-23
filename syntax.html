@@ -6,7 +6,7 @@
 	<title>Syntax</title>
 	<meta name="author" content="Fletcher T. Penney"/>
 	<meta name="version" content="4.5"/>
-	<meta name="revised" content="2014-01-05"/>
+	<meta name="revised" content="2014-01-24"/>
 	<link type="text/css" rel="stylesheet" href="http://fletcher.github.io/MultiMarkdown-4/css/document.css"/>
 <script type="text/javascript"
 src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
@@ -758,12 +758,13 @@ makeindex -s `kpsewhich basic.gst` -o &quot;${basefile}.gls&quot; &quot;${basefi
 
 <p>When editing in MultiMarkdown Composer, you can have CriticMarkup syntax flagged in the both the editor pane and the preview window. This will allow you to see changes in the HTML preview.</p>
 
-<p>When using CriticMarkup with MultiMarkdown itself, you have three choices:</p>
+<p>When using CriticMarkup with MultiMarkdown itself, you have four choices:</p>
 
 <ul>
-<li>Leave the CriticMarkup syntax in place</li>
+<li>Leave the CriticMarkup syntax in place (<code>multimarkdown foo.txt</code>)</li>
 <li>Accept all changes, giving you the &#8220;new&#8221; document (<code>multimarkdown -a foo.txt</code>)</li>
 <li>Reject all changes, giving you the &#8220;original&#8221; document (<code>multimarkdown -r foo.txt</code>)</li>
+<li>Attempt to show the changes as highlights. This only works in HTML, and to use it you ask for the new and original document at the same time (<code>multimarkdown -a -r foo.txt</code>)</li>
 </ul>
 
 <p>CriticMarkup comments and highlighting are ignored when processing.</p>
