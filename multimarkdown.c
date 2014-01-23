@@ -327,6 +327,7 @@ int main(int argc, char **argv)
 				free(temp);
 			}
 			free(target_meta_key);
+			target_meta_key = NULL;
 
 			out = markdown_to_string(inputbuf->str,  extensions, output_format);
 			
