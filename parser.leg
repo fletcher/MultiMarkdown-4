@@ -1356,13 +1356,16 @@ CriticComment = ('{>>' < (!'<<}' .)* > '<<}')
 	{ $$ = str(yytext); $$->key = CRITICCOMMENT; }
 
 DocForCritic = BOM? a:StartList
-		( CriticString { a = cons($$, a); } | RawString { a = cons($$, a); } )*
+		( CriticString { a = cons($$, a); } | RawString { a = cons($$, a); } | FalseMatch { a = cons($$, a); } )*
 		( RawString { a = cons($$, a); } )* Eof
 		{ ((parser_data *)G->data)->result = reverse_list(a); }
 
 CriticString = CriticMarkup
 
 RawString = < (!( "{++" | "{--" | "{~~" | "{==" | "{>>" ) .)+ >
+		{ $$ = str(yytext); }
+
+FalseMatch = < ( "{++" | "{--" | "{~~" | "{==" | "{>>" ) >
 		{ $$ = str(yytext); }
 
 %%
