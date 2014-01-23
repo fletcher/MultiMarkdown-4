@@ -112,7 +112,11 @@ test-critic-reject: $(PROGRAM)
 	cd MarkdownTest; \
 	./MarkdownTest.pl --Script=../$(PROGRAM) --testdir=CriticMarkup --Flags="-r" --ext=".htmlr"
 
-test-all: $(PROGRAM) test test-mmd test-compat test-latex test-beamer test-memoir test-opml test-odf test-critic-accept test-critic-reject test-lyx test-lyx-beamer
+test-critic-highlight: $(PROGRAM)
+	cd MarkdownTest; \
+	./MarkdownTest.pl --Script=../$(PROGRAM) --testdir=CriticMarkup --Flags="-a -r" --ext=".htmlh"
+
+test-all: $(PROGRAM) test test-mmd test-compat test-latex test-beamer test-memoir test-opml test-odf test-critic-accept test-critic-reject test-critic-highlight test-lyx test-lyx-beamer
 
 test-memory: $(PROGRAM)
 	valgrind --leak-check=full ./$(PROGRAM) MarkdownTest/Tests/*.text MarkdownTest/MultiMarkdownTests/*.text > /dev/null
