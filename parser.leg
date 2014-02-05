@@ -252,7 +252,7 @@ OptionallyIndentedLine = Indent? Line
 Symbol = < SpecialChar >
 		{ $$ = str(yytext); }
 
-EscapedChar = '\\' !Newline < [-\\`|*_{}[\]()#+.!$><'""] >
+EscapedChar = '\\' < [-\\`|*_{}[\]()#+.!$><'""\n] >
 		{ $$ = str(yytext); }
 
 Entity = ( HexEntity | DecEntity | CharEntity )
