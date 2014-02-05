@@ -332,10 +332,10 @@ NormalEndline =   Sp Newline !BlankLine !'>' !AtxStart
 TerminalEndline = Sp Newline Eof
 		{ $$ = NULL; }
 
-LineBreak = "  " a:NormalEndline
+LineBreak = ("  " | &{ !ext(EXT_COMPATIBILITY) && ext(EXT_ESCAPED_LINE_BREAKS) } Sp "\\") a:NormalEndline
 		{ $$ = a; $$->key = LINEBREAK; }
 
-voidEndline = ("  " voidNormalEndline) | (Sp Newline Eof) | voidNormalEndline
+voidEndline = (("  " | &{ !ext(EXT_COMPATIBILITY) && ext(EXT_ESCAPED_LINE_BREAKS) } Sp "\\") voidNormalEndline) | (Sp Newline Eof) | voidNormalEndline
 
 voidNormalEndline = Sp Newline !BlankLine !'>' !AtxStart
 		!(RawLine ('='+ | '-'+) Newline)
