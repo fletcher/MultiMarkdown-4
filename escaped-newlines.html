@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<meta name="latexinput" content="mmd-article-header"/>
+	<title>Escaped Newlines</title>
+	<meta name="author" content="Fletcher T. Penney"/>
+	<meta name="version" content="4.5"/>
+	<meta name="revised" content="2014-02-05"/>
+	<link type="text/css" rel="stylesheet" href="http://fletcher.github.io/MultiMarkdown-4/css/document.css"/>
+	<meta name="latexmode" content="memoir"/>
+	<meta name="latexinput" content="mmd-article-begin-doc"/>
+	<meta name="latexfooter" content="mmd-memoir-footer"/>
+</head>
+<body>
+
+<h2 id="escapednewlines">Escaped newlines</h2>
+
+<p>Thanks to a contribution from <a href="https://github.com/njmsdk">Nicolas</a>, MultiMarkdown has an additional syntax to indicate a line break. The usual approach for Markdown is &#8220;space-space-newline&#8221; &#8212; two spaces at the end of the line. For some users, this causes problems:</p>
+
+<ul>
+<li>the trailing spaces are typically invisible when glancing at the source, making it easy to overlook them</li>
+<li>some users&#8217; text editors modify trailing space (IMHO, the proper fix for this is a new text editor&#8230;)</li>
+</ul>
+
+<p>Nicolas submitted a patch that enables a new option that interprets &quot;&quot; before a newline as a marker that a line break should be used:</p>
+
+<pre><code>This is a line.\
+This is a new line.
+</code></pre>
+
+<p>To enable this feature, use the following option:</p>
+
+<pre><code>multimarkdown --escaped-line-breaks file.txt
+</code></pre>
+
+<p>If this option is not enabled, then the default behavior will be to treat the newline as an escaped character, which results in it simply appearing as a newline character in the output. This means that the default behavior is the same as if the &quot;&quot; is not in the source file.</p>
+
+</body>
+</html>
