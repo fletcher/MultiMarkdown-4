@@ -39,6 +39,7 @@ int main(int argc, char **argv)
 	static int no_typography_flag = 0;
 	static int label_flag = 0;
 	static int no_label_flag = 0;
+	static int escaped_line_breaks_flag = 0;
 	static int obfuscate_flag = 0;
 	static int no_obfuscate_flag = 0;
 	static int process_html_flag = 0;
@@ -47,28 +48,29 @@ int main(int argc, char **argv)
 	char *target_meta_key = FALSE;
 		
 	static struct option long_options[] = {
-		{"batch", no_argument, &batch_flag, 1},                    /* process each file separately */
-		{"to", required_argument, 0, 't'},                         /* which output format to use */
-		{"full", no_argument, &complete_flag, 1},                  /* complete document */
-		{"snippet", no_argument, &snippet_flag, 1},                /* snippet only */
-		{"output", required_argument, 0, 'o'},                     /* which output format to use */
-		{"notes", no_argument, &notes_flag, 1},                    /* use footnotes */
-		{"nonotes", no_argument, &no_notes_flag, 1},               /* don't use footnotes */
-		{"smart", no_argument, &typography_flag, 1},               /* use smart typography */
-		{"nosmart", no_argument, &no_typography_flag, 1},          /* don't use smart typography */
-		{"mask", no_argument, &obfuscate_flag, 1},                 /* mask email addresses */
-		{"nomask", no_argument, &no_obfuscate_flag, 1},            /* don't mask email addresses */
-		{"labels", no_argument, &label_flag, 1},                   /* generate labels */
-		{"nolabels", no_argument, &no_label_flag, 1},              /* don't generate labels */
-		{"compatibility", no_argument, &compatibility_flag, 1},    /* compatibility mode */
-		{"process-html", no_argument, &process_html_flag, 1},      /* process Markdown inside HTML */
-		{"random", no_argument, &random_footnotes_flag, 1},        /* Use random numbers for footnote links */
-		{"accept", no_argument, 0, 'a'},                           /* Accept all proposed CriticMarkup changes */
-		{"reject", no_argument, 0, 'r'},                           /* Reject all proposed CriticMarkup changes */
-		{"metadata-keys", no_argument, 0, 'm'},                    /* List all metadata keys */
-		{"extract", required_argument, 0, 'e'},                    /* show value of specified metadata */
-		{"version", no_argument, 0, 'v'},                          /* display version information */
-		{"help", no_argument, 0, 'h'},                             /* display usage information */
+		{"batch", no_argument, &batch_flag, 1},                              /* process each file separately */
+		{"to", required_argument, 0, 't'},                                   /* which output format to use */
+		{"full", no_argument, &complete_flag, 1},                            /* complete document */
+		{"snippet", no_argument, &snippet_flag, 1},                          /* snippet only */
+		{"output", required_argument, 0, 'o'},                               /* which output format to use */
+		{"notes", no_argument, &notes_flag, 1},                              /* use footnotes */
+		{"nonotes", no_argument, &no_notes_flag, 1},                         /* don't use footnotes */
+		{"smart", no_argument, &typography_flag, 1},                         /* use smart typography */
+		{"nosmart", no_argument, &no_typography_flag, 1},                    /* don't use smart typography */
+		{"mask", no_argument, &obfuscate_flag, 1},                           /* mask email addresses */
+		{"nomask", no_argument, &no_obfuscate_flag, 1},                      /* don't mask email addresses */
+		{"labels", no_argument, &label_flag, 1},                             /* generate labels */
+		{"nolabels", no_argument, &no_label_flag, 1},                        /* don't generate labels */
+		{"escaped-line-breaks", no_argument, &escaped_line_breaks_flag, 1},  /* enable escaped line breaks */
+		{"compatibility", no_argument, &compatibility_flag, 1},              /* compatibility mode */
+		{"process-html", no_argument, &process_html_flag, 1},                /* process Markdown inside HTML */
+		{"random", no_argument, &random_footnotes_flag, 1},                  /* Use random numbers for footnote links */
+		{"accept", no_argument, 0, 'a'},                                     /* Accept all proposed CriticMarkup changes */
+		{"reject", no_argument, 0, 'r'},                                     /* Reject all proposed CriticMarkup changes */
+		{"metadata-keys", no_argument, 0, 'm'},                              /* List all metadata keys */
+		{"extract", required_argument, 0, 'e'},                              /* show value of specified metadata */
+		{"version", no_argument, 0, 'v'},                                    /* display version information */
+		{"help", no_argument, 0, 'h'},                                       /* display usage information */
 		{NULL, 0, NULL, 0}
 	};
 	
@@ -144,7 +146,8 @@ int main(int argc, char **argv)
 				"    --notes, --nonotes     Toggle footnotes\n"
 				"    --labels, --nolabels   Disable id attributes for headers\n"
 				"    --mask, --nomask       Mask email addresses in HTML\n"
-				
+				"    --escaped-line-breaks  Enable escaped line breaks\n"
+
 				"\nAvailable FORMATs: html(default), latex, beamer, memoir, odf, opml, lyx\n\n"
 				"NOTE: The lyx output format was created by Charles R. Cowan, and \n\tis provided as is.\n\n\n"
 				);
@@ -252,6 +255,9 @@ int main(int argc, char **argv)
 	if (random_footnotes_flag)
 		extensions = extensions | EXT_RANDOM_FOOT;
 
+	if (escaped_line_breaks_flag)
+		extensions = extensions | EXT_ESCAPED_LINE_BREAKS;
+
 	/* Enable HEADINGSECTION for certain formats */
 	if ((output_format == OPML_FORMAT) || (output_format == BEAMER_FORMAT) || (output_format == LYX_FORMAT))
 		extensions = extensions | EXT_HEADINGSECTION;
@@ -327,6 +333,7 @@ int main(int argc, char **argv)
 				free(temp);
 			}
 			free(target_meta_key);
+			target_meta_key = NULL;
 
 			out = markdown_to_string(inputbuf->str,  extensions, output_format);
 			
