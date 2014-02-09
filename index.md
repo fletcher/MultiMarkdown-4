@@ -2,7 +2,7 @@ latex input:	mmd-memoir-header
 Title:	MultiMarkdown Composer User's Guide
 Author:	Fletcher T. Penney
 Version:	{{version.txt}}
-Revised:	2014-01-24  
+Revised:	2014-02-05  
 Keywords:	MultiMarkdown, Markdown, LaTeX, PDF, RTF, LyX, HTML
 Base Header Level:	2
 CSS:	{{css.txt}}
@@ -41,6 +41,7 @@ Or as a set of web pages for individual sections:
 	* [CriticMarkup](criticmarkup)
 	* [Raw Source](raw)
 	* [File Transclusion](transclusion)
+	* [Escaped Newlines](escaped-newlines)
 * [Known Issues](known_issues)
 * [To Do](to_do)
 * [More Information](more_information)
