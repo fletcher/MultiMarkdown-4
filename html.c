@@ -509,7 +509,7 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 			}
 			g_string_append_printf(out, " />");
 			if (n->key == IMAGEBLOCK) {
-				if ((n->children != NULL) && (n->children->str != NULL) && (strlen(n->children->str) > 0)) {
+				if ((n->children != NULL) && (n->children->children != NULL) && (n->children->children->str != NULL)) {
 					g_string_append_printf(out, "\n<figcaption>");
 					print_html_node(out,n->children,scratch);
 					g_string_append_printf(out, "</figcaption>");
