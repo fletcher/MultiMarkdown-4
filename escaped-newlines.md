@@ -16,7 +16,7 @@ Thanks to a contribution from [Nicolas](https://github.com/njmsdk), MultiMarkdow
 * the trailing spaces are typically invisible when glancing at the source, making it easy to overlook them
 * some users' text editors modify trailing space (IMHO, the proper fix for this is a new text editor...)
 
-Nicolas submitted a patch that enables a new option that interprets "\" before a newline as a marker that a line break should be used:
+Nicolas submitted a patch that enables a new option that interprets "\\" before a newline as a marker that a line break should be used:
 
 	This is a line.\
 	This is a new line.
