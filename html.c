@@ -514,7 +514,7 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 					print_html_node(out,n->children,scratch);
 					g_string_append_printf(out, "</figcaption>");
 				}
-				g_string_append_printf(out,"</figure>");
+				g_string_append_printf(out,"\n</figure>");
 				scratch->padded = 0;
 			}
 
