@@ -1,7 +1,7 @@
 <project>
     <shortName>multimarkdown</shortName>
     <fullName>MultiMarkdown</fullName>
-    <version>3.2</version>
+    <version>4.5.3</version>
     <installerFilename>MMD-${platform_name}-${product_version}.${platform_exec_suffix}</installerFilename>
     <readmeFile>README.txt</readmeFile>
     <licenseFile>../LICENSE</licenseFile>
@@ -86,6 +86,9 @@
                         </distributionFile>
                         <distributionFile>
                             <origin>mmd2odf.bat</origin>
+                        </distributionFile>
+                        <distributionFile>
+                            <origin>mmd2rtf.bat</origin>
                         </distributionFile>
                     </distributionFileList>
                 </folder>
