@@ -17,7 +17,7 @@
 #define MMD_VERSION "4.5.1"
 
 #define MMD_COPYRIGHT \
-	"Copyright (c) 2013 Fletcher T. Penney.\n\n" \
+	"Copyright (c) 2013-2014 Fletcher T. Penney.\n\n" \
 	"portions based on peg-markdown - Copyright (c) 2008-2009 John MacFarlane.\n" \
 	"peg-markdown is Licensed under either the GPLv2+ or MIT.\n" \
 	"portions Copyright (c) 2011 Daniel Jalkut, MIT licensed.\n\n" \
