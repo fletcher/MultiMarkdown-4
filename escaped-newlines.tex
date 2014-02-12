@@ -1,0 +1,46 @@
+\input{mmd-article-header}
+\def\mytitle{Escaped Newlines}
+\def\myauthor{Fletcher T. Penney}
+\def\version{4.5.1}
+\def\revised{2014-02-05}
+\def\latexmode{memoir}
+\input{mmd-article-begin-doc}
+
+\chapter{Escaped newlines}
+\label{escapednewlines}
+
+Thanks to a contribution from \href{https://github.com/njmsdk}{Nicolas}\footnote{\href{https://github.com/njmsdk}{https:/\slash github.com\slash njmsdk}}, MultiMarkdown has an additional syntax to indicate a line break. The usual approach for Markdown is ``space-space-newline'' --- two spaces at the end of the line. For some users, this causes problems:
+
+\begin{itemize}
+\item the trailing spaces are typically invisible when glancing at the source, making it easy to overlook them
+
+\item some users' text editors modify trailing space (IMHO, the proper fix for this is a new text editor{\ldots})
+
+\end{itemize}
+
+Nicolas submitted a patch that enables a new option that interprets ``\textbackslash{}'' before a newline as a marker that a line break should be used:
+
+\begin{adjustwidth}{2.5em}{2.5em}
+\begin{verbatim}
+
+This is a line.\
+This is a new line.
+
+\end{verbatim}
+\end{adjustwidth}
+
+To enable this feature, use the following option:
+
+\begin{adjustwidth}{2.5em}{2.5em}
+\begin{verbatim}
+
+multimarkdown --escaped-line-breaks file.txt
+
+\end{verbatim}
+\end{adjustwidth}
+
+If this option is not enabled, then the default behavior will be to treat the newline as an escaped character, which results in it simply appearing as a newline character in the output. This means that the default behavior is the same as if the ``\textbackslash{}'' is not in the source file.
+
+\input{mmd-memoir-footer}
+
+\end{document}
