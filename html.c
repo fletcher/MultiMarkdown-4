@@ -153,6 +153,7 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 		case METADATA:
 			/* Not if snippet only */
 			if (scratch->extensions & EXT_SNIPPET) {
+				is_html_complete_doc(n);
 				print_html_node_tree(out,n->children, scratch);
 				break;
 			}
