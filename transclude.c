@@ -71,8 +71,8 @@ char * source_without_metadata(char * source, unsigned long extensions ) {
 
 	Keep track of what we're parsing to prevent recursion using stack. */
 void transclude_source(GString *source, char *basedir, char *stack, int output_format) {
-	char *base = strdup(basedir);
-	char *path = strdup(base);
+	char *base = NULL;
+	char *path = NULL;
 	char *start;
 	char *stop;
 	char *temp;
@@ -81,16 +81,18 @@ void transclude_source(GString *source, char *basedir, char *stack, int output_f
 	char real[1000];
 	FILE *input;
 
+	if (basedir == NULL) {
+		base = strdup("");
+	} else {
+		base = strdup(basedir);
+	}
+
 	GString *folder = NULL;
 	GString *filename = NULL;
 	GString *filebuffer = NULL;
 	GString *stackstring = NULL;
 
-	/* Change to file directory */
-	if (base == NULL) {
-		base = strdup("");
-		path = strdup(base);
-	}
+	path = strdup(base);
 
 	/* Look for override folder inside document */
 	if (has_metadata(source->str, 0x000000)) {
@@ -134,7 +136,8 @@ void transclude_source(GString *source, char *basedir, char *stack, int output_f
 		g_string_append_printf(filename, "%s",real);
 
 		/* Adjust for wildcard extensions */
-		if (strncmp(&filename->str[strlen(filename->str) - 2],".*",2) == 0) {
+		/* But not if output_format == 0 */
+		if (output_format && strncmp(&filename->str[strlen(filename->str) - 2],".*",2) == 0) {
 			g_string_erase(filename, strlen(filename->str) - 2, 2);
 			if (output_format == TEXT_FORMAT) {
 				g_string_append(filename,".txt");
@@ -201,6 +204,8 @@ void transclude_source(GString *source, char *basedir, char *stack, int output_f
 			pos += strlen(temp);
 			g_string_free(filebuffer, true);
 			g_string_free(stackstring, true);
+		} else {
+			/* fprintf(stderr, "error opening file: %s\n", filename->str); */
 		}
 
 		start = strstr(source->str + pos,"{{");
