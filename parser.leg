@@ -640,7 +640,9 @@ AutoLabel = '[' < (!Newline !'^' !'#' !'%' . )( !Newline !']' . )+ > ']' &(!(Sp 
 	ref->key = LINKREFERENCE;
 }
 
-NoteReference = &{ ext(EXT_NOTES) } ( "[^" ) < ( !(Newline BlankLine) !']' . )+ > ']'
+RawInline = ( '[' (!']' .)* ']' ) | .
+
+NoteReference = &{ ext(EXT_NOTES) } ( "[^" ) < ( !(Newline BlankLine) !']' RawInline )+ > ']'
 	{
 		/* Copy entire label, and ensure we are treated as a paragraph */
 		GString *original = g_string_new(yytext);
