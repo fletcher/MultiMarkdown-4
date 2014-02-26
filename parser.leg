@@ -1429,9 +1429,22 @@ char * markdown_to_string(char * source, unsigned long extensions, int format) {
 	char *out;
 	char *formatted;
 	char *critic_resolved;
+	char *target_meta_key = FALSE;
+	char *temp;
 	node *refined;
 	GREG g;               /* create parser context */
 	yyinit(&g);
+
+	/* Check for beamer mode in metadata */
+	target_meta_key = extract_metadata_value(source, extensions, "latexmode");
+	if (target_meta_key != NULL) {
+		temp = label_from_string(target_meta_key);
+		if (strcmp(temp, "beamer") == 0) {
+				extensions = extensions | EXT_HEADINGSECTION;				
+		}
+		free(temp);
+	}
+	free(target_meta_key);
 
 	/* Resolve Critic Markup before parsing */
 	if ((extensions & EXT_CRITIC_ACCEPT) || (extensions & EXT_CRITIC_REJECT)) {

@@ -324,17 +324,6 @@ int main(int argc, char **argv)
 				// free(folder);
 			}
 
-			target_meta_key = extract_metadata_value(inputbuf->str, extensions, "latexmode");
-			if (target_meta_key != NULL) {
-				temp = label_from_string(target_meta_key);
-				if (strcmp(temp, "beamer") == 0) {
-	  				extensions = extensions | EXT_HEADINGSECTION;				
-				}
-				free(temp);
-			}
-			free(target_meta_key);
-			target_meta_key = NULL;
-
 			out = markdown_to_string(inputbuf->str,  extensions, output_format);
 			
 			g_string_free(inputbuf, true);
@@ -451,16 +440,6 @@ int main(int argc, char **argv)
 			free(target_meta_key);
 			return(EXIT_SUCCESS);
 		}
-
-		target_meta_key = extract_metadata_value(inputbuf->str, extensions, "latexmode");
-		if (target_meta_key != NULL) {
-			temp = label_from_string(target_meta_key);
-			if (strcmp(temp, "beamer") == 0) {
-  				extensions = extensions | EXT_HEADINGSECTION;				
-			}
-			free(temp);
-		}
-		free(target_meta_key);
 
 		out = markdown_to_string(inputbuf->str, extensions, output_format);
 		
