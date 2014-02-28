@@ -1777,7 +1777,7 @@ into a single paragraph.</text:p>
 <text:p text:style-name="Preformatted Text">This is some text.<text:line-break/><text:line-break/>{{some_other_file.txt}}<text:line-break/><text:line-break/>Another paragraph<text:line-break/></text:p>
 
 
-<text:p text:style-name="Standard">If a file named <text:span text:style-name="Source_20_Text">some_other_file.txt</text:span> exists, its contents will be inserted inside of this document <text:span text:style-name="MMD-Italic">before</text:span> being processed by MultiMarkdown. This means that the contents of the file can also MultiMarkdown.</text:p>
+<text:p text:style-name="Standard">If a file named <text:span text:style-name="Source_20_Text">some_other_file.txt</text:span> exists, its contents will be inserted inside of this document <text:span text:style-name="MMD-Italic">before</text:span> being processed by MultiMarkdown. This means that the contents of the file can also contain MultiMarkdown formatted text.</text:p>
 
 <text:p text:style-name="Standard">If you want to display the <text:span text:style-name="MMD-Italic">contents</text:span> of the file without processing it, you can include it in a code block (you may need to remove trailing newlines at the end of the document to be included):</text:p>
 
@@ -1809,7 +1809,7 @@ into a single paragraph.</text:p>
 <text:p text:style-name="P1">some users&#8217; text editors modify trailing space (IMHO, the proper fix for this is a new text editor&#8230;)</text:p></text:list-item>
 </text:list>
 
-<text:p text:style-name="Standard">Nicolas submitted a patch that enables a new option that interprets &quot;&quot; before a newline as a marker that a line break should be used:</text:p>
+<text:p text:style-name="Standard">Nicolas submitted a patch that enables a new option that interprets &#8220;\&#8221; before a newline as a marker that a line break should be used:</text:p>
 
 <text:p text:style-name="Preformatted Text">This is a line.\<text:line-break/>This is a new line.<text:line-break/></text:p>
 
@@ -1819,7 +1819,7 @@ into a single paragraph.</text:p>
 <text:p text:style-name="Preformatted Text">multimarkdown --escaped-line-breaks file.txt<text:line-break/></text:p>
 
 
-<text:p text:style-name="Standard">If this option is not enabled, then the default behavior will be to treat the newline as an escaped character, which results in it simply appearing as a newline character in the output. This means that the default behavior is the same as if the &quot;&quot; is not in the source file.</text:p>
+<text:p text:style-name="Standard">If this option is not enabled, then the default behavior will be to treat the newline as an escaped character, which results in it simply appearing as a newline character in the output. This means that the default behavior is the same as if the &#8220;\&#8221; is not in the source file.</text:p>
 
 <text:h text:outline-level="2"><text:bookmark text:name="knownissues"/>Known Issues<text:bookmark-end text:name="knownissues"/></text:h>
 

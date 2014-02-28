@@ -2,7 +2,7 @@ latex input:	mmd-article-header
 Title:	File Transclusion
 Author:	Fletcher T. Penney
 Version:	{{version.txt}}
-Revised:	2014-01-05 
+Revised:	2014-02-28 
 Base Header Level:	1
 CSS:	{{css.txt}}
 latex mode:	memoir
@@ -19,7 +19,7 @@ File transclusion is the ability to tell MultiMarkdown to insert the contents of
 	
 	Another paragraph
 
-If a file named `some_other_file.txt` exists, its contents will be inserted inside of this document *before* being processed by MultiMarkdown.  This means that the contents of the file can also MultiMarkdown.
+If a file named `some_other_file.txt` exists, its contents will be inserted inside of this document *before* being processed by MultiMarkdown.  This means that the contents of the file can also contain MultiMarkdown formatted text.
 
 If you want to display the *contents* of the file without processing it, you can include it in a code block (you may need to remove trailing newlines at the end of the document to be included):
 
