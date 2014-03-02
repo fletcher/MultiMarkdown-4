@@ -2,7 +2,7 @@ latex input:	mmd-article-header
 Title:	Syntax
 Author:	Fletcher T. Penney
 Version:	{{version.txt}}
-Revised:	2014-02-05  
+Revised:	2014-03-02  
 Base Header Level:	1
 CSS:	{{css.txt}}
 HTML header:	<script type="text/javascript"
@@ -18,6 +18,7 @@ latex footer:	mmd-memoir-footer
 {{metadata.md}}
 {{cross-references.md}}
 {{attributes.md}}
+{{images.md}}
 {{tables.md}}
 {{footnotes.md}}
 {{citations.md}}

@@ -259,14 +259,14 @@
 <dc:title>MultiMarkdown Composer User's Guide</dc:title>
 <meta:user-defined meta:name="Author">Fletcher T. Penney</meta:user-defined>
 <meta:user-defined meta:name="Version">4.5.1</meta:user-defined>
-<meta:user-defined meta:name="Revised">2014-02-05</meta:user-defined>
+<meta:user-defined meta:name="Revised">2014-03-02</meta:user-defined>
 <meta:keyword>MultiMarkdown, Markdown, LaTeX, PDF, RTF, LyX, HTML</meta:keyword>
 </office:meta>
 <office:body>
 <office:text>
 <text:h text:outline-level="2"><text:bookmark text:name="title"/>MultiMarkdown Composer User's Guide<text:bookmark-end text:name="title"/></text:h>
 
-<text:p text:style-name="Quotations">Version 4.5.1<text:line-break/>Revised 2014-02-05</text:p>
+<text:p text:style-name="Quotations">Version 4.5.1<text:line-break/>Revised 2014-03-02</text:p>
 
 <text:h text:outline-level="2"><text:bookmark text:name="introduction"/>Introduction<text:bookmark-end text:name="introduction"/></text:h>
 
@@ -1266,6 +1266,25 @@ newlines, but must start at the beginning of the line. The format is
 <text:span text:style-name="Source_20_Text">attribute=value</text:span> or <text:span text:style-name="Source_20_Text">attribute=&quot;multi word value&quot;</text:span>. Currently, MultiMarkdown
 does not attempt to interpret or make any use of any of these attributes.
 Also, you can&#8217;t have a multiword attribute span a newline.</text:p>
+
+<text:h text:outline-level="3"><text:bookmark text:name="images"/>Images<text:bookmark-end text:name="images"/></text:h>
+
+<text:p text:style-name="Standard">The basic syntax for images in Markdown is:</text:p>
+
+<text:p text:style-name="Preformatted Text">![Alt text](/path/to/img.jpg)<text:line-break/><text:line-break/>![Alt text](/path/to/img.jpg &quot;Optional title&quot;)<text:line-break/><text:line-break/><text:line-break/>![Alt text][id]<text:line-break/><text:line-break/>[id]: url/to/image  &quot;Optional title attribute&quot;<text:line-break/></text:p>
+
+
+<text:p text:style-name="Standard">In addition to the attributes you can use with links and images (described in the previous section), MultiMarkdown also adds a few additional things. If an image is the only thing in a paragraph, it is treated as a block level element:</text:p>
+
+<text:p text:style-name="Preformatted Text">This image (![Alt text](/path/to/img.jpg))<text:line-break/>is different than the following image:<text:line-break/><text:line-break/>![Alt text](/path/to/img.jpg)<text:line-break/></text:p>
+
+
+<text:p text:style-name="Standard">The resulting HTML is:</text:p>
+
+<text:p text:style-name="Preformatted Text">&lt;p&gt;This image (&lt;img src=&quot;/path/to/img.jpg&quot; alt=&quot;Alt text&quot; /&gt;)<text:line-break/>is different than the following image:&lt;/p&gt;<text:line-break/><text:line-break/>&lt;figure&gt;<text:line-break/>&lt;img src=&quot;/path/to/img.jpg&quot; alt=&quot;Alt text&quot; /&gt;<text:line-break/>&lt;figcaption&gt;Alt text&lt;/figcaption&gt;<text:line-break/>&lt;/figure&gt;<text:line-break/></text:p>
+
+
+<text:p text:style-name="Standard">The first one would be an inline image. The second one (in HTML) would be wrapped in an HTML <text:span text:style-name="Source_20_Text">figure</text:span> element. In this case, the <text:span text:style-name="Source_20_Text">alt</text:span> text is also used as a figure caption, and can contain MultiMarkdown syntax (e.g. bold, emph, etc.). The alt text is not specifically designed to limit which MultiMarkdown is supported, but there will be limits and block level elements aren&#8217;t supported.</text:p>
 
 <text:h text:outline-level="3"><text:bookmark text:name="tables"/>Tables<text:bookmark-end text:name="tables"/></text:h>
 

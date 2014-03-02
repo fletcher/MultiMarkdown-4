@@ -6,7 +6,7 @@
 	<title>MultiMarkdown Composer User's Guide</title>
 	<meta name="author" content="Fletcher T. Penney"/>
 	<meta name="version" content="4.5.1"/>
-	<meta name="revised" content="2014-02-05"/>
+	<meta name="revised" content="2014-03-02"/>
 	<meta name="keywords" content="MultiMarkdown, Markdown, LaTeX, PDF, RTF, LyX, HTML"/>
 	<link type="text/css" rel="stylesheet" href="http://fletcher.github.io/MultiMarkdown-4/css/document.css"/>
 <script type="text/javascript"
@@ -22,7 +22,7 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorM
 
 <blockquote>
 <p>Version 4.5.1<br/>
-Revised 2014-02-05</p>
+Revised 2014-03-02</p>
 </blockquote>
 
 <h2 id="introduction">Introduction</h2>
@@ -1027,6 +1027,41 @@ newlines, but must start at the beginning of the line. The format is
 does not attempt to interpret or make any use of any of these attributes.
 Also, you can&#8217;t have a multiword attribute span a newline.</p>
 
+<h3 id="images">Images</h3>
+
+<p>The basic syntax for images in Markdown is:</p>
+
+<pre><code>![Alt text](/path/to/img.jpg)
+
+![Alt text](/path/to/img.jpg &quot;Optional title&quot;)
+
+
+![Alt text][id]
+
+[id]: url/to/image  &quot;Optional title attribute&quot;
+</code></pre>
+
+<p>In addition to the attributes you can use with links and images (described in the previous section), MultiMarkdown also adds a few additional things. If an image is the only thing in a paragraph, it is treated as a block level element:</p>
+
+<pre><code>This image (![Alt text](/path/to/img.jpg))
+is different than the following image:
+
+![Alt text](/path/to/img.jpg)
+</code></pre>
+
+<p>The resulting HTML is:</p>
+
+<pre><code>&lt;p&gt;This image (&lt;img src=&quot;/path/to/img.jpg&quot; alt=&quot;Alt text&quot; /&gt;)
+is different than the following image:&lt;/p&gt;
+
+&lt;figure&gt;
+&lt;img src=&quot;/path/to/img.jpg&quot; alt=&quot;Alt text&quot; /&gt;
+&lt;figcaption&gt;Alt text&lt;/figcaption&gt;
+&lt;/figure&gt;
+</code></pre>
+
+<p>The first one would be an inline image. The second one (in HTML) would be wrapped in an HTML <code>figure</code> element. In this case, the <code>alt</code> text is also used as a figure caption, and can contain MultiMarkdown syntax (e.g. bold, emph, etc.). The alt text is not specifically designed to limit which MultiMarkdown is supported, but there will be limits and block level elements aren&#8217;t supported.</p>
+
 <h3 id="tables">Tables</h3>
 
 <h4 id="tablebasics">Table Basics</h4>
@@ -1587,7 +1622,7 @@ into a single paragraph.</p>
 Another paragraph
 </code></pre>
 
-<p>If a file named <code>some_other_file.txt</code> exists, its contents will be inserted inside of this document <em>before</em> being processed by MultiMarkdown. This means that the contents of the file can also MultiMarkdown.</p>
+<p>If a file named <code>some_other_file.txt</code> exists, its contents will be inserted inside of this document <em>before</em> being processed by MultiMarkdown. This means that the contents of the file can also contain MultiMarkdown formatted text.</p>
 
 <p>If you want to display the <em>contents</em> of the file without processing it, you can include it in a code block (you may need to remove trailing newlines at the end of the document to be included):</p>
 
