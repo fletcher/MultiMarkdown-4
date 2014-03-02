@@ -119,7 +119,7 @@ test-critic-highlight: $(PROGRAM)
 test-all: $(PROGRAM) test test-mmd test-compat test-latex test-beamer test-memoir test-opml test-odf test-critic-accept test-critic-reject test-critic-highlight test-lyx test-lyx-beamer
 
 test-memory: $(PROGRAM)
-	valgrind --leak-check=full ./$(PROGRAM) MarkdownTest/MultiMarkdown/*.text MarkdownTest/MultiMarkdownTests/*.text > /dev/null
+	valgrind --leak-check=full ./$(PROGRAM) MarkdownTest/Tests/*.text MarkdownTest/MultiMarkdownTests/*.text > /dev/null
 
 test-memory-latex: $(PROGRAM)
 	valgrind --leak-check=full ./$(PROGRAM) -t latex MarkdownTest/Tests/*.text MarkdownTest/MultiMarkdownTests/*.text > /dev/null
