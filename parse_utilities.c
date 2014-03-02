@@ -142,6 +142,7 @@ void free_node(node *n) {
 		free_node_tree(n->children);
 		n->children = NULL;
 	}
+	n->next = NULL;
 	free(n);
 }
 
@@ -190,6 +191,7 @@ node * reverse_list(node *list) {
 	
 	while (list != NULL) {
 		next = list->next;
+		list->next = NULL;
 		new = cons(list, new);
 		list = next;
 	}

@@ -821,6 +821,7 @@ void print_html_endnotes(GString *out, scratch_pad *scratch) {
 	int counter = 0;
 	int random;
 	node *reversed = copy_node_tree(scratch->used_notes);
+
 	reversed = reverse_list(reversed);
 
 	scratch->printing_notes = 1;
@@ -830,8 +831,10 @@ void print_html_endnotes(GString *out, scratch_pad *scratch) {
 	fprintf(stderr, "start endnotes\n");
 #endif
 	
-	if ((note == NULL) || ((note->key == KEY_COUNTER) && (note->next == NULL)))
+	if ((note == NULL) || ((note->key == KEY_COUNTER) && (note->next == NULL))) {
+		free_node_tree(reversed);
 		return;
+	}
 
 #ifdef DEBUG_ON
 	fprintf(stderr, "there are endnotes to print\n");
