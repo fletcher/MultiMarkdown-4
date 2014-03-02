@@ -1291,7 +1291,7 @@ Note = &{ ext(EXT_NOTES) }
 		}
 
 RawNoteBlock = a:StartList
-		( !BlankLine !(NonindentSpace RawNoteReference) OptionallyIndentedLine { a = cons($$, a); } )+
+		( !BlankLine !(NonindentSpace RawNoteReference ':') OptionallyIndentedLine { a = cons($$, a); } )+
 		( < BlankLine* > { a = cons(str(yytext), a); } )
 		{ $$ = mk_str_from_list(a, true); $$->key = RAW; }
 

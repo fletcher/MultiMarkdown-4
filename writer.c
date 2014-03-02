@@ -304,7 +304,14 @@ int note_number_for_label(char *text, scratch_pad *scratch) {
 		if (n != NULL) {
 			/* move to used queue */
 			move_note_to_used(n, scratch);
+#ifdef DEBUG_ON
+	fprintf(stderr, "note has not already been used for: %s\n",text);
+#endif
 		}
+	} else {
+#ifdef DEBUG_ON
+	fprintf(stderr, "note has already been used for: %s\n",text);
+#endif
 	}
 	
 	/* Check label version */
@@ -317,7 +324,15 @@ int note_number_for_label(char *text, scratch_pad *scratch) {
 		if (n != NULL) {
 			/* move to used queue */
 			move_note_to_used(n, scratch);
+#ifdef DEBUG_ON
+	fprintf(stderr, "note has not already been used for: %s\n",label);
+#endif
 		}
+	} else {
+#ifdef DEBUG_ON
+	fprintf(stderr, "note has already been used for: %s\n",label);
+#endif
+
 	}
 	
 	/* CAN recursively drill down to start counter at 0 and ++ */
@@ -325,8 +340,12 @@ int note_number_for_label(char *text, scratch_pad *scratch) {
 	
 	free(label);
 	free(clean);
-	if (n != NULL)
+	if (n != NULL) {
+#ifdef DEBUG_ON
+	fprintf(stderr, "note number is: %d\n",count_node_from_end(n));
+#endif
 		return count_node_from_end(n);
+	}
 	else 
 		return 0;
 }
@@ -371,8 +390,14 @@ int count_node_from_end(node *n) {
 	if (n->next == NULL) {
 		if (n->key == KEY_COUNTER)
 			return 0;
+#ifdef DEBUG_ON
+	fprintf(stderr, "note %d: '%s'\n",1,n->str);
+#endif
 		return 1;	/* reserve 0 for not found */
 	}
+#ifdef DEBUG_ON
+	fprintf(stderr, "note %d: '%s'\n",count_node_from_end(n->next) +1,n->str);
+#endif
 	return (count_node_from_end(n->next) + 1);
 }
 

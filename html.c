@@ -584,7 +584,7 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 					lev = note_number_for_label(n->link_data->label, scratch);
 				if (lev != 0) {
 #ifdef DEBUG_ON
-					fprintf(stderr, "matching cite found\n");
+					fprintf(stderr, "matching cite found - %d\n",lev);
 #endif
 					if (scratch->extensions & EXT_RANDOM_FOOT) {
 						srand(scratch->random_seed_base + lev);
@@ -820,11 +820,12 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 void print_html_endnotes(GString *out, scratch_pad *scratch) {
 	int counter = 0;
 	int random;
-	
-	scratch->used_notes = reverse_list(scratch->used_notes);
+	node *reversed = copy_node_tree(scratch->used_notes);
+	reversed = reverse_list(reversed);
+
 	scratch->printing_notes = 1;
 	
-	node *note = scratch->used_notes;
+	node *note = reversed;
 #ifdef DEBUG_ON
 	fprintf(stderr, "start endnotes\n");
 #endif
@@ -875,6 +876,8 @@ void print_html_endnotes(GString *out, scratch_pad *scratch) {
 	pad(out,1, scratch);
 	g_string_append_printf(out, "</ol>\n</div>\n");
 	scratch->padded = 0;
+
+	free_node_tree(reversed);
 #ifdef DEBUG_ON
 	fprintf(stderr, "finish endnotes\n");
 #endif

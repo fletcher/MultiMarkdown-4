@@ -183,6 +183,10 @@ node * cons(node *new, node *list) {
 node * reverse_list(node *list) {
 	node *new = NULL;
 	node *next = NULL;
+#ifdef DEBUG_ON
+	if ((list != NULL) && (list->str != NULL))
+	fprintf(stderr, "reverse_list: '%s'\n",list->str);
+#endif
 	
 	while (list != NULL) {
 		next = list->next;
