@@ -1076,6 +1076,18 @@ HtmlBlockOpenNav = '<' Spnl ("nav" | "NAV") Spnl HtmlAttribute* '>'
 HtmlBlockCloseNav = '<' Spnl '/' ("nav" | "NAV") Spnl '>'
 HtmlBlockNav = HtmlBlockOpenNav (!HtmlBlockCloseNav .)* HtmlBlockCloseNav
 
+HtmlBlockOpenDel = '<' Spnl ("del" | "DEL") Spnl HtmlAttribute* '>'
+HtmlBlockCloseDel = '<' Spnl '/' ("del" | "DEL") Spnl '>'
+HtmlBlockDel = HtmlBlockOpenDel (!HtmlBlockCloseDel .)* HtmlBlockCloseDel
+
+HtmlBlockOpenIns = '<' Spnl ("ins" | "INS") Spnl HtmlAttribute* '>'
+HtmlBlockCloseIns = '<' Spnl '/' ("ins" | "INS") Spnl '>'
+HtmlBlockIns = HtmlBlockOpenIns (!HtmlBlockCloseIns .)* HtmlBlockCloseIns
+
+HtmlBlockOpenMark = '<' Spnl ("mark" | "MARK") Spnl HtmlAttribute* '>'
+HtmlBlockCloseMark = '<' Spnl '/' ("mark" | "MARK") Spnl '>'
+HtmlBlockMark = HtmlBlockOpenMark (!HtmlBlockCloseMark .)* HtmlBlockCloseMark
+
 
 HtmlBlockInTags = HtmlBlockAddress
 		| HtmlBlockArticle
@@ -1123,6 +1135,9 @@ HtmlBlockInTags = HtmlBlockAddress
 		| HtmlBlockHead
 		| HtmlBlockMain
 		| HtmlBlockNav
+		| HtmlBlockDel
+		| HtmlBlockIns
+		| HtmlBlockMark
 
 HtmlBlock = !MarkdownHtmlTagOpen < ( HtmlBlockInTags | HtmlComment | HtmlBlockSelfClosing ) >
 		BlankLine+
