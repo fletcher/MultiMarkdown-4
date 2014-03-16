@@ -53,3 +53,26 @@ Comments:
 	This is a test{>>What is it a test of?<<}.
 
 {{links.txt}}
+
+
+## My philosophy on CriticMarkup
+
+I view CriticMarkup as two things:
+
+1. A syntax for documenting editing notes and changes, and for collaborating amongst coauthors.
+
+2. A means to display those notes/changes in the HTML output.
+
+I believe that #1 is a really great idea, and well implemented.  #2 is not so well implemented, largely due to the "orthogonal" nature of CriticMarkup and the underlying Markdown syntax.
+
+CM is designed as a separate layer on top of Markdown/MultiMarkdown.  This means that a Markdown span could, for example, start in the middle of a CriticMarkup structure, but end outside of it.  This means that an algorithm to properly convert a CM/Markdown document to HTML would be quite complex, with a huge number of edge cases to consider.  I've tried a few (fairly creative, in my opinion) approaches, but they didn't work.  Perhaps someone else will come up with a better solution, or will be so interested that they put the work in to create the complex algorithm.  I have no current plans to do so.
+
+Additionally, there is a philosophical distinction between documenting editing notes, and using those notes to produce a "finished" document (e.g. HTML or PDF) that keeps those editing notes intact (e.g. strikethroughs, highlighting, etc.)  I believe that CM is incredibly useful for the editing process, but am less convinced for the output process (I know many others disagree with me, and that's ok.  And to be clear, I think that what Gabe and Erik have done with CriticMarkup is fantastic!)
+
+There are other CriticMarkup tools besides MultiMarkdown and [MultiMarkdown Composer](http://multimarkdown.com/), and you are more than welcome to use them.
+
+For now, the *official* MultiMarkdown support for CriticMarkup consists of:
+
+1. CriticMarkup syntax is "understood" by the MultiMarkdown parser, and by MultiMarkdown Composer syntax highlighting.
+2. When converting from MultiMarkdown text to an output format, you can ignore CM formatting (probably not what you want to do), accept all changes, or reject all changes (as above).  These are the preferred choices.
+3. The secondary to choice, when exporting to HTML, is to *attempt* to show the changes in the HTML output.  Because the syntaxes are orthogonal, this will not always work properly, and will not always give valid HTML output. 

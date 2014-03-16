@@ -1741,6 +1741,28 @@ feature, and might take some trial and error the first few times.</text:span></t
 <text:p text:style-name="Preformatted Text">This is a test{&gt;&gt;What is it a test of?&lt;&lt;}.<text:line-break/></text:p>
 
 
+<text:h text:outline-level="3"><text:bookmark text:name="myphilosophyoncriticmarkup"/>My philosophy on CriticMarkup<text:bookmark-end text:name="myphilosophyoncriticmarkup"/></text:h>
+
+<text:p text:style-name="Standard">I view CriticMarkup as two things:</text:p>
+
+<text:p text:style-name="Standard">1) A syntax for documenting editing notes, changes, and collaborating amongst coauthors.</text:p>
+
+<text:p text:style-name="Standard">2) A means to display those notes in the HTML output.</text:p>
+
+<text:p text:style-name="Standard">I believe that #1 is a really great idea, and well implemented. #2 is not so well implemented, largely due to the &#8220;orthogonal&#8221; nature of CriticMarkup and the underlying Markdown syntax.</text:p>
+
+<text:p text:style-name="Standard">CM is designed as a separate layer on top of Markdown/MultiMarkdown. This means that a Markdown span could, for example, start in the middle of a CriticMarkup structure, but end outside of it. This means that an algorithm to properly convert a CM/Markdown document to HTML would be quite complex, with a huge number of edge cases to consider. I&#8217;ve tried a few (fairly creative, in my opinion) approaches, but they didn&#8217;t work. Perhaps someone else will come up with a better solution, or will be so interested that they put the work in to create the complex algorithm. I have no current plans to do so.</text:p>
+
+<text:p text:style-name="Standard">Additionally, there is a philosophical distinction between documenting editing notes, and using those notes to produce a &#8220;finished&#8221; document (e.g. HTML or PDF) that keeps those editing notes intact (e.g. strikethroughs, highlighting, etc.) I believe that CM is incredibly useful for the editing process, but am less convinced for the output process (I know many others disagree with me, and that&#8217;s ok. And to be clear, I think that what Gabe and Erik have done with CriticMarkup is fantastic!)</text:p>
+
+<text:p text:style-name="Standard">There are other CriticMarkup tools besides MultiMarkdown and <text:a xlink:type="simple" xlink:href="http://multimarkdown.com/">MultiMarkdown Composer</text:a>, and you are more than welcome to use them.</text:p>
+
+<text:p text:style-name="Standard">For now, the <text:span text:style-name="MMD-Italic">official</text:span> MultiMarkdown support for CriticMarkup consists of:</text:p>
+
+<text:p text:style-name="Standard">1) CriticMarkup syntax is &#8220;understood&#8221; by the MultiMarkdown parser, and by MultiMarkdown Composer syntax highlighting.
+2) When converting from MultiMarkdown text to an output format, you can ignore CM formatting (probably not what you want to do), accept all changes, or reject all changes (as above). These are the preferred choices.
+3) The secondary to choice, when exporting to HTML, is to <text:span text:style-name="MMD-Italic">attempt</text:span> to show the changes in the HTML output. Because the syntaxes are orthogonal, this will not always work properly, and will not always give valid HTML output. </text:p>
+
 <text:h text:outline-level="3"><text:bookmark text:name="rawhtml"/>Raw HTML<text:bookmark-end text:name="rawhtml"/></text:h>
 
 <text:p text:style-name="Standard">You can include raw (X)HTML within your document. Exactly what happens with
