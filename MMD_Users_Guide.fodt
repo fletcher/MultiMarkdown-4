@@ -257,16 +257,19 @@
  </office:master-styles>
 <office:meta>
 <dc:title>MultiMarkdown Composer User's Guide</dc:title>
+<meta:user-defined meta:name="latex title">MultiMarkdown \\
+Composer \\
+User's Guide</meta:user-defined>
 <meta:user-defined meta:name="Author">Fletcher T. Penney</meta:user-defined>
 <meta:user-defined meta:name="Version">4.5.1</meta:user-defined>
-<meta:user-defined meta:name="Revised">2014-03-02</meta:user-defined>
+<meta:user-defined meta:name="Revised">2014-04-06</meta:user-defined>
 <meta:keyword>MultiMarkdown, Markdown, LaTeX, PDF, RTF, LyX, HTML</meta:keyword>
 </office:meta>
 <office:body>
 <office:text>
 <text:h text:outline-level="2"><text:bookmark text:name="title"/>MultiMarkdown Composer User's Guide<text:bookmark-end text:name="title"/></text:h>
 
-<text:p text:style-name="Quotations">Version 4.5.1<text:line-break/>Revised 2014-03-02</text:p>
+<text:p text:style-name="Quotations">Version 4.5.1<text:line-break/>Revised 2014-04-06</text:p>
 
 <text:h text:outline-level="2"><text:bookmark text:name="introduction"/>Introduction<text:bookmark-end text:name="introduction"/></text:h>
 
@@ -1149,6 +1152,12 @@ change the language of a document in LaTeX is up to the individual.</text:p>
 
 <text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">Quotes Language</text:span> does not trigger a complete document.</text:p>
 
+<text:h text:outline-level="4"><text:bookmark text:name="latexauthor"/>LaTeX Author<text:bookmark-end text:name="latexauthor"/></text:h>
+
+<text:p text:style-name="Standard">Since MultiMarkdown syntax is not processed inside of metadata, you can use the <text:span text:style-name="Source_20_Text">latex author</text:span> metadata to override the regular author metadata when exporting to LaTeX.</text:p>
+
+<text:p text:style-name="Standard">This metadata <text:span text:style-name="MMD-Italic">must</text:span> come after the regular <text:span text:style-name="Source_20_Text">author</text:span> metadata if it is also being used.</text:p>
+
 <text:h text:outline-level="4"><text:bookmark text:name="latexfooter"/>LaTeX Footer<text:bookmark-end text:name="latexfooter"/></text:h>
 
 <text:p text:style-name="Standard">A special case of the <text:span text:style-name="Source_20_Text">LaTeX Input</text:span> metadata below. This file will be linked
@@ -1183,6 +1192,12 @@ LaTeX users do not have to learn XSLT to customize their code as desired.</text:
 <text:p text:style-name="Standard">When outputting a document to LaTeX, there are two special options that change
 the output slightly &#8212; <text:span text:style-name="Source_20_Text">memoir</text:span> and <text:span text:style-name="Source_20_Text">beamer</text:span>. These options are designed to
 be compatible with the LaTeX classes of the same names.</text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="latextitle"/>LaTeX Title<text:bookmark-end text:name="latextitle"/></text:h>
+
+<text:p text:style-name="Standard">Since MultiMarkdown syntax is not processed inside of metadata, you can use the <text:span text:style-name="Source_20_Text">latex title</text:span> metadata to override the regular title metadata when exporting to LaTeX.</text:p>
+
+<text:p text:style-name="Standard">This metadata <text:span text:style-name="MMD-Italic">must</text:span> come after the regular <text:span text:style-name="Source_20_Text">title</text:span> metadata if it is also being used.</text:p>
 
 <text:h text:outline-level="4"><text:bookmark text:name="odfheader"/>ODF Header<text:bookmark-end text:name="odfheader"/></text:h>
 
@@ -1745,9 +1760,13 @@ feature, and might take some trial and error the first few times.</text:span></t
 
 <text:p text:style-name="Standard">I view CriticMarkup as two things:</text:p>
 
-<text:p text:style-name="Standard">1) A syntax for documenting editing notes, changes, and collaborating amongst coauthors.</text:p>
-
-<text:p text:style-name="Standard">2) A means to display those notes in the HTML output.</text:p>
+<text:list text:style-name="L2"><text:list-item>
+<text:p text:style-name="P2">A syntax for documenting editing notes and changes, and for collaborating amongst coauthors.</text:p>
+</text:list-item>
+<text:list-item>
+<text:p text:style-name="P2">A means to display those notes/changes in the HTML output.</text:p>
+</text:list-item>
+</text:list>
 
 <text:p text:style-name="Standard">I believe that #1 is a really great idea, and well implemented. #2 is not so well implemented, largely due to the &#8220;orthogonal&#8221; nature of CriticMarkup and the underlying Markdown syntax.</text:p>
 
@@ -1759,9 +1778,13 @@ feature, and might take some trial and error the first few times.</text:span></t
 
 <text:p text:style-name="Standard">For now, the <text:span text:style-name="MMD-Italic">official</text:span> MultiMarkdown support for CriticMarkup consists of:</text:p>
 
-<text:p text:style-name="Standard">1) CriticMarkup syntax is &#8220;understood&#8221; by the MultiMarkdown parser, and by MultiMarkdown Composer syntax highlighting.
-2) When converting from MultiMarkdown text to an output format, you can ignore CM formatting (probably not what you want to do), accept all changes, or reject all changes (as above). These are the preferred choices.
-3) The secondary to choice, when exporting to HTML, is to <text:span text:style-name="MMD-Italic">attempt</text:span> to show the changes in the HTML output. Because the syntaxes are orthogonal, this will not always work properly, and will not always give valid HTML output. </text:p>
+<text:list text:style-name="L2"><text:list-item>
+<text:p text:style-name="P2">CriticMarkup syntax is &#8220;understood&#8221; by the MultiMarkdown parser, and by MultiMarkdown Composer syntax highlighting.</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P2">When converting from MultiMarkdown text to an output format, you can ignore CM formatting (probably not what you want to do), accept all changes, or reject all changes (as above). These are the preferred choices.</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P2">The secondary to choice, when exporting to HTML, is to <text:span text:style-name="MMD-Italic">attempt</text:span> to show the changes in the HTML output. Because the syntaxes are orthogonal, this will not always work properly, and will not always give valid HTML output.</text:p></text:list-item>
+</text:list>
 
 <text:h text:outline-level="3"><text:bookmark text:name="rawhtml"/>Raw HTML<text:bookmark-end text:name="rawhtml"/></text:h>
 

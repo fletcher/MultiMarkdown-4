@@ -6,7 +6,7 @@
 	<title>Metadata</title>
 	<meta name="author" content="Fletcher T. Penney"/>
 	<meta name="version" content="4.5.1"/>
-	<meta name="revised" content="2014-01-04"/>
+	<meta name="revised" content="2014-04-06"/>
 	<link type="text/css" rel="stylesheet" href="http://fletcher.github.io/MultiMarkdown-4/css/document.css"/>
 	<meta name="latexmode" content="memoir"/>
 	<meta name="latexinput" content="mmd-article-begin-doc"/>
@@ -167,6 +167,12 @@ change the language of a document in LaTeX is up to the individual.</p>
 
 <p><code>Quotes Language</code> does not trigger a complete document.</p>
 
+<h3 id="latexauthor">LaTeX Author</h3>
+
+<p>Since MultiMarkdown syntax is not processed inside of metadata, you can use the <code>latex author</code> metadata to override the regular author metadata when exporting to LaTeX.</p>
+
+<p>This metadata <em>must</em> come after the regular <code>author</code> metadata if it is also being used.</p>
+
 <h3 id="latexfooter">LaTeX Footer</h3>
 
 <p>A special case of the <code>LaTeX Input</code> metadata below. This file will be linked
@@ -206,6 +212,12 @@ LaTeX users do not have to learn XSLT to customize their code as desired.</p>
 <p>When outputting a document to LaTeX, there are two special options that change
 the output slightly &#8212; <code>memoir</code> and <code>beamer</code>. These options are designed to
 be compatible with the LaTeX classes of the same names.</p>
+
+<h3 id="latextitle">LaTeX Title</h3>
+
+<p>Since MultiMarkdown syntax is not processed inside of metadata, you can use the <code>latex title</code> metadata to override the regular title metadata when exporting to LaTeX.</p>
+
+<p>This metadata <em>must</em> come after the regular <code>title</code> metadata if it is also being used.</p>
 
 <h3 id="odfheader">ODF Header</h3>
 

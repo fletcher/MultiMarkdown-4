@@ -2,7 +2,7 @@ latex input:	mmd-article-header
 Title:	Metadata
 Author:	Fletcher T. Penney
 Version:	{{version.txt}}
-Revised:	2014-01-04 
+Revised:	2014-04-06  
 Base Header Level:	1
 CSS:	{{css.txt}}
 latex mode:	memoir
@@ -169,6 +169,12 @@ change the language of a document in LaTeX is up to the individual.
 `Quotes Language` does not trigger a complete document.
 
 
+### LaTeX Author ###
+
+Since MultiMarkdown syntax is not processed inside of metadata, you can use the `latex author` metadata to override the regular author metadata when exporting to LaTeX.
+
+This metadata *must* come after the regular `author` metadata if it is also being used.
+
 ### LaTeX Footer ###
 
 A special case of the `LaTeX Input` metadata below. This file will be linked
@@ -210,6 +216,12 @@ When outputting a document to LaTeX, there are two special options that change
 the output slightly --- `memoir` and `beamer`. These options are designed to
 be compatible with the LaTeX classes of the same names.
 
+
+### LaTeX Title ###
+
+Since MultiMarkdown syntax is not processed inside of metadata, you can use the `latex title` metadata to override the regular title metadata when exporting to LaTeX.
+
+This metadata *must* come after the regular `title` metadata if it is also being used.
 
 ### ODF Header ###
 

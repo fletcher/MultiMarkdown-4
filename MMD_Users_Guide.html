@@ -2,19 +2,22 @@
 <html>
 <head>
 	<meta charset="utf-8"/>
-	<meta name="latexinput" content="mmd-memoir-header"/>
+	<meta name="latexinput" content="mmd-tufte-book-header"/>
 	<title>MultiMarkdown Composer User's Guide</title>
+	<meta name="latextitle" content="MultiMarkdown \\
+Composer \\
+User's Guide"/>
 	<meta name="author" content="Fletcher T. Penney"/>
 	<meta name="version" content="4.5.1"/>
-	<meta name="revised" content="2014-03-02"/>
+	<meta name="revised" content="2014-04-06"/>
 	<meta name="keywords" content="MultiMarkdown, Markdown, LaTeX, PDF, RTF, LyX, HTML"/>
 	<link type="text/css" rel="stylesheet" href="http://fletcher.github.io/MultiMarkdown-4/css/document.css"/>
 <script type="text/javascript"
 src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
 	<meta name="latexmode" content="memoir"/>
-	<meta name="latexinput" content="mmd-memoir-begin-doc"/>
-	<meta name="latexfooter" content="mmd-memoir-footer"/>
+	<meta name="latexinput" content="mmd-tufte-book-begin-doc"/>
+	<meta name="latexfooter" content="mmd-tufte-book-footer"/>
 </head>
 <body>
 
@@ -22,7 +25,7 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorM
 
 <blockquote>
 <p>Version 4.5.1<br/>
-Revised 2014-03-02</p>
+Revised 2014-04-06</p>
 </blockquote>
 
 <h2 id="introduction">Introduction</h2>
@@ -898,6 +901,12 @@ change the language of a document in LaTeX is up to the individual.</p>
 
 <p><code>Quotes Language</code> does not trigger a complete document.</p>
 
+<h4 id="latexauthor">LaTeX Author</h4>
+
+<p>Since MultiMarkdown syntax is not processed inside of metadata, you can use the <code>latex author</code> metadata to override the regular author metadata when exporting to LaTeX.</p>
+
+<p>This metadata <em>must</em> come after the regular <code>author</code> metadata if it is also being used.</p>
+
 <h4 id="latexfooter">LaTeX Footer</h4>
 
 <p>A special case of the <code>LaTeX Input</code> metadata below. This file will be linked
@@ -937,6 +946,12 @@ LaTeX users do not have to learn XSLT to customize their code as desired.</p>
 <p>When outputting a document to LaTeX, there are two special options that change
 the output slightly &#8212; <code>memoir</code> and <code>beamer</code>. These options are designed to
 be compatible with the LaTeX classes of the same names.</p>
+
+<h4 id="latextitle">LaTeX Title</h4>
+
+<p>Since MultiMarkdown syntax is not processed inside of metadata, you can use the <code>latex title</code> metadata to override the regular title metadata when exporting to LaTeX.</p>
+
+<p>This metadata <em>must</em> come after the regular <code>title</code> metadata if it is also being used.</p>
 
 <h4 id="odfheader">ODF Header</h4>
 
@@ -1554,6 +1569,31 @@ makeindex -s `kpsewhich basic.gst` -o &quot;${basefile}.gls&quot; &quot;${basefi
 
 <pre><code>This is a test{&gt;&gt;What is it a test of?&lt;&lt;}.
 </code></pre>
+
+<h3 id="myphilosophyoncriticmarkup">My philosophy on CriticMarkup</h3>
+
+<p>I view CriticMarkup as two things:</p>
+
+<ol>
+<li><p>A syntax for documenting editing notes and changes, and for collaborating amongst coauthors.</p></li>
+<li><p>A means to display those notes/changes in the HTML output.</p></li>
+</ol>
+
+<p>I believe that #1 is a really great idea, and well implemented. #2 is not so well implemented, largely due to the &#8220;orthogonal&#8221; nature of CriticMarkup and the underlying Markdown syntax.</p>
+
+<p>CM is designed as a separate layer on top of Markdown/MultiMarkdown. This means that a Markdown span could, for example, start in the middle of a CriticMarkup structure, but end outside of it. This means that an algorithm to properly convert a CM/Markdown document to HTML would be quite complex, with a huge number of edge cases to consider. I&#8217;ve tried a few (fairly creative, in my opinion) approaches, but they didn&#8217;t work. Perhaps someone else will come up with a better solution, or will be so interested that they put the work in to create the complex algorithm. I have no current plans to do so.</p>
+
+<p>Additionally, there is a philosophical distinction between documenting editing notes, and using those notes to produce a &#8220;finished&#8221; document (e.g. HTML or PDF) that keeps those editing notes intact (e.g. strikethroughs, highlighting, etc.) I believe that CM is incredibly useful for the editing process, but am less convinced for the output process (I know many others disagree with me, and that&#8217;s ok. And to be clear, I think that what Gabe and Erik have done with CriticMarkup is fantastic!)</p>
+
+<p>There are other CriticMarkup tools besides MultiMarkdown and <a href="http://multimarkdown.com/">MultiMarkdown Composer</a>, and you are more than welcome to use them.</p>
+
+<p>For now, the <em>official</em> MultiMarkdown support for CriticMarkup consists of:</p>
+
+<ol>
+<li>CriticMarkup syntax is &#8220;understood&#8221; by the MultiMarkdown parser, and by MultiMarkdown Composer syntax highlighting.</li>
+<li>When converting from MultiMarkdown text to an output format, you can ignore CM formatting (probably not what you want to do), accept all changes, or reject all changes (as above). These are the preferred choices.</li>
+<li>The secondary to choice, when exporting to HTML, is to <em>attempt</em> to show the changes in the HTML output. Because the syntaxes are orthogonal, this will not always work properly, and will not always give valid HTML output.</li>
+</ol>
 
 <h3 id="rawhtml">Raw HTML</h3>
 
