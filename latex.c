@@ -202,10 +202,14 @@ void print_latex_node(GString *out, node *n, scratch_pad *scratch) {
 				g_string_append_printf(out, "\\def\\mytitle{");
 				print_latex_node(out, n->children, scratch);
 				g_string_append_printf(out, "}\n");
+			} else if (strcmp(n->str, "latextitle") == 0) {
+				g_string_append_printf(out, "\\def\\mytitle{%s}\n",n->children->str);
 			} else if (strcmp(n->str, "author") == 0) {
 				g_string_append_printf(out, "\\def\\myauthor{");
 				print_latex_node(out, n->children, scratch);
 				g_string_append_printf(out, "}\n");
+			} else if (strcmp(n->str, "latexauthor") == 0) {
+				g_string_append_printf(out, "\\def\\myauthor{%s}\n",n->children->str);
 			} else if (strcmp(n->str, "date") == 0) {
 				g_string_append_printf(out, "\\def\\mydate{");
 				print_latex_node(out, n->children, scratch);
