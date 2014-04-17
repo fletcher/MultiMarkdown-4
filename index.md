@@ -29,6 +29,7 @@ Or as a set of web pages for individual sections:
 * [Using MultiMarkdown](using_mmd)
 * [MultiMarkdown Syntax](syntax)
 	* [Metadata](metadata)
+	* [Smart Typography](typography)
 	* [Cross-References](cross-references)
 	* [Link and Image Attributes](attributes)
 	* [Images](images)
