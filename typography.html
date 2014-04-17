@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<meta name="latexinput" content="mmd-article-header"/>
+	<title>Smart Typography</title>
+	<meta name="author" content="Fletcher T. Penney"/>
+	<meta name="version" content="4.5.1"/>
+	<meta name="revised" content="2014-04-16"/>
+	<link type="text/css" rel="stylesheet" href="http://fletcher.github.io/MultiMarkdown-4/css/document.css"/>
+<script type="text/javascript"
+src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+	<meta name="latexmode" content="memoir"/>
+	<meta name="latexinput" content="mmd-article-begin-doc"/>
+	<meta name="latexfooter" content="mmd-memoir-footer"/>
+</head>
+<body>
+
+<h2 id="smarttypography">Smart Typography</h2>
+
+<p>MultiMarkdown incorporates John Gruber&#8217;s <a href="http://daringfireball.net/projects/smartypants/">SmartyPants</a> tool in addition to the core Markdown functionality. This program converts &#8220;plain&#8221; punctuation into &#8220;smarter&#8221; typographic punctuation.</p>
+
+<p>Just like the original, MultiMarkdown converts:</p>
+
+<ul>
+<li>Straight quotes (<code>&quot;</code> and <code>'</code>) into &#8220;curly&#8221; quotes</li>
+<li>Backticks-style quotes (<code>``this''</code>) into &#8220;curly&#8221; quotes</li>
+<li>Dashes (<code>--</code> and <code>---</code>) into en- and em- dashes</li>
+<li>Three dots (<code>...</code>) become an ellipsis</li>
+</ul>
+
+<p>MultiMarkdown also includes support for quotes styles other than English (the default). Use the <code>quotes language</code> metadata to choose:</p>
+
+<ul>
+<li>dutch (<code>nl</code>)</li>
+<li>german(<code>de</code>)</li>
+<li>germanguillemets</li>
+<li>french(<code>fr</code>)</li>
+<li>swedish(<code>sv</code>)</li>
+</ul>
+
+<p>This feature is enabled by default, but is disabled in <code>compatibility</code> mode, since it is not part of the original Markdown. You can also use the <code>smart</code> and <code>nosmart</code> command line options to control this feature.</p>
+
+</body>
+</html>

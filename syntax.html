@@ -6,7 +6,7 @@
 	<title>Syntax</title>
 	<meta name="author" content="Fletcher T. Penney"/>
 	<meta name="version" content="4.5.1"/>
-	<meta name="revised" content="2014-04-06"/>
+	<meta name="revised" content="2014-04-16"/>
 	<link type="text/css" rel="stylesheet" href="http://fletcher.github.io/MultiMarkdown-4/css/document.css"/>
 <script type="text/javascript"
 src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
@@ -239,6 +239,31 @@ working &#8212; MultiMarkdown just copies it verbatim to the output.</p>
 <p>When using the <a href="#filetransclusion">File Transclusion</a> feature to &#8220;link&#8221; to other documents inside a MultiMarkdown document, this metadata specifies a folder that contains the files being linked to. If omitted, the default is the folder containing the file in question. This can be a relative path or a complete path.</p>
 
 <p>This metadata can be particularly useful when using MultiMarkdown to parse a text string that does not exist as a file on the computer, and therefore does not have a parent folder (when using <code>stdin</code> or another application that offers MultiMarkdown support). In this case, the path must be a complete path.</p>
+
+<h1 id="syntax">Syntax</h1>
+
+<p>MultiMarkdown incorporates John Gruber&#8217;s <a href="http://daringfireball.net/projects/smartypants/">SmartyPants</a> tool in addition to the core Markdown functionality. This program converts &#8220;plain&#8221; punctuation into &#8220;smarter&#8221; typographic punctuation.</p>
+
+<p>Just like the original, MultiMarkdown converts:</p>
+
+<ul>
+<li>Straight quotes (<code>&quot;</code> and <code>'</code>) into &#8220;curly&#8221; quotes</li>
+<li>Backticks-style quotes (<code>``this''</code>) into &#8220;curly&#8221; quotes</li>
+<li>Dashes (<code>--</code> and <code>---</code>) into en- and em- dashes</li>
+<li>Three dots (<code>...</code>) become an ellipsis</li>
+</ul>
+
+<p>MultiMarkdown also includes support for quotes styles other than English (the default). Use the <code>quotes language</code> metadata to choose:</p>
+
+<ul>
+<li>dutch (<code>nl</code>)</li>
+<li>german(<code>de</code>)</li>
+<li>germanguillemets</li>
+<li>french(<code>fr</code>)</li>
+<li>swedish(<code>sv</code>)</li>
+</ul>
+
+<p>This feature is enabled by default, but is disabled in <code>compatibility</code> mode, since it is not part of the original Markdown. You can also use the <code>smart</code> and <code>nosmart</code> command line options to control this feature.</p>
 
 <h2 id="cross-references">Cross-References</h2>
 

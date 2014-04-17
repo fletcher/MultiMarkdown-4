@@ -262,14 +262,14 @@ Composer \\
 User's Guide</meta:user-defined>
 <meta:user-defined meta:name="Author">Fletcher T. Penney</meta:user-defined>
 <meta:user-defined meta:name="Version">4.5.1</meta:user-defined>
-<meta:user-defined meta:name="Revised">2014-04-06</meta:user-defined>
+<meta:user-defined meta:name="Revised">2014-04-16</meta:user-defined>
 <meta:keyword>MultiMarkdown, Markdown, LaTeX, PDF, RTF, LyX, HTML</meta:keyword>
 </office:meta>
 <office:body>
 <office:text>
 <text:h text:outline-level="2"><text:bookmark text:name="title"/>MultiMarkdown Composer User's Guide<text:bookmark-end text:name="title"/></text:h>
 
-<text:p text:style-name="Quotations">Version 4.5.1<text:line-break/>Revised 2014-04-06</text:p>
+<text:p text:style-name="Quotations">Version 4.5.1<text:line-break/>Revised 2014-04-16</text:p>
 
 <text:h text:outline-level="2"><text:bookmark text:name="introduction"/>Introduction<text:bookmark-end text:name="introduction"/></text:h>
 
@@ -1214,6 +1214,38 @@ working &#8212; MultiMarkdown just copies it verbatim to the output.</text:p>
 <text:p text:style-name="Standard">When using the <text:a xlink:type="simple" xlink:href="#filetransclusion">File Transclusion</text:a> feature to &#8220;link&#8221; to other documents inside a MultiMarkdown document, this metadata specifies a folder that contains the files being linked to. If omitted, the default is the folder containing the file in question. This can be a relative path or a complete path.</text:p>
 
 <text:p text:style-name="Standard">This metadata can be particularly useful when using MultiMarkdown to parse a text string that does not exist as a file on the computer, and therefore does not have a parent folder (when using <text:span text:style-name="Source_20_Text">stdin</text:span> or another application that offers MultiMarkdown support). In this case, the path must be a complete path.</text:p>
+
+<text:h text:outline-level="3"><text:bookmark text:name="smarttypography"/>Smart Typography<text:bookmark-end text:name="smarttypography"/></text:h>
+
+<text:p text:style-name="Standard">MultiMarkdown incorporates John Gruber&#8217;s <text:a xlink:type="simple" xlink:href="http://daringfireball.net/projects/smartypants/">SmartyPants</text:a> tool in addition to the core Markdown functionality. This program converts &#8220;plain&#8221; punctuation into &#8220;smarter&#8221; typographic punctuation.</text:p>
+
+<text:p text:style-name="Standard">Just like the original, MultiMarkdown converts:</text:p>
+
+<text:list text:style-name="L1"><text:list-item>
+<text:p text:style-name="P1">Straight quotes (<text:span text:style-name="Source_20_Text">&quot;</text:span> and <text:span text:style-name="Source_20_Text">'</text:span>) into &#8220;curly&#8221; quotes</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">Backticks-style quotes (<text:span text:style-name="Source_20_Text">``this''</text:span>) into &#8220;curly&#8221; quotes</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">Dashes (<text:span text:style-name="Source_20_Text">--</text:span> and <text:span text:style-name="Source_20_Text">---</text:span>) into en- and em- dashes</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">Three dots (<text:span text:style-name="Source_20_Text">...</text:span>) become an ellipsis</text:p></text:list-item>
+</text:list>
+
+<text:p text:style-name="Standard">MultiMarkdown also includes support for quotes styles other than English (the default). Use the <text:span text:style-name="Source_20_Text">quotes language</text:span> metadata to choose:</text:p>
+
+<text:list text:style-name="L1"><text:list-item>
+<text:p text:style-name="P1">dutch (<text:span text:style-name="Source_20_Text">nl</text:span>)</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">german(<text:span text:style-name="Source_20_Text">de</text:span>)</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">germanguillemets</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">french(<text:span text:style-name="Source_20_Text">fr</text:span>)</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">swedish(<text:span text:style-name="Source_20_Text">sv</text:span>)</text:p></text:list-item>
+</text:list>
+
+<text:p text:style-name="Standard">This feature is enabled by default, but is disabled in <text:span text:style-name="Source_20_Text">compatibility</text:span> mode, since it is not part of the original Markdown. You can also use the <text:span text:style-name="Source_20_Text">smart</text:span> and <text:span text:style-name="Source_20_Text">nosmart</text:span> command line options to control this feature.</text:p>
 
 <text:h text:outline-level="3"><text:bookmark text:name="cross-references"/>Cross-References<text:bookmark-end text:name="cross-references"/></text:h>
 
