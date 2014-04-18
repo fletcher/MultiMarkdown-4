@@ -1047,8 +1047,10 @@ void print_latex_localized_typography(GString *out, int character, scratch_pad *
 /* print_latex_string - print string, escaping for LaTeX */
 void print_latex_string(GString *out, char *str, scratch_pad *scratch) {
 	char *tmp;
+	char *start;
 	if (str == NULL)
 		return;
+	start = str;	/* Store start of string */
 	while (*str != '\0') {
 		switch (*str) {
 			case '{': case '}': case '$': case '%':
@@ -1085,7 +1087,7 @@ void print_latex_string(GString *out, char *str, scratch_pad *scratch) {
 			case '\n':
 				tmp = str;
 				tmp--;
-				if (*tmp == ' ') {
+				if ((tmp > start) && (*tmp == ' ')) {
 					tmp--;
 					if (*tmp == ' ') {
 						g_string_append_printf(out, "\\\\\n");
