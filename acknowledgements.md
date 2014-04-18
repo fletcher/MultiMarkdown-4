@@ -2,7 +2,7 @@ Title:	Acknowledgements
 Author:	Fletcher T. Penney
 CSS:	{{css.txt}}
 Version:	{{version.txt}}
-Revised:	2014-01-04 
+Revised:	2014-04-18  
 Base Header Level:	1
 
 # Acknowledgements #
@@ -69,6 +69,7 @@ improving Markdown and MultiMarkdown:
 *	Brett Terpstra
 *	Charles Cowan
 *	David Richards
+*	Thomas Hodgson
 
 and others I have surely forgotten....
 

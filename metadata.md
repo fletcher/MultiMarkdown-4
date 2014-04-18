@@ -2,7 +2,7 @@ latex input:	mmd-article-header
 Title:	Metadata
 Author:	Fletcher T. Penney
 Version:	{{version.txt}}
-Revised:	2014-04-06  
+Revised:	2014-04-18  
 Base Header Level:	1
 CSS:	{{css.txt}}
 latex mode:	memoir
