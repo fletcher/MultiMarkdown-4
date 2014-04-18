@@ -1096,6 +1096,9 @@ void print_latex_string(GString *out, char *str, scratch_pad *scratch) {
 					g_string_append_printf(out, "\n");
 				}
 				break;
+			case '-':
+				g_string_append_printf(out, "-{}");
+				break;
 			default:
 				g_string_append_c(out, *str);
 			}
