@@ -254,6 +254,7 @@ scratch_pad * mk_scratch_pad(unsigned long extensions) {
 	result->links       = mk_node(KEY_COUNTER);
 	result->glossary    = mk_node(KEY_COUNTER);
 	result->citations   = mk_node(KEY_COUNTER);
+	result->abbreviations = mk_node(KEY_COUNTER);
 	result->result_tree = NULL;
 	result->padded      = 2;
 	result->footnote_to_print = 0;
@@ -302,6 +303,7 @@ void free_scratch_pad(scratch_pad *scratch) {
 	free_node_tree(scratch->links);
 	free_node_tree(scratch->glossary);
 	free_node_tree(scratch->citations);
+	free_node_tree(scratch->abbreviations);
 	
 	g_string_free(scratch->lyx_debug_pad, true);    /* CRC - initally, no indent */
 	
@@ -394,6 +396,37 @@ char *label_from_string(char *str) {
 	return label;
 }
 
+char *ascii_label_from_string(char *str) {
+	GString *out = g_string_new("");
+	char *label;
+	char *next_char;
+
+	while (*str != '\0') {
+		next_char = str;
+		next_char++;
+		/* Is this a multibyte character? */
+		if ((*next_char & 0xC0) == 0x80) {
+			while ((*next_char & 0xC0) == 0x80) {
+				str++;
+				/* fprintf(stderr, "multibyte\n"); */
+				next_char++;
+			}
+		}
+		
+		/* can relax on following characters */
+		else if ((*str >= '0' && *str <= '9') || (*str >= 'A' && *str <= 'Z')
+			|| (*str >= 'a' && *str <= 'z') || (*str == '.') || (*str== '_')
+			|| (*str== '-') || (*str== ':'))
+		{
+			g_string_append_c(out, tolower(*str));
+		}           
+		str++;
+	}
+	label = out->str;
+	g_string_free(out, false);
+	return label;
+}
+
 /* clean_string -- clean up whitespace */
 char * clean_string(char *str) {
 	GString *out = g_string_new("");
@@ -418,9 +451,25 @@ char * clean_string(char *str) {
 	return clean;
 }
 
+/* string_from_node_tree -- Returns a null-terminated string,
+	which must be freed after use. */
+char * string_from_node_tree(node *n) {
+	char *result;
+	if (n == NULL)
+		return NULL;
+
+	GString *raw = g_string_new("");
+	print_raw_node_tree(raw, n);
+
+	result = raw->str;
+	g_string_free(raw, false);
+
+	return result;
+}
+
 /* label_from_node_tree -- Returns a null-terminated string,
 	which must be freed after use. */
-char *label_from_node_tree(node *n) {
+char * label_from_node_tree(node *n) {
 	char *label;
 	if (n == NULL)
 		return NULL;
@@ -442,6 +491,30 @@ char *label_from_node_tree(node *n) {
 	return label;
 }
 
+/* ascii_label_from_node_tree -- Returns a null-terminated string,
+	which must be freed after use. */
+char * ascii_label_from_node_tree(node *n) {
+	char *label;
+	if (n == NULL)
+		return NULL;
+	
+#ifdef DEBUG_ON
+		fprintf(stderr, "\n\nstart label from node_tree\n");
+#endif
+	GString *raw = g_string_new("");
+	print_raw_node_tree(raw, n);
+
+#ifdef DEBUG_ON
+		fprintf(stderr, "halfway('%s')\n",raw->str);
+#endif
+	label =  ascii_label_from_string(raw->str);
+	g_string_free(raw,true);
+#ifdef DEBUG_ON
+		fprintf(stderr, "finish label from node_tree: '%s'\n",label);
+#endif
+	return label;
+}
+
 /* label_from_node -- Returns a null-terminated string,
 	which must be freed after use. */
 char *label_from_node(node *n) {
@@ -453,6 +526,23 @@ char *label_from_node(node *n) {
 	GString *raw = g_string_new("");
 	print_raw_node(raw, n);
 	label =  label_from_string(raw->str);
+	label2 = strdup(label);
+	free(label);
+	g_string_free(raw,true);
+	return label2;
+}
+
+/* ascii_label_from_node -- Returns a null-terminated string,
+	which must be freed after use. */
+char *ascii_label_from_node(node *n) {
+	char *label;
+	char *label2;
+	if (n == NULL)
+		return NULL;
+	
+	GString *raw = g_string_new("");
+	print_raw_node(raw, n);
+	label =  ascii_label_from_string(raw->str);
 	label2 = strdup(label);
 	free(label);
 	g_string_free(raw,true);

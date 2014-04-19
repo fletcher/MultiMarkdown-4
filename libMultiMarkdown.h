@@ -142,6 +142,10 @@ enum keys {
 	SUPERSCRIPT,
 	SUBSCRIPT,
 	VARIABLE,
+	ABBREVIATION,
+	ABBR,
+	ABBRSTART,
+	ABBRSTOP,
 	KEY_COUNTER                      /* This *MUST* be the last item in the list */
 };
 

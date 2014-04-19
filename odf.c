@@ -74,11 +74,16 @@ void print_odf_node(GString *out, node *n, scratch_pad *scratch) {
 	
 	switch (n->key) {
 		case NO_TYPE:
+		case ABBREVIATION:
 			break;
 		case LIST:
 			print_odf_node_tree(out,n->children,scratch);
 			break;
 		case STR:
+		case ABBR:
+		case ABBRSTART:
+		case ABBRSTOP:
+			/* TODO: Need something a bit better here for abbreviations */
 			print_html_string(out,n->str, scratch);
 			break;
 		case SPACE:

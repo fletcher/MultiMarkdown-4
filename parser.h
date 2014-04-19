@@ -69,6 +69,7 @@ typedef struct {
 	node *links;                 /* ... links */
 	node *glossary;              /* ... glossary */
 	node *citations;             /* ... citations */
+	node *abbreviations;         /* ... abbreviations */
 	node *used_notes;            /* notes that have been referenced */
 	node *result_tree;           /* reference to entire result tree */
 	int   footnote_to_print;     /* set while we are printing so we can reverse link */
@@ -158,6 +159,7 @@ link_data * extract_link_data(char *label, scratch_pad *scratch);
 node * mk_autolink(char *text);
 
 void   extract_references(node *list, scratch_pad *scratch);
+void   extract_abbreviations(node *list, scratch_pad *scratch);
 
 bool   extension(int ext, unsigned long extensions);
 
@@ -167,9 +169,13 @@ void   trim_trailing_newlines(char *str);
 
 /* other utilities */
 char * label_from_string(char *str);
+char * ascii_label_from_string(char *str);
 char * clean_string(char *str);
+char * string_from_node_tree(node *n);
 char * label_from_node_tree(node *n);
 char * label_from_node(node *n);
+char * ascii_label_from_node_tree(node *n);
+char * ascii_label_from_node(node *n);
 void   print_raw_node(GString *out, node *n);
 void   print_raw_node_tree(GString *out, node*n);
 

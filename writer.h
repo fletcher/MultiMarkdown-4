@@ -15,6 +15,9 @@
 char * export_node_tree(node *list, int format, unsigned long extensions);
 
 void extract_references(node *list, scratch_pad *scratch);
+void extract_abbreviations(node *list, scratch_pad *scratch);
+void find_abbreviations(node *list, scratch_pad *scratch);
+
 link_data * extract_link_data(char *label, scratch_pad *scratch);
 
 void pad(GString *out, int num, scratch_pad *scratch);

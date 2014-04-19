@@ -115,6 +115,7 @@ Block =	BlankLine*
 		| &{ !ext(EXT_COMPATIBILITY) } Glossary
 		| Note
 		| LinkReference
+		| Abbreviation
 		| HorizontalRule
 		| &{ ext(EXT_HEADINGSECTION) } HeadingSection
 		| Heading
@@ -136,6 +137,7 @@ HeadingSectionBlock = BlankLine* !Heading
 		| &{ !ext(EXT_COMPATIBILITY) } Glossary
 		| Note
 		| LinkReference
+		| Abbreviation
 		| HorizontalRule
 		| OrderedList
 		| BulletList
@@ -211,7 +213,7 @@ Spnl =          Sp (Newline Sp)?
 Spacechar =		' ' | '\t'
 Nonspacechar =  !Spacechar !Newline .
 NormalChar =	!( SpecialChar | Spacechar | Newline ) .
-SpecialChar =   '*' | '_' | '`' | '&' | '[' | ']' | '(' | ')' | '<' | '!' | '#' | '\\' | '\'' | '"' | ExtendedSpecialChar
+SpecialChar =   '*' | '_' | '`' | '&' | '[' | ']' | '(' | ')' | '<' | '!' | '#' | '\\' | '\'' | '"' | '?' | ',' | ';' | '/' | '.' | ExtendedSpecialChar
 ExtendedSpecialChar = &{ ext(EXT_SMART) } ('.' | '-' | '\'' | '"')
 		| &{ ext(EXT_NOTES) } ( '^' )
 		| &{ ext(EXT_CRITIC) } ( '{' )
@@ -608,6 +610,15 @@ RefTitleParens = Spnl '(' < ( !(')' Sp Newline | Newline |
 QuotedValue = '"' < (!'"' .)* > '"'
 
 UnQuotedValue = < (AlphanumericAscii | '.')+ >
+
+
+Abbreviation = '*' l:Label Sp ':' Sp RawLine
+	{
+		$$ = str(yytext);
+		$$->key = ABBREVIATION;
+
+		$$->children = l;
+	}
 
 ImageBlock = Image Sp Newline BlankLine+
 	{ if ($$->key == IMAGE) $$->key = IMAGEBLOCK; }

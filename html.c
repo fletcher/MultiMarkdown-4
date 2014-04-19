@@ -68,8 +68,34 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 			print_html_node_tree(out,n->children,scratch);
 			break;
 		case STR:
+			/* fprintf(stderr, "str: '%s'\n", n->str); */
 			print_html_string(out,n->str, scratch);
 			break;
+		case ABBR:
+			if (strlen(n->children->str) == 0) {
+				g_string_append_printf(out, "<abbr>");
+			} else {
+				g_string_append_printf(out, "<abbr title=\"");
+				print_html_string(out, n->children->str, scratch);
+				g_string_append_printf(out, "\">");
+			}
+			print_html_string(out,n->str, scratch);
+			g_string_append_printf(out, "</abbr>");
+			break;
+		case ABBRSTART:
+			if (strlen(n->children->str) == 0) {
+				g_string_append_printf(out, "<abbr>");
+			} else {
+				g_string_append_printf(out, "<abbr title=\"");
+				print_html_string(out, n->children->str, scratch);
+				g_string_append_printf(out, "\">");
+			}
+			print_html_string(out,n->str, scratch);
+			break;
+		case ABBRSTOP:
+			print_html_string(out,n->str, scratch);
+			g_string_append_printf(out, "</abbr>");
+			break;		
 		case SPACE:
 			g_string_append_printf(out,"%s",n->str);
 			break;
@@ -808,6 +834,7 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 		case SUBSCRIPT:
 			g_string_append_printf(out, "<sub>%s</sub>",n->str);
 			break;
+		case ABBREVIATION:
 		case KEY_COUNTER:
 			break;
 		default:

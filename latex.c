@@ -96,6 +96,42 @@ void print_latex_node(GString *out, node *n, scratch_pad *scratch) {
 		case STR:
 			print_latex_string(out,n->str, scratch);
 			break;
+		case ABBREVIATION:
+			/* We combine the short and full names, since stripping non-ascii characters may result
+				in a conflict otherwise.  This at least makes it less likely. */
+			width = ascii_label_from_node(n->children);
+			temp = ascii_label_from_string(n->str);
+			g_string_append_printf(out, "\\newacro{%s%s}[",width,temp);
+			print_latex_node_tree(out, n->children, scratch);
+			g_string_append_printf(out, "]{");
+			trim_trailing_whitespace(n->str);
+			print_latex_string(out, n->str, scratch);
+			g_string_append_printf(out, "}\n");
+			free(temp);
+			free(width);
+			break;
+		case ABBRSTART:
+			/* Strip out nodes that are being replaced with the abbreviation */
+			temp_node = n->next;
+			while (temp_node->key != ABBRSTOP) {
+				n->next = temp_node->next;
+				temp_node->next = NULL;
+				free_node(temp_node);
+				temp_node = n->next;
+			}
+			n->next = temp_node->next;
+			temp_node->next = NULL;
+			free_node(temp_node);
+		case ABBR:
+			/* In either case, now we call on the abbreviation */
+			width = ascii_label_from_node(n->children->children);
+			temp = ascii_label_from_string(n->children->str);
+			g_string_append_printf(out, "\\ac{%s%s}", width, temp);
+			free(temp);
+			free(width);
+			break;
+		case ABBRSTOP:
+			break;		
 		case SPACE:
 			g_string_append_printf(out,"%s",n->str);
 			break;
@@ -170,6 +206,8 @@ void print_latex_node(GString *out, node *n, scratch_pad *scratch) {
 			if (!(scratch->extensions & EXT_SNIPPET) && (is_latex_complete_doc(n))) {
 				scratch->extensions = scratch->extensions | EXT_COMPLETE;
 			}
+			/* print acronym definitions */
+			print_latex_node_tree(out, scratch->abbreviations, scratch);
 			break;
 		case METAKEY:
 			/* reformat the key */

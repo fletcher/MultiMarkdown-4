@@ -36,12 +36,19 @@ char * export_node_tree(node *list, int format, unsigned long extensions) {
 #ifdef DEBUG_ON
 	fprintf(stderr, "extract_references\n");
 #endif
-	/* Parse for link, images, etc reference definitions */
+
 	if ((format != OPML_FORMAT) &&
 		(format != CRITIC_ACCEPT_FORMAT) &&
 		(format != CRITIC_REJECT_FORMAT) &&
-		(format != CRITIC_HTML_HIGHLIGHT_FORMAT))
+		(format != CRITIC_HTML_HIGHLIGHT_FORMAT)) {
+			/* Parse for link, images, etc reference definitions */
 			extract_references(list, scratch);
+
+			/* Find defined abbreviations */
+			extract_abbreviations(list, scratch);
+			/* Apply those abbreviations to source text */
+			find_abbreviations(list, scratch);
+		}
 	
 	/* Change our desired format based on metadata */
 	if (format == LATEX_FORMAT)
@@ -76,12 +83,21 @@ char * export_node_tree(node *list, int format, unsigned long extensions) {
 #endif
 			break;
 		case LATEX_FORMAT:
+			if (list->key != METADATA) {
+				print_latex_node_tree(out, scratch->abbreviations, scratch);
+			}
 			print_latex_node_tree(out, list, scratch);
 			break;
 		case MEMOIR_FORMAT:
+			if (list->key != METADATA) {
+				print_memoir_node_tree(out, scratch->abbreviations, scratch);
+			}
 			print_memoir_node_tree(out, list, scratch);
 			break;
 		case BEAMER_FORMAT:
+			if (list->key != METADATA) {
+				print_beamer_node_tree(out, scratch->abbreviations, scratch);
+			}
 			print_beamer_node_tree(out, list, scratch);
 			break;
 		case LYX_FORMAT:
@@ -193,6 +209,105 @@ void extract_references(node *list, scratch_pad *scratch) {
 		list = list->next;
 	}
 }
+
+/* extract_abbreviations -- traverse node tree and find abbreviation definitions */
+void extract_abbreviations(node *list, scratch_pad *scratch) {
+	node *temp;
+
+	while (list != NULL) {
+		switch (list->key) {
+			case ABBREVIATION:
+				temp = copy_node(list);
+				list->key = KEY_COUNTER;	/* Mark this as dead; we will use it elsewhere */
+				trim_trailing_whitespace(temp->str);
+				scratch->abbreviations = cons(temp, scratch->abbreviations);
+				break;
+			case HEADINGSECTION:
+			case RAW:
+			case LIST:
+				extract_abbreviations(list->children, scratch);
+				break;
+			default:
+				/* Try to boost performance by skipping dead ends */
+				break;
+		}
+		list = list->next;
+	}
+}
+
+
+/* find_abbreviations -- use abbreviations to look for matching strings */
+void find_abbreviations(node *list, scratch_pad *scratch) {
+	node *abbr = scratch->abbreviations;
+	node *temp, *target, *end;
+	bool ismatch;
+
+	// Don't look if we didn't define any abbreviations */
+	if (abbr->key == KEY_COUNTER)
+		return;
+	
+	while (list != NULL) {
+		switch (list->key) {
+			case STR:
+				/* Look for matching abbrevation */
+				/*fprintf(stderr, "Check '%s' for matching abbr\n", list->str); */
+				abbr = scratch->abbreviations;
+				while (abbr != NULL) {
+					if (abbr->key != KEY_COUNTER) {
+						ismatch = true;
+						temp = abbr->children->children;
+						target = list;
+
+						while((ismatch) && (temp != NULL) && (target != NULL)) {
+							switch (temp->key) {
+								case STR:
+									if (strcmp(temp->str, target->str) != 0) {
+										ismatch = false;
+									}
+								case SPACE:
+								case KEY_COUNTER:
+									break;
+								default:
+									if (temp->key != target->key)
+										ismatch = false;
+									break;
+							}
+							temp = temp->next;
+							end = target;
+							target = target->next;
+						}
+						if ((ismatch) && (temp == NULL)) {
+							temp = copy_node(abbr);
+							temp->next = NULL;
+							list->children = temp;
+							if (list != end) {
+								list->key = ABBRSTART;
+								end->key = ABBRSTOP;
+							} else {
+								list->key = ABBR;
+							}
+						}
+					}
+					abbr = abbr->next;
+				}
+				break;
+			case LIST:
+			case HEADINGSECTION:
+			case PARA:
+			case LINK:
+			case LINKREFERENCE:
+			case NOTEREFERENCE:
+				/* Check children of these elements */
+				find_abbreviations(list->children, scratch);
+				break;
+			default:
+				/* Everything else we skip */
+				break;
+		}
+		list = list->next;
+	}
+}
+
 
 /* extract_link_data -- given a label, parse the link data and return */
 link_data * extract_link_data(char *label, scratch_pad *scratch) {
