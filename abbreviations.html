@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<meta name="latexinput" content="mmd-article-header"/>
+	<title>Abbreviations</title>
+	<meta name="author" content="Fletcher T. Penney"/>
+	<meta name="version" content="4.5.3"/>
+	<meta name="revised" content="2014-04-19"/>
+	<link type="text/css" rel="stylesheet" href="http://fletcher.github.io/MultiMarkdown-4/css/document.css"/>
+<script type="text/javascript"
+src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+	<meta name="latexmode" content="memoir"/>
+	<meta name="latexinput" content="mmd-article-begin-doc"/>
+	<meta name="latexfooter" content="mmd-memoir-footer"/>
+</head>
+<body>
+
+<h2 id="abbreviations">Abbreviations</h2>
+
+<p>MultiMarkdown includes support for abbreviations, as implemented in Michel Fortin&#8217;s <a href="http://michelf.ca/projects/php-markdown/extra/">PHP Markdown Extra</a>. Basically, you define an abbreviation using the following syntax:</p>
+
+<pre><code>*[HTML]: HyperText Markup Language
+*[W3C]:  World Wide Web Consortium
+</code></pre>
+
+<p>Then, wherever you use the words <code>HTML</code> or <code>W3C</code> in your document, the <code>abbr</code> markup will be added:</p>
+
+<pre><code>The HTML specification
+is maintained by the W3C.
+</code></pre>
+
+<p>becomes:</p>
+
+<pre><code>The &lt;abbr title=&quot;Hyper Text Markup Language&quot;&gt;HTML&lt;/abbr&gt; specification
+is maintained by the &lt;abbr title=&quot;World Wide Web Consortium&quot;&gt;W3C&lt;/abbr&gt;.
+</code></pre>
+
+<p>Here&#8217;s an example using <abbr title="HyperText Markup Language">HTML</abbr> and <abbr title="World Wide Web Consortium">W3C</abbr>. The exact behavior will depend on which format you are viewing this document in. Especially if we use <abbr title="HyperText Markup Language">HTML</abbr> and <abbr title="World Wide Web Consortium">W3C</abbr> again. (Remember that <abbr title="HyperText Markup Language">HTML</abbr> has probably already been used if you&#8217;re viewing a longer version of this document.)</p>
+
+<p>As in PHP Markdown Extra, abbreviations are case-sensitive and will work on multiple word abbreviations. In this case, MultiMarkdown is tolerant of different variations of whitespace between words.</p>
+
+<pre><code>Operation Tigra Genesis is going well.
+
+*[Tigra Genesis]:
+</code></pre>
+
+<p>An abbreviation with an empty definition results in an omitted <code>title</code> attribute.</p>
+
+<p>There are a few limitations:</p>
+
+<ul>
+<li>The full name of the abbreviation is plain text only &#8211; no MultiMarkdown markup will be processed.</li>
+<li>Abbreviations don&#8217;t do anything when exporting to ODF &#8211; there&#8217;s not an equivalent structure there &#8211; it would have to be hand coded. I may or may not get around to this, but pull requests welcome. ;)</li>
+<li>When exporting to LaTeX, the <code>acronym</code> package is used; this means that the first usage will result in <code>full text (short)</code>, and subsequent uses will result in <code>short</code>.</li>
+</ul>
+
+</body>
+</html>

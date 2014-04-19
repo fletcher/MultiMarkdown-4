@@ -9,7 +9,7 @@ Composer \\
 User's Guide"/>
 	<meta name="author" content="Fletcher T. Penney"/>
 	<meta name="version" content="4.5.3"/>
-	<meta name="revised" content="2014-04-18"/>
+	<meta name="revised" content="2014-04-19"/>
 	<meta name="keywords" content="MultiMarkdown, Markdown, LaTeX, PDF, RTF, LyX, HTML"/>
 	<link type="text/css" rel="stylesheet" href="http://fletcher.github.io/MultiMarkdown-4/css/document.css"/>
 <script type="text/javascript"
@@ -25,7 +25,7 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorM
 
 <blockquote>
 <p>Version 4.5.3<br/>
-Revised 2014-04-18</p>
+Revised 2014-04-19</p>
 </blockquote>
 
 <h2 id="introduction">Introduction</h2>
@@ -72,7 +72,7 @@ with documents, rather than just pieces of a web page.</p>
 
 <p>I wrote MultiMarkdown in order to leverage Markdown&#8217;s syntax, but to extend it
 to work with complete documents that could ultimately be converted from text
-into other formats, including complete HTML documents, LaTeX, PDF, ODF, or
+into other formats, including complete <abbr title="HyperText Markup Language">HTML</abbr> documents, LaTeX, PDF, ODF, or
 even (shudder) Microsoft Word documents.</p>
 
 <p>In addition to the ability to work with complete documents and conversion to
@@ -110,7 +110,7 @@ ensuring the proper spacing between paragraphs. And with a little forethought,
 a single plain text document can easily be converted into multiple output
 formats without having to rewrite the entire thing or format it by hand. Even
 better, you don&#8217;t have to write in &#8220;computer-ese&#8221; to create well formatted
-HTML or LaTeX commands. You just write, MultiMarkdown takes care of the rest.</p>
+<abbr title="HyperText Markup Language">HTML</abbr> or LaTeX commands. You just write, MultiMarkdown takes care of the rest.</p>
 
 <p>For example, instead of writing:</p>
 
@@ -166,7 +166,7 @@ The main MultiMarkdown page, for example, would be
 
 <h3 id="whatarethedifferentversionsofmultimarkdown">What Are the Different Versions of MultiMarkdown?</h3>
 
-<p>The first real version of MultiMarkdown was version 2. It was a modification of the original <code>Markdown.pl</code> script. It worked fine, but was slow when parsing longer documents. The plain text was converted to HTML, and then XSLT was used to convert the HTML to other formats (primarily LaTeX). Over time, maintaining the complicated nest of regular expressions became more difficult, and a better approach was needed.</p>
+<p>The first real version of MultiMarkdown was version 2. It was a modification of the original <code>Markdown.pl</code> script. It worked fine, but was slow when parsing longer documents. The plain text was converted to <abbr title="HyperText Markup Language">HTML</abbr>, and then XSLT was used to convert the <abbr title="HyperText Markup Language">HTML</abbr> to other formats (primarily LaTeX). Over time, maintaining the complicated nest of regular expressions became more difficult, and a better approach was needed.</p>
 
 <p>MultiMarkdown 3 (aka <code>peg-multimarkdown</code>) was built using John MacFarlane&#8217;s <a href="https://github.com/jgm/peg-markdown">peg-markdown</a> as a base. It was <em>much</em> faster than version 2, and the underlying PEG (parsing expression grammar) made things more reliable. There were still issues and limitations (some inherited from peg-markdown, but most were my errors), which lead to the development of version 4.</p>
 
@@ -190,9 +190,9 @@ The main MultiMarkdown page, for example, would be
 
 <p>A central tenet of MultiMarkdown is that the focus is on <em>content</em>, not <em>presentation</em>. I honestly couldn&#8217;t care whether you want to use Arial, Helvetica, or Comic Sans for your masterpiece. The presentation/styling/appearance is for you to decide. You pick the fonts. You pick the colors. What I care about with MultiMarkdown is that most (not necessarily all) of the <em>meaning</em> of the document is represented &#8212; this is a list, that is a table, this is a top-level heading, etc.</p>
 
-<p>A well written MultiMarkdown document will look reasonably good whether you output to HTML, LaTeX, OpenDocument, etc. It might not look perfect. A page might break at an inopportune place. The title page of a LaTeX document doesn&#8217;t have an exact analogy in HTML. HTML doesn&#8217;t handle page breaks well. </p>
+<p>A well written MultiMarkdown document will look reasonably good whether you output to <abbr title="HyperText Markup Language">HTML</abbr>, LaTeX, OpenDocument, etc. It might not look perfect. A page might break at an inopportune place. The title page of a LaTeX document doesn&#8217;t have an exact analogy in <abbr title="HyperText Markup Language">HTML</abbr>. <abbr title="HyperText Markup Language">HTML</abbr> doesn&#8217;t handle page breaks well. </p>
 
-<p>If you&#8217;re writing your thesis, publishing a book, or submitting a document to the board of directors &#8212; by all means write in MultiMarkdown. Focus on the content and overall structure. And when you&#8217;re ready, convert to your desired output format. Proofread. And when you&#8217;re sure that you like what you&#8217;ve got, <em>then</em> focus on the aesthetics. Insert a page break. Tweak fonts. Go wild. But do it in a tool appropriate for the format you&#8217;re using. This might be a good programmer&#8217;s text editor for HTML and CSS. It might be <a href="http://www.lyx.org/">LyX</a>. It might be <a href="http://www.libreoffice.org/">LibreOffice</a>.</p>
+<p>If you&#8217;re writing your thesis, publishing a book, or submitting a document to the board of directors &#8212; by all means write in MultiMarkdown. Focus on the content and overall structure. And when you&#8217;re ready, convert to your desired output format. Proofread. And when you&#8217;re sure that you like what you&#8217;ve got, <em>then</em> focus on the aesthetics. Insert a page break. Tweak fonts. Go wild. But do it in a tool appropriate for the format you&#8217;re using. This might be a good programmer&#8217;s text editor for <abbr title="HyperText Markup Language">HTML</abbr> and CSS. It might be <a href="http://www.lyx.org/">LyX</a>. It might be <a href="http://www.libreoffice.org/">LibreOffice</a>.</p>
 
 <h3 id="featurerequests">Feature Requests</h3>
 
@@ -313,7 +313,7 @@ installed, check out Troubleshooting.</p>
 <pre><code>multimarkdown file.txt
 </code></pre>
 
-<p>will convert the plain text file <code>file.txt</code> into HTML output. To save the
+<p>will convert the plain text file <code>file.txt</code> into <abbr title="HyperText Markup Language">HTML</abbr> output. To save the
 results to a file:</p>
 
 <pre><code>multimarkdown file.txt &gt; file.html
@@ -364,7 +364,7 @@ mmd2opml file.txt
 mmd2odf file.txt
 </code></pre>
 
-<p>These scripts run MultiMarkdown in batch mode to generate HTML, LaTeX, OPML,
+<p>These scripts run MultiMarkdown in batch mode to generate <abbr title="HyperText Markup Language">HTML</abbr>, LaTeX, OPML,
 or ODF files respectively. These scripts are included with the Mac or Windows
 installers, and are available for *nix in the <code>scripts</code> directory in the
 source project. They are intended to be used as shortcuts for the most common
@@ -405,13 +405,13 @@ convenience scripts to choose the correct output format as well.</p>
 
 <p>Automatically redirects the output to a file with the same base name as the
 input file, but with the appropriate extension based on the output type. For
-example, <code>multimarkdown -b file.txt</code> would output the HTML to <code>file.html</code>, and
+example, <code>multimarkdown -b file.txt</code> would output the <abbr title="HyperText Markup Language">HTML</abbr> to <code>file.html</code>, and
 <code>multimarkdown -b -t latex file.txt</code> would output to <code>file.tex</code>.</p>
 
 <pre><code>multimarkdown -c, multimarkdown --compatibility
 </code></pre>
 
-<p>Compatibility mode causes MultiMarkdown to output HTML that is compatible
+<p>Compatibility mode causes MultiMarkdown to output <abbr title="HyperText Markup Language">HTML</abbr> that is compatible
 with that output from the original Markdown. This allows it to pass the
 original Markdown test suite. Syntax features that don&#8217;t exist in regular
 Markdown will still be output using the regular MultiMarkdown output
@@ -430,7 +430,7 @@ formatting.</p>
 <pre><code>multimarkdown --process-html
 </code></pre>
 
-<p>This option tells MultiMarkdown to process the text included within HTML tags
+<p>This option tells MultiMarkdown to process the text included within <abbr title="HyperText Markup Language">HTML</abbr> tags
 in the source document.</p>
 
 <pre><code>multimarkdown -m, multimarkdown --metadata-keys
@@ -448,7 +448,7 @@ and could be used in other circumstances as well.</p>
 <pre><code>multimarkdown --random
 </code></pre>
 
-<p>Tell MultiMarkdown to use random identifier numbers for footnotes. Useful when you might combine multiple HTML documents together, e.g. in a weblog.</p>
+<p>Tell MultiMarkdown to use random identifier numbers for footnotes. Useful when you might combine multiple <abbr title="HyperText Markup Language">HTML</abbr> documents together, e.g. in a weblog.</p>
 
 <pre><code>multimarkdown --accept
 multimarkdown --reject
@@ -472,13 +472,13 @@ multimarkdown --nonotes
 multimarkdown --nolabels
 </code></pre>
 
-<p>Tell MultiMarkdown whether to add id attributes to headers in HTML (enabled by default).</p>
+<p>Tell MultiMarkdown whether to add id attributes to headers in <abbr title="HyperText Markup Language">HTML</abbr> (enabled by default).</p>
 
 <pre><code>multimarkdown --mask
 multimarkdown --nomask
 </code></pre>
 
-<p>Tell MultiMarkdown whether to mask email addresses when creating HTML (enabled by default).</p>
+<p>Tell MultiMarkdown whether to mask email addresses when creating <abbr title="HyperText Markup Language">HTML</abbr> (enabled by default).</p>
 
 <pre><code>multimarkdown --notes
 </code></pre>
@@ -491,7 +491,7 @@ the ones listed above are the primary options.</p>
 
 <h4 id="advancedmode">Advanced Mode</h4>
 
-<p>MultiMarkdown version 2.0 had to first convert the source file to HTML, and
+<p>MultiMarkdown version 2.0 had to first convert the source file to <abbr title="HyperText Markup Language">HTML</abbr>, and
 then applied XSLT files to convert to the final LaTeX format. Since
 MultiMarkdown 3.0 can create LaTeX directly, this approach is no longer
 necessary.</p>
@@ -544,7 +544,7 @@ faster, and easier, and the results can still be customized quite a bit.</p>
 as needed.</p>
 
 <p>If you have XSLT files that you used in MultiMarkdown 2.0, you will likely
-need to modify them to recognize the HTML output generated by MultiMarkdown
+need to modify them to recognize the <abbr title="HyperText Markup Language">HTML</abbr> output generated by MultiMarkdown
 3.0. You can use the default XSLT files as a guide to what is different.</p>
 
 <h3 id="macosxapplications">Mac OS X Applications</h3>
@@ -586,7 +586,7 @@ the command line in the <code>multimarkdown</code> source directory.</p>
 <p>Starting in Mac OS 10.5, the Finder has the ability to show a &#8220;Quick Look&#8221;
 preview of the contents of a file. I have a Quick Look generator that allows
 the Finder to preview the contents of a MultiMarkdown text file (or OPML file)
-as an HTML preview.</p>
+as an <abbr title="HyperText Markup Language">HTML</abbr> preview.</p>
 
 <p>I recommend using the latest (closed-source) version available for <a href="http://multimarkdown.com/download/">download</a>. It contains advanced features that are not available in the open source version.</p>
 
@@ -613,7 +613,7 @@ need. It doesn&#8217;t handle all circumstances, and sometimes you will need to 
 code your LaTeX yourself.</p>
 
 <p>In those cases you have a few options. MultiMarkdown will pass text included
-in HTML comments along to the LaTeX as raw output. For example:</p>
+in <abbr title="HyperText Markup Language">HTML</abbr> comments along to the LaTeX as raw output. For example:</p>
 
 <pre><code>&lt;!--  This is raw \LaTeX \[ {e}^{i\pi }+1=0 \] --&gt;
 </code></pre>
@@ -726,7 +726,7 @@ Package&#8230;&#8221; button to import the downloaded <code>.jar</code> file.</p
 
 <p>It is possible to use an XSLT file to customize the OpenDocument output from
 MultiMarkdown. I suppose you could also write an XSLT to convert OpenDocument
-into LaTeX, similar to the default ones that convert HTML into LaTeX.</p>
+into LaTeX, similar to the default ones that convert <abbr title="HyperText Markup Language">HTML</abbr> into LaTeX.</p>
 
 <p>You can also create an XSLT that converts the OpenDocument output and modifies
 it to incorporate necessary customizations. While a little tricky to learn,
@@ -826,7 +826,7 @@ website, the name of an employer, academic affiliation, etc.</p>
 # Introduction #
 </code></pre>
 
-<p>Normally, the Introduction would be output as <code>&lt;h1&gt;</code> in HTML, or <code>\part{}</code> in
+<p>Normally, the Introduction would be output as <code>&lt;h1&gt;</code> in <abbr title="HyperText Markup Language">HTML</abbr>, or <code>\part{}</code> in
 LaTeX. If you&#8217;re writing a shorter document, you may wish for the largest
 division in the document to be <code>&lt;h2&gt;</code> or <code>\chapter{}</code>. The <code>Base Header Level</code>
 metadata tells MultiMarkdown to change the largest division level to the
@@ -863,7 +863,7 @@ information. Do not include the trailing &#8216;.bib&#8217;.</p>
 <h4 id="css">CSS</h4>
 
 <p>This metadata specifies a URL to be used as a CSS file for the produced
-document. Obviously, this is only useful when outputting to HTML.</p>
+document. Obviously, this is only useful when outputting to <abbr title="HyperText Markup Language">HTML</abbr>.</p>
 
 <h4 id="date">Date</h4>
 
@@ -871,7 +871,7 @@ document. Obviously, this is only useful when outputting to HTML.</p>
 
 <h4 id="htmlheader">HTML Header</h4>
 
-<p>You can include raw HTML information to be included in the header.
+<p>You can include raw <abbr title="HyperText Markup Language">HTML</abbr> information to be included in the header.
 MultiMarkdown doesn&#8217;t perform any validation on this data &#8212; it just copies
 it as is.</p>
 
@@ -896,7 +896,7 @@ installation (not provided by me):</p>
 <li>swedish (<code>sv</code>)</li>
 </ul>
 
-<p>The default is <code>english</code> if not specified. This affects HTML output. To
+<p>The default is <code>english</code> if not specified. This affects <abbr title="HyperText Markup Language">HTML</abbr> output. To
 change the language of a document in LaTeX is up to the individual.</p>
 
 <p><code>Quotes Language</code> does not trigger a complete document.</p>
@@ -1089,7 +1089,7 @@ is different than the following image:
 ![Alt text](/path/to/img.jpg)
 </code></pre>
 
-<p>The resulting HTML is:</p>
+<p>The resulting <abbr title="HyperText Markup Language">HTML</abbr> is:</p>
 
 <pre><code>&lt;p&gt;This image (&lt;img src=&quot;/path/to/img.jpg&quot; alt=&quot;Alt text&quot; /&gt;)
 is different than the following image:&lt;/p&gt;
@@ -1100,7 +1100,7 @@ is different than the following image:&lt;/p&gt;
 &lt;/figure&gt;
 </code></pre>
 
-<p>The first one would be an inline image. The second one (in HTML) would be wrapped in an HTML <code>figure</code> element. In this case, the <code>alt</code> text is also used as a figure caption, and can contain MultiMarkdown syntax (e.g. bold, emph, etc.). The alt text is not specifically designed to limit which MultiMarkdown is supported, but there will be limits and block level elements aren&#8217;t supported.</p>
+<p>The first one would be an inline image. The second one (in <abbr title="HyperText Markup Language">HTML</abbr>) would be wrapped in an <abbr title="HyperText Markup Language">HTML</abbr> <code>figure</code> element. In this case, the <code>alt</code> text is also used as a figure caption, and can contain MultiMarkdown syntax (e.g. bold, emph, etc.). The alt text is not specifically designed to limit which MultiMarkdown is supported, but there will be limits and block level elements aren&#8217;t supported.</p>
 
 <h3 id="tables">Tables</h3>
 
@@ -1263,7 +1263,7 @@ used in the bibliography.
 [#Doe:2006]: John Doe. *Some Big Fancy Book*.  Vanity Press, 2006.
 </code></pre>
 
-<p>In HTML output, citations are indistinguishable from footnotes.</p>
+<p>In <abbr title="HyperText Markup Language">HTML</abbr> output, citations are indistinguishable from footnotes.</p>
 
 <p>You are not required to use a locator (e.g. p. 23), and there are
 no special rules on what can be used as a locator if you choose
@@ -1377,7 +1377,46 @@ prefer the <code>&lt;p&gt;</code> tags in place. Let me know if this is a proble
 
 <p>See the <a href="http://www.michelf.com/projects/php-markdown/extra/">PHP Markdown Extra</a> page for more information.</p>
 
-<h2 id="fencedcodeblocks">Fenced Code Blocks</h2>
+<h3 id="abbreviations">Abbreviations</h3>
+
+<p>MultiMarkdown includes support for abbreviations, as implemented in Michel Fortin&#8217;s <a href="http://michelf.ca/projects/php-markdown/extra/">PHP Markdown Extra</a>. Basically, you define an abbreviation using the following syntax:</p>
+
+<pre><code>*[HTML]: HyperText Markup Language
+*[W3C]:  World Wide Web Consortium
+</code></pre>
+
+<p>Then, wherever you use the words <code>HTML</code> or <code>W3C</code> in your document, the <code>abbr</code> markup will be added:</p>
+
+<pre><code>The HTML specification
+is maintained by the W3C.
+</code></pre>
+
+<p>becomes:</p>
+
+<pre><code>The &lt;abbr title=&quot;Hyper Text Markup Language&quot;&gt;HTML&lt;/abbr&gt; specification
+is maintained by the &lt;abbr title=&quot;World Wide Web Consortium&quot;&gt;W3C&lt;/abbr&gt;.
+</code></pre>
+
+<p>Here&#8217;s an example using <abbr title="HyperText Markup Language">HTML</abbr> and <abbr title="World Wide Web Consortium">W3C</abbr>. The exact behavior will depend on which format you are viewing this document in. Especially if we use <abbr title="HyperText Markup Language">HTML</abbr> and <abbr title="World Wide Web Consortium">W3C</abbr> again.</p>
+
+<p>As in PHP Markdown Extra, abbreviations are case-sensitive and will work on multiple word abbreviations. In this case, MultiMarkdown is tolerant of different variations of whitespace between words.</p>
+
+<pre><code>Operation Tigra Genesis is going well.
+
+*[Tigra Genesis]:
+</code></pre>
+
+<p>An abbreviation with an empty definition results in an omitted <code>title</code> attribute.</p>
+
+<p>There are a few limitations:</p>
+
+<ul>
+<li>The full name of the abbreviation is plain text only &#8211; no MultiMarkdown markup will be processed.</li>
+<li>Abbreviations don&#8217;t do anything when exporting to ODF &#8211; there&#8217;s not an equivalent structure there &#8211; it would have to be hand coded. I may or may not get around to this, but pull requests welcome. ;)</li>
+<li><p>When exporting to LaTeX, the <code>acronym</code> package is used; this means that the first usage will result in <code>full text (short)</code>, and subsequent uses will result in <code>short</code>.</p>
+
+<h2 id="fencedcodeblocks">Fenced Code Blocks</h2></li>
+</ul>
 
 <p>In addition to the regular indented code block that Markdown uses, you can use &#8220;fenced&#8221; code blocks in MultiMarkdown. These code blocks do not have to be indented, and can also be configured to be compatible with a third party syntax highlighter. These code blocks should begin with 3 to 5 backticks, an optional language specifier (if using a syntax highlighter), and should end with the same number of backticks you started with:</p>
 
@@ -1557,7 +1596,7 @@ makeindex -s `kpsewhich basic.gst` -o &quot;${basefile}.gls&quot; &quot;${basefi
 
 <p>The CriticMarkup syntax is fairly straightforward. The key thing to remember is that CriticMarkup is processed <em>before</em> any other MultiMarkdown is handled. It&#8217;s almost like a separate layer on top of the MultiMarkdown syntax.</p>
 
-<p>When editing in MultiMarkdown Composer, you can have CriticMarkup syntax flagged in the both the editor pane and the preview window. This will allow you to see changes in the HTML preview.</p>
+<p>When editing in MultiMarkdown Composer, you can have CriticMarkup syntax flagged in the both the editor pane and the preview window. This will allow you to see changes in the <abbr title="HyperText Markup Language">HTML</abbr> preview.</p>
 
 <p>When using CriticMarkup with MultiMarkdown itself, you have four choices:</p>
 
@@ -1606,9 +1645,9 @@ makeindex -s `kpsewhich basic.gst` -o &quot;${basefile}.gls&quot; &quot;${basefi
 
 <p>I believe that #1 is a really great idea, and well implemented. #2 is not so well implemented, largely due to the &#8220;orthogonal&#8221; nature of CriticMarkup and the underlying Markdown syntax.</p>
 
-<p>CM is designed as a separate layer on top of Markdown/MultiMarkdown. This means that a Markdown span could, for example, start in the middle of a CriticMarkup structure, but end outside of it. This means that an algorithm to properly convert a CM/Markdown document to HTML would be quite complex, with a huge number of edge cases to consider. I&#8217;ve tried a few (fairly creative, in my opinion) approaches, but they didn&#8217;t work. Perhaps someone else will come up with a better solution, or will be so interested that they put the work in to create the complex algorithm. I have no current plans to do so.</p>
+<p>CM is designed as a separate layer on top of Markdown/MultiMarkdown. This means that a Markdown span could, for example, start in the middle of a CriticMarkup structure, but end outside of it. This means that an algorithm to properly convert a CM/Markdown document to <abbr title="HyperText Markup Language">HTML</abbr> would be quite complex, with a huge number of edge cases to consider. I&#8217;ve tried a few (fairly creative, in my opinion) approaches, but they didn&#8217;t work. Perhaps someone else will come up with a better solution, or will be so interested that they put the work in to create the complex algorithm. I have no current plans to do so.</p>
 
-<p>Additionally, there is a philosophical distinction between documenting editing notes, and using those notes to produce a &#8220;finished&#8221; document (e.g. HTML or PDF) that keeps those editing notes intact (e.g. strikethroughs, highlighting, etc.) I believe that CM is incredibly useful for the editing process, but am less convinced for the output process (I know many others disagree with me, and that&#8217;s ok. And to be clear, I think that what Gabe and Erik have done with CriticMarkup is fantastic!)</p>
+<p>Additionally, there is a philosophical distinction between documenting editing notes, and using those notes to produce a &#8220;finished&#8221; document (e.g. <abbr title="HyperText Markup Language">HTML</abbr> or PDF) that keeps those editing notes intact (e.g. strikethroughs, highlighting, etc.) I believe that CM is incredibly useful for the editing process, but am less convinced for the output process (I know many others disagree with me, and that&#8217;s ok. And to be clear, I think that what Gabe and Erik have done with CriticMarkup is fantastic!)</p>
 
 <p>There are other CriticMarkup tools besides MultiMarkdown and <a href="http://multimarkdown.com/">MultiMarkdown Composer</a>, and you are more than welcome to use them.</p>
 
@@ -1622,12 +1661,12 @@ makeindex -s `kpsewhich basic.gst` -o &quot;${basefile}.gls&quot; &quot;${basefi
 
 <h3 id="rawhtml">Raw HTML</h3>
 
-<p>You can include raw (X)HTML within your document. Exactly what happens with
+<p>You can include raw (X)<abbr title="HyperText Markup Language">HTML</abbr> within your document. Exactly what happens with
 these portions depends on the output format. You can also use the <code>markdown</code>
 attribute to indicate that MultiMarkdown processing should be applied within
-the block level HTML tag. This is in addition to the <code>--process-html</code> command
+the block level <abbr title="HyperText Markup Language">HTML</abbr> tag. This is in addition to the <code>--process-html</code> command
 line option that causes MultiMarkdown processing to occur within <em>all</em> block
-level HTML tags.</p>
+level <abbr title="HyperText Markup Language">HTML</abbr> tags.</p>
 
 <p>For example:</p>
 
@@ -1651,7 +1690,7 @@ level HTML tags.</p>
 </code></pre>
 
 <p>However, the results may be different than anticipated when outputting to
-LaTeX or other formats. Normally, block level HTML will be ignored when
+LaTeX or other formats. Normally, block level <abbr title="HyperText Markup Language">HTML</abbr> will be ignored when
 outputting to LaTeX or ODF. The example above would produce the following,
 leaving out the first <code>&lt;div&gt;</code> entirely:</p>
 
@@ -1670,7 +1709,7 @@ into a single paragraph.</p>
 
 <h3 id="rawlatexopendocumentetc.">Raw LaTeX/OpenDocument/etc.</h3>
 
-<p>You can use HTML comments to include additional text that will be included in the exported file without being changed. This can be used for any export format, which means that each document can only be configured for one export format at a time. In other words, it is highly unlikely that valid raw LaTeX will also be valid OpenDocument source code.</p>
+<p>You can use <abbr title="HyperText Markup Language">HTML</abbr> comments to include additional text that will be included in the exported file without being changed. This can be used for any export format, which means that each document can only be configured for one export format at a time. In other words, it is highly unlikely that valid raw LaTeX will also be valid OpenDocument source code.</p>
 
 <pre><code>This will be processed by *MultiMarkdown*.
 &lt;!-- This will not be processed by *MultiMarkdown --&gt;
@@ -1748,7 +1787,7 @@ This is a new line.
 harder to get a scaled image without knowing the exact aspect ratio of the
 image.</p>
 
-<p>For example, in LaTeX or HTML, one can specify that image should be scaled to
+<p>For example, in LaTeX or <abbr title="HyperText Markup Language">HTML</abbr>, one can specify that image should be scaled to
 50% of the width, and have it automatically calculate the proper height. This
 does not work in ODF, at least not that I can find.</p>
 

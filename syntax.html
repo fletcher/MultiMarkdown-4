@@ -6,7 +6,7 @@
 	<title>Syntax</title>
 	<meta name="author" content="Fletcher T. Penney"/>
 	<meta name="version" content="4.5.3"/>
-	<meta name="revised" content="2014-04-18"/>
+	<meta name="revised" content="2014-04-19"/>
 	<link type="text/css" rel="stylesheet" href="http://fletcher.github.io/MultiMarkdown-4/css/document.css"/>
 <script type="text/javascript"
 src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
@@ -97,7 +97,7 @@ website, the name of an employer, academic affiliation, etc.</p>
 # Introduction #
 </code></pre>
 
-<p>Normally, the Introduction would be output as <code>&lt;h1&gt;</code> in HTML, or <code>\part{}</code> in
+<p>Normally, the Introduction would be output as <code>&lt;h1&gt;</code> in <abbr title="HyperText Markup Language">HTML</abbr>, or <code>\part{}</code> in
 LaTeX. If you&#8217;re writing a shorter document, you may wish for the largest
 division in the document to be <code>&lt;h2&gt;</code> or <code>\chapter{}</code>. The <code>Base Header Level</code>
 metadata tells MultiMarkdown to change the largest division level to the
@@ -134,7 +134,7 @@ information. Do not include the trailing &#8216;.bib&#8217;.</p>
 <h3 id="css">CSS</h3>
 
 <p>This metadata specifies a URL to be used as a CSS file for the produced
-document. Obviously, this is only useful when outputting to HTML.</p>
+document. Obviously, this is only useful when outputting to <abbr title="HyperText Markup Language">HTML</abbr>.</p>
 
 <h3 id="date">Date</h3>
 
@@ -142,7 +142,7 @@ document. Obviously, this is only useful when outputting to HTML.</p>
 
 <h3 id="htmlheader">HTML Header</h3>
 
-<p>You can include raw HTML information to be included in the header.
+<p>You can include raw <abbr title="HyperText Markup Language">HTML</abbr> information to be included in the header.
 MultiMarkdown doesn&#8217;t perform any validation on this data &#8212; it just copies
 it as is.</p>
 
@@ -167,7 +167,7 @@ installation (not provided by me):</p>
 <li>swedish (<code>sv</code>)</li>
 </ul>
 
-<p>The default is <code>english</code> if not specified. This affects HTML output. To
+<p>The default is <code>english</code> if not specified. This affects <abbr title="HyperText Markup Language">HTML</abbr> output. To
 change the language of a document in LaTeX is up to the individual.</p>
 
 <p><code>Quotes Language</code> does not trigger a complete document.</p>
@@ -360,7 +360,7 @@ is different than the following image:
 ![Alt text](/path/to/img.jpg)
 </code></pre>
 
-<p>The resulting HTML is:</p>
+<p>The resulting <abbr title="HyperText Markup Language">HTML</abbr> is:</p>
 
 <pre><code>&lt;p&gt;This image (&lt;img src=&quot;/path/to/img.jpg&quot; alt=&quot;Alt text&quot; /&gt;)
 is different than the following image:&lt;/p&gt;
@@ -371,7 +371,7 @@ is different than the following image:&lt;/p&gt;
 &lt;/figure&gt;
 </code></pre>
 
-<p>The first one would be an inline image. The second one (in HTML) would be wrapped in an HTML <code>figure</code> element. In this case, the <code>alt</code> text is also used as a figure caption, and can contain MultiMarkdown syntax (e.g. bold, emph, etc.). The alt text is not specifically designed to limit which MultiMarkdown is supported, but there will be limits and block level elements aren&#8217;t supported.</p>
+<p>The first one would be an inline image. The second one (in <abbr title="HyperText Markup Language">HTML</abbr>) would be wrapped in an <abbr title="HyperText Markup Language">HTML</abbr> <code>figure</code> element. In this case, the <code>alt</code> text is also used as a figure caption, and can contain MultiMarkdown syntax (e.g. bold, emph, etc.). The alt text is not specifically designed to limit which MultiMarkdown is supported, but there will be limits and block level elements aren&#8217;t supported.</p>
 
 <h2 id="tables">Tables</h2>
 
@@ -534,7 +534,7 @@ used in the bibliography.
 [#Doe:2006]: John Doe. *Some Big Fancy Book*.  Vanity Press, 2006.
 </code></pre>
 
-<p>In HTML output, citations are indistinguishable from footnotes.</p>
+<p>In <abbr title="HyperText Markup Language">HTML</abbr> output, citations are indistinguishable from footnotes.</p>
 
 <p>You are not required to use a locator (e.g. p. 23), and there are
 no special rules on what can be used as a locator if you choose
@@ -648,7 +648,46 @@ prefer the <code>&lt;p&gt;</code> tags in place. Let me know if this is a proble
 
 <p>See the <a href="http://www.michelf.com/projects/php-markdown/extra/">PHP Markdown Extra</a> page for more information.</p>
 
-<h1 id="fencedcodeblocks">Fenced Code Blocks</h1>
+<h2 id="abbreviations">Abbreviations</h2>
+
+<p>MultiMarkdown includes support for abbreviations, as implemented in Michel Fortin&#8217;s <a href="http://michelf.ca/projects/php-markdown/extra/">PHP Markdown Extra</a>. Basically, you define an abbreviation using the following syntax:</p>
+
+<pre><code>*[HTML]: HyperText Markup Language
+*[W3C]:  World Wide Web Consortium
+</code></pre>
+
+<p>Then, wherever you use the words <code>HTML</code> or <code>W3C</code> in your document, the <code>abbr</code> markup will be added:</p>
+
+<pre><code>The HTML specification
+is maintained by the W3C.
+</code></pre>
+
+<p>becomes:</p>
+
+<pre><code>The &lt;abbr title=&quot;Hyper Text Markup Language&quot;&gt;HTML&lt;/abbr&gt; specification
+is maintained by the &lt;abbr title=&quot;World Wide Web Consortium&quot;&gt;W3C&lt;/abbr&gt;.
+</code></pre>
+
+<p>Here&#8217;s an example using <abbr title="HyperText Markup Language">HTML</abbr> and <abbr title="World Wide Web Consortium">W3C</abbr>. The exact behavior will depend on which format you are viewing this document in. Especially if we use <abbr title="HyperText Markup Language">HTML</abbr> and <abbr title="World Wide Web Consortium">W3C</abbr> again.</p>
+
+<p>As in PHP Markdown Extra, abbreviations are case-sensitive and will work on multiple word abbreviations. In this case, MultiMarkdown is tolerant of different variations of whitespace between words.</p>
+
+<pre><code>Operation Tigra Genesis is going well.
+
+*[Tigra Genesis]:
+</code></pre>
+
+<p>An abbreviation with an empty definition results in an omitted <code>title</code> attribute.</p>
+
+<p>There are a few limitations:</p>
+
+<ul>
+<li>The full name of the abbreviation is plain text only &#8211; no MultiMarkdown markup will be processed.</li>
+<li>Abbreviations don&#8217;t do anything when exporting to ODF &#8211; there&#8217;s not an equivalent structure there &#8211; it would have to be hand coded. I may or may not get around to this, but pull requests welcome. ;)</li>
+<li><p>When exporting to LaTeX, the <code>acronym</code> package is used; this means that the first usage will result in <code>full text (short)</code>, and subsequent uses will result in <code>short</code>.</p>
+
+<h1 id="fencedcodeblocks">Fenced Code Blocks</h1></li>
+</ul>
 
 <p>In addition to the regular indented code block that Markdown uses, you can use &#8220;fenced&#8221; code blocks in MultiMarkdown. These code blocks do not have to be indented, and can also be configured to be compatible with a third party syntax highlighter. These code blocks should begin with 3 to 5 backticks, an optional language specifier (if using a syntax highlighter), and should end with the same number of backticks you started with:</p>
 
@@ -828,7 +867,7 @@ makeindex -s `kpsewhich basic.gst` -o &quot;${basefile}.gls&quot; &quot;${basefi
 
 <p>The CriticMarkup syntax is fairly straightforward. The key thing to remember is that CriticMarkup is processed <em>before</em> any other MultiMarkdown is handled. It&#8217;s almost like a separate layer on top of the MultiMarkdown syntax.</p>
 
-<p>When editing in MultiMarkdown Composer, you can have CriticMarkup syntax flagged in the both the editor pane and the preview window. This will allow you to see changes in the HTML preview.</p>
+<p>When editing in MultiMarkdown Composer, you can have CriticMarkup syntax flagged in the both the editor pane and the preview window. This will allow you to see changes in the <abbr title="HyperText Markup Language">HTML</abbr> preview.</p>
 
 <p>When using CriticMarkup with MultiMarkdown itself, you have four choices:</p>
 
@@ -877,9 +916,9 @@ makeindex -s `kpsewhich basic.gst` -o &quot;${basefile}.gls&quot; &quot;${basefi
 
 <p>I believe that #1 is a really great idea, and well implemented. #2 is not so well implemented, largely due to the &#8220;orthogonal&#8221; nature of CriticMarkup and the underlying Markdown syntax.</p>
 
-<p>CM is designed as a separate layer on top of Markdown/MultiMarkdown. This means that a Markdown span could, for example, start in the middle of a CriticMarkup structure, but end outside of it. This means that an algorithm to properly convert a CM/Markdown document to HTML would be quite complex, with a huge number of edge cases to consider. I&#8217;ve tried a few (fairly creative, in my opinion) approaches, but they didn&#8217;t work. Perhaps someone else will come up with a better solution, or will be so interested that they put the work in to create the complex algorithm. I have no current plans to do so.</p>
+<p>CM is designed as a separate layer on top of Markdown/MultiMarkdown. This means that a Markdown span could, for example, start in the middle of a CriticMarkup structure, but end outside of it. This means that an algorithm to properly convert a CM/Markdown document to <abbr title="HyperText Markup Language">HTML</abbr> would be quite complex, with a huge number of edge cases to consider. I&#8217;ve tried a few (fairly creative, in my opinion) approaches, but they didn&#8217;t work. Perhaps someone else will come up with a better solution, or will be so interested that they put the work in to create the complex algorithm. I have no current plans to do so.</p>
 
-<p>Additionally, there is a philosophical distinction between documenting editing notes, and using those notes to produce a &#8220;finished&#8221; document (e.g. HTML or PDF) that keeps those editing notes intact (e.g. strikethroughs, highlighting, etc.) I believe that CM is incredibly useful for the editing process, but am less convinced for the output process (I know many others disagree with me, and that&#8217;s ok. And to be clear, I think that what Gabe and Erik have done with CriticMarkup is fantastic!)</p>
+<p>Additionally, there is a philosophical distinction between documenting editing notes, and using those notes to produce a &#8220;finished&#8221; document (e.g. <abbr title="HyperText Markup Language">HTML</abbr> or PDF) that keeps those editing notes intact (e.g. strikethroughs, highlighting, etc.) I believe that CM is incredibly useful for the editing process, but am less convinced for the output process (I know many others disagree with me, and that&#8217;s ok. And to be clear, I think that what Gabe and Erik have done with CriticMarkup is fantastic!)</p>
 
 <p>There are other CriticMarkup tools besides MultiMarkdown and <a href="http://multimarkdown.com/">MultiMarkdown Composer</a>, and you are more than welcome to use them.</p>
 
@@ -893,12 +932,12 @@ makeindex -s `kpsewhich basic.gst` -o &quot;${basefile}.gls&quot; &quot;${basefi
 
 <h2 id="rawhtml">Raw HTML</h2>
 
-<p>You can include raw (X)HTML within your document. Exactly what happens with
+<p>You can include raw (X)<abbr title="HyperText Markup Language">HTML</abbr> within your document. Exactly what happens with
 these portions depends on the output format. You can also use the <code>markdown</code>
 attribute to indicate that MultiMarkdown processing should be applied within
-the block level HTML tag. This is in addition to the <code>--process-html</code> command
+the block level <abbr title="HyperText Markup Language">HTML</abbr> tag. This is in addition to the <code>--process-html</code> command
 line option that causes MultiMarkdown processing to occur within <em>all</em> block
-level HTML tags.</p>
+level <abbr title="HyperText Markup Language">HTML</abbr> tags.</p>
 
 <p>For example:</p>
 
@@ -922,7 +961,7 @@ level HTML tags.</p>
 </code></pre>
 
 <p>However, the results may be different than anticipated when outputting to
-LaTeX or other formats. Normally, block level HTML will be ignored when
+LaTeX or other formats. Normally, block level <abbr title="HyperText Markup Language">HTML</abbr> will be ignored when
 outputting to LaTeX or ODF. The example above would produce the following,
 leaving out the first <code>&lt;div&gt;</code> entirely:</p>
 
@@ -941,7 +980,7 @@ into a single paragraph.</p>
 
 <h2 id="rawlatexopendocumentetc.">Raw LaTeX/OpenDocument/etc.</h2>
 
-<p>You can use HTML comments to include additional text that will be included in the exported file without being changed. This can be used for any export format, which means that each document can only be configured for one export format at a time. In other words, it is highly unlikely that valid raw LaTeX will also be valid OpenDocument source code.</p>
+<p>You can use <abbr title="HyperText Markup Language">HTML</abbr> comments to include additional text that will be included in the exported file without being changed. This can be used for any export format, which means that each document can only be configured for one export format at a time. In other words, it is highly unlikely that valid raw LaTeX will also be valid OpenDocument source code.</p>
 
 <pre><code>This will be processed by *MultiMarkdown*.
 &lt;!-- This will not be processed by *MultiMarkdown --&gt;

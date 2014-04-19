@@ -262,14 +262,14 @@ Composer \\
 User's Guide</meta:user-defined>
 <meta:user-defined meta:name="Author">Fletcher T. Penney</meta:user-defined>
 <meta:user-defined meta:name="Version">4.5.3</meta:user-defined>
-<meta:user-defined meta:name="Revised">2014-04-18</meta:user-defined>
+<meta:user-defined meta:name="Revised">2014-04-19</meta:user-defined>
 <meta:keyword>MultiMarkdown, Markdown, LaTeX, PDF, RTF, LyX, HTML</meta:keyword>
 </office:meta>
 <office:body>
 <office:text>
 <text:h text:outline-level="2"><text:bookmark text:name="title"/>MultiMarkdown Composer User's Guide<text:bookmark-end text:name="title"/></text:h>
 
-<text:p text:style-name="Quotations">Version 4.5.3<text:line-break/>Revised 2014-04-18</text:p>
+<text:p text:style-name="Quotations">Version 4.5.3<text:line-break/>Revised 2014-04-19</text:p>
 
 <text:h text:outline-level="2"><text:bookmark text:name="introduction"/>Introduction<text:bookmark-end text:name="introduction"/></text:h>
 
@@ -1615,7 +1615,43 @@ prefer the <text:span text:style-name="Source_20_Text">&lt;p&gt;</text:span> tag
 
 <text:p text:style-name="Standard">See the <text:a xlink:type="simple" xlink:href="http://www.michelf.com/projects/php-markdown/extra/">PHP Markdown Extra</text:a> page for more information.</text:p>
 
-<text:h text:outline-level="2"><text:bookmark text:name="fencedcodeblocks"/>Fenced Code Blocks<text:bookmark-end text:name="fencedcodeblocks"/></text:h>
+<text:h text:outline-level="3"><text:bookmark text:name="abbreviations"/>Abbreviations<text:bookmark-end text:name="abbreviations"/></text:h>
+
+<text:p text:style-name="Standard">MultiMarkdown includes support for abbreviations, as implemented in Michel Fortin&#8217;s <text:a xlink:type="simple" xlink:href="http://michelf.ca/projects/php-markdown/extra/">PHP Markdown Extra</text:a>. Basically, you define an abbreviation using the following syntax:</text:p>
+
+<text:p text:style-name="Preformatted Text">*[HTML]: HyperText Markup Language<text:line-break/>*[W3C]:  World Wide Web Consortium<text:line-break/></text:p>
+
+
+<text:p text:style-name="Standard">Then, wherever you use the words <text:span text:style-name="Source_20_Text">HTML</text:span> or <text:span text:style-name="Source_20_Text">W3C</text:span> in your document, the <text:span text:style-name="Source_20_Text">abbr</text:span> markup will be added:</text:p>
+
+<text:p text:style-name="Preformatted Text">The HTML specification<text:line-break/>is maintained by the W3C.<text:line-break/></text:p>
+
+
+<text:p text:style-name="Standard">becomes:</text:p>
+
+<text:p text:style-name="Preformatted Text">The &lt;abbr title=&quot;Hyper Text Markup Language&quot;&gt;HTML&lt;/abbr&gt; specification<text:line-break/>is maintained by the &lt;abbr title=&quot;World Wide Web Consortium&quot;&gt;W3C&lt;/abbr&gt;.<text:line-break/></text:p>
+
+
+<text:p text:style-name="Standard">Here&#8217;s an example using HTML and W3C. The exact behavior will depend on which format you are viewing this document in. Especially if we use HTML and W3C again. (Remember that HTML has probably already been used if you&#8217;re viewing a longer version of this document.)</text:p>
+
+<text:p text:style-name="Standard">As in PHP Markdown Extra, abbreviations are case-sensitive and will work on multiple word abbreviations. In this case, MultiMarkdown is tolerant of different variations of whitespace between words.</text:p>
+
+<text:p text:style-name="Preformatted Text">Operation Tigra Genesis is going well.<text:line-break/><text:line-break/>*[Tigra Genesis]:<text:line-break/></text:p>
+
+
+<text:p text:style-name="Standard">An abbreviation with an empty definition results in an omitted <text:span text:style-name="Source_20_Text">title</text:span> attribute.</text:p>
+
+<text:p text:style-name="Standard">There are a few limitations:</text:p>
+
+<text:list text:style-name="L1"><text:list-item>
+<text:p text:style-name="P1">The full name of the abbreviation is plain text only &#8211; no MultiMarkdown markup will be processed.</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">Abbreviations don&#8217;t do anything when exporting to ODF &#8211; there&#8217;s not an equivalent structure there &#8211; it would have to be hand coded. I may or may not get around to this, but pull requests welcome. ;)</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">When exporting to LaTeX, the <text:span text:style-name="Source_20_Text">acronym</text:span> package is used; this means that the first usage will result in <text:span text:style-name="Source_20_Text">full text (short)</text:span>, and subsequent uses will result in <text:span text:style-name="Source_20_Text">short</text:span>.</text:p>
+
+<text:h text:outline-level="2"><text:bookmark text:name="fencedcodeblocks"/>Fenced Code Blocks<text:bookmark-end text:name="fencedcodeblocks"/></text:h></text:list-item>
+</text:list>
 
 <text:p text:style-name="Standard">In addition to the regular indented code block that Markdown uses, you can use &#8220;fenced&#8221; code blocks in MultiMarkdown. These code blocks do not have to be indented, and can also be configured to be compatible with a third party syntax highlighter. These code blocks should begin with 3 to 5 backticks, an optional language specifier (if using a syntax highlighter), and should end with the same number of backticks you started with:</text:p>
 
