@@ -2,7 +2,7 @@ latex input:	mmd-article-header
 Title:	Footnotes
 Author:	Fletcher T. Penney
 Version:	{{version.txt}}
-Revised:	2014-01-04 
+Revised:	2014-04-19  
 Base Header Level:	1
 CSS:	{{css.txt}}
 latex mode:	memoir
@@ -33,5 +33,9 @@ This is what the final result looks like:
 > Here is some text containing a footnote.[^somesamplefootnote]
 
 [^somesamplefootnote]: Here is the text of the footnote itself.
+
+You can also use "inline footnotes":
+
+	Here is another footnote.[^This is the footnote itself]
 
 {{links.txt}}
