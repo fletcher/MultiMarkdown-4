@@ -503,6 +503,11 @@ find.</p>
 <p>Here is some text containing a footnote.<a href="#fn:1" id="fnref:1" title="see footnote" class="footnote">[1]</a></p>
 </blockquote>
 
+<p>You can also use &#8220;inline footnotes&#8221;:</p>
+
+<pre><code>Here is another footnote.[^This is the footnote itself]
+</code></pre>
+
 <h2 id="citations">Citations</h2>
 
 <p>I have included support for <em>basic</em> bibliography features in this version of
@@ -668,7 +673,7 @@ is maintained by the W3C.
 is maintained by the &lt;abbr title=&quot;World Wide Web Consortium&quot;&gt;W3C&lt;/abbr&gt;.
 </code></pre>
 
-<p>Here&#8217;s an example using <abbr title="HyperText Markup Language">HTML</abbr> and <abbr title="World Wide Web Consortium">W3C</abbr>. The exact behavior will depend on which format you are viewing this document in. Especially if we use <abbr title="HyperText Markup Language">HTML</abbr> and <abbr title="World Wide Web Consortium">W3C</abbr> again.</p>
+<p>Here&#8217;s an example using <abbr title="HyperText Markup Language">HTML</abbr> and <abbr title="World Wide Web Consortium">W3C</abbr>. The exact behavior will depend on which format you are viewing this document in. Especially if we use <abbr title="HyperText Markup Language">HTML</abbr> and <abbr title="World Wide Web Consortium">W3C</abbr> again. (Remember that <abbr title="HyperText Markup Language">HTML</abbr> has probably already been used if you&#8217;re viewing a longer version of this document.)</p>
 
 <p>As in PHP Markdown Extra, abbreviations are case-sensitive and will work on multiple word abbreviations. In this case, MultiMarkdown is tolerant of different variations of whitespace between words.</p>
 
@@ -686,7 +691,7 @@ is maintained by the &lt;abbr title=&quot;World Wide Web Consortium&quot;&gt;W3C
 <li>Abbreviations don&#8217;t do anything when exporting to ODF &#8211; there&#8217;s not an equivalent structure there &#8211; it would have to be hand coded. I may or may not get around to this, but pull requests welcome. ;)</li>
 <li><p>When exporting to LaTeX, the <code>acronym</code> package is used; this means that the first usage will result in <code>full text (short)</code>, and subsequent uses will result in <code>short</code>.</p>
 
-<h1 id="fencedcodeblocks">Fenced Code Blocks</h1></li>
+<h2 id="fencedcodeblocks">Fenced Code Blocks</h2></li>
 </ul>
 
 <p>In addition to the regular indented code block that Markdown uses, you can use &#8220;fenced&#8221; code blocks in MultiMarkdown. These code blocks do not have to be indented, and can also be configured to be compatible with a third party syntax highlighter. These code blocks should begin with 3 to 5 backticks, an optional language specifier (if using a syntax highlighter), and should end with the same number of backticks you started with:</p>
@@ -853,9 +858,9 @@ set basefile = `basename &quot;$1&quot; .tex`
 makeindex -s `kpsewhich basic.gst` -o &quot;${basefile}.gls&quot; &quot;${basefile}.glo&quot;
 </code></pre>
 
-<h1 id="criticmarkup">CriticMarkup</h1>
+<h2 id="criticmarkup">CriticMarkup</h2>
 
-<h2 id="whatiscriticmarkup">What Is CriticMarkup?</h2>
+<h3 id="whatiscriticmarkup">What Is CriticMarkup?</h3>
 
 <blockquote>
 <p>CriticMarkup is a way for authors and editors to track changes to documents in plain text. As with Markdown, small groups of distinctive characters allow you to highlight insertions, deletions, substitutions and comments, all without the overhead of heavy, proprietary office suites. <a href="http://criticmarkup.com/">http://criticmarkup.com/</a></p>
@@ -863,7 +868,7 @@ makeindex -s `kpsewhich basic.gst` -o &quot;${basefile}.gls&quot; &quot;${basefi
 
 <p>CriticMarkup is integrated with MultiMarkdown itself, as well as <a href="http://multimarkdown.com/">MultiMarkdown Composer</a>. I encourage you to check out the web site to learn more as it can be a very useful tool. There is also a great video showing CriticMarkup in use while editing a document in MultiMarkdown Composer.</p>
 
-<h2 id="thecriticmarkupsyntax">The CriticMarkup Syntax</h2>
+<h3 id="thecriticmarkupsyntax">The CriticMarkup Syntax</h3>
 
 <p>The CriticMarkup syntax is fairly straightforward. The key thing to remember is that CriticMarkup is processed <em>before</em> any other MultiMarkdown is handled. It&#8217;s almost like a separate layer on top of the MultiMarkdown syntax.</p>
 
@@ -905,7 +910,7 @@ makeindex -s `kpsewhich basic.gst` -o &quot;${basefile}.gls&quot; &quot;${basefi
 <pre><code>This is a test{&gt;&gt;What is it a test of?&lt;&lt;}.
 </code></pre>
 
-<h2 id="myphilosophyoncriticmarkup">My philosophy on CriticMarkup</h2>
+<h3 id="myphilosophyoncriticmarkup">My philosophy on CriticMarkup</h3>
 
 <p>I view CriticMarkup as two things:</p>
 

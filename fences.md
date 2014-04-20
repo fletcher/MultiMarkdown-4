@@ -12,7 +12,7 @@ latex mode:	memoir
 latex input:	mmd-article-begin-doc
 latex footer:	mmd-memoir-footer
 
-# Fenced Code Blocks #
+## Fenced Code Blocks ##
 
 In addition to the regular indented code block that Markdown uses, you can use "fenced" code blocks in MultiMarkdown.  These code blocks do not have to be indented, and can also be configured to be compatible with a third party syntax highlighter.  These code blocks should begin with 3 to 5 backticks, an optional language specifier (if using a syntax highlighter), and should end with the same number of backticks you started with:
 

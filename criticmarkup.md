@@ -9,15 +9,15 @@ latex mode:	memoir
 latex input:	mmd-article-begin-doc
 latex footer:	mmd-memoir-footer
 
-# CriticMarkup #
+## CriticMarkup ##
 
-## What Is CriticMarkup? ##
+### What Is CriticMarkup? ###
 
 > CriticMarkup is a way for authors and editors to track changes to documents in plain text. As with Markdown, small groups of distinctive characters allow you to highlight insertions, deletions, substitutions and comments, all without the overhead of heavy, proprietary office suites. <http://criticmarkup.com/>
 
 CriticMarkup is integrated with MultiMarkdown itself, as well as [MultiMarkdown Composer].  I encourage you to check out the web site to learn more as it can be a very useful tool.  There is also a great video showing CriticMarkup in use while editing a document in MultiMarkdown Composer.
 
-## The CriticMarkup Syntax ##
+### The CriticMarkup Syntax ###
 
 The CriticMarkup syntax is fairly straightforward.  The key thing to remember is that CriticMarkup is processed *before* any other MultiMarkdown is handled.  It's almost like a separate layer on top of the MultiMarkdown syntax.
 
@@ -55,7 +55,7 @@ Comments:
 {{links.txt}}
 
 
-## My philosophy on CriticMarkup
+### My philosophy on CriticMarkup
 
 I view CriticMarkup as two things:
 
