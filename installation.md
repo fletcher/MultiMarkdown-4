@@ -1,9 +1,15 @@
+latex input:	mmd-tufte-handout-header
 Title:	Installation
 Author:	Fletcher T. Penney
-CSS:	{{css.txt}}
 Version:	{{version.txt}}
 Revised:	2014-01-04 
-Base Header Level:	1
+Base Header Level:	3
+CSS:	{{css.txt}}
+MMD Footer:	links.txt
+latex mode:	memoir
+latex input:	mmd-tufte-handout-begin-doc
+latex footer:	mmd-tufte-footer
+
 
 # Installation #
 

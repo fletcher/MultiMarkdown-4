@@ -2,19 +2,24 @@
 <html>
 <head>
 	<meta charset="utf-8"/>
+	<meta name="latexinput" content="mmd-tufte-handout-header"/>
 	<title>Known Issues</title>
 	<meta name="author" content="Fletcher T. Penney"/>
-	<link type="text/css" rel="stylesheet" href="http://fletcher.github.io/MultiMarkdown-4/css/document.css"/>
 	<meta name="version" content="4.5.3"/>
-	<meta name="revision" content="2014-01-04"/>
+	<meta name="revised" content="2014-01-04"/>
+	<link type="text/css" rel="stylesheet" href="http://fletcher.github.io/MultiMarkdown-4/css/document.css"/>
+	<meta name="mmdfooter" content="links.txt"/>
+	<meta name="latexmode" content="memoir"/>
+	<meta name="latexinput" content="mmd-tufte-handout-begin-doc"/>
+	<meta name="latexfooter" content="mmd-tufte-footer"/>
 </head>
 <body>
 
-<h1 id="knownissues">Known Issues</h1>
+<h3 id="knownissues">Known Issues</h3>
 
-<h2 id="opendocument">OpenDocument</h2>
+<h4 id="opendocument">OpenDocument</h4>
 
-<h3 id="opendocumentdoesntproperlysupportimagedimensions">OpenDocument doesn&#8217;t properly support image dimensions</h3>
+<h5 id="opendocumentdoesntproperlysupportimagedimensions">OpenDocument doesn&#8217;t properly support image dimensions</h5>
 
 <p>It&#8217;s relatively easy to insert an image into ODF using fixed dimensions, but
 harder to get a scaled image without knowing the exact aspect ratio of the
@@ -30,7 +35,7 @@ it will likely snap to match the specified dimension.</p>
 
 <p>I welcome suggestions on a better way to do this.</p>
 
-<h2 id="rtf">RTF</h2>
+<h4 id="rtf">RTF</h4>
 
 <ul>
 <li>Non-ASCII characters are not supported</li>
@@ -39,9 +44,9 @@ it will likely snap to match the specified dimension.</p>
 <li>Tables are not fully supported</li>
 </ul>
 
-<h2 id="opml">OPML</h2>
+<h4 id="opml">OPML</h4>
 
-<h3 id="opmldoesnthandleskippedlevels">OPML doesn&#8217;t handle &#8220;skipped&#8221; levels</h3>
+<h5 id="opmldoesnthandleskippedlevels">OPML doesn&#8217;t handle &#8220;skipped&#8221; levels</h5>
 
 <p>When converting a MMD text file to OPML with the mmd binary, each level only
 contains it&#8217;s direct children. For example:</p>

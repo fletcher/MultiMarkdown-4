@@ -256,9 +256,8 @@
   <style:master-page style:name="Footnote" style:page-layout-name="pm2"/>
  </office:master-styles>
 <office:meta>
-<dc:title>MultiMarkdown Composer User's Guide</dc:title>
+<dc:title>MultiMarkdown User's Guide</dc:title>
 <meta:user-defined meta:name="latex title">MultiMarkdown \\
-Composer \\
 User's Guide</meta:user-defined>
 <meta:user-defined meta:name="Author">Fletcher T. Penney</meta:user-defined>
 <meta:user-defined meta:name="Version">4.5.3</meta:user-defined>
@@ -267,7 +266,7 @@ User's Guide</meta:user-defined>
 </office:meta>
 <office:body>
 <office:text>
-<text:h text:outline-level="2"><text:bookmark text:name="title"/>MultiMarkdown Composer User's Guide<text:bookmark-end text:name="title"/></text:h>
+<text:h text:outline-level="2"><text:bookmark text:name="title"/>MultiMarkdown User's Guide<text:bookmark-end text:name="title"/></text:h>
 
 <text:p text:style-name="Quotations">Version 4.5.3<text:line-break/>Revised 2014-04-19</text:p>
 
@@ -1199,6 +1198,10 @@ be compatible with the LaTeX classes of the same names.</text:p>
 
 <text:p text:style-name="Standard">This metadata <text:span text:style-name="MMD-Italic">must</text:span> come after the regular <text:span text:style-name="Source_20_Text">title</text:span> metadata if it is also being used.</text:p>
 
+<text:h text:outline-level="4"><text:bookmark text:name="mmdfooter"/>MMD Footer<text:bookmark-end text:name="mmdfooter"/></text:h>
+
+<text:p text:style-name="Standard">The <text:span text:style-name="Source_20_Text">MMD Footer</text:span> metadata is used to specify the name of a file that should be appended to the end of the document using the <text:a xlink:type="simple" xlink:href="#filetransclusion">File Transclusion</text:a> feature. This is useful for keeping a list of references, abbreviations, footnotes, links, etc. all in a single file that can be reused across multiple documents. If you&#8217;re building a big document out of smaller documents, this allows you to use one list in all files, without multiple copies being inserted in the master file.</text:p>
+
 <text:h text:outline-level="4"><text:bookmark text:name="odfheader"/>ODF Header<text:bookmark-end text:name="odfheader"/></text:h>
 
 <text:p text:style-name="Standard">You can include raw XML to be included in the header of a file output in
@@ -1473,6 +1476,8 @@ the beginning of the line</text:p></text:list-item>
 </text:list-item>
 </text:list>
 
+<text:h text:outline-level="3"><text:bookmark text:name="footnotes"/>Footnotes<text:bookmark-end text:name="footnotes"/></text:h>
+
 <text:p text:style-name="Standard">I have added support for footnotes to MultiMarkdown, using the syntax proposed
 by John Gruber. Note that there is no official support for footnotes yet, so
 the output format may change, but the input format sounds fairly stable.</text:p>
@@ -1653,10 +1658,10 @@ prefer the <text:span text:style-name="Source_20_Text">&lt;p&gt;</text:span> tag
 <text:list-item>
 <text:p text:style-name="P1">Abbreviations don&#8217;t do anything when exporting to ODF &#8211; there&#8217;s not an equivalent structure there &#8211; it would have to be hand coded. I may or may not get around to this, but pull requests welcome. ;)</text:p></text:list-item>
 <text:list-item>
-<text:p text:style-name="P1">When exporting to LaTeX, the <text:span text:style-name="Source_20_Text">acronym</text:span> package is used; this means that the first usage will result in <text:span text:style-name="Source_20_Text">full text (short)</text:span>, and subsequent uses will result in <text:span text:style-name="Source_20_Text">short</text:span>.</text:p>
-
-<text:h text:outline-level="3"><text:bookmark text:name="fencedcodeblocks"/>Fenced Code Blocks<text:bookmark-end text:name="fencedcodeblocks"/></text:h></text:list-item>
+<text:p text:style-name="P1">When exporting to LaTeX, the <text:span text:style-name="Source_20_Text">acronym</text:span> package is used; this means that the first usage will result in <text:span text:style-name="Source_20_Text">full text (short)</text:span>, and subsequent uses will result in <text:span text:style-name="Source_20_Text">short</text:span>.</text:p></text:list-item>
 </text:list>
+
+<text:h text:outline-level="3"><text:bookmark text:name="fencedcodeblocks"/>Fenced Code Blocks<text:bookmark-end text:name="fencedcodeblocks"/></text:h>
 
 <text:p text:style-name="Standard">In addition to the regular indented code block that Markdown uses, you can use &#8220;fenced&#8221; code blocks in MultiMarkdown. These code blocks do not have to be indented, and can also be configured to be compatible with a third party syntax highlighter. These code blocks should begin with 3 to 5 backticks, an optional language specifier (if using a syntax highlighter), and should end with the same number of backticks you started with:</text:p>
 
@@ -1731,7 +1736,7 @@ supported format):</text:p>
 
 <text:p text:style-name="Quotations">y<text:span text:style-name="MMD-Superscript">(a+b)</text:span><text:line-break/>x<text:span text:style-name="MMD-Subscript">y,z</text:span></text:p>
 
-<text:h text:outline-level="3"><text:bookmark text:name="glossary"/>Glossary<text:bookmark-end text:name="glossary"/></text:h>
+<text:h text:outline-level="3"><text:bookmark text:name="glossaries"/>Glossaries<text:bookmark-end text:name="glossaries"/></text:h>
 
 <text:p text:style-name="Standard">MultiMarkdown has a feature that allows footnotes to be specified as glossary
 terms. It doesn&#8217;t do much for XHTML documents, but the XSLT file that converts

@@ -1,13 +1,14 @@
-latex input:	mmd-article-header
+latex input:	mmd-tufte-handout-header
 Title:	Citations
 Author:	Fletcher T. Penney
 Version:	{{version.txt}}
 Revised:	2014-01-04 
-Base Header Level:	1
+Base Header Level:	2
 CSS:	{{css.txt}}
+MMD Footer:	links.txt
 latex mode:	memoir
-latex input:	mmd-article-begin-doc
-latex footer:	mmd-memoir-footer
+latex input:	mmd-tufte-handout-begin-doc
+latex footer:	mmd-tufte-footer
 
 
 ## Citations ##

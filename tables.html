@@ -2,21 +2,22 @@
 <html>
 <head>
 	<meta charset="utf-8"/>
-	<meta name="latexinput" content="mmd-article-header"/>
+	<meta name="latexinput" content="mmd-tufte-handout-header"/>
 	<title>Tables</title>
 	<meta name="author" content="Fletcher T. Penney"/>
 	<meta name="version" content="4.5.3"/>
 	<meta name="revised" content="2014-01-04"/>
 	<link type="text/css" rel="stylesheet" href="http://fletcher.github.io/MultiMarkdown-4/css/document.css"/>
+	<meta name="mmdfooter" content="links.txt"/>
 	<meta name="latexmode" content="memoir"/>
-	<meta name="latexinput" content="mmd-article-begin-doc"/>
-	<meta name="latexfooter" content="mmd-memoir-footer"/>
+	<meta name="latexinput" content="mmd-tufte-handout-begin-doc"/>
+	<meta name="latexfooter" content="mmd-tufte-footer"/>
 </head>
 <body>
 
-<h2 id="tables">Tables</h2>
+<h3 id="tables">Tables</h3>
 
-<h3 id="tablebasics">Table Basics</h3>
+<h4 id="tablebasics">Table Basics</h4>
 
 <p>MultiMarkdown has a special syntax for creating tables. It is generally compatible with the syntax used by Michael Fortin for <a href="http://www.michelf.com/projects/php-markdown/extra/">PHP Markdown Extra</a></p>
 
@@ -80,7 +81,7 @@ And more      | With an escaped '\|'         ||
 </tbody>
 </table>
 
-<h3 id="tablerules">Table Rules</h3>
+<h4 id="tablerules">Table Rules</h4>
 
 <p>The requirements are:</p>
 
@@ -112,7 +113,7 @@ the beginning of the line</li>
 <li><p>You can create multiple <code>&lt;tbody&gt;</code> tags (for HTML) within a table by having a <strong>single</strong> empty line between rows of the table. This allows your CSS to place horizontal borders to emphasize different sections of the table. This feature doesn&#8217;t work in all output formats (e.g. RTF and OpenDocument).</p></li>
 </ul>
 
-<h3 id="limitationsoftables">Limitations of Tables</h3>
+<h4 id="limitationsoftables">Limitations of Tables</h4>
 
 <ul>
 <li><p>MultiMarkdown table support is designed to handle <em>most</em> tables for <em>most</em> people; it doesn&#8217;t cover <em>all</em> tables for <em>all</em> people. If you need complex tables you will need to create them by hand or with a tool specifically designed for your output format. At some point, however, you should consider whether a table is really the best approach if you find MultiMarkdown tables too limiting.</p></li>

@@ -3,9 +3,8 @@
 <head>
 	<meta charset="utf-8"/>
 	<meta name="latexinput" content="mmd-tufte-book-header"/>
-	<title>MultiMarkdown Composer User's Guide</title>
+	<title>MultiMarkdown User's Guide</title>
 	<meta name="latextitle" content="MultiMarkdown \\
-Composer \\
 User's Guide"/>
 	<meta name="author" content="Fletcher T. Penney"/>
 	<meta name="version" content="4.5.3"/>
@@ -21,7 +20,7 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorM
 </head>
 <body>
 
-<h2 id="title">MultiMarkdown Composer User's Guide</h2>
+<h2 id="title">MultiMarkdown User's Guide</h2>
 
 <blockquote>
 <p>Version 4.5.3<br/>
@@ -953,6 +952,10 @@ be compatible with the LaTeX classes of the same names.</p>
 
 <p>This metadata <em>must</em> come after the regular <code>title</code> metadata if it is also being used.</p>
 
+<h4 id="mmdfooter">MMD Footer</h4>
+
+<p>The <code>MMD Footer</code> metadata is used to specify the name of a file that should be appended to the end of the document using the <a href="#filetransclusion">File Transclusion</a> feature. This is useful for keeping a list of references, abbreviations, footnotes, links, etc. all in a single file that can be reused across multiple documents. If you&#8217;re building a big document out of smaller documents, this allows you to use one list in all files, without multiple copies being inserted in the master file.</p>
+
 <h4 id="odfheader">ODF Header</h4>
 
 <p>You can include raw XML to be included in the header of a file output in
@@ -1207,6 +1210,8 @@ the beginning of the line</li>
 <li><p>Native RTF support for tables is <em>very</em> limited. If you need more complex tables, I recommend using the OpenDocument format, and then using <a href="http://www.libreoffice.org/">LibreOffice</a> to convert your document to RTF.</p></li>
 </ul>
 
+<h3 id="footnotes">Footnotes</h3>
+
 <p>I have added support for footnotes to MultiMarkdown, using the syntax proposed
 by John Gruber. Note that there is no official support for footnotes yet, so
 the output format may change, but the input format sounds fairly stable.</p>
@@ -1418,10 +1423,10 @@ is maintained by the &lt;abbr title=&quot;World Wide Web Consortium&quot;&gt;W3C
 <ul>
 <li>The full name of the abbreviation is plain text only &#8211; no MultiMarkdown markup will be processed.</li>
 <li>Abbreviations don&#8217;t do anything when exporting to ODF &#8211; there&#8217;s not an equivalent structure there &#8211; it would have to be hand coded. I may or may not get around to this, but pull requests welcome. ;)</li>
-<li><p>When exporting to LaTeX, the <code>acronym</code> package is used; this means that the first usage will result in <code>full text (short)</code>, and subsequent uses will result in <code>short</code>.</p>
-
-<h3 id="fencedcodeblocks">Fenced Code Blocks</h3></li>
+<li>When exporting to LaTeX, the <code>acronym</code> package is used; this means that the first usage will result in <code>full text (short)</code>, and subsequent uses will result in <code>short</code>.</li>
 </ul>
+
+<h3 id="fencedcodeblocks">Fenced Code Blocks</h3>
 
 <p>In addition to the regular indented code block that Markdown uses, you can use &#8220;fenced&#8221; code blocks in MultiMarkdown. These code blocks do not have to be indented, and can also be configured to be compatible with a third party syntax highlighter. These code blocks should begin with 3 to 5 backticks, an optional language specifier (if using a syntax highlighter), and should end with the same number of backticks you started with:</p>
 
@@ -1538,7 +1543,7 @@ x~y,z~
 x<sub>y,z</sub></p>
 </blockquote>
 
-<h3 id="glossary">Glossary</h3>
+<h3 id="glossaries">Glossaries</h3>
 
 <p>MultiMarkdown has a feature that allows footnotes to be specified as glossary
 terms. It doesn&#8217;t do much for XHTML documents, but the XSLT file that converts

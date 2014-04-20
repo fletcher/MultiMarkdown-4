@@ -1,13 +1,17 @@
-latex input:	mmd-article-header
+latex input:	mmd-tufte-handout-header
 Title:	Footnotes
 Author:	Fletcher T. Penney
 Version:	{{version.txt}}
-Revised:	2014-04-19  
-Base Header Level:	1
+Revised:	2014-04-19 
+Base Header Level:	2
 CSS:	{{css.txt}}
+MMD Footer:	links.txt
 latex mode:	memoir
-latex input:	mmd-article-begin-doc
-latex footer:	mmd-memoir-footer
+latex input:	mmd-tufte-handout-begin-doc
+latex footer:	mmd-tufte-footer
+
+
+## Footnotes ##
 
 I have added support for footnotes to MultiMarkdown, using the syntax proposed
 by John Gruber. Note that there is no official support for footnotes yet, so

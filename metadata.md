@@ -1,13 +1,15 @@
-latex input:	mmd-article-header
-Title:	Metadata
-Author:	Fletcher T. Penney
-Version:	{{version.txt}}
-Revised:	2014-04-18  
-Base Header Level:	1
-CSS:	{{css.txt}}
-latex mode:	memoir
-latex input:	mmd-article-begin-doc
-latex footer:	mmd-memoir-footer
+latex input:  mmd-tufte-handout-header
+Title:  Metadata
+Author: Fletcher T. Penney
+Version:  {{version.txt}}
+Revised:  2014-04-18 
+Base Header Level:  2
+CSS:  {{css.txt}}
+MMD Footer: links.txt
+latex mode: memoir
+latex input:  mmd-tufte-handout-begin-doc
+latex footer: mmd-tufte-footer
+
 
 ## Metadata ##
 
@@ -222,6 +224,12 @@ be compatible with the LaTeX classes of the same names.
 Since MultiMarkdown syntax is not processed inside of metadata, you can use the `latex title` metadata to override the regular title metadata when exporting to LaTeX.
 
 This metadata *must* come after the regular `title` metadata if it is also being used.
+
+
+### MMD Footer ###
+
+The `MMD Footer` metadata is used to specify the name of a file that should be appended to the end of the document using the [File Transclusion] feature.  This is useful for keeping a list of references, abbreviations, footnotes, links, etc. all in a single file that can be reused across multiple documents.  If you're building a big document out of smaller documents, this allows you to use one list in all files, without multiple copies being inserted in the master file.
+
 
 ### ODF Header ###
 

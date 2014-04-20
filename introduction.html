@@ -2,15 +2,20 @@
 <html>
 <head>
 	<meta charset="utf-8"/>
-	<title>Introduction to MultiMarkdown Composer</title>
+	<meta name="latexinput" content="mmd-tufte-handout-header"/>
+	<title>Introduction to MultiMarkdown</title>
 	<meta name="author" content="Fletcher T. Penney"/>
-	<link type="text/css" rel="stylesheet" href="http://fletcher.github.io/MultiMarkdown-4/css/document.css"/>
 	<meta name="version" content="4.5.3"/>
-	<meta name="revision" content="2014-01-04"/>
+	<meta name="revised" content="2014-01-04"/>
+	<link type="text/css" rel="stylesheet" href="http://fletcher.github.io/MultiMarkdown-4/css/document.css"/>
+	<meta name="mmdfooter" content="links.txt"/>
+	<meta name="latexmode" content="memoir"/>
+	<meta name="latexinput" content="mmd-tufte-handout-begin-doc"/>
+	<meta name="latexfooter" content="mmd-tufte-footer"/>
 </head>
 <body>
 
-<h1 id="introduction">Introduction</h1>
+<h3 id="introduction">Introduction</h3>
 
 <blockquote>
 <p>As the world goes multi-platform with all of the new mobile operating systems, MultiMarkdown provides an easy way to share formatting between all of my devices. It&#8217;s easy to learn (even for us mortals) and immediately useful.</p>
@@ -20,7 +25,7 @@
 </blockquote>
 </blockquote>
 
-<h2 id="whatismarkdown">What is Markdown?</h2>
+<h4 id="whatismarkdown">What is Markdown?</h4>
 
 <p>To understand what MultiMarkdown is, you first should be familiar with
 <a href="http://daringfireball.net/projects/markdown/" title="Daring Fireball:
@@ -47,7 +52,7 @@ text-to-HTML filters, the single biggest source of inspiration for
 Markdown&#8217;s syntax is the format of plain text email. &#8212; <a href="http://daringfireball.net/projects/markdown/" title="Daring Fireball: Markdown">John Gruber</a></p>
 </blockquote>
 
-<h2 id="whatismultimarkdown">What is MultiMarkdown?</h2>
+<h4 id="whatismultimarkdown">What is MultiMarkdown?</h4>
 
 <p>Markdown is great, but it lacked a few features that would allow it to work
 with documents, rather than just pieces of a web page.</p>
@@ -83,7 +88,7 @@ as:</p>
  complete document.</p></li>
 </ol>
 
-<h2 id="whyshouldiusemultimarkdown">Why should I use MultiMarkdown?</h2>
+<h4 id="whyshouldiusemultimarkdown">Why should I use MultiMarkdown?</h4>
 
 <p>Writing with MultiMarkdown allows you to separate the content and structure of
 your document from the formatting. You focus on the actual writing, without
@@ -146,7 +151,7 @@ the URL. If the URL ends with <code>/</code>, then add <code>index.txt</code> to
 The main MultiMarkdown page, for example, would be
 <a href="http://fletcherpenney.net/multimarkdown/index.txt">http://fletcherpenney.net/multimarkdown/index.txt</a>.</p>
 
-<h2 id="whatarethedifferentversionsofmultimarkdown">What Are the Different Versions of MultiMarkdown?</h2>
+<h4 id="whatarethedifferentversionsofmultimarkdown">What Are the Different Versions of MultiMarkdown?</h4>
 
 <p>The first real version of MultiMarkdown was version 2. It was a modification of the original <code>Markdown.pl</code> script. It worked fine, but was slow when parsing longer documents. The plain text was converted to HTML, and then XSLT was used to convert the HTML to other formats (primarily LaTeX). Over time, maintaining the complicated nest of regular expressions became more difficult, and a better approach was needed.</p>
 
@@ -154,7 +159,7 @@ The main MultiMarkdown page, for example, would be
 
 <p><a href="http://github.com/fletcher/MultiMarkdown-4">MultiMarkdown 4</a> was a complete rewrite, keeping only the PEG and a few utility routines from MMD v3. This release fixed memory leaks and other problems from earlier MMD releases; it is safe to use in multithreaded applications and adds many new features. By far, it&#8217;s the best version to date!</p>
 
-<h2 id="whereisthisguidekept">Where is this Guide Kept?</h2>
+<h4 id="whereisthisguidekept">Where is this Guide Kept?</h4>
 
 <p>This guide has been rewritten with the following changes:</p>
 

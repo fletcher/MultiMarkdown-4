@@ -1,14 +1,16 @@
-latex input:	mmd-memoir-header
-Title:	MultiMarkdown Composer User's Guide
+latex input:	mmd-tufte-handout-header
+Title:	MultiMarkdown User's Guide
 Author:	Fletcher T. Penney
 Version:	{{version.txt}}
 Revised:	2014-04-19  
 Keywords:	MultiMarkdown, Markdown, LaTeX, PDF, RTF, LyX, HTML
 Base Header Level:	2
 CSS:	{{css.txt}}
+MMD Footer:	links.txt
 latex mode:	memoir
-latex input:	mmd-memoir-begin-doc
-latex footer:	mmd-memoir-footer
+latex input:	mmd-tufte-handout-begin-doc
+latex footer:	mmd-tufte-footer
+
 
 #  [%title] #
 

@@ -1,7 +1,6 @@
 latex input:	mmd-tufte-book-header
-Title:	MultiMarkdown Composer User's Guide
+Title:	MultiMarkdown User's Guide
 latex title: MultiMarkdown \\
-	Composer \\
 	User's Guide
 Author:	Fletcher T. Penney
 Version:	{{version.txt}}

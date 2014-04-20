@@ -1,9 +1,15 @@
-Title:	Introduction to MultiMarkdown Composer
+latex input:	mmd-tufte-handout-header
+Title:	Introduction to MultiMarkdown  
 Author:	Fletcher T. Penney
-CSS:	{{css.txt}}
 Version:	{{version.txt}}
-Revision:	2014-01-04
-Base Header Level:	1
+Revised:	2014-01-04 
+Base Header Level:	3
+CSS:	{{css.txt}}
+MMD Footer:	links.txt
+latex mode:	memoir
+latex input:	mmd-tufte-handout-begin-doc
+latex footer:	mmd-tufte-footer
+
 
 # Introduction #
 

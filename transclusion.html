@@ -2,19 +2,20 @@
 <html>
 <head>
 	<meta charset="utf-8"/>
-	<meta name="latexinput" content="mmd-article-header"/>
+	<meta name="latexinput" content="mmd-tufte-handout-header"/>
 	<title>File Transclusion</title>
 	<meta name="author" content="Fletcher T. Penney"/>
 	<meta name="version" content="4.5.3"/>
 	<meta name="revised" content="2014-02-28"/>
 	<link type="text/css" rel="stylesheet" href="http://fletcher.github.io/MultiMarkdown-4/css/document.css"/>
+	<meta name="mmdfooter" content="links.txt"/>
 	<meta name="latexmode" content="memoir"/>
-	<meta name="latexinput" content="mmd-article-begin-doc"/>
-	<meta name="latexfooter" content="mmd-memoir-footer"/>
+	<meta name="latexinput" content="mmd-tufte-handout-begin-doc"/>
+	<meta name="latexfooter" content="mmd-tufte-footer"/>
 </head>
 <body>
 
-<h2 id="filetransclusion">File Transclusion</h2>
+<h3 id="filetransclusion">File Transclusion</h3>
 
 <p>File transclusion is the ability to tell MultiMarkdown to insert the contents of another file inside the current file being processed. For example:</p>
 
@@ -46,7 +47,7 @@ Another paragraph
 
 <p><strong>Note:</strong> Thanks to David Richards for his ideas in developing support for this feature.</p>
 
-<h3 id="wildcardextensions">Wildcard Extensions</h3>
+<h4 id="wildcardextensions">Wildcard Extensions</h4>
 
 <p>Sometimes you may wish to transclude alternate versions of a file depending on your output format. Simply use the extension &#8220;.*&#8221; to have MMD choose the proper version of the file (e.g. <code>foo.tex</code>, <code>foo.fodt</code>, <code>foo.html</code>, etc.)</p>
 
