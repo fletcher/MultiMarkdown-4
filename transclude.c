@@ -216,3 +216,15 @@ void transclude_source(GString *source, char *basedir, char *stack, int output_f
 	free(path);
 	free(base);
 }
+
+/* Allow for a footer to specify files to be appended to the end of the text, and then transcluded.
+	Useful for appending a list of footnotes, citations, abbreviations, etc. to each separate file,
+	but not including multiple copies when processing the master file. */
+void append_mmd_footers(GString *source) {
+	/* Look for mmd_footer metadata */
+	if (has_metadata(source->str, 0x000000)) {
+		char *meta = extract_metadata_value(source->str, 0x000000, "mmdfooter");
+		if (meta != NULL)
+			g_string_append_printf(source, "\n\n{{%s}}\n",meta);
+	}
+}
