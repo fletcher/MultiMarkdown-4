@@ -35,6 +35,3 @@ header, then the defined anchor takes precedence.
 
 In addition to headers within the document, you can provide labels for images
 and tables which can then be used for cross-references as well.
-
-
-{{links.txt}}

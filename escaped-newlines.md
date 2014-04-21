@@ -28,5 +28,3 @@ To enable this feature, use the following option:
 	multimarkdown --escaped-line-breaks file.txt
 
 If this option is not enabled, then the default behavior will be to treat the newline as an escaped character, which results in it simply appearing as a newline character in the output.  This means that the default behavior is the same as if the "\\" is not in the source file.
-
-{{links.txt}}

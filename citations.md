@@ -107,5 +107,3 @@ MultiMarkdown syntax used.
 	[foo][#citekey;] => \citet[foo]{citekey}
 
 	[foo\]\[bar][#citekey;] => \citet[foo][bar]{citekey}
-
-{{links.txt}}

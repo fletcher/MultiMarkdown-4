@@ -71,6 +71,3 @@ Other notes:
 * MultiMarkdown table support is designed to handle *most* tables for *most* people; it doesn't cover *all* tables for *all* people.  If you need complex tables you will need to create them by hand or with a tool specifically designed for your output format.  At some point, however, you should consider whether a table is really the best approach if you find MultiMarkdown tables too limiting.
 
 * Native RTF support for tables is *very* limited.  If you need more complex tables, I recommend using the OpenDocument format, and then using [LibreOffice] to convert your document to RTF.
-
-
-{{links.txt}}

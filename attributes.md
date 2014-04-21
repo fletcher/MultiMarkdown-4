@@ -56,6 +56,3 @@ newlines, but must start at the beginning of the line. The format is
 `attribute=value` or `attribute="multi word value"`. Currently, MultiMarkdown
 does not attempt to interpret or make any use of any of these attributes.
 Also, you can't have a multiword attribute span a newline.
-
-
-{{links.txt}}

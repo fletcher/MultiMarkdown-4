@@ -62,5 +62,3 @@ You can use HTML comments to include additional text that will be included in th
 
 	This will be processed by *MultiMarkdown*.
 	<!-- This will not be processed by *MultiMarkdown -->
-
-{{links.txt}}

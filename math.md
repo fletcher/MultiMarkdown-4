@@ -97,5 +97,3 @@ More complicated exponents and subscripts can be delimited like this:
 	x~y,z~
 > y^(a+b)^  
 > x~y,z~
-
-{{links.txt}}

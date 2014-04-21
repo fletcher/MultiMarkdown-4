@@ -248,5 +248,3 @@ Self-explanatory.
 When using the [File Transclusion] feature to "link" to other documents inside a MultiMarkdown document, this metadata specifies a folder that contains the files being linked to.  If omitted, the default is the folder containing the file in question.  This can be a relative path or a complete path.
 
 This metadata can be particularly useful when using MultiMarkdown to parse a text string that does not exist as a file on the computer, and therefore does not have a parent folder (when using `stdin` or another application that offers MultiMarkdown support).  In this case, the path must be a complete path.
-
-{{links.txt}}

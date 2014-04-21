@@ -5,6 +5,7 @@ Version:	{{version.txt}}
 Revised:	2014-01-04 
 Base Header Level:	1
 CSS:	{{css.txt}}
+MMD Footer:	links.txt
 latex mode:	memoir
 latex input:	mmd-article-begin-doc
 latex footer:	mmd-memoir-footer
@@ -56,5 +57,3 @@ output will not trigger a complete document. Currently, this means you can use
 don't include any other metadata.
 
 Additionally, if you include (via [Transclusion]) a file that contains MultiMarkdown metadata, the metadata is stripped before being inserted into the parent document.  This is slightly different than the idea of a snippet, but the effect of ignoring the metadata is similar.
-
-{{links.txt}}

@@ -47,5 +47,3 @@ Sometimes you may wish to transclude alternate versions of a file depending on y
 
 	Insert a different version of a file here based on export format:
 	{{foo.*}}
-
-{{links.txt}}

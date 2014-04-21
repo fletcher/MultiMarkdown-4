@@ -263,6 +263,7 @@ User's Guide</meta:user-defined>
 <meta:user-defined meta:name="Version">4.5.3</meta:user-defined>
 <meta:user-defined meta:name="Revised">2014-04-19</meta:user-defined>
 <meta:keyword>MultiMarkdown, Markdown, LaTeX, PDF, RTF, LyX, HTML</meta:keyword>
+<meta:user-defined meta:name="MMD Footer">links.txt</meta:user-defined>
 </office:meta>
 <office:body>
 <office:text>

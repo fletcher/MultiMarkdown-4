@@ -44,5 +44,3 @@ The resulting HTML is:
 	</figure>
 
 The first one would be an inline image.  The second one (in HTML) would be wrapped in an HTML `figure` element.  In this case, the `alt` text is also used as a figure caption, and can contain MultiMarkdown syntax (e.g. bold, emph, etc.).  The alt text is not specifically designed to limit which MultiMarkdown is supported, but there will be limits and block level elements aren't supported.
-
-{{links.txt}}

@@ -75,6 +75,3 @@ For Mac and *nix users:
 MultiMarkdown includes a few other projects as submodules, but the only one you need to actually compile the code is the `greg` software.  Once compiled, MultiMarkdown has no external dependencies -- the binary is self-contained.  Therefore, it should basically compile and run anywhere. 
 
 Windows users can obtain the code in the same way, but will need to use their own compiler.  The way I compile for Windows is actually to use the `make windows` command running on a *nix system with MinGW installed.
-
-
-{{links.txt}}

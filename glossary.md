@@ -58,6 +58,3 @@ feature, and might take some trial and error the first few times.*
 	set basefile = `basename "$1" .tex`
 	
 	makeindex -s `kpsewhich basic.gst` -o "${basefile}.gls" "${basefile}.glo"
-
-
-{{links.txt}}

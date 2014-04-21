@@ -11,6 +11,7 @@ CSS:	{{css.txt}}
 HTML header:	<script type="text/javascript"
 	src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 	</script>
+MMD Footer:	links.txt
 latex mode:	memoir
 latex input:	mmd-tufte-book-begin-doc
 latex footer:	mmd-tufte-book-footer

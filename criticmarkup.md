@@ -54,7 +54,7 @@ Comments:
 
 	This is a test{>>What is it a test of?<<}.
 
-{{links.txt}}
+
 
 
 ### My philosophy on CriticMarkup

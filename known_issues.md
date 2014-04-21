@@ -61,6 +61,3 @@ When this is converted to OPML, the "Fourth Level" item will be deleted, since i
 It's possible to fix this, but it's going to take a more complicated algorithm than what I currently have and it's not a high priority for me to fix at the moment.
 
 As always, suggestions welcome.
-
-
-{{links.txt}}

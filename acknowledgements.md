@@ -78,5 +78,3 @@ improving Markdown and MultiMarkdown:
 *	Thomas Hodgson
 
 and others I have surely forgotten....
-
-{{links.txt}}

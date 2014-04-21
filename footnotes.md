@@ -41,5 +41,3 @@ This is what the final result looks like:
 You can also use "inline footnotes":
 
 	Here is another footnote.[^This is the footnote itself]
-
-{{links.txt}}

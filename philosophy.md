@@ -43,6 +43,3 @@ Instead, if there is something that you wish MultiMarkdown would do, consider th
 4. But before requesting a new feature, honestly ask yourself how many other people need it.  Ask yourself why, if it's such a great idea, it hasn't been implemented yet. 
 
 5. If your idea isn't really useful to other people, then that makes it the *perfect* opportunity to develop some new skills.  Grab a copy of the MultiMarkdown source, and start hacking away to add what you want.  Test it out.  If it's really great, share it on the discussion list to let others use it.  Convince everyone that it simply *must* be added to the core source.
-
-
-{{links.txt}}

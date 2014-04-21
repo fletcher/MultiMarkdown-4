@@ -454,7 +454,3 @@ There are several limitations to the OpenDocument Flat Text format:
 
 * math features are not supported, though I hope to be able to implement this
   at some point in the future
-
-
-
-{{links.txt}}

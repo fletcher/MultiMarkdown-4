@@ -49,5 +49,3 @@ where it mattered - the only difference seems to be aesthetic, and I actually
 prefer the `<p>` tags in place. Let me know if this is a problem.
 
 See the [PHP Markdown Extra][] page for more information.
-
-{{links.txt}}

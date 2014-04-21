@@ -19,5 +19,3 @@ latex footer:	mmd-tufte-footer
 * Improve table support
 * Support Non-ASCII characters
 * Code span
-
-{{links.txt}}
