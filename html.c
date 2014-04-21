@@ -243,6 +243,7 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 				trim_trailing_whitespace(n->children->str);
 				print_raw_node(out, n->children);
 				g_string_append_printf(out, "\n");
+			} else if (strcmp(n->str, "mmdfooter") == 0) {
 			} else {
 				g_string_append_printf(out,"\t<meta name=\"%s\" content=\"",n->str);
 				print_html_node(out,n->children,scratch);
