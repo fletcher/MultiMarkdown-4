@@ -1138,7 +1138,14 @@ void print_latex_string(GString *out, char *str, scratch_pad *scratch) {
 				}
 				break;
 			case '-':
-				g_string_append_printf(out, "-{}");
+				str++;
+				if (*str == '-') {
+					g_string_append_printf(out, "-{}");
+					str--;
+				} else {
+					str--;
+					g_string_append_c(out,*str);
+				}
 				break;
 			default:
 				g_string_append_c(out, *str);
