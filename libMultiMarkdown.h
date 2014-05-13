@@ -149,6 +149,7 @@ enum keys {
 	KEY_COUNTER                      /* This *MUST* be the last item in the list */
 };
 
+
 /* This is the element used in the resulting parse tree */
 struct node {
 	short             key;           /* what type of element are we? */
@@ -159,3 +160,14 @@ struct node {
 };
 
 typedef struct node node;
+
+
+/* Define a structure to simplify handling of links */
+struct link_data {
+	char *label;                /* if this is a reference link */
+	char *source;               /* source URL     */
+	char *title;                /* title string   */
+	node *attr;                 /* attribute tree */
+};
+
+typedef struct link_data link_data;

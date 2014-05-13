@@ -33,16 +33,6 @@
 /* This is the type used for the $$ pseudovariable passed to parents */
 #define YYSTYPE node *
 
-/* Define a structure to simplify handling of links */
-struct link_data {
-	char *label;                /* if this is a reference link */
-	char *source;               /* source URL     */
-	char *title;                /* title string   */
-	node *attr;                 /* attribute tree */
-};
-
-typedef struct link_data link_data;
-
 /* This is the data we store in the parser context */
 typedef struct {
 	char *charbuf;              /* Input buffer */
