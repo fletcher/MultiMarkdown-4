@@ -591,7 +591,18 @@ AttrValue = (QuotedValue | UnQuotedValue)
 		{ $$ = str(yytext); $$->key = ATTRVALUE; }
 
 RefSrc = < Nonspacechar+ > 
-		{ $$ = str(yytext); $$->key = HTML; }
+	{
+		char *tmp = strdup(yytext);
+		if ((tmp[0] == '<') &&
+			(tmp[strlen(tmp) - 1] == '>')) {
+			tmp[strlen(tmp) - 1] = '\0';
+			$$ = str(&tmp[1]);
+		} else {
+			$$ = str(yytext);
+		}
+		$$->key = HTML;
+		free(tmp);
+	}
 
 RefTitle =  ( RefTitleSingle | RefTitleDouble | RefTitleParens | EmptyTitle )
 		{ $$ = str(yytext); $$->key = RAW; }
