@@ -115,7 +115,7 @@ Block =	BlankLine*
 		| &{ !ext(EXT_COMPATIBILITY) } Glossary
 		| Note
 		| LinkReference
-		| Abbreviation
+		| &{ !ext(EXT_COMPATIBILITY) } Abbreviation
 		| HorizontalRule
 		| &{ ext(EXT_HEADINGSECTION) } HeadingSection
 		| Heading
@@ -137,7 +137,7 @@ HeadingSectionBlock = BlankLine* !Heading
 		| &{ !ext(EXT_COMPATIBILITY) } Glossary
 		| Note
 		| LinkReference
-		| Abbreviation
+		| &{ !ext(EXT_COMPATIBILITY) } Abbreviation
 		| HorizontalRule
 		| OrderedList
 		| BulletList
