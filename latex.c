@@ -827,7 +827,8 @@ void print_latex_node(GString *out, node *n, scratch_pad *scratch) {
 					g_string_append_printf(temp_str,"%c",toupper(n->str[i]));
 			}
 			g_string_append_printf(out, "\\begin{tabulary}{\\textwidth}{@{}%s@{}} \\toprule\n", temp_str->str);
-			g_string_free(temp_str, true);
+			scratch->table_alignment = temp_str->str;
+			g_string_free(temp_str, false);
 			break;
 		case TABLECAPTION:
 			if ((n->children != NULL) && (n->children->key == TABLELABEL)) {
@@ -857,11 +858,14 @@ void print_latex_node(GString *out, node *n, scratch_pad *scratch) {
 		case TABLEROW:
 			print_latex_node_tree(out, n->children, scratch);
 			g_string_append_printf(out, "\\\\\n");
+			scratch->table_column = 0;
 			break;
 		case TABLECELL:
 			scratch->padded = 2;
+			temp = scratch->table_alignment;
 			if ((n->children != NULL) && (n->children->key == CELLSPAN)) {
-				g_string_append_printf(out, "\\multicolumn{%d}{c}{",(int)strlen(n->children->str)+1);
+				g_string_append_printf(out, "\\multicolumn{%d}{%c}{",
+					(int)strlen(n->children->str)+1,tolower(temp[scratch->table_column]));
 			}
 			print_latex_node_tree(out, n->children, scratch);
 			if ((n->children != NULL) && (n->children->key == CELLSPAN)) {
@@ -869,6 +873,10 @@ void print_latex_node(GString *out, node *n, scratch_pad *scratch) {
 			}
 			if (n->next != NULL)
 				g_string_append_printf(out, "&");
+			if ((n->children != NULL) && (n->children->key == CELLSPAN)) {
+				scratch->table_column += (int)strlen(n->children->str);
+			}
+			scratch->table_column++;
 			break;
 		case CELLSPAN:
 			break;
