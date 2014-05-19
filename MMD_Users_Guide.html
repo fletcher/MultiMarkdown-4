@@ -430,7 +430,8 @@ formatting.</p>
 </code></pre>
 
 <p>This option tells MultiMarkdown to process the text included within <abbr title="HyperText Markup Language">HTML</abbr> tags
-in the source document.</p>
+in the source document. This can feature can also be implemented on a tag-by-tag
+basis within the document itself, such as <code>&lt;div markdown=&quot;1&quot;&gt;</code>.</p>
 
 <pre><code>multimarkdown -m, multimarkdown --metadata-keys
 </code></pre>
@@ -459,7 +460,10 @@ multimarkdown --reject
 multimarkdown --nosmart
 </code></pre>
 
-<p>Tell MultiMarkdown whether to use &#8220;smart&#8221; typography, similar to John Gruber&#8217;s <a href="http://daringfireball.net/projects/smartypants/">SmartyPants</a> program, which was includedin MultiMarkdown 2.0. This extension is turned on by default in MultiMarkdown.</p>
+<p>Tell MultiMarkdown whether to use &#8220;smart&#8221; typography, similar to John Gruber&#8217;s
+<a href="http://daringfireball.net/projects/smartypants/">SmartyPants</a> program, which
+was included in MultiMarkdown 2.0. This extension is turned on by default in
+MultiMarkdown.</p>
 
 <pre><code>multimarkdown --notes
 multimarkdown --nonotes

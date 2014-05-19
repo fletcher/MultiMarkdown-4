@@ -138,7 +138,8 @@ The `snippet` option forces the output of a "snippet", meaning that header and f
 	multimarkdown --process-html
 
 This option tells MultiMarkdown to process the text included within HTML tags
-in the source document.
+in the source document.  This can feature can also be implemented on a tag-by-tag
+basis within the document itself, such as `<div markdown="1">`.
 
 	multimarkdown -m, multimarkdown --metadata-keys
 
@@ -162,7 +163,10 @@ Tell MultiMarkdown whether to accept or reject changes in written in [CriticMark
 	multimarkdown --smart
 	multimarkdown --nosmart
 
-Tell MultiMarkdown whether to use "smart" typography, similar to John Gruber's [SmartyPants](http://daringfireball.net/projects/smartypants/) program, which was includedin MultiMarkdown 2.0. This extension is turned on by default in MultiMarkdown.
+Tell MultiMarkdown whether to use "smart" typography, similar to John Gruber's
+[SmartyPants](http://daringfireball.net/projects/smartypants/) program, which
+was included in MultiMarkdown 2.0. This extension is turned on by default in
+MultiMarkdown.
 
 
 	multimarkdown --notes

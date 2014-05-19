@@ -665,7 +665,8 @@ formatting.</text:p>
 
 
 <text:p text:style-name="Standard">This option tells MultiMarkdown to process the text included within HTML tags
-in the source document.</text:p>
+in the source document. This can feature can also be implemented on a tag-by-tag
+basis within the document itself, such as <text:span text:style-name="Source_20_Text">&lt;div markdown=&quot;1&quot;&gt;</text:span>.</text:p>
 
 <text:p text:style-name="Preformatted Text">multimarkdown -m, multimarkdown --metadata-keys<text:line-break/></text:p>
 
@@ -692,7 +693,10 @@ and could be used in other circumstances as well.</text:p>
 <text:p text:style-name="Preformatted Text">multimarkdown --smart<text:line-break/>multimarkdown --nosmart<text:line-break/></text:p>
 
 
-<text:p text:style-name="Standard">Tell MultiMarkdown whether to use &#8220;smart&#8221; typography, similar to John Gruber&#8217;s <text:a xlink:type="simple" xlink:href="http://daringfireball.net/projects/smartypants/">SmartyPants</text:a> program, which was includedin MultiMarkdown 2.0. This extension is turned on by default in MultiMarkdown.</text:p>
+<text:p text:style-name="Standard">Tell MultiMarkdown whether to use &#8220;smart&#8221; typography, similar to John Gruber&#8217;s
+<text:a xlink:type="simple" xlink:href="http://daringfireball.net/projects/smartypants/">SmartyPants</text:a> program, which
+was included in MultiMarkdown 2.0. This extension is turned on by default in
+MultiMarkdown.</text:p>
 
 <text:p text:style-name="Preformatted Text">multimarkdown --notes<text:line-break/>multimarkdown --nonotes<text:line-break/></text:p>
 
