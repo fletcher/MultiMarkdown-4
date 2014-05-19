@@ -685,10 +685,12 @@ and could be used in other circumstances as well.</text:p>
 
 <text:p text:style-name="Standard">Tell MultiMarkdown to use random identifier numbers for footnotes. Useful when you might combine multiple HTML documents together, e.g. in a weblog.</text:p>
 
-<text:p text:style-name="Preformatted Text">multimarkdown --accept<text:line-break/>multimarkdown --reject<text:line-break/></text:p>
+<text:p text:style-name="Preformatted Text">multimarkdown --accept<text:line-break/>multimarkdown --reject<text:line-break/>multimarkdown --accept --reject<text:line-break/></text:p>
 
 
-<text:p text:style-name="Standard">Tell MultiMarkdown whether to accept or reject changes in written in <text:a xlink:type="simple" xlink:href="http://criticmarkup.com/">CriticMarkup</text:a> format within the document.</text:p>
+<text:p text:style-name="Standard">Tell MultiMarkdown whether to accept or reject changes in written in
+<text:a xlink:type="simple" xlink:href="http://criticmarkup.com/">CriticMarkup</text:a> format within the document. Use both together if you
+want to highlight the differences &#8211; this only works for HTML output.</text:p>
 
 <text:p text:style-name="Preformatted Text">multimarkdown --smart<text:line-break/>multimarkdown --nosmart<text:line-break/></text:p>
 
