@@ -157,8 +157,11 @@ Tell MultiMarkdown to use random identifier numbers for footnotes.  Useful when 
 
 	multimarkdown --accept
 	multimarkdown --reject
+	multimarkdown --accept --reject
 
-Tell MultiMarkdown whether to accept or reject changes in written in [CriticMarkup] format within the document.
+Tell MultiMarkdown whether to accept or reject changes in written in
+[CriticMarkup] format within the document.  Use both together if you 
+want to highlight the differences -- this only works for HTML output.
 
 	multimarkdown --smart
 	multimarkdown --nosmart
