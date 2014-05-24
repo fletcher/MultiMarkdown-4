@@ -366,33 +366,34 @@ void print_latex_node(GString *out, node *n, scratch_pad *scratch) {
 			g_string_append_printf(out, "\\\\\n");
 			break;
 		case MATHSPAN:
-			if (n->str[0] == '$') {
-				if (n->str[1] == '$') {
-					if (strncmp(&n->str[2],"\\begin",5) == 0) {
-						n->str[strlen(n->str)-2] = '\0';
-						g_string_append_printf(out, "%s",&n->str[1]);
+			temp = strdup(n->str);
+			if (temp[0] == '$') {
+				if (temp[1] == '$') {
+					if (strncmp(&temp[2],"\\begin",5) == 0) {
+						temp[strlen(temp)-2] = '\0';
+						g_string_append_printf(out, "%s",&temp[1]);
 					} else {
-						g_string_append_printf(out, "%s",n->str);
+						g_string_append_printf(out, "%s",temp);
 					}
 				} else {
-					if (strncmp(&n->str[1],"\\begin",5) == 0) {
-						n->str[strlen(n->str)-1] = '\0';
-						g_string_append_printf(out, "%s",&n->str[1]);
+					if (strncmp(&temp[1],"\\begin",5) == 0) {
+						temp[strlen(temp)-1] = '\0';
+						g_string_append_printf(out, "%s",&temp[1]);
 					} else {
-						g_string_append_printf(out, "%s",n->str);
+						g_string_append_printf(out, "%s",temp);
 					}
 				}
-			} else if (strncmp(&n->str[2],"\\begin",5) == 0) {
+			} else if (strncmp(&temp[2],"\\begin",5) == 0) {
 				/* trim */
-				n->str[strlen(n->str)-3] = '\0';
-				g_string_append_printf(out, "%s", &n->str[2]);
+				temp[strlen(temp)-3] = '\0';
+				g_string_append_printf(out, "%s", &temp[2]);
 			} else {
-				if (n->str[strlen(n->str)-1] == ']') {
-					n->str[strlen(n->str)-3] = '\0';
-					g_string_append_printf(out, "%s\\]", n->str);
+				if (temp[strlen(temp)-1] == ']') {
+					temp[strlen(temp)-3] = '\0';
+					g_string_append_printf(out, "%s\\]", temp);
 				} else {
-					n->str[strlen(n->str)-3] = '\0';
-					g_string_append_printf(out, "$%s$", &n->str[2]);
+					temp[strlen(temp)-3] = '\0';
+					g_string_append_printf(out, "$%s$", &temp[2]);
 				}
 			}
 			break;
