@@ -116,7 +116,7 @@ void transclude_source(GString *source, char *basedir, char *stack, int output_f
 		g_string_append_c(folder, '/');
 	}
 
-	//fprintf(stderr, "Transclude using '%s'\n", folder->str);
+	/* fprintf(stderr, "Transclude using '%s'\n", folder->str); */
 
 	/* Iterate through {{foo.txt}} and substitute contents of file without metadata */
 
@@ -127,89 +127,93 @@ void transclude_source(GString *source, char *basedir, char *stack, int output_f
 		if (stop == NULL)
 			break;
 
-		// TODO: Need to check that we found something reasonable 
+		/* Check that we found something reasonable -- we cap at 1000 characters */
+        if (stop - start < 1000) {
+			strncpy(real,start+2,stop-start-2);
+			real[stop-start-2] = '\0';
 
-		strncpy(real,start+2,stop-start-2);
-		real[stop-start-2] = '\0';
+			filename = g_string_new(folder->str);
+			g_string_append_printf(filename, "%s",real);
 
-		filename = g_string_new(folder->str);
-		g_string_append_printf(filename, "%s",real);
+			/* Adjust for wildcard extensions */
+			/* But not if output_format == 0 */
+			if (output_format && strncmp(&filename->str[strlen(filename->str) - 2],".*",2) == 0) {
+				g_string_erase(filename, strlen(filename->str) - 2, 2);
+				if (output_format == TEXT_FORMAT) {
+					g_string_append(filename,".txt");
+				} else if (output_format == HTML_FORMAT) {
+					g_string_append(filename,".html");
+				} else if (output_format == LATEX_FORMAT) {
+					g_string_append(filename,".tex");
+				} else if (output_format == BEAMER_FORMAT) {
+					g_string_append(filename,".tex");
+				} else if (output_format == MEMOIR_FORMAT) {
+					g_string_append(filename,".tex");
+				} else if (output_format == ODF_FORMAT) {
+					g_string_append(filename,".fodt");
+				} else if (output_format == OPML_FORMAT) {
+					g_string_append(filename,".opml");
+				} else if (output_format == LYX_FORMAT) {
+					g_string_append(filename,".lyx");
+				} else if (output_format == RTF_FORMAT) {
+					g_string_append(filename,".rtf");
+				} else {
+					/* default extension -- in this case we only have 1 */
+					g_string_append(filename,".txt");
+				}
+			}
 
-		/* Adjust for wildcard extensions */
-		/* But not if output_format == 0 */
-		if (output_format && strncmp(&filename->str[strlen(filename->str) - 2],".*",2) == 0) {
-			g_string_erase(filename, strlen(filename->str) - 2, 2);
-			if (output_format == TEXT_FORMAT) {
-				g_string_append(filename,".txt");
-			} else if (output_format == HTML_FORMAT) {
-				g_string_append(filename,".html");
-			} else if (output_format == LATEX_FORMAT) {
-				g_string_append(filename,".tex");
-			} else if (output_format == BEAMER_FORMAT) {
-				g_string_append(filename,".tex");
-			} else if (output_format == MEMOIR_FORMAT) {
-				g_string_append(filename,".tex");
-			} else if (output_format == ODF_FORMAT) {
-				g_string_append(filename,".fodt");
-			} else if (output_format == OPML_FORMAT) {
-				g_string_append(filename,".opml");
-			} else if (output_format == LYX_FORMAT) {
-				g_string_append(filename,".lyx");
-			} else if (output_format == RTF_FORMAT) {
-				g_string_append(filename,".rtf");
+			pos = stop - source->str;
+
+			/* Don't reparse ourselves */
+			if (stack != NULL) {
+				temp = strstr(stack,filename->str);
+
+				if ((temp != NULL) && (temp[strlen(filename->str)] == '\n')){
+					start = strstr(source->str + pos,"{{");
+					g_string_free(filename, true);
+					continue;
+				}
+			}
+
+			/* Read file */
+			if ((input = fopen(filename->str, "r")) != NULL ) {
+				filebuffer = g_string_new("");
+
+				while ((curchar = fgetc(input)) != EOF)
+					g_string_append_c(filebuffer, curchar);
+				
+				fclose(input);
+
+	 			pos = start - source->str;
+
+				g_string_erase(source, pos, 2 + stop - start);
+
+				/* Update stack list */
+				stackstring = g_string_new(stack);
+				g_string_append_printf(stackstring,"%s\n",filename->str);
+
+
+				/* Recursively transclude files */
+				transclude_source(filebuffer, folder->str, stackstring->str, output_format);
+
+				temp = source_without_metadata(filebuffer->str, 0x000000);
+
+				g_string_insert(source, pos, temp);
+
+				pos += strlen(temp);
+				g_string_free(filebuffer, true);
+				g_string_free(stackstring, true);
 			} else {
-				/* default extension -- in this case we only have 1 */
-				g_string_append(filename,".txt");
+				/* fprintf(stderr, "error opening file: %s\n", filename->str); */
 			}
-		}
 
-		pos = stop - source->str;
-
-		/* Don't reparse ourselves */
-		if (stack != NULL) {
-			temp = strstr(stack,filename->str);
-
-			if ((temp != NULL) && (temp[strlen(filename->str)] == '\n')){
-				start = strstr(source->str + pos,"{{");
-				g_string_free(filename, true);
-				continue;
-			}
-		}
-
-		/* Read file */
-		if ((input = fopen(filename->str, "r")) != NULL ) {
-			filebuffer = g_string_new("");
-
-			while ((curchar = fgetc(input)) != EOF)
-				g_string_append_c(filebuffer, curchar);
-			
-			fclose(input);
-
- 			pos = start - source->str;
-
-			g_string_erase(source, pos, 2 + stop - start);
-
-			/* Update stack list */
-			stackstring = g_string_new(stack);
-			g_string_append_printf(stackstring,"%s\n",filename->str);
-
-
-			/* Recursively transclude files */
-			transclude_source(filebuffer, folder->str, stackstring->str, output_format);
-
-			temp = source_without_metadata(filebuffer->str, 0x000000);
-
-			g_string_insert(source, pos, temp);
-
-			pos += strlen(temp);
-			g_string_free(filebuffer, true);
-			g_string_free(stackstring, true);
-		} else {
-			/* fprintf(stderr, "error opening file: %s\n", filename->str); */
-		}
-
+            g_string_free(filename, true);
+        } else {
+        	/* Our "match" was > 1000 characters long */
+            pos = stop - source->str;
+        }
 		start = strstr(source->str + pos,"{{");
-		g_string_free(filename, true);
 	}
 
 	g_string_free(folder, true);

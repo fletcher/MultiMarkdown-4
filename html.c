@@ -314,20 +314,21 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 			g_string_append_printf(out, "<br/>\n");
 			break;
 		case MATHSPAN:
-			if (n->str[0] == '$') {
-				n->str[strlen(n->str)-1] = '\0';
-				if (n->str[1] == '$') {
-					n->str[strlen(n->str)-1] = '\0';
-					g_string_append_printf(out, "<span class=\"math\">\\[%s\\]</span>",&n->str[2]);
+			temp = strdup(n->str);
+			if (temp[0] == '$') {
+				temp[strlen(temp)-1] = '\0';
+				if (temp[1] == '$') {
+					temp[strlen(temp)-1] = '\0';
+					g_string_append_printf(out, "<span class=\"math\">\\[%s\\]</span>",&temp[2]);
 				} else {
-					g_string_append_printf(out, "<span class=\"math\">\\(%s\\)</span>",&n->str[1]);
+					g_string_append_printf(out, "<span class=\"math\">\\(%s\\)</span>",&temp[1]);
 				}
-			} else if (n->str[strlen(n->str) - 1] == ']') {
-				n->str[strlen(n->str) - 3] = '\0';
-				g_string_append_printf(out, "<span class=\"math\">%s\\]</span>",n->str);
+			} else if (temp[strlen(temp) - 1] == ']') {
+				temp[strlen(temp) - 3] = '\0';
+				g_string_append_printf(out, "<span class=\"math\">%s\\]</span>",temp);
 			} else {
-				n->str[strlen(n->str) - 3] = '\0';
-				g_string_append_printf(out, "<span class=\"math\">%s\\)</span>",n->str);
+				temp[strlen(temp) - 3] = '\0';
+				g_string_append_printf(out, "<span class=\"math\">%s\\)</span>",temp);
 			}
 			break;
 		case STRONG:

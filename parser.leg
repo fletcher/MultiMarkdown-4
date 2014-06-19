@@ -429,7 +429,7 @@ StrongUl = "__" !Whitespace
 		<"__">
 		{ $$ = list(STRONG, a); }
 
-StrongAndEmph = StrongAndEmphStar | StrongAndEmphUl | EmphAndStrongStar
+StrongAndEmph = StrongAndEmphStar | StrongAndEmphUl | EmphAndStrongStar | EmphAndStrongUl
 
 StrongAndEmphStar = "***" !Whitespace
 		a:StartList
@@ -455,6 +455,14 @@ StrongAndEmphUl = "___" !Whitespace
 		{
 			$$ = list(EMPH, a); 
 			$$ = list(STRONG, $$);
+		}
+
+EmphAndStrongUl = "_" &("__")
+		a:StartList 
+		( !('_' !'_') b:InlineNoEmph { a = cons(b, a); })+
+		<"_">
+		{
+			$$ = list(EMPH, a); 
 		}
 
 Link = ExplicitLink | ReferenceLink | AutoLink
