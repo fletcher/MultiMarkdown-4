@@ -2,7 +2,7 @@ latex input:	mmd-tufte-handout-header
 Title:	The Philosophy Behind MultiMarkdown  
 Author:	Fletcher T. Penney
 Version:	{{version.txt}}
-Revised:	2014-01-04 
+Revised:	2014-06-23  
 Base Header Level:	3  
 CSS:	{{css.txt}}
 MMD Footer:	links.txt
@@ -22,6 +22,20 @@ A central tenet of MultiMarkdown is that the focus is on *content*, not *present
 A well written MultiMarkdown document will look reasonably good whether you output to HTML, LaTeX, OpenDocument, etc.  It might not look perfect.  A page might break at an inopportune place.  The title page of a LaTeX document doesn't have an exact analogy in HTML.  HTML doesn't handle page breaks well.  
 
 If you're writing your thesis, publishing a book, or submitting a document to the board of directors --- by all means write in MultiMarkdown.  Focus on the content and overall structure.  And when you're ready, convert to your desired output format.  Proofread.  And when you're sure that you like what you've got, *then* focus on the aesthetics.  Insert a page break.  Tweak fonts.  Go wild.  But do it in a tool appropriate for the format you're using.  This might be a good programmer's text editor for HTML and CSS.  It might be [LyX]. It might be [LibreOffice].
+
+## The Purpose of MultiMarkdown ##
+
+In the years since MultiMarkdown was first released, I've received countless emails of all kinds.  A group stands out that seems to point to a philosophical difference between types of users.
+
+Computers are wonderful for doing the tedious sorts of things that humans tend to not enjoy and to suck at.  For example, I don't want to have to add all the columns in a spreadsheet by hand.  That's what computers are for.  Conversely, I don't want to read a novel written by a computer (at least not yet...)
+
+As applied to MultiMarkdown, it's purpose is to handle the tedium of applying repetitive formatting rules to text.  For example, having to wrap every single paragraph in `<p>` tags for a web site is really tedious.  The computer should be able to handle that easily.
+
+But the user should still understand *why* those `<p>` tags are necessary.  The goal of MultiMarkdown is not to say, "Don't worry your pretty little head about complicated things like HTML or LaTeX."  The goal is to allow you to learn and appreciate things like HTML and LaTeX without most of the tedium that goes along with marking up a document by hand.
+
+MultiMarkdown is not a magical "black box" that converts plain text to HTML with a lot of hand-waving and "pay no attention to the man behind the curtain."  Programs that use this approach tend to result in crappy output (e.g. Microsoft products, most apps to create web pages "for you", etc.)
+
+So when you're trying to do something fancy, or trying to trouble-shoot a problem, start at the end.  Look at the HTML/LaTeX/whatever that is generated and see what's going on at a fundamental level.  Once you understand that, then look at what MultiMarkdown is doing.  I believe you'll have an easier time solving problems, and probably learn a thing or two along the way....
 
 
 ## Feature Requests ##
