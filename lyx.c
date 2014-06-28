@@ -99,6 +99,7 @@ GString *heading_name[7];
   "CITATIONSOURCE",
   "SOURCEBRANCH",
   "NOTELABEL",
+  "GLOSSARYLABEL",
   "ATTRVALUE",
   "ATTRKEY",
   "GLOSSARYSOURCE",
@@ -1651,6 +1652,7 @@ void print_lyx_node(GString *out, node *n, scratch_pad *scratch, bool no_newline
 			fprintf(stderr,"SOURCEBRANCH\n");
 			break;
 		case NOTELABEL:
+		case GLOSSARYLABEL:
 			break;
 		case SUPERSCRIPT:
 			g_string_append_printf(out, "\n\\begin_inset script superscript\n\n\\begin_layout Plain Layout\n%s\n\\end_layout\n\n\\end_inset\n",n->str);

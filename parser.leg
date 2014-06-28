@@ -705,7 +705,7 @@ Glossary =  &{ ext(EXT_NOTES) }
 		{
 			node *label;
 			label = str(ref->str);
-			label->key = NOTELABEL;
+			label->key = GLOSSARYLABEL;
 			a = cons(label,a);
 			$$ = list(GLOSSARYSOURCE, a);
 			$$->str = strdup(ref->str);

@@ -449,6 +449,7 @@ void print_rtf_node(GString *out, node *n, scratch_pad *scratch) {
 			g_string_append_printf(out, "\\\n");
 			break;
 		case NOTELABEL:
+		case GLOSSARYLABEL:
 		case FOOTER:
 		case LINKREFERENCE:
 			break;

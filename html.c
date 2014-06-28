@@ -829,6 +829,7 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 			fprintf(stderr,"SOURCEBRANCH\n");
 			break;
 		case NOTELABEL:
+		case GLOSSARYLABEL:
 			break;
 		case SUPERSCRIPT:
 			g_string_append_printf(out, "<sup>%s</sup>",n->str);
