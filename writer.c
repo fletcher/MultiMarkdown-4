@@ -239,7 +239,7 @@ void extract_abbreviations(node *list, scratch_pad *scratch) {
 /* find_abbreviations -- use abbreviations to look for matching strings */
 void find_abbreviations(node *list, scratch_pad *scratch) {
 	node *abbr = scratch->abbreviations;
-	node *temp, *target, *end;
+	node *temp, *target, *end = NULL;
 	bool ismatch;
 
 	// Don't look if we didn't define any abbreviations */
