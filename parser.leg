@@ -740,9 +740,9 @@ Code = ( Ticks1 Sp < ( ( !'`' Nonspacechar )+ | !Ticks1 '`'+ | !( Sp Ticks1 ) ( 
 FenceType = Sp RawLine
 		{ $$ = str(yytext); $$->key = VERBATIMTYPE; }
 
-Fenced = (( Ticks3 a:FenceType < ( (!Ticks3 NonMatchingRawLine)* ) > Ticks3 Newline ) |
-		( Ticks4 a:FenceType < ( (!Ticks4 NonMatchingRawLine)* ) > Ticks4 Newline ) |
-		( Ticks5 a:FenceType < ( (!Ticks5 NonMatchingRawLine)* ) > Ticks5 Newline ) )
+Fenced = (( Ticks3 a:FenceType < ( (!Ticks3 NonMatchingRawLine)* ) > Ticks3 Sp Newline ) |
+		( Ticks4 a:FenceType < ( (!Ticks4 NonMatchingRawLine)* ) > Ticks4 Sp Newline ) |
+		( Ticks5 a:FenceType < ( (!Ticks5 NonMatchingRawLine)* ) > Ticks5 Sp Newline ) )
 	{
 		$$ = str(yytext); $$->key = VERBATIM;
 		$$->children = a;
