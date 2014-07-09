@@ -2,7 +2,7 @@ latex input:	mmd-tufte-handout-header
 Title:	Glossaries
 Author:	Fletcher T. Penney
 Version:	{{version.txt}}
-Revised:	2014-01-04 
+Revised:	2014-07-09  
 Base Header Level:	2
 CSS:	{{css.txt}}
 MMD Footer:	links.txt
