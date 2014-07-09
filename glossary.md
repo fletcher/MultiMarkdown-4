@@ -1,5 +1,5 @@
 latex input:	mmd-tufte-handout-header
-Title:	Gloassaries
+Title:	Glossaries
 Author:	Fletcher T. Penney
 Version:	{{version.txt}}
 Revised:	2014-01-04 
