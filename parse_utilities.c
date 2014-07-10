@@ -200,8 +200,16 @@ node * reverse_list(node *list) {
 
 /* append_list -- add element to end of list; slower than cons */
 void append_list(node *new, node *list) {
-	if (new != NULL) {
+
+    /* If we append to an empty list... */
+    if (list == NULL) {
+        list = new;
+        return;
+    }
+    
+    if (new != NULL) {
 		node *step = list;
+        
 		
 		while (step->next != NULL) {
 			step = step->next;
