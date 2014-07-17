@@ -282,7 +282,8 @@ void find_abbreviations(node *list, scratch_pad *scratch) {
 							list->children = temp;
 							if (list != end) {
 								list->key = ABBRSTART;
-								end->key = ABBRSTOP;
+                                if (end != NULL)
+                                    end->key = ABBRSTOP;
 							} else {
 								list->key = ABBR;
 							}

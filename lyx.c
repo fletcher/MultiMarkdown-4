@@ -805,7 +805,6 @@ void print_lyx_node(GString *out, node *n, scratch_pad *scratch, bool no_newline
 			#ifdef DEBUG_ON
 	          fprintf(stderr, "\nStart List Item\n");
             #endif
-            i = 0;
             old_type = scratch->lyx_para_type;
 			temp_node = n-> children; /* should be a list node */
 			if(temp_node->children == NULL) {

@@ -438,6 +438,12 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 #ifdef DEBUG_ON
 	fprintf(stderr, "print image\n");
 #endif
+            /* Verify all is well */
+            if (n->link_data == NULL) {
+                fprintf(stderr, "Invalid IMAGEBLOCK or IMAGE -- (null) link_data\n");
+                exit(EXIT_FAILURE);
+            }
+                
 			/* Stash a copy of the link data */
 			if (n->link_data != NULL)
 				temp_link_data = mk_link_data(n->link_data->label, n->link_data->source, n->link_data->title, n->link_data->attr);

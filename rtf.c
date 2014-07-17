@@ -379,7 +379,7 @@ void print_rtf_node(GString *out, node *n, scratch_pad *scratch) {
 						scratch->odf_para_type = CITATION;
 						
 						/* change to represent cite count only */
-						lev = cite_count_node_from_end(temp_node);
+						// lev = cite_count_node_from_end(temp_node);
 						g_string_append_printf(out, "{\\super\\chftn}{\\footnote\\ftnalt\\pard\\plain\\chtfn ");
 						scratch->padded = 2;
 						if (temp_node->children != NULL) {
@@ -392,7 +392,7 @@ void print_rtf_node(GString *out, node *n, scratch_pad *scratch) {
 						/* We are reusing a previous citation */
 
 						/* Change lev to represent cite count only */
-						lev = cite_count_node_from_end(temp_node);
+						// lev = cite_count_node_from_end(temp_node);
 					
 						g_string_append_printf(out, "REUSE CITATION");
 					}
