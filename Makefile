@@ -34,8 +34,11 @@ $(GREG): greg
 $(PROGRAM) : $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $(OBJS)
 
-install: $(PROGRAM)
+install: $(PROGRAM) | $(prefix)/bin
 	install -m 0755 multimarkdown $(prefix)/bin
+
+$(prefix)/bin:
+	-mkdir $(prefix)/bin  2>/dev/null
 
 install-scripts:
 	install -m 0755 scripts/* $(prefix)/bin
