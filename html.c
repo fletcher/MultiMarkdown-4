@@ -544,10 +544,15 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 			}
 			g_string_append_printf(out, " />");
 			if (n->key == IMAGEBLOCK) {
-				if ((n->children != NULL) && (n->children->children != NULL) && (n->children->children->str != NULL)) {
-					g_string_append_printf(out, "\n<figcaption>");
-					print_html_node(out,n->children,scratch);
-					g_string_append_printf(out, "</figcaption>");
+				if (n->children != NULL) {
+					temp_str = g_string_new("");
+					print_html_node(temp_str,n->children,scratch);
+					if (temp_str->currentStringLength > 0) {
+						g_string_append_printf(out, "\n<figcaption>");
+						g_string_append(out, temp_str->str);
+						g_string_append_printf(out, "</figcaption>");
+					}
+					g_string_free(temp_str, true);
 				}
 				g_string_append_printf(out,"\n</figure>");
 				scratch->padded = 0;
