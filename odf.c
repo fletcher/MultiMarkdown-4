@@ -515,12 +515,17 @@ void print_odf_node(GString *out, node *n, scratch_pad *scratch) {
 			g_string_append_printf(out," xlink:type=\"simple\" xlink:show=\"embed\" xlink:actuate=\"onLoad\" draw:filter-name=\"&lt;All formats&gt;\"/>\n</draw:frame></text:p>");
 
 			if (n->key == IMAGEBLOCK) {
-				g_string_append_printf(out,"<text:p>");
 				if (n->children != NULL) {
-					g_string_append_printf(out, "Figure <text:sequence text:name=\"Figure\" text:formula=\"ooow:Figure+1\" style:num-format=\"1\"> Update Fields to calculate numbers</text:sequence>: ");
-					print_odf_node_tree(out, n->children, scratch);
+					temp_str = g_string_new("");
+					print_odf_node_tree(temp_str,n->children,scratch);
+					if (temp_str->currentStringLength > 0) {
+					g_string_append_printf(out, "<text:p>Figure <text:sequence text:name=\"Figure\" text:formula=\"ooow:Figure+1\" style:num-format=\"1\"> Update Fields to calculate numbers</text:sequence>: ");
+						g_string_append(out, temp_str->str);
+						g_string_append_printf(out, "</text:p>");
+					}
+					g_string_free(temp_str, true);
 				}
-				g_string_append_printf(out, "</text:p></draw:text-box></draw:frame>\n</text:p>\n");
+				g_string_append_printf(out, "</draw:text-box></draw:frame>\n</text:p>\n");
 			} else {
 				g_string_append_printf(out, "</draw:text-box></draw:frame>\n");
 			}

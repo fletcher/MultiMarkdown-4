@@ -623,10 +623,16 @@ void print_latex_node(GString *out, node *n, scratch_pad *scratch) {
 			
 			if (n->key == IMAGEBLOCK) {
 				if (n->children != NULL) {
-					g_string_append_printf(out, "\n\\caption{");
-					print_latex_node_tree(out, n->children, scratch);
-					g_string_append_printf(out, "}");
+					temp_str = g_string_new("");
+					print_latex_node_tree(temp_str,n->children,scratch);
+					if (temp_str->currentStringLength > 0) {
+						g_string_append_printf(out, "\n\\caption{");
+						g_string_append(out, temp_str->str);
+						g_string_append_printf(out, "}");
+					}
+					g_string_free(temp_str, true);
 				}
+				
 				if (n->link_data->label != NULL) {
 					temp = label_from_string(n->link_data->label);
 					g_string_append_printf(out, "\n\\label{%s}",temp);
