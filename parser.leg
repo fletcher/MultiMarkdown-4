@@ -752,11 +752,11 @@ Fenced = (( Ticks3 a:FenceType < ( (!Ticks3 NonMatchingRawLine)* ) > Ticks3 Sp N
 Smart = &{ ext(EXT_SMART) }
         ( Ellipsis | Dash | SingleQuoted | DoubleQuoted | Apostrophe )
 
-Apostrophe = '\''
-		{ $$ = node(APOSTROPHE); }
+Apostrophe = <'\''>
+		{ $$ = str(yytext); $$->key = APOSTROPHE; }
 
-Ellipsis = ("..." | ". . .")
-		{ $$ = node(ELLIPSIS); }
+Ellipsis = < ("..." | ". . .") >
+		{ $$ = str(yytext); $$->key = ELLIPSIS; }
 
 Dash = EmDash | EnDash
 
