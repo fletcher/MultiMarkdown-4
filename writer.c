@@ -83,19 +83,19 @@ char * export_node_tree(node *list, int format, unsigned long extensions) {
 #endif
 			break;
 		case LATEX_FORMAT:
-			if (list->key != METADATA) {
+			if ((list != NULL) && (list->key != METADATA)) {
 				print_latex_node_tree(out, scratch->abbreviations, scratch);
 			}
 			print_latex_node_tree(out, list, scratch);
 			break;
 		case MEMOIR_FORMAT:
-			if (list->key != METADATA) {
+			if ((list != NULL) && (list->key != METADATA)) {
 				print_memoir_node_tree(out, scratch->abbreviations, scratch);
 			}
 			print_memoir_node_tree(out, list, scratch);
 			break;
 		case BEAMER_FORMAT:
-			if (list->key != METADATA) {
+			if ((list != NULL) && (list->key != METADATA)) {
 				print_beamer_node_tree(out, scratch->abbreviations, scratch);
 			}
 			print_beamer_node_tree(out, list, scratch);
@@ -282,7 +282,8 @@ void find_abbreviations(node *list, scratch_pad *scratch) {
 							list->children = temp;
 							if (list != end) {
 								list->key = ABBRSTART;
-								end->key = ABBRSTOP;
+                                if (end != NULL)
+                                    end->key = ABBRSTOP;
 							} else {
 								list->key = ABBR;
 							}

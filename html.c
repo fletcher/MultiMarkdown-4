@@ -438,6 +438,12 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 #ifdef DEBUG_ON
 	fprintf(stderr, "print image\n");
 #endif
+            /* Verify all is well */
+            if (n->link_data == NULL) {
+                fprintf(stderr, "Invalid IMAGEBLOCK or IMAGE -- (null) link_data\n");
+                exit(EXIT_FAILURE);
+            }
+                
 			/* Stash a copy of the link data */
 			if (n->link_data != NULL)
 				temp_link_data = mk_link_data(n->link_data->label, n->link_data->source, n->link_data->title, n->link_data->attr);
@@ -538,10 +544,15 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 			}
 			g_string_append_printf(out, " />");
 			if (n->key == IMAGEBLOCK) {
-				if ((n->children != NULL) && (n->children->children != NULL) && (n->children->children->str != NULL)) {
-					g_string_append_printf(out, "\n<figcaption>");
-					print_html_node(out,n->children,scratch);
-					g_string_append_printf(out, "</figcaption>");
+				if (n->children != NULL) {
+					temp_str = g_string_new("");
+					print_html_node(temp_str,n->children,scratch);
+					if (temp_str->currentStringLength > 0) {
+						g_string_append_printf(out, "\n<figcaption>");
+						g_string_append(out, temp_str->str);
+						g_string_append_printf(out, "</figcaption>");
+					}
+					g_string_free(temp_str, true);
 				}
 				g_string_append_printf(out,"\n</figure>");
 				scratch->padded = 0;

@@ -598,7 +598,7 @@ AttrKey = < AlphanumericAscii+ >
 AttrValue = (QuotedValue | UnQuotedValue)
 		{ $$ = str(yytext); $$->key = ATTRVALUE; }
 
-RefSrc = < Nonspacechar+ > 
+RefSrc = ( '<' < (!'>' Nonspacechar)+ > '>' | < Nonspacechar+ > )
 	{
 		char *tmp = strdup(yytext);
 		if ((tmp[0] == '<') &&
