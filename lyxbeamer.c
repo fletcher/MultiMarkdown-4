@@ -21,6 +21,8 @@
 #include "lyxbeamer.h"
 #include "lyx.h"
 
+bool need_fragile; // if the frame needs to be fragile
+
 /* print_beamer_node_tree -- convert node tree to LyX */
 void print_lyxbeamer_node_tree(GString *out, node *list, scratch_pad *scratch, bool no_newline) {
 	while (list != NULL) {
@@ -47,15 +49,18 @@ void print_lyxbeamer_node(GString *out, node *n, scratch_pad *scratch, bool no_n
 		}
 	switch (n->key) {
 		case FOOTER:
-			if (scratch->lyx_fragile){  // have an open fragile
-				      g_string_append(out,"\n\\end_inset");
-				      g_string_append(out,"\n\\end_layout");
+			if (scratch->lyx_in_frame){  // have an open frame
+				      g_string_append(out,"\n\\end_deeper");
+//				      g_string_append(out,"\n\\end_layout");
+				      g_string_append(out, "\n\\begin_layout Separator");
+					  g_string_append(out, "\n\\end_layout");
         	}
-        	scratch->lyx_fragile = FALSE; 
+        	scratch->lyx_in_frame = FALSE; 
         	print_lyxbeamer_endnotes(out, scratch);
 			break;
         case BULLETLIST:
 		case ORDEREDLIST:
+			scratch -> lyx_beamerbullet = TRUE;
 		case DEFLIST:
 			old_type = scratch->lyx_para_type;
 			scratch->lyx_para_type = n->key;
@@ -75,7 +80,6 @@ void print_lyxbeamer_node(GString *out, node *n, scratch_pad *scratch, bool no_n
             }
 			break;
 		case LISTITEM:
-			scratch-> lyx_beamerbullet = TRUE;
 			temp_node = n-> children; // should be a list node
 			if (temp_node->key != LIST){
 				fprintf(stderr,"\nUnanticipated List Item Format");
@@ -99,16 +103,18 @@ void print_lyxbeamer_node(GString *out, node *n, scratch_pad *scratch, bool no_n
 					g_string_append(out,"\n\\end_deeper\n");
 				}
 			}
-			scratch-> lyx_beamerbullet = TRUE;
 			break;
         case HEADINGSECTION:
-        	if (scratch->lyx_fragile){  // have an open fragile
-				      g_string_append(out,"\n\\end_inset");
-				      g_string_append(out,"\n\\end_layout");
+        	if (scratch->lyx_in_frame){  // have an open frame
+				      g_string_append(out,"\n\\end_deeper");
+//				      g_string_append(out,"\n\\end_layout");
+				      g_string_append(out, "\n\\begin_layout Separator");
+					  g_string_append(out, "\n\\end_layout");
         	}
-        	scratch->lyx_fragile = FALSE;
+        	scratch->lyx_in_frame = FALSE;
+        	need_fragile = FALSE;
         	if (tree_contains_key(n->children,VERBATIM)) {
-					scratch->lyx_fragile = TRUE;
+					need_fragile = TRUE;
 				}
 			print_lyxbeamer_node_tree(out,n->children,scratch , FALSE);
 			break;
@@ -122,20 +128,15 @@ void print_lyxbeamer_node(GString *out, node *n, scratch_pad *scratch, bool no_n
 					g_string_append(out, "\n\\begin_layout Section\n");
 					break;
 				case 3:
-					if (scratch->lyx_fragile) {
-					g_string_append(out, "\n\\begin_layout EndFrame");
-					g_string_append(out, "\n\\end_layout");
-					g_string_append(out, "\n\\begin_layout Standard");
-					g_string_append(out,"\n\\begin_inset Flex FragileFrame");
-					g_string_append(out,"\nstatus open\n\n");
+					if (need_fragile) {
+					  g_string_append(out, "\n\\begin_layout FragileFrame");
+				    } else {
+					  g_string_append(out, "\n\\begin_layout Frame");
+				    };	
+					g_string_append(out,"\n\\begin_inset Argument 4");
+					g_string_append(out,"\nstatus open\n");
 					g_string_append(out,"\n\\begin_layout Plain Layout\n");
-					g_string_append(out,"\n\\begin_inset Flex FragileTitle");
-					g_string_append(out,"\nstatus open\n\n");
-					g_string_append(out,"\n\\begin_layout Plain Layout\n");
-					
-				} else {
-					g_string_append(out, "\n\\begin_layout BeginFrame\n");
-				}
+				    scratch->lyx_in_frame = TRUE;
 					break;
 				case 4:
 					g_string_append(out,"\n\\begin_layout Standard");
@@ -179,13 +180,10 @@ void print_lyxbeamer_node(GString *out, node *n, scratch_pad *scratch, bool no_n
 				    g_string_append(out,"\n\\end_layout\n");
 					break;
 				case 3:
-					if (scratch->lyx_fragile){ 
-					  g_string_append(out,"\n\\end_layout");
-				      g_string_append(out,"\n\\end_inset");
-				      g_string_append(out,"\n\\end_layout\n");
-				}   else{
-					  g_string_append(out, "\n\\end_layout\n");
-				}  
+					  g_string_append(out,"\n\\end_layout\n");
+					  g_string_append(out,"\n\\end_inset\n");
+					  g_string_append(out,"\n\\end_layout\n");
+				      g_string_append(out,"\n\\begin_deeper\n");
 					break;
 				case 4:
 					g_string_append(out,"\n\\end_layout");

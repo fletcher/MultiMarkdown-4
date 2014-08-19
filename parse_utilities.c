@@ -293,7 +293,7 @@ scratch_pad * mk_scratch_pad(unsigned long extensions) {
 	result->lyx_debug_pad = g_string_new(""); /* CRC - initally, no indent */
 	result->lyx_definition_hit = TRUE;        /* CRC - initialize to have hit it (closed) */
 	result->lyx_definition_open = FALSE;      /* CRC - don't have an open definition */
-	result->lyx_fragile = FALSE;              /* CRC - not in a fragile section */
+	result->lyx_in_frame = FALSE;             /* CRC - not in a frame */
 	result->lyx_beamerbullet = FALSE;         /* CRC - not in a beamer bullet */
 	result->lyx_debug_nest = 0;               /* CRC - no nesting yet */
 	result->lyx_table_need_line = FALSE;      /* CRC - No table yet */

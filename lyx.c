@@ -31,6 +31,7 @@
 /* allow the user to change the heading levels */
 
 GString *heading_name[7];
+GString *used_abbreviations;
 
 #if defined(DEBUG_ON) || defined(DUMP_TREES)
   const char * const node_types[] = {
@@ -114,6 +115,11 @@ GString *heading_name[7];
   "CRITICCOMMENT",
   "SUPERSCRIPT",
   "SUBSCRIPT",
+  "VARIABLE",
+  "ABBREVIATION",
+  "ABBR",
+  "ABBRSTART",
+  "ABBRSTOP",
   "KEY_COUNTER"
   }; 
   
@@ -155,6 +161,7 @@ void perform_lyx_output(GString *out, node* list, scratch_pad *scratch)
 	node *headings;
 	node *base_header_level;
 	char *key;
+
 	
 #ifdef DUMP_TREES
       fprintf(stderr, "\n*** Base Tree ***\n");
@@ -180,6 +187,7 @@ void perform_lyx_output(GString *out, node* list, scratch_pad *scratch)
 		   affect creating the prefixes */
 	
 	GString *lyx_headings = g_string_new("");
+	used_abbreviations = g_string_new("");
 	int hcount;
 	hcount = 0;
 	const char s[2] = ",";
@@ -241,7 +249,7 @@ void perform_lyx_output(GString *out, node* list, scratch_pad *scratch)
 	for (i=0;i<=6;i++){
 		g_string_free(heading_name[i],TRUE);   
 	}
-	
+    g_string_free(used_abbreviations,TRUE);
 }
 
 /* begin_lyx_output -- Check metadata and open the document */
@@ -466,9 +474,6 @@ bool begin_lyx_output(GString *out, node* list, scratch_pad *scratch) {
 			free(token);
 		} 
 	}
-	if(isbeamer){
-	  g_string_append(out,"beamer-fragile\n");
-	}
 	 g_string_append(out,"\\end_modules\n");
 	
 	g_string_append(out,"\\bibtex_command default\n");
@@ -561,7 +566,7 @@ void end_lyx_output(GString *out, node* list, scratch_pad *scratch) {
 if (tree_contains_key(list, METAKEY)) {
 		content = metadata_for_key("bibtex",list);
 		if (content != NULL) {
-			g_string_append(out, "\n\\begin_layout Standart\n");
+			g_string_append(out, "\n\\begin_layout Standard\n");
 			g_string_append(out,"\n\\begin_inset CommandInset bibtex");
 			g_string_append(out,"\nLatexCommand bibtex");
 			value = metavalue_for_key("bibtex",list);
@@ -646,6 +651,56 @@ void print_lyx_node(GString *out, node *n, scratch_pad *scratch, bool no_newline
 		case STR:
 			print_lyx_string(out,n->str, scratch,LYX_NONE);
 			break;
+		case ABBREVIATION: 
+		   // this work was done in writer.c
+			break;
+		case ABBRSTART:
+			/* Strip out nodes that are being replaced with the abbreviation */
+			temp_node = n->next;
+			while (temp_node->key != ABBRSTOP) {
+				n->next = temp_node->next;
+				temp_node->next = NULL;
+				free_node(temp_node);
+				temp_node = n->next;
+			}
+			n->next = temp_node->next;
+			temp_node->next = NULL;
+			free_node(temp_node);
+		case ABBR:
+			/* In either case, now we call on the abbreviation */
+//			width = ascii_label_from_node(n->children->children);
+            width = string_from_node_tree(n->children->children);
+//			temp = ascii_label_from_string(n->children->str);
+			temp_str = g_string_new("");
+		    g_string_append_printf(temp_str,"[%s]",width);
+		    if(strstr(used_abbreviations->str,temp_str->str)){
+		    	g_string_append(out,width); // just the abbrev
+		    }
+		    else
+		    {
+		    g_string_append(used_abbreviations,temp_str->str);
+		      
+			
+			g_string_append(out,n->children->str);
+			g_string_append_printf(out," (%s)",width);
+			
+			
+			g_string_append(out,"\n\\begin_inset CommandInset nomenclature");
+			g_string_append(out,"\nLatexCommand nomenclature");
+     		g_string_append_printf(out,"\nsymbol \"%s\"",width);
+			g_string_append(out,"\ndescription \"");
+//            g_string_append(out,n->children->str);
+            temp = escape_string(n->children->str);
+            g_string_append(out,temp);
+			g_string_append(out,"\"");		
+			g_string_append(out, "\n\\end_inset\n");
+            }
+            g_string_free(temp_str,TRUE);
+			free(temp);
+			free(width);
+			break;
+		case ABBRSTOP:
+			break;
 		case SPACE:
 			if (strncmp(n->str,"\n",1)==0){
 			  if (no_newline){
@@ -685,16 +740,26 @@ void print_lyx_node(GString *out, node *n, scratch_pad *scratch, bool no_newline
 					break;
 				case ORDEREDLIST:
 					g_string_append(out, "\n\\begin_layout Enumerate\n");
-					break;
-				case BULLETLIST:
-					g_string_append(out, "\n\\begin_layout Itemize\n");
-					if (scratch-> lyx_beamerbullet){
-					  g_string_append(out,"\n\\begin_inset ERT");
-					  g_string_append(out,"\nstatus collapsed\n");
+			    	if (scratch-> lyx_beamerbullet){
+					  g_string_append(out,"\n\\begin_inset Argument 1");
+					  g_string_append(out,"\nstatus open\n");
 					  g_string_append(out,"\n\\begin_layout Plain Layout");
 					  g_string_append(out,"\n<+->");
 					  g_string_append(out,"\n\\end_layout\n");
 					  g_string_append(out,"\n\\end_inset\n");
+					  scratch -> lyx_beamerbullet = FALSE;
+					}
+					break;
+				case BULLETLIST:
+					g_string_append(out, "\n\\begin_layout Itemize\n");
+					if (scratch-> lyx_beamerbullet){
+					  g_string_append(out,"\n\\begin_inset Argument 1");
+					  g_string_append(out,"\nstatus open\n");
+					  g_string_append(out,"\n\\begin_layout Plain Layout");
+					  g_string_append(out,"\n+-");
+					  g_string_append(out,"\n\\end_layout\n");
+					  g_string_append(out,"\n\\end_inset\n");
+					  scratch -> lyx_beamerbullet = FALSE;
 					}
 					break;
 				case NOTEREFERENCE:
@@ -743,9 +808,9 @@ void print_lyx_node(GString *out, node *n, scratch_pad *scratch, bool no_newline
 			if (strncmp(n->str,"<!--",4) == 0) {
 				/* trim "-->" from end */
 				n->str[strlen(n->str)-3] = '\0';
-				g_string_append(out, "\n\\begin_layout Plain\n\\begin_inset ERT\nstatus collapsed\n\n\\begin_layout Plain Layout\n\n");
+				g_string_append(out, "\n\\begin_layout Plain Layout\n\\begin_inset ERT\nstatus collapsed\n\n\\begin_layout Plain Layout\n\n");
                 print_latex_string(out,&n->str[4],scratch);				
-				g_string_append(out,"\n\n\\end_layout\n\\end_inset\n\\end_layout\n");
+				g_string_append(out,"\n\n\\end_layout\n\n\\end_inset\n\\end_layout\n");
 			}
 			break;
 		case VERBATIM:
@@ -1431,8 +1496,10 @@ void print_lyx_node(GString *out, node *n, scratch_pad *scratch, bool no_newline
 			if (strncmp(n->str,"<!--",4) == 0) {
 				/* trim "-->" from end */
 				n->str[strlen(n->str)-3] = '\0';
+//				g_string_append(out, "\n\\begin_layout Plain Layout\n\\begin_inset ERT\nstatus collapsed\n\n\\begin_layout Plain Layout\n\n");
 				g_string_append(out, "\n\\begin_inset ERT\nstatus collapsed\n\n\\begin_layout Plain Layout\n\n");
                 print_lyx_string(out,&n->str[4],scratch,LYX_NONE);				
+//              g_string_append(out,"\n\n\\end_layout\n\\end_inset\n\\end_layout\n");
 				g_string_append(out,"\n\n\\end_layout\n\\end_inset\n");
 			}
 			break;
@@ -1671,25 +1738,36 @@ void print_lyx_node(GString *out, node *n, scratch_pad *scratch, bool no_newline
 /* print_lyx_endnotes */
 void print_lyx_endnotes(GString *out, scratch_pad *scratch) {
 	node *temp_node;
+	bool do_nomenclature;
 	scratch->used_notes = reverse_list(scratch->used_notes);
 	node *note = scratch->used_notes;
 #ifdef DEBUG_ON
 	fprintf(stderr, "start endnotes\n");
 #endif
 
-    	    /* Handle Glossary */
-    temp_node = note;
-    while (temp_node != NULL){
-    	if(temp_node->key == GLOSSARYSOURCE){
+    	    /* Handle Glossary or abbreviations */
+    do_nomenclature = false;
+	if (strcmp(used_abbreviations->str,"")!=0){  // if any abbreviations have been used, print a glossary
+	  do_nomenclature = true; 
+	} else
+	{
+      temp_node = note;
+      while (temp_node != NULL){
+      	  if(temp_node->key == GLOSSARYSOURCE){
+          do_nomenclature = true;
+    	  break;
+          }
+	  temp_node = temp_node->next;
+	  }
+    }
+	
+	if (do_nomenclature){
     	g_string_append(out,"\n\\begin_layout Standard");
     	g_string_append(out,"\n\\begin_inset CommandInset nomencl_print");
     	g_string_append(out,"\nLatexCommand printnomenclature");
     	g_string_append(out,"\nset_width \"auto\"\n");
     	g_string_append(out,"\n\\end_inset\n");
     	g_string_append(out,"\n\\end_layout\n");
-    	break;
-        }
-		temp_node = temp_node->next;
 	}
 
 	if (note == NULL)
@@ -1834,9 +1912,11 @@ void print_lyx_localized_typography(GString *out, unsigned char character, scrat
 /* print_lyx_string - print string, escaping and formatting for LYX */
 void print_lyx_string(GString *out, char *str, scratch_pad *scratch, short environment) {
 	char *tmp;
+	char *start;
 	unsigned char extended_character;
 	if (str == NULL)
 		return;
+	start = str;	/* Store start of string */
 	if (environment == LYX_PLAIN) {
 	   g_string_append(out,"\n\\begin_layout Plain Layout\n\n");
     }   
@@ -1873,7 +1953,7 @@ void print_lyx_string(GString *out, char *str, scratch_pad *scratch, short envir
 			    } else {
 	  				tmp = str;
 					tmp--;
-					if (*tmp == ' ') {
+					if ((tmp > start) && (*tmp == ' ')) {
 						g_string_append(out,"\n");
 					} else {
 						g_string_append(out, "\n "); /* add a space */
@@ -1883,14 +1963,14 @@ void print_lyx_string(GString *out, char *str, scratch_pad *scratch, short envir
 			case '<': /* look for HTML comment LaTeX escape */
 			    if ( (environment != LYX_CODE) && (environment != LYX_PLAIN) && (strncmp(str,"<!--",4) == 0)){
 			       str+=4; /* move past delimeter */
-			       	g_string_append(out, "\n\\begin_inset ERT\nstatus collapsed\n\n\\begin_layout Plain Layout\n\n");
+			       	g_string_append(out, "\n\\begin_layoutPlain Layout\n\\begin_inset ERT\nstatus collapsed\n\n\\begin_layout Plain Layout\n\n");
                     while(strncmp(str,"-->",3) !=0){
                     	switch (*str){
                     	  case '\\':
 				            g_string_append(out,"\n\\backslash\n\n");
 				            break;
 			              case '\"':
-                            g_string_append(out,"\n\\begin_inset Quotes erd\n\\end_inset\n");
+                            g_string_append(out,"\n\\begin_inset Quotes erd\n\\end_inset\n\\end_layout\n");
 				            break;
                     	  default: 
                     	    g_string_append_c(out,*str);
@@ -2163,3 +2243,19 @@ void print_escaped_node(GString *out, node *n) {
 	  }
     	print_escaped_node_tree(out, n->children);
 	}
+	/* escape string - replace double quotes with escaped version */
+char * escape_string(char *str) {
+	GString *out = g_string_new("");
+	char *clean;
+	while (*str != '\0') {
+		if (*str == '"') {
+				g_string_append(out, "\\\"");
+		} else {
+			g_string_append_c(out, *str);
+		}
+		str++;
+	}
+	clean = out->str;
+	g_string_free(out, false);
+	return clean;
+}
