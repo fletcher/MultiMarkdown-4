@@ -1499,6 +1499,7 @@ void print_lyx_node(GString *out, node *n, scratch_pad *scratch, bool no_newline
 			g_string_append(out,"\n\\end_inset");
 			g_string_append(out, "\n\\end_layout\n");
 			scratch->lyx_table_caption = NULL;
+			scratch->table_alignment = NULL;
 			break;
 		case TABLESEPARATOR:
 			colwidth = 100/scratch->lyx_table_total_cols;

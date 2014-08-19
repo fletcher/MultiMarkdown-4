@@ -396,6 +396,7 @@ void print_latex_node(GString *out, node *n, scratch_pad *scratch) {
 					g_string_append_printf(out, "$%s$", &temp[2]);
 				}
 			}
+			free(temp);
 			break;
 		case STRONG:
 			g_string_append_printf(out, "\\textbf{");
@@ -834,6 +835,10 @@ void print_latex_node(GString *out, node *n, scratch_pad *scratch) {
 					g_string_append_printf(temp_str,"%c",toupper(n->str[i]));
 			}
 			g_string_append_printf(out, "\\begin{tabulary}{\\textwidth}{@{}%s@{}} \\toprule\n", temp_str->str);
+			
+			if (scratch->table_alignment != NULL)
+				free(scratch->table_alignment);
+
 			scratch->table_alignment = temp_str->str;
 			g_string_free(temp_str, false);
 			break;

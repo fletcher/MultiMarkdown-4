@@ -330,6 +330,7 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 				temp[strlen(temp) - 3] = '\0';
 				g_string_append_printf(out, "<span class=\"math\">%s\\)</span>",temp);
 			}
+			free(temp);
 			break;
 		case STRONG:
 			g_string_append_printf(out, "<strong>");
@@ -754,6 +755,7 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 			g_string_append_printf(out, "</table>\n");
 			scratch->cell_type = 0;
 			scratch->padded = 1;
+			scratch->table_alignment = NULL;
 			break;
 		case TABLESEPARATOR:
 			scratch->table_alignment = n->str;

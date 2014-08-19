@@ -274,6 +274,7 @@ scratch_pad * mk_scratch_pad(unsigned long extensions) {
 	result->odf_list_needs_end_p = FALSE;
 	result->odf_para_type = PARA;
 	result->cell_type = 0;
+	result->table_alignment = NULL;
 
 	if (extensions & EXT_RANDOM_FOOT) {
 	    srand((int)time(NULL));
@@ -318,6 +319,9 @@ void free_scratch_pad(scratch_pad *scratch) {
 	if (scratch->latex_footer != NULL)
 		free(scratch->latex_footer);
 	
+	if (scratch->table_alignment != NULL)
+		free(scratch->table_alignment);
+
 	free (scratch);
 #ifdef DEBUG_ON
 	fprintf(stderr, "finished freeing scratch\n");

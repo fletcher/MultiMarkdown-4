@@ -328,17 +328,18 @@ void print_odf_node(GString *out, node *n, scratch_pad *scratch) {
 				temp[strlen(temp) - 3] = '\0';
 				g_string_append_printf(out, "<text:span text:style-name=\"math\">%s\\)</text:span>",temp);
 			}
+			free(temp);
 			break;
 		case STRONG:
 			g_string_append_printf(out, "<text:span text:style-name=\"MMD-Bold\">");
 			print_odf_node_tree(out,n->children,scratch);
 			g_string_append_printf(out, "</text:span>");
-		break;
+			break;
 		case EMPH:
 			g_string_append_printf(out, "<text:span text:style-name=\"MMD-Italic\">");
 			print_odf_node_tree(out,n->children,scratch);
 			g_string_append_printf(out, "</text:span>");
-		break;
+			break;
 		case LINKREFERENCE:
 			break;
 		case LINK:
@@ -730,6 +731,7 @@ void print_odf_node(GString *out, node *n, scratch_pad *scratch) {
 				free(temp);
 			}
 			scratch->padded = 1;
+			scratch->table_alignment = NULL;
 			break;
 		case TABLESEPARATOR:
 			scratch->table_alignment = n->str;
