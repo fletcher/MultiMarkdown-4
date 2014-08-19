@@ -17,10 +17,18 @@ exec_prefix = $(prefix)
 # Where to put the executable
 bindir = $(exec_prefix)/bin
 
+# Allow for linking any libraries statically
+# This only matters on some OS/environments, and 
+# only if you move the binary to a different OS/environment
+# `make static` may not work on all OS versions (e.g. Mac OS X)
+ifeq ($(MAKECMDGOALS),static)
+LDFLAGS += -static -static-libgcc
+endif
 
 GREG= greg/greg
 
 ALL : $(PROGRAM) enumMap.txt
+static : $(PROGRAM) enumMap.txt
 
 %.o : %.c parser.h
 	$(CC) -c $(CFLAGS) -o $@ $<
@@ -32,7 +40,7 @@ $(GREG): greg
 	$(MAKE) -C greg
 
 $(PROGRAM) : $(OBJS)
-	$(CC) $(CFLAGS) -o $@ $(OBJS)
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $(OBJS)
 
 install: $(PROGRAM) | $(prefix)/bin
 	install -m 0755 multimarkdown $(prefix)/bin
