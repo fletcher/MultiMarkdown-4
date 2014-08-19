@@ -694,9 +694,9 @@ void print_lyx_node(GString *out, node *n, scratch_pad *scratch, bool no_newline
             g_string_append(out,temp);
 			g_string_append(out,"\"");		
 			g_string_append(out, "\n\\end_inset\n");
+			free(temp);
             }
             g_string_free(temp_str,TRUE);
-			free(temp);
 			free(width);
 			break;
 		case ABBRSTOP:
