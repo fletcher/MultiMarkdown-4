@@ -33,4 +33,5 @@ char *prefix_label(char *prefix, char *label, bool pound);
 void update_link_source(char *source, char *prefix,node *n);
 void print_escaped_node_tree(GString *out, node *n);
 void print_escaped_node(GString *out, node *n);
+char * escape_string(char *str);
 #endif

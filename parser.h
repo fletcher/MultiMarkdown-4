@@ -79,7 +79,7 @@ typedef struct {
 	bool  lyx_definition_hit;    /* CRC  - True when a definition has been encountered */
 	bool  lyx_definition_open;   /* CRC - Have not completed a definition list entry */
 	bool  lyx_in_header;         /* CRC - In a table header */
-	bool  lyx_fragile;           /* CRC - in a beamer fragile frame */
+	bool  lyx_in_frame;           /* CRC - in a beamer frame */
 	bool  lyx_beamerbullet;      /* CRC - beamer bullet list (add <+->) */
 	int   lyx_debug_nest;        /* CRC - nesting level for enhanced debugging */
 	bool  lyx_table_need_line;   /* CRC - need a line at the top */
