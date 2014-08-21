@@ -744,7 +744,7 @@ Fenced = (( Ticks3 a:FenceType < ( (!Ticks3 NonMatchingRawLine)* ) > Ticks3 Sp N
 		( Ticks4 a:FenceType < ( (!Ticks4 NonMatchingRawLine)* ) > Ticks4 Sp Newline ) |
 		( Ticks5 a:FenceType < ( (!Ticks5 NonMatchingRawLine)* ) > Ticks5 Sp Newline ) )
 	{
-		$$ = str(yytext); $$->key = VERBATIM;
+		$$ = str(yytext); $$->key = VERBATIMFENCE;
 		$$->children = a;
 	}
 
