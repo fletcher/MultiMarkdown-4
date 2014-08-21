@@ -162,6 +162,7 @@ void print_latex_node(GString *out, node *n, scratch_pad *scratch) {
 			}
 			break;
 		case VERBATIM:
+		case VERBATIMFENCE:
 			pad(out, 2, scratch);
 			if ((n->children != NULL) && (n->children->key == VERBATIMTYPE)) {
 				trim_trailing_whitespace(n->children->str);

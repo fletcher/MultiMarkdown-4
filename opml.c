@@ -135,6 +135,7 @@ void print_opml_node(GString *out, node *n, scratch_pad *scratch) {
 			g_string_append_printf(out,"\"");
 			break;
 		case VERBATIM:
+		case VERBATIMFENCE:
 			print_opml_string(out, n->str);
 			break;
 		case SPACE:

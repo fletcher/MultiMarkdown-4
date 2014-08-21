@@ -814,6 +814,7 @@ void print_lyx_node(GString *out, node *n, scratch_pad *scratch, bool no_newline
 			}
 			break;
 		case VERBATIM:
+		case VERBATIMFENCE:
 			old_type = scratch->lyx_para_type;
 			scratch->lyx_para_type = VERBATIM;
 			scratch->lyx_level++;

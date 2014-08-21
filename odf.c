@@ -104,6 +104,7 @@ void print_odf_node(GString *out, node *n, scratch_pad *scratch) {
 					break;
 				case CODE:
 				case VERBATIM:
+				case VERBATIMFENCE:
 					g_string_append_printf(out, " text:style-name=\"Preformatted Text\"");
 					break;
 				case ORDEREDLIST:
@@ -144,6 +145,7 @@ void print_odf_node(GString *out, node *n, scratch_pad *scratch) {
 			}
 			break;
 		case VERBATIM:
+		case VERBATIMFENCE:
 			old_type = scratch->odf_para_type;
 			scratch->odf_para_type = VERBATIM;
 			pad(out, 2, scratch);

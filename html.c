@@ -136,6 +136,7 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 			scratch->padded = 0;
 			break;
 		case VERBATIM:
+		case VERBATIMFENCE:
 			pad(out, 2, scratch);
 			if ((n->children != NULL) && (n->children->key == VERBATIMTYPE)) {
 				trim_trailing_whitespace(n->children->str);

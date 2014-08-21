@@ -135,6 +135,7 @@ void print_rtf_node(GString *out, node *n, scratch_pad *scratch) {
 			scratch->odf_para_type = old_type;
 			break;
 		case VERBATIM:
+		case VERBATIMFENCE:
 			pad_rtf(out, 2, scratch);
 			g_string_append_printf(out, "{\\pard " kCodeStyle);
 			print_rtf_code_string(out,n->str,scratch);
@@ -157,6 +158,7 @@ void print_rtf_node(GString *out, node *n, scratch_pad *scratch) {
 					break;
 				case CODE:
 				case VERBATIM:
+				case VERBATIMFENCE:
 					g_string_append_printf(out, "{\\pard " kCodeStyle);
 					break;
 				default:
