@@ -89,9 +89,9 @@ MetaDataValue = a:StartList
 			$$->key = METAVALUE;
 		}
 
-YAMLStart = "---" BlankLine
+YAMLStart = "---" Sp BlankLine
 
-YAMLStop = ("---"|"...") BlankLine
+YAMLStop = ("---"|"...") Sp BlankLine
 
 DocForMetaDataOnly = BOM? a:StartList
 		( &( MetaDataKey Sp ':' Sp (!Newline)) MetaData
@@ -166,9 +166,9 @@ AtxHeading = s:AtxStart Sp a:StartList ( AtxInline { a = cons($$, a); } )+ ( Sp 
 
 SetextHeading = NonindentSpace (SetextHeading1 | SetextHeading2)
 
-SetextBottom1 = NonindentSpace '='+ Newline
+SetextBottom1 = NonindentSpace '='+ Sp Newline
 
-SetextBottom2 = NonindentSpace '-'+ Newline
+SetextBottom2 = NonindentSpace '-'+ Sp Newline
 
 SetextHeading1 =  &(RawLine SetextBottom1)
 		a:StartList ( !Endline !( &{ !ext(EXT_COMPATIBILITY) } Sp AutoLabel ) Inline { a = cons($$, a); } )+ ( Sp b:AutoLabel { append_list(b,a);} Sp )? Sp Newline
@@ -1342,7 +1342,7 @@ RawNoteBlock = a:StartList
 
 DocForOPML = BOM? a:StartList 
 		( &{ !ext(EXT_COMPATIBILITY) }
-		&( MetaDataKey Sp ':' Sp (!Newline)) MetaData { a = cons($$, a); })?
+		&( (YAMLStart)? MetaDataKey Sp ':' Sp (!Newline)) MetaData { a = cons($$, a); })?
 		( OPMLBlock { a = cons($$, a); } )*
 		BlankLine*
 		{ ((parser_data *)G->data)->result = reverse_list(a); }
