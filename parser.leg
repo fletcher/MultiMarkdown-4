@@ -109,7 +109,7 @@ SkipBlock = HtmlBlock { free_node_tree($$); }
 
 Block =	BlankLine*
 		( BlockQuote
-		|  Fenced
+		| &{ !ext(EXT_COMPATIBILITY) } Fenced
 		| Verbatim
 		| &{ !ext(EXT_COMPATIBILITY) } DefinitionList
 		| &{ !ext(EXT_COMPATIBILITY) } Glossary
@@ -131,7 +131,7 @@ Block =	BlankLine*
 
 HeadingSectionBlock = BlankLine* !Heading
 		( BlockQuote
-		|  Fenced
+		| &{ !ext(EXT_COMPATIBILITY) } Fenced
 		| Verbatim
 		| &{ !ext(EXT_COMPATIBILITY) } DefinitionList
 		| &{ !ext(EXT_COMPATIBILITY) } Glossary
