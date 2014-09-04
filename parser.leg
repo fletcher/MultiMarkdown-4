@@ -164,17 +164,17 @@ AtxHeading = s:AtxStart Sp a:StartList ( AtxInline { a = cons($$, a); } )+ ( Sp 
 # <newline> ensures that we count characters all the way to the end
 		{ $$ = list(s->key,a); free(s); }
 
-SetextHeading = SetextHeading1 | SetextHeading2
+SetextHeading = NonindentSpace (SetextHeading1 | SetextHeading2)
 
 SetextBottom1 = NonindentSpace '='+ Newline
 
 SetextBottom2 = NonindentSpace '-'+ Newline
 
-SetextHeading1 =  &(NonindentSpace RawLine SetextBottom1)
+SetextHeading1 =  &(RawLine SetextBottom1)
 		a:StartList ( !Endline !( &{ !ext(EXT_COMPATIBILITY) } Sp AutoLabel ) Inline { a = cons($$, a); } )+ ( Sp b:AutoLabel { append_list(b,a);} Sp )? Sp Newline
 		<SetextBottom1> { $$ = list(H1, a); }
 
-SetextHeading2 =  &(NonindentSpace RawLine SetextBottom2)
+SetextHeading2 =  &(RawLine SetextBottom2)
 		a:StartList ( !Endline !( &{ !ext(EXT_COMPATIBILITY) } Sp AutoLabel ) Inline { a = cons($$, a); } )+ ( Sp b:AutoLabel { append_list(b,a)} Sp )? Sp Newline
 		<SetextBottom2> { $$ = list(H2, a); }
 
