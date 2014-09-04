@@ -213,7 +213,7 @@ int main(int argc, char **argv)
 	}	
 	
 	/* Compatibility mode emulates the behavior of Markdown.pl */
-	if (compatibility_flag) {
+	if (1 || compatibility_flag) {
 		extensions = 0x000000;
 		extensions = extensions | EXT_COMPATIBILITY | EXT_NO_LABELS | EXT_OBFUSCATE;
 	}
