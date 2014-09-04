@@ -157,7 +157,7 @@ HeadingSection = a:StartList Heading { a = cons($$, a); }
 
 AtxInline = !Newline !( &{ !ext(EXT_COMPATIBILITY) } Sp AutoLabel Sp '#'* Sp Newline) !(Sp '#'* Sp Newline) Inline
 
-AtxStart =  < ( "######" | "#####" | "####" | "###" | "##" | "#" ) >
+AtxStart =  NonindentSpace < ( "######" | "#####" | "####" | "###" | "##" | "#" ) >
 		{ $$ = node(H1 + ((int)strlen(yytext) - 1)); }
 
 AtxHeading = s:AtxStart Sp a:StartList ( AtxInline { a = cons($$, a); } )+ ( Sp b:AutoLabel { append_list(b,a);})? (Sp '#'* Sp)? Sp < Newline >
