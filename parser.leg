@@ -183,8 +183,8 @@ BlockQuote = a:BlockQuoteRaw
 	{ $$ = list(BLOCKQUOTE,a); }
 
 BlockQuoteRaw =  a:StartList x:StartList
-		(( b:BlockQuoteMarker Line { a = cons($$, a); x = cons(b, x); } )
-		( !'>' !BlankLine Line { a = cons($$, a); } )*
+		(( NonindentSpace b:BlockQuoteMarker Line { a = cons($$, a); x = cons(b, x); } )
+		( !(NonindentSpace '>') !BlankLine Line { a = cons($$, a); } )*
 		( BlankLine { a = cons(mk_str("\n"), a); } )*
 		)+
 		{
@@ -740,9 +740,9 @@ Code = ( Ticks1 Sp < ( ( !'`' Nonspacechar )+ | !Ticks1 '`'+ | !( Sp Ticks1 ) ( 
 FenceType = Sp RawLine
 		{ $$ = str(yytext); $$->key = VERBATIMTYPE; }
 
-Fenced = (( Ticks3 a:FenceType < ( (!Ticks3 NonMatchingRawLine)* ) > Ticks3 Sp Newline ) |
-		( Ticks4 a:FenceType < ( (!Ticks4 NonMatchingRawLine)* ) > Ticks4 Sp Newline ) |
-		( Ticks5 a:FenceType < ( (!Ticks5 NonMatchingRawLine)* ) > Ticks5 Sp Newline ) )
+Fenced = NonindentSpace (( Ticks3 a:FenceType < ( (!(NonindentSpace Ticks3) NonMatchingRawLine)* ) > NonindentSpace Ticks3 Sp Newline ) |
+		( Ticks4 a:FenceType < ( (!(NonindentSpace Ticks4) NonMatchingRawLine)* ) > NonindentSpace Ticks4 Sp Newline ) |
+		( Ticks5 a:FenceType < ( (!(NonindentSpace Ticks5) NonMatchingRawLine)* ) > NonindentSpace Ticks5 Sp Newline ) )
 	{
 		$$ = str(yytext); $$->key = VERBATIMFENCE;
 		$$->children = a;
