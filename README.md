@@ -1,5 +1,5 @@
-Title:	MultiMarkdown User's Guide
-Author:	Fletcher T. Penney
+Title:	MultiMarkdown User's Guide  
+Author:	Fletcher T. Penney  
 
 These files are used to generate the MultiMarkdown.  The document is, of course, written using MultiMarkdown.  It is also a *relatively* complex document, making use of several tricks with file transclusion among other things.  The idea is to repeat oneself as little as possible, and make it easier to keep all the formats and files in sync automatically.
 
