@@ -260,8 +260,8 @@
 <meta:user-defined meta:name="latex title">MultiMarkdown \\
 User's Guide</meta:user-defined>
 <meta:user-defined meta:name="Author">Fletcher T. Penney</meta:user-defined>
-<meta:user-defined meta:name="Version">4.5.3</meta:user-defined>
-<meta:user-defined meta:name="Revised">2014-06-23</meta:user-defined>
+<meta:user-defined meta:name="Version">4.6</meta:user-defined>
+<meta:user-defined meta:name="Revised">2014-09-22</meta:user-defined>
 <meta:keyword>MultiMarkdown, Markdown, LaTeX, PDF, RTF, LyX, HTML</meta:keyword>
 <meta:user-defined meta:name="MMD Footer">links.txt</meta:user-defined>
 </office:meta>
@@ -269,7 +269,7 @@ User's Guide</meta:user-defined>
 <office:text>
 <text:h text:outline-level="2"><text:bookmark text:name="title"/>MultiMarkdown User's Guide<text:bookmark-end text:name="title"/></text:h>
 
-<text:p text:style-name="Quotations">Version 4.5.3<text:line-break/>Revised 2014-06-23</text:p>
+<text:p text:style-name="Quotations">Version 4.6<text:line-break/>Revised 2014-09-22</text:p>
 
 <text:h text:outline-level="2"><text:bookmark text:name="introduction"/>Introduction<text:bookmark-end text:name="introduction"/></text:h>
 
