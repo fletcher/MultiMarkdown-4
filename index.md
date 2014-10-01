@@ -47,6 +47,7 @@ Or as a set of web pages for individual sections:
 	* [Raw Source](raw)
 	* [File Transclusion](transclusion)
 	* [Escaped Newlines](escaped-newlines)
+* ["Hacking" MultiMarkdown](hacking)
 * [Known Issues](known_issues)
 * [To Do](to_do)
 * [More Information](more_information)

@@ -26,6 +26,7 @@ latex footer:	mmd-tufte-book-footer
 {{installation.md}}
 {{using_mmd.md}}
 {{syntax.md}}
+{{hacking.md}}
 {{known_issues.md}}
 {{to_do.md}}
 {{more_information.md}}
