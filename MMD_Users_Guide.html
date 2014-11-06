@@ -7,8 +7,8 @@
 	<meta name="latextitle" content="MultiMarkdown \\
 User's Guide"/>
 	<meta name="author" content="Fletcher T. Penney"/>
-	<meta name="version" content="4.5.3"/>
-	<meta name="revised" content="2014-06-23"/>
+	<meta name="version" content="4.6"/>
+	<meta name="revised" content="2014-09-22"/>
 	<meta name="keywords" content="MultiMarkdown, Markdown, LaTeX, PDF, RTF, LyX, HTML"/>
 	<link type="text/css" rel="stylesheet" href="http://fletcher.github.io/MultiMarkdown-4/css/document.css"/>
 <script type="text/javascript"
@@ -23,8 +23,8 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorM
 <h2 id="title">MultiMarkdown User's Guide</h2>
 
 <blockquote>
-<p>Version 4.5.3<br/>
-Revised 2014-06-23</p>
+<p>Version 4.6<br/>
+Revised 2014-09-22</p>
 </blockquote>
 
 <h2 id="introduction">Introduction</h2>
@@ -1774,7 +1774,7 @@ Another paragraph
 
 <p>Metadata in the file being inserted will be ignored. This means that the file can contain certain metadata when viewed alone that will not be included when the file is transcluded by another file.</p>
 
-<p>You can use the <a href="#transcludebase">Transclude Base</a> metadata to specify where MultiMarkdown should look for the files to be included. All files must be in this folder. If this folder is not specified, then MultiMarkdown will look in the same folder as the parent file.</p>
+<p>You can use the <code>[Transclude Base]</code> metadata to specify where MultiMarkdown should look for the files to be included. All files must be in this folder. If this folder is not specified, then MultiMarkdown will look in the same folder as the parent file.</p>
 
 <p><strong>Note:</strong> Thanks to David Richards for his ideas in developing support for this feature.</p>
 
@@ -1807,6 +1807,19 @@ This is a new line.
 </code></pre>
 
 <p>If this option is not enabled, then the default behavior will be to treat the newline as an escaped character, which results in it simply appearing as a newline character in the output. This means that the default behavior is the same as if the &#8220;\&#8221; is not in the source file.</p>
+
+<h2 id="hackingmultimarkdown">&#8220;Hacking&#8221; MultiMarkdown</h2>
+
+<h3 id="multipleformats">Multiple Formats</h3>
+
+<p>On some occasions, the same MultiMarkdown syntax is not ideal for different output formats. For example, a link may need to be slightly different for the <abbr title="HyperText Markup Language">HTML</abbr> version than for the LaTeX version (since LaTeX offers the <code>\autoref()</code> feature).</p>
+
+<p>You have a few options for crafting MultiMarkdown that will be handled differently for <abbr title="HyperText Markup Language">HTML</abbr> than for another format.</p>
+
+<ol>
+<li><p>You can use HTML comments to include text that is ignored in HTML documents, but is passed through verbatim to other formats. See the section on <a href="#rawhtml">Raw Source</a> for more information. This only works with one format besides HTML.</p></li>
+<li><p>You can use file transclusion with <a href="#wildcardextensions">Wildcard Extensions</a> to embed a different string of text for each output format. This requires a bit more organization, but allows you to do just about anything you like.</p></li>
+</ol>
 
 <h2 id="knownissues">Known Issues</h2>
 

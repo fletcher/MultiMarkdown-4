@@ -37,7 +37,7 @@ Transclusion is recursive, so the file being inserted will be scanned to see if 
 
 Metadata in the file being inserted will be ignored.  This means that the file can contain certain metadata when viewed alone that will not be included when the file is transcluded by another file.
 
-You can use the [Transclude Base] metadata to specify where MultiMarkdown should look for the files to be included.  All files must be in this folder.  If this folder is not specified, then MultiMarkdown will look in the same folder as the parent file.
+You can use the `[Transclude Base]` metadata to specify where MultiMarkdown should look for the files to be included.  All files must be in this folder.  If this folder is not specified, then MultiMarkdown will look in the same folder as the parent file.
 
 **Note:**  Thanks to David Richards for his ideas in developing support for this feature.
 

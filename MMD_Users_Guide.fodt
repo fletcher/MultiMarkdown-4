@@ -260,8 +260,8 @@
 <meta:user-defined meta:name="latex title">MultiMarkdown \\
 User's Guide</meta:user-defined>
 <meta:user-defined meta:name="Author">Fletcher T. Penney</meta:user-defined>
-<meta:user-defined meta:name="Version">4.5.3</meta:user-defined>
-<meta:user-defined meta:name="Revised">2014-06-23</meta:user-defined>
+<meta:user-defined meta:name="Version">4.6</meta:user-defined>
+<meta:user-defined meta:name="Revised">2014-09-22</meta:user-defined>
 <meta:keyword>MultiMarkdown, Markdown, LaTeX, PDF, RTF, LyX, HTML</meta:keyword>
 <meta:user-defined meta:name="MMD Footer">links.txt</meta:user-defined>
 </office:meta>
@@ -269,7 +269,7 @@ User's Guide</meta:user-defined>
 <office:text>
 <text:h text:outline-level="2"><text:bookmark text:name="title"/>MultiMarkdown User's Guide<text:bookmark-end text:name="title"/></text:h>
 
-<text:p text:style-name="Quotations">Version 4.5.3<text:line-break/>Revised 2014-06-23</text:p>
+<text:p text:style-name="Quotations">Version 4.6<text:line-break/>Revised 2014-09-22</text:p>
 
 <text:h text:outline-level="2"><text:bookmark text:name="introduction"/>Introduction<text:bookmark-end text:name="introduction"/></text:h>
 
@@ -1951,7 +1951,7 @@ into a single paragraph.</text:p>
 
 <text:p text:style-name="Standard">Metadata in the file being inserted will be ignored. This means that the file can contain certain metadata when viewed alone that will not be included when the file is transcluded by another file.</text:p>
 
-<text:p text:style-name="Standard">You can use the <text:a xlink:type="simple" xlink:href="#transcludebase">Transclude Base</text:a> metadata to specify where MultiMarkdown should look for the files to be included. All files must be in this folder. If this folder is not specified, then MultiMarkdown will look in the same folder as the parent file.</text:p>
+<text:p text:style-name="Standard">You can use the <text:span text:style-name="Source_20_Text">[Transclude Base]</text:span> metadata to specify where MultiMarkdown should look for the files to be included. All files must be in this folder. If this folder is not specified, then MultiMarkdown will look in the same folder as the parent file.</text:p>
 
 <text:p text:style-name="Standard"><text:span text:style-name="MMD-Bold">Note:</text:span> Thanks to David Richards for his ideas in developing support for this feature.</text:p>
 
@@ -1983,6 +1983,22 @@ into a single paragraph.</text:p>
 
 
 <text:p text:style-name="Standard">If this option is not enabled, then the default behavior will be to treat the newline as an escaped character, which results in it simply appearing as a newline character in the output. This means that the default behavior is the same as if the &#8220;\&#8221; is not in the source file.</text:p>
+
+<text:h text:outline-level="2"><text:bookmark text:name="hackingmultimarkdown"/>&#8220;Hacking&#8221; MultiMarkdown<text:bookmark-end text:name="hackingmultimarkdown"/></text:h>
+
+<text:h text:outline-level="3"><text:bookmark text:name="multipleformats"/>Multiple Formats<text:bookmark-end text:name="multipleformats"/></text:h>
+
+<text:p text:style-name="Standard">On some occasions, the same MultiMarkdown syntax is not ideal for different output formats. For example, a link may need to be slightly different for the HTML version than for the LaTeX version (since LaTeX offers the <text:span text:style-name="Source_20_Text">\autoref()</text:span> feature).</text:p>
+
+<text:p text:style-name="Standard">You have a few options for crafting MultiMarkdown that will be handled differently for HTML than for another format.</text:p>
+
+<text:list text:style-name="L2"><text:list-item>
+<text:p text:style-name="P2">You can use HTML comments to include text that is ignored in HTML documents, but is passed through verbatim to other formats. See the section on <text:a xlink:type="simple" xlink:href="#rawhtml">Raw Source</text:a> for more information. This only works with one format besides HTML.</text:p>
+</text:list-item>
+<text:list-item>
+<text:p text:style-name="P2">You can use file transclusion with <text:a xlink:type="simple" xlink:href="#wildcardextensions">Wildcard Extensions</text:a> to embed a different string of text for each output format. This requires a bit more organization, but allows you to do just about anything you like.</text:p>
+</text:list-item>
+</text:list>
 
 <text:h text:outline-level="2"><text:bookmark text:name="knownissues"/>Known Issues<text:bookmark-end text:name="knownissues"/></text:h>
 

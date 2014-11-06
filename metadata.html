@@ -5,7 +5,7 @@
 	<meta name="latexinput" content="mmd-tufte-handout-header"/>
 	<title>Metadata</title>
 	<meta name="author" content="Fletcher T. Penney"/>
-	<meta name="version" content="4.5.3"/>
+	<meta name="version" content="4.6"/>
 	<meta name="revised" content="2014-04-18"/>
 	<link type="text/css" rel="stylesheet" href="http://fletcher.github.io/MultiMarkdown-4/css/document.css"/>
 	<meta name="latexmode" content="memoir"/>
@@ -107,7 +107,7 @@ formats so that you can specify a different header level for different output
 formats &#8212; e.g. <code>LaTeX Header Level</code>, <code>HTML Header Level</code>, and <code>ODF Header
 Level</code>.</p>
 
-<p>If you are doing something interesting with [File Transclusion], you can also use a
+<p>If you are doing something interesting with <a href="transclusion.html#filetransclusion">File Transclusion</a>, you can also use a
 negative number here. Since metadata is not used when a file is &#8220;transcluded&#8221;,
 this allows you to use a different level of headings when a file is processed on
 its own.</p>
@@ -221,7 +221,7 @@ be compatible with the LaTeX classes of the same names.</p>
 
 <h4 id="mmdfooter">MMD Footer</h4>
 
-<p>The <code>MMD Footer</code> metadata is used to specify the name of a file that should be appended to the end of the document using the [File Transclusion] feature. This is useful for keeping a list of references, abbreviations, footnotes, links, etc. all in a single file that can be reused across multiple documents. If you&#8217;re building a big document out of smaller documents, this allows you to use one list in all files, without multiple copies being inserted in the master file.</p>
+<p>The <code>MMD Footer</code> metadata is used to specify the name of a file that should be appended to the end of the document using the <a href="transclusion.html#filetransclusion">File Transclusion</a> feature. This is useful for keeping a list of references, abbreviations, footnotes, links, etc. all in a single file that can be reused across multiple documents. If you&#8217;re building a big document out of smaller documents, this allows you to use one list in all files, without multiple copies being inserted in the master file.</p>
 
 <h4 id="odfheader">ODF Header</h4>
 
@@ -235,7 +235,7 @@ working &#8212; MultiMarkdown just copies it verbatim to the output.</p>
 
 <h4 id="transcludebase">Transclude Base</h4>
 
-<p>When using the [File Transclusion] feature to &#8220;link&#8221; to other documents inside a MultiMarkdown document, this metadata specifies a folder that contains the files being linked to. If omitted, the default is the folder containing the file in question. This can be a relative path or a complete path.</p>
+<p>When using the <a href="transclusion.html#filetransclusion">File Transclusion</a> feature to &#8220;link&#8221; to other documents inside a MultiMarkdown document, this metadata specifies a folder that contains the files being linked to. If omitted, the default is the folder containing the file in question. This can be a relative path or a complete path.</p>
 
 <p>This metadata can be particularly useful when using MultiMarkdown to parse a text string that does not exist as a file on the computer, and therefore does not have a parent folder (when using <code>stdin</code> or another application that offers MultiMarkdown support). In this case, the path must be a complete path.</p>
 

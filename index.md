@@ -2,7 +2,7 @@ latex input:	mmd-tufte-handout-header
 Title:	MultiMarkdown User's Guide
 Author:	Fletcher T. Penney
 Version:	{{version.txt}}
-Revised:	2014-06-23  
+Revised:	2014-09-22  
 Keywords:	MultiMarkdown, Markdown, LaTeX, PDF, RTF, LyX, HTML
 Base Header Level:	2
 CSS:	{{css.txt}}
@@ -47,6 +47,7 @@ Or as a set of web pages for individual sections:
 	* [Raw Source](raw)
 	* [File Transclusion](transclusion)
 	* [Escaped Newlines](escaped-newlines)
+* ["Hacking" MultiMarkdown](hacking)
 * [Known Issues](known_issues)
 * [To Do](to_do)
 * [More Information](more_information)

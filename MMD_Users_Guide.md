@@ -4,7 +4,7 @@ latex title: MultiMarkdown \\
 	User's Guide
 Author:	Fletcher T. Penney
 Version:	{{version.txt}}
-Revised:	2014-06-23  
+Revised:	2014-09-22  
 Keywords:	MultiMarkdown, Markdown, LaTeX, PDF, RTF, LyX, HTML
 Base Header Level:	2
 CSS:	{{css.txt}}
@@ -26,6 +26,7 @@ latex footer:	mmd-tufte-book-footer
 {{installation.md}}
 {{using_mmd.md}}
 {{syntax.md}}
+{{hacking.md}}
 {{known_issues.md}}
 {{to_do.md}}
 {{more_information.md}}

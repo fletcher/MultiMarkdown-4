@@ -5,7 +5,7 @@ Version:  {{version.txt}}
 Revised:  2014-04-18 
 Base Header Level:  2
 CSS:  {{css.txt}}
-MMD Footer: links.txt
+MMD Footer: meta-links.txt
 latex mode: memoir
 latex input:  mmd-tufte-handout-begin-doc
 latex footer: mmd-tufte-footer
