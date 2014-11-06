@@ -295,8 +295,12 @@ void find_abbreviations(node *list, scratch_pad *scratch) {
 				}
 				break;
 			case LIST:
+			case ORDEREDLIST:
+			case BULLETLIST:
+			case LISTITEM:
 			case HEADINGSECTION:
 			case PARA:
+			case PLAIN:
 			case LINK:
 			case LINKREFERENCE:
 			case NOTEREFERENCE:
