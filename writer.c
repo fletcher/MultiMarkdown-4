@@ -225,6 +225,8 @@ void extract_abbreviations(node *list, scratch_pad *scratch) {
 			case HEADINGSECTION:
 			case RAW:
 			case LIST:
+			case BLOCKQUOTEMARKER:
+			case BLOCKQUOTE:
 				extract_abbreviations(list->children, scratch);
 				break;
 			default:
@@ -298,6 +300,8 @@ void find_abbreviations(node *list, scratch_pad *scratch) {
 			case LINK:
 			case LINKREFERENCE:
 			case NOTEREFERENCE:
+			case BLOCKQUOTEMARKER:
+			case BLOCKQUOTE:
 				/* Check children of these elements */
 				find_abbreviations(list->children, scratch);
 				break;
