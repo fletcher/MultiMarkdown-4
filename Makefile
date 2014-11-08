@@ -2,6 +2,13 @@
 # Feel free to submit pull requests if you have a proposed change.
 # Please explain your change so I'll understand what you need, and why - 
 # I don't claim to be an expert at this aspect! 
+#
+#
+# You can use `make pkg-install` and `make pkg-install-scripts` to install to 
+# a custom directory (useful when building package installers):
+#
+#		make pkg-install DESTDIR=/some/folder/to/be/created
+#
 # - Fletcher T. Penney
 
 CFLAGS ?= -Wall -g -O3 -include GLibFacade.h
@@ -50,6 +57,15 @@ $(prefix)/bin:
 
 install-scripts:
 	install -m 0755 scripts/* $(prefix)/bin
+
+pkg-install: $(PROGRAM) | $(DESTDIR)$(prefix)/bin
+	install -m 0755 multimarkdown $(DESTDIR)$(prefix)/bin
+
+$(DESTDIR)$(prefix)/bin:
+	-mkdir -p $(DESTDIR)$(prefix)/bin  2>/dev/null
+
+pkg-install-scripts:
+	install -m 0755 scripts/* $(DESTDIR)$(prefix)/bin
 
 clean:
 	rm -f $(PROGRAM) $(OBJS) parser.c enumMap.txt speed*.txt; \
