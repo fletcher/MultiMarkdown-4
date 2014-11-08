@@ -22,4 +22,36 @@ You have a few options for crafting MultiMarkdown that will be handled different
 1. You can use HTML comments to include text that is ignored in HTML documents, but is passed through verbatim to other formats.  See the section on [Raw Source][rawhtml] for more information.  This only works with one format besides HTML.
 
 2. You can use file transclusion with [Wildcard Extensions] to embed a different string of text for each output format.  This requires a bit more organization, but allows you to do just about anything you like.
- 
+
+
+## Scrivener Tricks ##
+
+[Scrivener] is a full-featured tool for writers that includes some support for MultiMarkdown when exporting to other formats.
+
+### Multiple Citations ###
+
+When using Scrivener to publish to LaTeX, you may want to include multiple sources within a single citation.  Mike Thicke suggests this approach:
+
+	In the Compile | Replacements dialog I have:
+	
+	][],[# --> ,
+	],[][# --> ,
+	
+	So for citations like this:
+	
+	[][#Tversky:1974wi],[][#Kahneman:1979wl],[][#Tversky:1981vc]
+	
+	I get this:
+	
+	[][#Tversky:1974wi,Kahneman:1979wl,Tversky:1981vc]
+	
+	When complied to Latex it becomes:
+	
+	 ~\citep{Tversky:1974wi,Kahneman:1979wl,Tversky:1981vc} 
+	And finally:
+	
+	(Tversky and Kahneman 1974; Kahneman and Tversky 1979; Tversky and Kahneman 1981)
+	
+	If you want page numbers you might have to do raw latex or use RegEx replacements.
+
+You could always doing something similar with a script to find/replace the same syntax in tools other than Scrivener.

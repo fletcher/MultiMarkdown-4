@@ -2000,6 +2000,19 @@ into a single paragraph.</text:p>
 </text:list-item>
 </text:list>
 
+<text:h text:outline-level="3"><text:bookmark text:name="scrivenertricks"/>Scrivener Tricks<text:bookmark-end text:name="scrivenertricks"/></text:h>
+
+<text:p text:style-name="Standard"><text:a xlink:type="simple" xlink:href="http://www.literatureandlatte.com/">Scrivener</text:a> is a full-featured tool for writers that includes some support for MultiMarkdown when exporting to other formats.</text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="multiplecitations"/>Multiple Citations<text:bookmark-end text:name="multiplecitations"/></text:h>
+
+<text:p text:style-name="Standard">When using Scrivener to publish to LaTeX, you may want to include multiple sources within a single citation. Mike Thicke suggests this approach:</text:p>
+
+<text:p text:style-name="Preformatted Text">In the Compile | Replacements dialog I have:<text:line-break/><text:line-break/>][],[# --&gt; ,<text:line-break/>],[][# --&gt; ,<text:line-break/><text:line-break/>So for citations like this:<text:line-break/><text:line-break/>[][#Tversky:1974wi],[][#Kahneman:1979wl],[][#Tversky:1981vc]<text:line-break/><text:line-break/>I get this:<text:line-break/><text:line-break/>[][#Tversky:1974wi,Kahneman:1979wl,Tversky:1981vc]<text:line-break/><text:line-break/>When complied to Latex it becomes:<text:line-break/><text:line-break/> ~\citep{Tversky:1974wi,Kahneman:1979wl,Tversky:1981vc} <text:line-break/>And finally:<text:line-break/><text:line-break/>(Tversky and Kahneman 1974; Kahneman and Tversky 1979; Tversky and Kahneman 1981)<text:line-break/><text:line-break/>If you want page numbers you might have to do raw latex or use RegEx replacements.<text:line-break/></text:p>
+
+
+<text:p text:style-name="Standard">You could always doing something similar with a script to find/replace the same syntax in tools other than Scrivener.</text:p>
+
 <text:h text:outline-level="2"><text:bookmark text:name="knownissues"/>Known Issues<text:bookmark-end text:name="knownissues"/></text:h>
 
 <text:h text:outline-level="3"><text:bookmark text:name="opendocument"/>OpenDocument<text:bookmark-end text:name="opendocument"/></text:h>
