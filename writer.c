@@ -41,13 +41,13 @@ char * export_node_tree(node *list, int format, unsigned long extensions) {
 		(format != CRITIC_ACCEPT_FORMAT) &&
 		(format != CRITIC_REJECT_FORMAT) &&
 		(format != CRITIC_HTML_HIGHLIGHT_FORMAT)) {
-			/* Parse for link, images, etc reference definitions */
-			extract_references(list, scratch);
-
 			/* Find defined abbreviations */
 			extract_abbreviations(list, scratch);
 			/* Apply those abbreviations to source text */
 			find_abbreviations(list, scratch);
+
+			/* Parse for link, images, etc reference definitions */
+			extract_references(list, scratch);
 		}
 	
 	/* Change our desired format based on metadata */
@@ -304,6 +304,8 @@ void find_abbreviations(node *list, scratch_pad *scratch) {
 			case LINK:
 			case LINKREFERENCE:
 			case NOTEREFERENCE:
+			case NOTESOURCE:
+			case GLOSSARYSOURCE:
 			case BLOCKQUOTEMARKER:
 			case BLOCKQUOTE:
 				/* Check children of these elements */
