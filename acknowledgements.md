@@ -76,5 +76,6 @@ improving Markdown and MultiMarkdown:
 *	Charles Cowan
 *	David Richards
 *	Thomas Hodgson
+*	Dan Lowe
 
 and others I have surely forgotten....

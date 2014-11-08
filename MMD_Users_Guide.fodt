@@ -2198,6 +2198,8 @@ improving Markdown and MultiMarkdown:</text:p>
 <text:p text:style-name="P1">David Richards</text:p></text:list-item>
 <text:list-item>
 <text:p text:style-name="P1">Thomas Hodgson</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">Dan Lowe</text:p></text:list-item>
 </text:list>
 
 <text:p text:style-name="Standard">and others I have surely forgotten&#8230;.</text:p>
