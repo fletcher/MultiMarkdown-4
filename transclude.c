@@ -54,6 +54,8 @@ char * source_without_metadata(char * source, unsigned long extensions ) {
 
 	if (has_metadata(source, extensions)) {
 		/* If we have metadata, then return just the body */
+		/* TODO: This could miss YAML Metadata that does not contain
+			blank line afterwards */
 		result = strstr(source, "\n\n");
 
 		if (result != NULL)
