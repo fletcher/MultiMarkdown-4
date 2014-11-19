@@ -89,9 +89,9 @@ MetaDataValue = a:StartList
 			$$->key = METAVALUE;
 		}
 
-YAMLStart = "---" Sp BlankLine
+YAMLStart = "---" BlankLine
 
-YAMLStop = ("---"|"...") Sp BlankLine
+YAMLStop = ("---"|"...") BlankLine
 
 DocForMetaDataOnly = BOM? a:StartList
 		( &( MetaDataKey Sp ':' Sp (!Newline)) MetaData
