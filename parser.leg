@@ -59,10 +59,14 @@ Doc =  BOM? a:StartList b:StartList
 			((parser_data *)G->data)->result = reverse_list(a);
 		}
 
-MetaData = a:StartList (YAMLStart)? !([A-Za-z]+ "://") !SetextHeading
+MetaData = a:StartList
+		((
+			(YAMLStart) |
+			!([A-Za-z]+ "://") !SetextHeading
+		)
 		(MetaDataKeyValue { a = cons($$, a); })+
+		(YAMLStop)?)
 		{ $$ = list(METADATA, a); }
-		(YAMLStop)?
 
 MetaDataKeyValue = a:MetaDataKey Sp ':' Sp b:MetaDataValue
 	{
