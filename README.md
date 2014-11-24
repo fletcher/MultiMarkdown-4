@@ -46,7 +46,7 @@ Once installed, you simply do something like the following:
 
 * `multimarkdown -t latex file.txt` --- output the results as LaTeX instead of HTML. This can then be processed into a PDF if you have LaTeX installed. You can further specify the `LaTeX Mode` metadata to customize output for compatibility with `memoir` or `beamer` classes. 
 
-* `multimarkdown -t odf file.txt` --- output the results as an OpenDocument Text Flat XML file. Does require the plugin be installed in your copy of OpenOffice, which is available at the [downloads] page. LibreOffice includes this plugin by default. 
+* `multimarkdown -t odf file.txt` --- output the results as an OpenDocument Text Flat XML file. Does require the plugin be installed in your copy of OpenOffice, which is available at the [peg-multimarkdown-downloads] page. LibreOffice includes this plugin by default. 
 
 * `multimarkdown -t opml file.txt` --- convert the MMD text file to an MMD OPML file, compatible with OmniOutliner and certain other outlining and mind-mapping programs (including iThoughts and iThoughtsHD). 
 
@@ -72,8 +72,9 @@ To get more information about MultiMarkdown, check out the [website][MultiMarkdo
 [Markdown]:	http://daringfireball.net/projects/markdown/
 [MultiMarkdown]:	http://fletcherpenney.net/multimarkdown/
 [peg-multimarkdown]:	https://github.com/fletcher/peg-multimarkdown
+[peg-multimarkdown-downloads]:	https://github.com/fletcher/peg-multimarkdown/downloads
 [fink]:	http://www.finkproject.org/
-[downloads]:	http://github.com/fletcher/peg-multimarkdown/downloads
+[downloads]:	http://fletcherpenney.net/multimarkdown/download/
 [GTK+]:	http://www.gtk.org/
 [homebrew]:	https://github.com/mxcl/homebrew
 [MacPorts]:	http://www.macports.org/
