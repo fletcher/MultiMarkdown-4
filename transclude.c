@@ -49,6 +49,7 @@ char * path_from_dir_base(char *dir, char *base) {
 }
 
 /* Return pointer to beginning of text without metadata */
+/* NOTE: This is not a new string, and does not need to be freed separately */
 char * source_without_metadata(char * source, unsigned long extensions ) {
 	char *result;
 
@@ -59,10 +60,15 @@ char * source_without_metadata(char * source, unsigned long extensions ) {
 		result = strstr(source, "\n\n");
 
 		if (result != NULL)
-			return result+2;
+			return result + 2;
 	}
 
 	/* No metadata, so return original pointer */
+
+	/* But check for UTF-8 BOM and skip if present */
+	if (strncmp(source, "\xef\xbb\xbf",3) == 0)
+		return source + 3;
+
 	return source;
 }
 
