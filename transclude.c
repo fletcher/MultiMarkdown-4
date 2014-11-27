@@ -194,6 +194,7 @@ void transclude_source(GString *source, char *basedir, char *stack, int output_f
 			MultiByteToWideChar(CP_UTF8, 0, filename->str, -1, wstr, wchars_num);
 
 			if ((input = _wfopen(wstr, L"r")) != NULL ) {
+				free(wstr);
 #else
 			if ((input = fopen(filename->str, "r")) != NULL ) {
 #endif
