@@ -17,6 +17,9 @@
 
 #include "transclude.h"
 #include "parser.h"
+#if defined(__WIN32)
+#include <windows.h>
+#endif
 
 
 /* Combine directory and filename to create a full path */
@@ -185,7 +188,15 @@ void transclude_source(GString *source, char *basedir, char *stack, int output_f
 			}
 
 			/* Read file */
+#if defined(__WIN32)
+			int wchars_num = MultiByteToWideChar(CP_UTF8, 0, filename->str, -1, NULL, 0);
+			wchar_t wstr[wchars_num];
+			MultiByteToWideChar(CP_UTF8, 0, filename->str, -1, wstr, wchars_num);
+
+			if ((input = _wfopen(wstr, L"r")) != NULL ) {
+#else
 			if ((input = fopen(filename->str, "r")) != NULL ) {
+#endif
 				filebuffer = g_string_new("");
 
 				while ((curchar = fgetc(input)) != EOF)
