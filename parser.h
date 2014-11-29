@@ -180,5 +180,6 @@ int tree_contains_key_count(node *list, int key);
 bool check_timeout();
 
 void debug_node(node *n);
+void debug_node_tree(node *n);
 
 #endif

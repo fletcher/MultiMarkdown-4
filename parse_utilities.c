@@ -817,10 +817,18 @@ char * mmd_version(void) {
 }
 
 void debug_node(node *n) {
+	if (n != NULL) {
+		fprintf(stderr, "node (%d) '%s'\n",n->key, n->str);
+		if (n->children != NULL)
+			debug_node_tree(n->children);
+	}
+}
+
+void debug_node_tree(node *n) {
 	while (n != NULL) {
 		fprintf(stderr, "node (%d) '%s'\n",n->key, n->str);
 		if (n->children != NULL)
-			debug_node(n->children);
+			debug_node_tree(n->children);
 		n = n->next;
 	}
 }
