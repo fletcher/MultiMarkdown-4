@@ -98,7 +98,7 @@ YAMLStart = "---" BlankLine
 YAMLStop = ("---"|"...") BlankLine
 
 DocForMetaDataOnly = BOM? a:StartList
-		( &( MetaDataKey Sp ':' Sp (!Newline)) MetaData
+		( &( YAMLStart? MetaDataKey Sp ':' Sp (!Newline)) MetaData
 			{ a = cons($$, a); } )?
 		( SkipBlock )*
 		BlankLine*
