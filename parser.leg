@@ -896,7 +896,7 @@ EmptyList = BlankLine
 		{ $$ = mk_str(""); }
 
 ListBlock = a:StartList
-		!BlankLine Line { a = cons($$, a); }
+		!BlankLine !Heading Line { a = cons($$, a); }
 		( ListBlockLine { a = cons($$, a); } )*
 		{ $$ = mk_str_from_list(a, false); }
 
@@ -919,6 +919,7 @@ OrderedList = &Enumerator (ListTight | ListLoose)
 		{ $$->key = ORDEREDLIST; }
 
 ListBlockLine = !BlankLine
+		!Heading
 		!( Indent? (Bullet | Enumerator | BulletNoSpace &EmptyList | EnumeratorNoSpace &EmptyList ) )
 		!HorizontalRule
 		OptionallyIndentedLine
