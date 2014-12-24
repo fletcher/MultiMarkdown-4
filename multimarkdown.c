@@ -45,6 +45,7 @@ int main(int argc, char **argv)
 	static int process_html_flag = 0;
 	static int random_footnotes_flag = 0;
 	bool list_meta_keys = 0;
+	bool list_transclude_manifest = 0;
 	char *target_meta_key = FALSE;
 		
 	static struct option long_options[] = {
@@ -71,10 +72,12 @@ int main(int argc, char **argv)
 		{"extract", required_argument, 0, 'e'},                              /* show value of specified metadata */
 		{"version", no_argument, 0, 'v'},                                    /* display version information */
 		{"help", no_argument, 0, 'h'},                                       /* display usage information */
+		{"manifest", no_argument, 0, 'x'},                                   /* List all transcluded files */
 		{NULL, 0, NULL, 0}
 	};
 	
 	GString *inputbuf;
+	GString *manifest = g_string_new("");
 	FILE *input;
 	FILE *output;
 	int curchar;
@@ -91,7 +94,7 @@ int main(int argc, char **argv)
 	while (1) {
 		int option_index = 0;
 
-		c = getopt_long (argc, argv, "vhco:bfst:me:ar", long_options, &option_index);
+		c = getopt_long (argc, argv, "vhco:bfst:me:arx", long_options, &option_index);
 		
 		if (c == -1)
 			break;
@@ -206,6 +209,10 @@ int main(int argc, char **argv)
 				extensions = extensions | EXT_CRITIC_REJECT;
 				break;
 			
+			case 'x':	/* List transcluded files */
+				list_transclude_manifest = 1;
+				break;
+
 			default:
 			fprintf(stderr,"Error parsing options.\n");
 			abort();
@@ -320,9 +327,19 @@ int main(int argc, char **argv)
 				temp = strdup(argv[i+1]);
 				folder = dirname(temp);
 				append_mmd_footers(inputbuf);
-				transclude_source(inputbuf, folder, NULL, output_format);
+				transclude_source(inputbuf, folder, NULL, output_format, manifest);
 				free(temp);
 				// free(folder);
+			}
+
+			/* list transclude manifest */
+			if (list_transclude_manifest) {
+				fprintf(stdout, "%s\n", manifest->str);
+				g_string_free(inputbuf, true);
+				g_string_free(manifest, true);
+				return(EXIT_SUCCESS);
+			} else {
+				g_string_free(manifest, true);
 			}
 
 			out = markdown_to_string(inputbuf->str,  extensions, output_format);
@@ -381,6 +398,7 @@ int main(int argc, char **argv)
 		inputbuf = g_string_new("");
 		char *folder = NULL;
 		char *temp = NULL;
+		GString *manifest = g_string_new("");
 
 		folder = getcwd(0,0);
 
@@ -413,7 +431,7 @@ int main(int argc, char **argv)
 		
 		if (!(extensions & EXT_COMPATIBILITY)) {
 			append_mmd_footers(inputbuf);
-			transclude_source(inputbuf, folder, NULL, output_format);
+			transclude_source(inputbuf, folder, NULL, output_format, manifest);
 		}
 
 		free(temp);
@@ -442,6 +460,16 @@ int main(int argc, char **argv)
 			g_string_free(inputbuf, true);
 			free(target_meta_key);
 			return(EXIT_SUCCESS);
+		}
+
+		/* list transclude manifest */
+		if (list_transclude_manifest) {
+			fprintf(stdout, "%s\n", manifest->str);
+			g_string_free(inputbuf, true);
+			g_string_free(manifest, true);
+			return(EXIT_SUCCESS);
+		} else {
+			g_string_free(manifest, true);			
 		}
 
 		out = markdown_to_string(inputbuf->str, extensions, output_format);

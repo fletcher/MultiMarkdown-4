@@ -81,7 +81,7 @@ char * source_without_metadata(char * source, unsigned long extensions ) {
 	Pass the path to the current folder if available -- should be a full path. 
 
 	Keep track of what we're parsing to prevent recursion using stack. */
-void transclude_source(GString *source, char *basedir, char *stack, int output_format) {
+void transclude_source(GString *source, char *basedir, char *stack, int output_format, GString *manifest) {
 	char *base = NULL;
 	char *path = NULL;
 	char *start;
@@ -176,6 +176,18 @@ void transclude_source(GString *source, char *basedir, char *stack, int output_f
 
 			pos = stop - source->str;
 
+			/* Add to the manifest (if not already included) */
+			if (manifest != NULL) {
+				temp = strstr(manifest->str,filename->str);
+
+				if ((temp != NULL) && (temp[strlen(filename->str)] == '\n')){
+					/* Already on manifest */
+				} else {
+					g_string_append_printf(manifest,"%s\n",filename->str);
+				}
+			}
+
+
 			/* Don't reparse ourselves */
 			if (stack != NULL) {
 				temp = strstr(stack,filename->str);
@@ -214,7 +226,7 @@ void transclude_source(GString *source, char *basedir, char *stack, int output_f
 
 
 				/* Recursively transclude files */
-				transclude_source(filebuffer, folder->str, stackstring->str, output_format);
+				transclude_source(filebuffer, folder->str, stackstring->str, output_format, manifest);
 
 				temp = source_without_metadata(filebuffer->str, 0x000000);
 
