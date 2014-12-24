@@ -51,6 +51,22 @@ char * path_from_dir_base(char *dir, char *base) {
 	return result;
 }
 
+/* Separate filename and directory from a full path */
+/* See http://stackoverflow.com/questions/1575278/function-to-split-a-filepath-into-path-and-file */
+void split_path_file(char** dir, char** file, char *path) {
+    char *slash = path, *next;
+#if defined(__WIN32)
+	const char sep[] = "\\";
+#else
+	const char sep[] = "/";
+#endif
+
+    while ((next = strpbrk(slash + 1, sep))) slash = next;
+    if (path != slash) slash++;
+    *dir = strndup(path, slash - path);
+    *file = strdup(slash);
+}
+
 /* Return pointer to beginning of text without metadata */
 /* NOTE: This is not a new string, and does not need to be freed separately */
 char * source_without_metadata(char * source, unsigned long extensions ) {
@@ -226,8 +242,18 @@ void transclude_source(GString *source, char *basedir, char *stack, int output_f
 
 
 				/* Recursively transclude files */
-				transclude_source(filebuffer, folder->str, stackstring->str, output_format, manifest);
 
+				/* We want to reset the base directory if we enter a subdirectory */
+				char * new_dir;
+				char * file_only;
+				split_path_file(&new_dir, &file_only, filename->str);
+
+				/* transclude_source(filebuffer, folder->str, stackstring->str, output_format, manifest); */
+				transclude_source(filebuffer, new_dir, stackstring->str, output_format, manifest);
+
+				free(new_dir);
+				free(file_only);
+				
 				temp = source_without_metadata(filebuffer->str, 0x000000);
 
 				g_string_insert(source, pos, temp);
