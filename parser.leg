@@ -754,7 +754,7 @@ Fenced = NonindentSpace (( Ticks3 a:FenceType < ( (!(NonindentSpace Ticks3) NonM
 
 
 Smart = &{ ext(EXT_SMART) }
-        ( Ellipsis | Dash | SingleQuoted | DoubleQuoted | Apostrophe )
+        ( Ellipsis | Dash | SingleQuoted | DoubleQuoted | BackTickQuoted | Apostrophe )
 
 Apostrophe = <'\''>
 		{ $$ = str(yytext); $$->key = APOSTROPHE; }
@@ -791,6 +791,15 @@ DoubleQuoted =  DoubleQuoteStart
 		DoubleQuoteEnd
 		{ $$ = mk_list(DOUBLEQUOTED, a); }
 
+BackTickStart = '``'
+
+BackTickEnd = '\'\''
+
+BackTickQuoted =  BackTickStart
+		a:StartList
+		( !BackTickEnd b:Inline { a = cons(b, a); } )+
+		BackTickEnd
+		{ $$ = mk_list(DOUBLEQUOTED, a); }
 
 NonblankIndentedLine = !BlankLine IndentedLine
 
