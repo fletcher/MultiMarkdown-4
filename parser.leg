@@ -787,7 +787,7 @@ DoubleQuoteEnd = '"'
 
 DoubleQuoted =  DoubleQuoteStart
 		a:StartList
-		( !DoubleQuoteEnd b:Inline { a = cons(b, a); } )+
+		( !DoubleQuoteEnd !BackTickEnd !BackTickStart b:Inline { a = cons(b, a); } )+
 		DoubleQuoteEnd
 		{ $$ = mk_list(DOUBLEQUOTED, a); }
 
@@ -797,7 +797,7 @@ BackTickEnd = '\'\''
 
 BackTickQuoted =  BackTickStart
 		a:StartList
-		( !BackTickEnd b:Inline { a = cons(b, a); } )+
+		( !DoubleQuoteEnd !BackTickEnd b:Inline { a = cons(b, a); } )+
 		BackTickEnd
 		{ $$ = mk_list(DOUBLEQUOTED, a); }
 
