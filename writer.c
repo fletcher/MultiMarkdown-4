@@ -27,6 +27,7 @@ char * export_node_tree(node *list, int format, unsigned long extensions) {
 	char *output;
 	GString *out = g_string_new("");
 	scratch_pad *scratch = mk_scratch_pad(extensions);
+	scratch->result_tree = list;  /* Pointer to result tree to use later */
 
 #ifdef DEBUG_ON
 	fprintf(stderr, "export_node_tree\n");
@@ -35,12 +36,19 @@ char * export_node_tree(node *list, int format, unsigned long extensions) {
 #ifdef DEBUG_ON
 	fprintf(stderr, "extract_references\n");
 #endif
-	/* Parse for link, images, etc reference definitions */
+
 	if ((format != OPML_FORMAT) &&
 		(format != CRITIC_ACCEPT_FORMAT) &&
 		(format != CRITIC_REJECT_FORMAT) &&
-		(format != CRITIC_HTML_HIGHLIGHT_FORMAT))
+		(format != CRITIC_HTML_HIGHLIGHT_FORMAT)) {
+			/* Find defined abbreviations */
+			extract_abbreviations(list, scratch);
+			/* Apply those abbreviations to source text */
+			find_abbreviations(list, scratch);
+
+			/* Parse for link, images, etc reference definitions */
 			extract_references(list, scratch);
+		}
 	
 	/* Change our desired format based on metadata */
 	if (format == LATEX_FORMAT)
@@ -75,13 +83,25 @@ char * export_node_tree(node *list, int format, unsigned long extensions) {
 #endif
 			break;
 		case LATEX_FORMAT:
+			if ((list != NULL) && (list->key != METADATA)) {
+				print_latex_node_tree(out, scratch->abbreviations, scratch);
+			}
 			print_latex_node_tree(out, list, scratch);
 			break;
 		case MEMOIR_FORMAT:
+			if ((list != NULL) && (list->key != METADATA)) {
+				print_memoir_node_tree(out, scratch->abbreviations, scratch);
+			}
 			print_memoir_node_tree(out, list, scratch);
 			break;
 		case BEAMER_FORMAT:
+			if ((list != NULL) && (list->key != METADATA)) {
+				print_beamer_node_tree(out, scratch->abbreviations, scratch);
+			}
 			print_beamer_node_tree(out, list, scratch);
+			break;
+		case LYX_FORMAT:
+			perform_lyx_output(out,list,scratch);
 			break;
 		case OPML_FORMAT:
 #ifdef DEBUG_ON
@@ -98,6 +118,16 @@ char * export_node_tree(node *list, int format, unsigned long extensions) {
 			begin_odf_output(out, list, scratch);
 			print_odf_node_tree(out, list, scratch);
 			end_odf_output(out, list, scratch);
+			break;
+		case RTF_FORMAT:
+#ifdef DEBUG_ON
+	fprintf(stderr, "export RTF\n");
+#endif
+			if (!(scratch->extensions & EXT_SNIPPET))
+				begin_rtf_output(out, list, scratch);
+			print_rtf_node_tree(out, list, scratch);
+			if (!(scratch->extensions & EXT_SNIPPET))
+				end_rtf_output(out, list, scratch);
 			break;
 		case CRITIC_ACCEPT_FORMAT:
 			print_critic_accept_node_tree(out, list, scratch);
@@ -125,49 +155,26 @@ char * export_node_tree(node *list, int format, unsigned long extensions) {
 
 /* extract_references -- go through node tree and find elements we need to reference;
    e.g. links, images, citations, footnotes 
-   Remove them from main parse tree */
+   Copy them from main parse tree */
 void extract_references(node *list, scratch_pad *scratch) {
 	node *temp;
-	node *last = NULL;
 	link_data *l;
 	
 	while (list != NULL) {
 		switch (list->key) {
 			case LINKREFERENCE:
 				l = list->link_data;
-				temp = mk_link(list->children, l->label, l->source, l->title, l->attr);
-				
+				temp = mk_link(list->children, l->label, l->source, l->title, NULL);
+				temp->link_data->attr = copy_node_tree(l->attr);
+
 				/* store copy of link reference */
 				scratch->links = cons(temp, scratch->links);
 				
-				/* Disconnect from children so not duplicated */
-				l->attr = NULL;
-				
-				if (last != NULL) {
-					/* remove this node from tree */
-					last->next = list->next;
-					free_link_data(list->link_data);
-					free(list);
-					list = last->next;
-					continue;
-				} else {
-				}
 				break;
 			case NOTESOURCE:
-				if (last != NULL) {
-					last->next = list->next;
-					scratch->notes = cons(list, scratch->notes);
-					list = last->next;
-					continue;
-				}
-				break;
 			case GLOSSARYSOURCE:
-				if (last != NULL) {
-					last->next = list->next;
-					scratch->notes = cons(list, scratch->notes);
-					list = last->next;
-					continue;
-				}
+				temp = copy_node(list);
+				scratch->notes = cons(temp, scratch->notes);
 				break;
 			case H1: case H2: case H3: case H4: case H5: case H6:
 				if ((list->children->key != AUTOLABEL) && !(scratch->extensions & EXT_NO_LABELS)
@@ -199,10 +206,119 @@ void extract_references(node *list, scratch_pad *scratch) {
 			default:
 				break;
 		}
-		last = list;
 		list = list->next;
 	}
 }
+
+/* extract_abbreviations -- traverse node tree and find abbreviation definitions */
+void extract_abbreviations(node *list, scratch_pad *scratch) {
+	node *temp;
+
+	while (list != NULL) {
+		switch (list->key) {
+			case ABBREVIATION:
+				temp = copy_node(list);
+				list->key = KEY_COUNTER;	/* Mark this as dead; we will use it elsewhere */
+				trim_trailing_whitespace(temp->str);
+				scratch->abbreviations = cons(temp, scratch->abbreviations);
+				break;
+			case HEADINGSECTION:
+			case RAW:
+			case LIST:
+			case BLOCKQUOTEMARKER:
+			case BLOCKQUOTE:
+				extract_abbreviations(list->children, scratch);
+				break;
+			default:
+				/* Try to boost performance by skipping dead ends */
+				break;
+		}
+		list = list->next;
+	}
+}
+
+
+/* find_abbreviations -- use abbreviations to look for matching strings */
+void find_abbreviations(node *list, scratch_pad *scratch) {
+	node *abbr = scratch->abbreviations;
+	node *temp, *target, *end = NULL;
+	bool ismatch;
+
+	// Don't look if we didn't define any abbreviations */
+	if (abbr->key == KEY_COUNTER)
+		return;
+	
+	while (list != NULL) {
+		switch (list->key) {
+			case STR:
+				/* Look for matching abbrevation */
+				/*fprintf(stderr, "Check '%s' for matching abbr\n", list->str); */
+				abbr = scratch->abbreviations;
+				while (abbr != NULL) {
+					if (abbr->key != KEY_COUNTER) {
+						ismatch = true;
+						temp = abbr->children->children;
+						target = list;
+
+						while((ismatch) && (temp != NULL) && (target != NULL)) {
+							switch (temp->key) {
+								case STR:
+									if (strcmp(temp->str, target->str) != 0) {
+										ismatch = false;
+									}
+								case SPACE:
+								case KEY_COUNTER:
+									break;
+								default:
+									if (temp->key != target->key)
+										ismatch = false;
+									break;
+							}
+							temp = temp->next;
+							end = target;
+							target = target->next;
+						}
+						if ((ismatch) && (temp == NULL)) {
+							temp = copy_node(abbr);
+							temp->next = NULL;
+							list->children = temp;
+							if (list != end) {
+								list->key = ABBRSTART;
+                                if (end != NULL)
+                                    end->key = ABBRSTOP;
+							} else {
+								list->key = ABBR;
+							}
+						}
+					}
+					abbr = abbr->next;
+				}
+				break;
+			case LIST:
+			case ORDEREDLIST:
+			case BULLETLIST:
+			case LISTITEM:
+			case HEADINGSECTION:
+			case PARA:
+			case PLAIN:
+			case LINK:
+			case LINKREFERENCE:
+			case NOTEREFERENCE:
+			case NOTESOURCE:
+			case GLOSSARYSOURCE:
+			case BLOCKQUOTEMARKER:
+			case BLOCKQUOTE:
+				/* Check children of these elements */
+				find_abbreviations(list->children, scratch);
+				break;
+			default:
+				/* Everything else we skip */
+				break;
+		}
+		list = list->next;
+	}
+}
+
 
 /* extract_link_data -- given a label, parse the link data and return */
 link_data * extract_link_data(char *label, scratch_pad *scratch) {
@@ -314,7 +430,14 @@ int note_number_for_label(char *text, scratch_pad *scratch) {
 		if (n != NULL) {
 			/* move to used queue */
 			move_note_to_used(n, scratch);
+#ifdef DEBUG_ON
+	fprintf(stderr, "note has not already been used for: %s\n",text);
+#endif
 		}
+	} else {
+#ifdef DEBUG_ON
+	fprintf(stderr, "note has already been used for: %s\n",text);
+#endif
 	}
 	
 	/* Check label version */
@@ -327,7 +450,15 @@ int note_number_for_label(char *text, scratch_pad *scratch) {
 		if (n != NULL) {
 			/* move to used queue */
 			move_note_to_used(n, scratch);
+#ifdef DEBUG_ON
+	fprintf(stderr, "note has not already been used for: %s\n",label);
+#endif
 		}
+	} else {
+#ifdef DEBUG_ON
+	fprintf(stderr, "note has already been used for: %s\n",label);
+#endif
+
 	}
 	
 	/* CAN recursively drill down to start counter at 0 and ++ */
@@ -335,8 +466,12 @@ int note_number_for_label(char *text, scratch_pad *scratch) {
 	
 	free(label);
 	free(clean);
-	if (n != NULL)
+	if (n != NULL) {
+#ifdef DEBUG_ON
+	fprintf(stderr, "note number is: %d\n",count_node_from_end(n));
+#endif
 		return count_node_from_end(n);
+	}
 	else 
 		return 0;
 }
@@ -381,8 +516,14 @@ int count_node_from_end(node *n) {
 	if (n->next == NULL) {
 		if (n->key == KEY_COUNTER)
 			return 0;
+#ifdef DEBUG_ON
+	fprintf(stderr, "note %d: '%s'\n",1,n->str);
+#endif
 		return 1;	/* reserve 0 for not found */
 	}
+#ifdef DEBUG_ON
+	fprintf(stderr, "note %d: '%s'\n",count_node_from_end(n->next) +1,n->str);
+#endif
 	return (count_node_from_end(n->next) + 1);
 }
 
@@ -544,4 +685,43 @@ char * dimension_for_attribute(char *querystring, node *list) {
 	fprintf(stderr, "finish dimension_for_attribute\n");
 #endif
     return(dimension);
+}
+
+
+/* Load available info for a link */
+link_data * load_link_data(node *n, scratch_pad *scratch) {
+	link_data *r = NULL;
+	GString *temp_str = NULL;
+	char *temp;
+
+	r = mk_link_data(n->link_data->label, n->link_data->source, n->link_data->title, n->link_data->attr);
+
+	/* Do we have proper info? */
+	if ((r->label == NULL) &&
+	(r->source == NULL)) {
+		/* we seem to be a [foo][] style link */
+		/* so load a label */
+		temp_str = g_string_new("");
+		print_raw_node_tree(temp_str, n->children);
+		r->label = temp_str->str;
+		g_string_free(temp_str, FALSE);
+	}
+	/* Load data by reference */
+	if (r->label != NULL) {
+		temp = strdup(r->label);
+
+		r->attr = NULL;
+		free_link_data(r);
+
+		r = extract_link_data(temp, scratch);
+		if (r == NULL) {
+			/* return NULL since no definition found */
+			
+			free(temp);
+			return NULL;
+		}
+		free(temp);
+	}
+
+	return r;
 }

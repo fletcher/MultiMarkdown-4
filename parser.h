@@ -14,10 +14,12 @@
 
 #define TABSTOP 4
 
-#define MMD_VERSION "4.3.1"
+#define MMD_VERSION "4.6"
 
 #define MMD_COPYRIGHT \
-	"Copyright (c) 2015 Fletcher T. Penney.\n\n" \
+	"Copyright (c) 2013-2015 Fletcher T. Penney.\n\n" \
+	"LyX export code (c) 2013-2014 Charles R. Cowan,\n" \
+	"licensed under both GPL and MIT licenses.\n\n" \
 	"portions based on peg-markdown - Copyright (c) 2008-2009 John MacFarlane.\n" \
 	"peg-markdown is Licensed under either the GPLv2+ or MIT.\n" \
 	"portions Copyright (c) 2011 Daniel Jalkut, MIT licensed.\n\n" \
@@ -30,16 +32,6 @@
 
 /* This is the type used for the $$ pseudovariable passed to parents */
 #define YYSTYPE node *
-
-/* Define a structure to simplify handling of links */
-struct link_data {
-	char *label;                /* if this is a reference link */
-	char *source;               /* source URL     */
-	char *title;                /* title string   */
-	node *attr;                 /* attribute tree */
-};
-
-typedef struct link_data link_data;
 
 /* This is the data we store in the parser context */
 typedef struct {
@@ -55,26 +47,46 @@ typedef struct {
 /* A "scratch pad" for storing data when writing output 
 	The structure will vary based on what you need */
 typedef struct {
-	unsigned long extensions;   /* Store copy of extensions for retrieval */
-	int   padded;               /* Track newlines */
-	int   baseheaderlevel;      /* Increase header levels when outputting */
-	int   language;             /* For smart quotes */
-	char *table_alignment;      /* Hold the alignment string while parsing table */
-	int   table_column;         /* Track the current column number */
-	char  cell_type;            /* What sort of cell type are we in? */
-	node *notes;                /* Store reference notes */
-	node *links;                /* ... links */
-	node *glossary;             /* ... glossary */
-	node *citations;            /* ... citations */
-	node *used_notes;           /* notes that have been referenced */
-	int   footnote_to_print;    /* set while we are printing so we can reverse link */
-	int   max_footnote_num;     /* so we know if current note is new or repeat */
-	bool  obfuscate;            /* flag that we need to mask email addresses */
-	char *latex_footer;         /* store for appending at the end */
-	bool  no_latex_footnote;    /* can't use footnotes in some places */
-	int   odf_para_type;        /* what type of paragraph do we need? */
-	bool  odf_list_needs_end_p; /* is there a <p> that need to be closed */
-	int   random_seed_base;     /* Allow random footnotes */
+	unsigned long extensions;    /* Store copy of extensions for retrieval */
+	int   padded;                /* Track newlines */
+	int   baseheaderlevel;       /* Increase header levels when outputting */
+	int   language;              /* For smart quotes */
+	char *table_alignment;       /* Hold the alignment string while parsing table */
+	int   table_column;          /* Track the current column number */
+	char  cell_type;             /* What sort of cell type are we in? */
+	bool  printing_notes;        /* Are we printing notes/glossary/etc.? */
+	node *notes;                 /* Store reference notes */
+	node *links;                 /* ... links */
+	node *glossary;              /* ... glossary */
+	node *citations;             /* ... citations */
+	node *abbreviations;         /* ... abbreviations */
+	node *used_notes;            /* notes that have been referenced */
+	node *result_tree;           /* reference to entire result tree */
+	int   footnote_to_print;     /* set while we are printing so we can reverse link */
+	int   footnote_para_counter; /* so we know which para is last */
+	int   max_footnote_num;      /* so we know if current note is new or repeat */
+	bool  obfuscate;             /* flag that we need to mask email addresses */
+	char *latex_footer;          /* store for appending at the end */
+	bool  no_latex_footnote;     /* can't use footnotes in some places */
+	int   odf_para_type;         /* what type of paragraph do we need? */
+	bool  odf_list_needs_end_p;  /* is there a <p> that need to be closed */
+	int   random_seed_base;      /* Allow random footnotes */
+	int   table_row;             /* CRC - Track the current row number */
+	int   lyx_para_type;         /* CRC - the type of paragraph being processed */
+	int   lyx_level;             /* CRC - nesting level */
+	bool  no_lyx_footnote;       /* CRC - Can't use footnotes in some places */
+	bool  lyx_number_headers;    /* CRC - Whether to number headers (with or without *) */
+	bool  lyx_definition_hit;    /* CRC  - True when a definition has been encountered */
+	bool  lyx_definition_open;   /* CRC - Have not completed a definition list entry */
+	bool  lyx_in_header;         /* CRC - In a table header */
+	bool  lyx_in_frame;           /* CRC - in a beamer frame */
+	bool  lyx_beamerbullet;      /* CRC - beamer bullet list (add <+->) */
+	int   lyx_debug_nest;        /* CRC - nesting level for enhanced debugging */
+	bool  lyx_table_need_line;   /* CRC - need a line at the top */
+	int   lyx_table_total_rows;  /* CRC - The total number of rows in the table */
+	int   lyx_table_total_cols;  /* CRC - The total number of columns in the table */
+	node *lyx_table_caption;     /* CRC - Hold the table caption */
+	GString *lyx_debug_pad;      /* CRC - padding to indent debugging informaiton */
 } scratch_pad;
 
 /* Define smart typography languages -- first in list is default */
@@ -113,6 +125,8 @@ node * mk_pos_list(int key, node *list, unsigned int start, unsigned int stop);
 void   free_node(node *n);
 void   free_node_tree(node * n);
 void   print_node_tree(node * n);
+node * copy_node(node *n);
+node * copy_node_tree(node *n);
 
 node * cons(node *new, node *list);
 node * reverse_list(node *list);
@@ -135,6 +149,7 @@ link_data * extract_link_data(char *label, scratch_pad *scratch);
 node * mk_autolink(char *text);
 
 void   extract_references(node *list, scratch_pad *scratch);
+void   extract_abbreviations(node *list, scratch_pad *scratch);
 
 bool   extension(int ext, unsigned long extensions);
 
@@ -144,9 +159,13 @@ void   trim_trailing_newlines(char *str);
 
 /* other utilities */
 char * label_from_string(char *str);
+char * ascii_label_from_string(char *str);
 char * clean_string(char *str);
+char * string_from_node_tree(node *n);
 char * label_from_node_tree(node *n);
 char * label_from_node(node *n);
+char * ascii_label_from_node_tree(node *n);
+char * ascii_label_from_node(node *n);
 void   print_raw_node(GString *out, node *n);
 void   print_raw_node_tree(GString *out, node*n);
 
@@ -156,9 +175,11 @@ node * metadata_for_key(char *key, node *list);
 char * metavalue_for_key(char *key, node *list);
 
 bool tree_contains_key(node *list, int key);
+int tree_contains_key_count(node *list, int key);
 
 bool check_timeout();
 
 void debug_node(node *n);
+void debug_node_tree(node *n);
 
 #endif

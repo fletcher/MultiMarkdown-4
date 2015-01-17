@@ -47,6 +47,7 @@ void print_odf_node_tree(GString *out, node *list, scratch_pad *scratch) {
 /* print_odf_node -- convert given node to odf and append */
 void print_odf_node(GString *out, node *n, scratch_pad *scratch) {
 	node *temp_node;
+	link_data *temp_link_data = NULL;
 	char *temp;
 	int lev;
 	int old_type;
@@ -73,11 +74,16 @@ void print_odf_node(GString *out, node *n, scratch_pad *scratch) {
 	
 	switch (n->key) {
 		case NO_TYPE:
+		case ABBREVIATION:
 			break;
 		case LIST:
 			print_odf_node_tree(out,n->children,scratch);
 			break;
 		case STR:
+		case ABBR:
+		case ABBRSTART:
+		case ABBRSTOP:
+			/* TODO: Need something a bit better here for abbreviations */
 			print_html_string(out,n->str, scratch);
 			break;
 		case SPACE:
@@ -98,6 +104,7 @@ void print_odf_node(GString *out, node *n, scratch_pad *scratch) {
 					break;
 				case CODE:
 				case VERBATIM:
+				case VERBATIMFENCE:
 					g_string_append_printf(out, " text:style-name=\"Preformatted Text\"");
 					break;
 				case ORDEREDLIST:
@@ -138,6 +145,7 @@ void print_odf_node(GString *out, node *n, scratch_pad *scratch) {
 			}
 			break;
 		case VERBATIM:
+		case VERBATIMFENCE:
 			old_type = scratch->odf_para_type;
 			scratch->odf_para_type = VERBATIM;
 			pad(out, 2, scratch);
@@ -225,6 +233,7 @@ void print_odf_node(GString *out, node *n, scratch_pad *scratch) {
 			} else if (strcmp(temp, "css") == 0) {
 			} else if (strcmp(temp, "xhtmlheader") == 0) {
 			} else if (strcmp(temp, "htmlheader") == 0) {
+			} else if (strcmp(n->str, "mmdfooter") == 0) {
 			} else if (strcmp(temp, "baseheaderlevel") == 0) {
 				scratch->baseheaderlevel = atoi(n->children->str);
 			} else if (strcmp(temp, "odfheaderlevel") == 0) {
@@ -311,34 +320,39 @@ void print_odf_node(GString *out, node *n, scratch_pad *scratch) {
 			g_string_append_printf(out, "<text:line-break/>");
 			break;
 		case MATHSPAN:
-			if (n->str[0] == '$') {
-				g_string_append_printf(out, "<text:span text:style-name=\"math\">%s</text:span>",n->str);
-			} else if (n->str[strlen(n->str) - 1] == ']') {
-				n->str[strlen(n->str) - 3] = '\0';
-				g_string_append_printf(out, "<text:span text:style-name=\"math\">%s\\]</text:span>",n->str);
+			temp = strdup(n->str);
+			if (temp[0] == '$') {
+				g_string_append_printf(out, "<text:span text:style-name=\"math\">%s</text:span>",temp);
+			} else if (temp[strlen(temp) - 1] == ']') {
+				temp[strlen(temp) - 3] = '\0';
+				g_string_append_printf(out, "<text:span text:style-name=\"math\">%s\\]</text:span>",temp);
 			} else {
-				n->str[strlen(n->str) - 3] = '\0';
-				g_string_append_printf(out, "<text:span text:style-name=\"math\">%s\\)</text:span>",n->str);
+				temp[strlen(temp) - 3] = '\0';
+				g_string_append_printf(out, "<text:span text:style-name=\"math\">%s\\)</text:span>",temp);
 			}
+			free(temp);
 			break;
 		case STRONG:
 			g_string_append_printf(out, "<text:span text:style-name=\"MMD-Bold\">");
 			print_odf_node_tree(out,n->children,scratch);
 			g_string_append_printf(out, "</text:span>");
-		break;
+			break;
 		case EMPH:
 			g_string_append_printf(out, "<text:span text:style-name=\"MMD-Italic\">");
 			print_odf_node_tree(out,n->children,scratch);
 			g_string_append_printf(out, "</text:span>");
-		break;
+			break;
 		case LINKREFERENCE:
 			break;
 		case LINK:
 #ifdef DEBUG_ON
 	fprintf(stderr, "print odf link: '%s'\n",n->str);
 #endif
-			/* Do we have proper info? */
+			/* Stash a copy of the link data */
+			if (n->link_data != NULL)
+				temp_link_data = mk_link_data(n->link_data->label, n->link_data->source, n->link_data->title, n->link_data->attr);
 
+			/* Do we have proper info? */
 			if (n->link_data == NULL) {
 				/* NULL link_data could occur if we parsed this link before and it didn't
 					match anything */
@@ -384,7 +398,12 @@ void print_odf_node(GString *out, node *n, scratch_pad *scratch) {
 					} else {
 						g_string_append_printf(out, "[%s]",temp);
 					}
+
 					free(temp);
+
+					/* Restore stashed copy */
+					n->link_data = temp_link_data;
+
 					break;
 				}
 				free(temp);
@@ -408,7 +427,12 @@ void print_odf_node(GString *out, node *n, scratch_pad *scratch) {
 			if (n->children != NULL)
 				print_odf_node_tree(out,n->children,scratch);
 			g_string_append_printf(out, "</text:a>");
-			n->link_data->attr = NULL;	/* We'll delete these elsewhere */
+
+			/* Restore stashed copy */
+			n->link_data->attr = NULL;
+			free_link_data(n->link_data);
+			n->link_data = temp_link_data;
+
 			break;
 		case ATTRKEY:
 			if ( (strcmp(n->str,"height") == 0) || (strcmp(n->str, "width") == 0)) {
@@ -424,6 +448,10 @@ void print_odf_node(GString *out, node *n, scratch_pad *scratch) {
 #ifdef DEBUG_ON
 	fprintf(stderr, "print image\n");
 #endif
+			/* Stash a copy of the link data */
+			if (n->link_data != NULL)
+				temp_link_data = mk_link_data(n->link_data->label, n->link_data->source, n->link_data->title, n->link_data->attr);
+
 			if (n->key == IMAGEBLOCK)
 				g_string_append_printf(out, "<text:p>\n");
 			/* Do we have proper info? */
@@ -448,7 +476,12 @@ void print_odf_node(GString *out, node *n, scratch_pad *scratch) {
 					g_string_append_printf(out, "![");
 					print_html_node_tree(out, n->children, scratch);
 					g_string_append_printf(out,"][%s]",temp);
+
+					/* Restore stashed copy */
+					n->link_data = temp_link_data;
+
 					free(temp);
+					
 					break;
 				}
 				free(temp);
@@ -485,20 +518,30 @@ void print_odf_node(GString *out, node *n, scratch_pad *scratch) {
 			g_string_append_printf(out," xlink:type=\"simple\" xlink:show=\"embed\" xlink:actuate=\"onLoad\" draw:filter-name=\"&lt;All formats&gt;\"/>\n</draw:frame></text:p>");
 
 			if (n->key == IMAGEBLOCK) {
-				g_string_append_printf(out,"<text:p>");
 				if (n->children != NULL) {
-					g_string_append_printf(out, "Figure <text:sequence text:name=\"Figure\" text:formula=\"ooow:Figure+1\" style:num-format=\"1\"> Update Fields to calculate numbers</text:sequence>: ");
-					print_odf_node_tree(out, n->children, scratch);
+					temp_str = g_string_new("");
+					print_odf_node_tree(temp_str,n->children,scratch);
+					if (temp_str->currentStringLength > 0) {
+					g_string_append_printf(out, "<text:p>Figure <text:sequence text:name=\"Figure\" text:formula=\"ooow:Figure+1\" style:num-format=\"1\"> Update Fields to calculate numbers</text:sequence>: ");
+						g_string_append(out, temp_str->str);
+						g_string_append_printf(out, "</text:p>");
+					}
+					g_string_free(temp_str, true);
 				}
-				g_string_append_printf(out, "</text:p></draw:text-box></draw:frame>\n</text:p>\n");
+				g_string_append_printf(out, "</draw:text-box></draw:frame>\n</text:p>\n");
 			} else {
 				g_string_append_printf(out, "</draw:text-box></draw:frame>\n");
 			}
 			scratch->padded = 1;
-			n->link_data->attr = NULL;	/* We'll delete these elsewhere */
+
+			/* Restore stashed copy */
+			n->link_data->attr = NULL;
+			free_link_data(n->link_data);
+			n->link_data = temp_link_data;
 			
 			free(height);
 			free(width);
+			
 			break;
 #ifdef DEBUG_ON
 	fprintf(stderr, "finish image\n");
@@ -509,6 +552,7 @@ void print_odf_node(GString *out, node *n, scratch_pad *scratch) {
 			lev = note_number_for_node(n, scratch);
 			temp_node = node_for_count(scratch->used_notes, lev);
 			scratch->padded = 2;
+			scratch->printing_notes = 1;
 			if (temp_node->key == GLOSSARYSOURCE) {
 				g_string_append_printf(out, "<text:note text:id=\"\" text:note-class=\"glossary\"><text:note-body>\n");
 				print_odf_node_tree(out, temp_node->children, scratch);
@@ -518,6 +562,7 @@ void print_odf_node(GString *out, node *n, scratch_pad *scratch) {
 				print_odf_node_tree(out, temp_node->children, scratch);
 				g_string_append_printf(out, "</text:note-body>\n</text:note>\n");
 			}
+			scratch->printing_notes = 0;
 			scratch->padded = 1;
 			scratch->odf_para_type = old_type;
 			break;
@@ -538,6 +583,7 @@ void print_odf_node(GString *out, node *n, scratch_pad *scratch) {
 #endif
 				/* MMD citation, so output as footnote */
 				/* TODO: create separate stream from footnotes */
+				scratch->printing_notes = 1;
 				lev = 0;
 				if (n->link_data != NULL)
 					lev = note_number_for_label(n->link_data->label, scratch);
@@ -595,12 +641,22 @@ void print_odf_node(GString *out, node *n, scratch_pad *scratch) {
 					}
 				}
 			}
+			scratch->printing_notes = 0;
 			if ((n->next != NULL) && (n->next->key == CITATION)) {
 				g_string_append_printf(out, " ");
 			}
 #ifdef DEBUG_ON
 		fprintf(stderr, "finish cite\n");
 #endif
+			break;
+		case VARIABLE:
+			temp = metavalue_for_key(n->str,scratch->result_tree);
+			if (temp == NULL) {
+				g_string_append_printf(out, "[%%%s]",n->str);
+			} else {
+				g_string_append_printf(out, temp);
+				free(temp);
+			}
 			break;
 		case GLOSSARYTERM:
 			g_string_append_printf(out,"<text:p text:style-name=\"Glossary\">");
@@ -677,6 +733,7 @@ void print_odf_node(GString *out, node *n, scratch_pad *scratch) {
 				free(temp);
 			}
 			scratch->padded = 1;
+			scratch->table_alignment = NULL;
 			break;
 		case TABLESEPARATOR:
 			scratch->table_alignment = n->str;
@@ -711,6 +768,7 @@ void print_odf_node(GString *out, node *n, scratch_pad *scratch) {
 			g_string_append_printf(out, "<table:table-cell");
 			if ((n->children != NULL) && (n->children->key == CELLSPAN)) {
 				g_string_append_printf(out, " table:number-columns-spanned=\"%d\"", strlen(n->children->str)+1);
+				scratch->table_column += (int)strlen(n->children->str);
 			}
 			g_string_append_printf(out, ">\n<text:p");
 			if (scratch->cell_type == 'h') {
@@ -738,16 +796,19 @@ void print_odf_node(GString *out, node *n, scratch_pad *scratch) {
 		case CELLSPAN:
 			break;
 		case GLOSSARYSOURCE:
-			print_odf_node_tree(out, n->children, scratch);
+			if (scratch->printing_notes)
+				print_odf_node_tree(out, n->children, scratch);
 			break;
 		case CITATIONSOURCE:
 		case NOTESOURCE:
-			print_odf_node(out, n->children, scratch);
+			if (scratch->printing_notes)
+				print_odf_node(out, n->children, scratch);
 			break;
 		case SOURCEBRANCH:
 			fprintf(stderr,"SOURCEBRANCH\n");
 			break;
 		case NOTELABEL:
+		case GLOSSARYLABEL:
 			break;
 		case SUPERSCRIPT:
 			g_string_append_printf(out, "<text:span text:style-name=\"MMD-Superscript\">");

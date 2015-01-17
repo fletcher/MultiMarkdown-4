@@ -9,6 +9,15 @@
 /* Begin PBXBuildFile section */
 		5A116B581734545700DB0DE6 /* critic.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A116B561734545700DB0DE6 /* critic.c */; };
 		5A116B591734545B00DB0DE6 /* critic.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A116B561734545700DB0DE6 /* critic.c */; };
+		5A1FF043186A16D3002544C0 /* lyx.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A1FF041186A16D3002544C0 /* lyx.c */; };
+		5A1FF044186A16D3002544C0 /* lyx.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A1FF041186A16D3002544C0 /* lyx.c */; };
+		5A1FF045186A16D3002544C0 /* lyx.h in Headers */ = {isa = PBXBuildFile; fileRef = 5A1FF042186A16D3002544C0 /* lyx.h */; };
+		5A1FF048186A1724002544C0 /* lyxbeamer.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A1FF046186A1724002544C0 /* lyxbeamer.c */; };
+		5A1FF049186A1724002544C0 /* lyxbeamer.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A1FF046186A1724002544C0 /* lyxbeamer.c */; };
+		5A1FF04A186A1724002544C0 /* lyxbeamer.h in Headers */ = {isa = PBXBuildFile; fileRef = 5A1FF047186A1724002544C0 /* lyxbeamer.h */; };
+		5A56E585186CE833004089C0 /* transclude.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A56E583186CE833004089C0 /* transclude.c */; };
+		5A56E586186CE833004089C0 /* transclude.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A56E583186CE833004089C0 /* transclude.c */; };
+		5A56E587186CE833004089C0 /* transclude.h in Headers */ = {isa = PBXBuildFile; fileRef = 5A56E584186CE833004089C0 /* transclude.h */; };
 		5A60F8B4172BFE4700EFBF5B /* parse_utilities.c in Sources */ = {isa = PBXBuildFile; fileRef = 5AD6CB0C1718CB560085E51D /* parse_utilities.c */; };
 		5A60F8DB172C07E200EFBF5B /* GLibFacade.c in Sources */ = {isa = PBXBuildFile; fileRef = 5AD6CB0A1718CB560085E51D /* GLibFacade.c */; };
 		5A60F8DC172C07E200EFBF5B /* parse_utilities.c in Sources */ = {isa = PBXBuildFile; fileRef = 5AD6CB0C1718CB560085E51D /* parse_utilities.c */; };
@@ -21,6 +30,10 @@
 		5A60F8E3172C07E200EFBF5B /* odf.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A89852C17297DFB00D1D72D /* odf.c */; };
 		5A60F8E4172C07E200EFBF5B /* opml.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A2534F3172768A8003D1A91 /* opml.c */; };
 		5A60F8E5172C07E200EFBF5B /* parser.c in Sources */ = {isa = PBXBuildFile; fileRef = 5AD6CB211718CCD90085E51D /* parser.c */; };
+		5ABBCFCB18442416005F519F /* rng.c in Sources */ = {isa = PBXBuildFile; fileRef = 5ABBCFCA18442416005F519F /* rng.c */; };
+		5ABBCFCC18442416005F519F /* rng.c in Sources */ = {isa = PBXBuildFile; fileRef = 5ABBCFCA18442416005F519F /* rng.c */; };
+		5AE0694418515D1300DFFF33 /* rtf.c in Sources */ = {isa = PBXBuildFile; fileRef = 5AE0694318515D1300DFFF33 /* rtf.c */; };
+		5AE0694518515D1300DFFF33 /* rtf.c in Sources */ = {isa = PBXBuildFile; fileRef = 5AE0694318515D1300DFFF33 /* rtf.c */; };
 		5AE4484C1769F0EA0055DD27 /* multimarkdown.c in Sources */ = {isa = PBXBuildFile; fileRef = 5AE4484B1769F0EA0055DD27 /* multimarkdown.c */; };
 		5AE59DB5172A14D600401A65 /* GLibFacade.c in Sources */ = {isa = PBXBuildFile; fileRef = 5AD6CB0A1718CB560085E51D /* GLibFacade.c */; };
 		5AE59DB7172A14D600401A65 /* parser.c in Sources */ = {isa = PBXBuildFile; fileRef = 5AD6CB211718CCD90085E51D /* parser.c */; };
@@ -72,6 +85,10 @@
 		5A1D85931719B95900C6ADD3 /* writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = writer.h; sourceTree = "<group>"; };
 		5A1D85961719BDC700C6ADD3 /* html.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = html.c; sourceTree = "<group>"; };
 		5A1D85971719BDC700C6ADD3 /* html.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = html.h; sourceTree = "<group>"; };
+		5A1FF041186A16D3002544C0 /* lyx.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lyx.c; sourceTree = "<group>"; };
+		5A1FF042186A16D3002544C0 /* lyx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lyx.h; sourceTree = "<group>"; };
+		5A1FF046186A1724002544C0 /* lyxbeamer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lyxbeamer.c; sourceTree = "<group>"; };
+		5A1FF047186A1724002544C0 /* lyxbeamer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lyxbeamer.h; sourceTree = "<group>"; };
 		5A2534ED172768A8003D1A91 /* beamer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = beamer.c; sourceTree = "<group>"; };
 		5A2534EE172768A8003D1A91 /* beamer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = beamer.h; sourceTree = "<group>"; };
 		5A2534EF172768A8003D1A91 /* latex.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = latex.c; sourceTree = "<group>"; };
@@ -80,10 +97,13 @@
 		5A2534F2172768A8003D1A91 /* memoir.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = memoir.h; sourceTree = "<group>"; };
 		5A2534F3172768A8003D1A91 /* opml.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = opml.c; sourceTree = "<group>"; };
 		5A2534F4172768A8003D1A91 /* opml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = opml.h; sourceTree = "<group>"; };
+		5A56E583186CE833004089C0 /* transclude.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = transclude.c; sourceTree = "<group>"; };
+		5A56E584186CE833004089C0 /* transclude.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = transclude.h; sourceTree = "<group>"; };
 		5A60F8D7172C07D100EFBF5B /* libMultiMarkdown.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMultiMarkdown.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A60F8FF172C099100EFBF5B /* libMultiMarkdown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libMultiMarkdown.h; sourceTree = "<group>"; };
 		5A89852C17297DFB00D1D72D /* odf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = odf.c; sourceTree = "<group>"; };
 		5A89852D17297DFB00D1D72D /* odf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = odf.h; sourceTree = "<group>"; };
+		5ABBCFCA18442416005F519F /* rng.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = rng.c; sourceTree = "<group>"; };
 		5AD6CB091718CB560085E51D /* glib.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = glib.h; sourceTree = "<group>"; };
 		5AD6CB0A1718CB560085E51D /* GLibFacade.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = GLibFacade.c; sourceTree = "<group>"; };
 		5AD6CB0B1718CB560085E51D /* GLibFacade.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GLibFacade.h; sourceTree = "<group>"; };
@@ -91,6 +111,7 @@
 		5AD6CB0E1718CB560085E51D /* parser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = parser.h; sourceTree = "<group>"; };
 		5AD6CB0F1718CB560085E51D /* parser.leg */ = {isa = PBXFileReference; lastKnownFileType = text; path = parser.leg; sourceTree = "<group>"; };
 		5AD6CB211718CCD90085E51D /* parser.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = parser.c; sourceTree = "<group>"; };
+		5AE0694318515D1300DFFF33 /* rtf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = rtf.c; sourceTree = "<group>"; };
 		5AE4484B1769F0EA0055DD27 /* multimarkdown.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = multimarkdown.c; sourceTree = "<group>"; };
 		5AE59DC5172A14D600401A65 /* multimarkdown */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = multimarkdown; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -134,6 +155,10 @@
 				5A2534EE172768A8003D1A91 /* beamer.h */,
 				5A2534EF172768A8003D1A91 /* latex.c */,
 				5A2534F0172768A8003D1A91 /* latex.h */,
+				5A1FF041186A16D3002544C0 /* lyx.c */,
+				5A1FF042186A16D3002544C0 /* lyx.h */,
+				5A1FF046186A1724002544C0 /* lyxbeamer.c */,
+				5A1FF047186A1724002544C0 /* lyxbeamer.h */,
 				5A2534F1172768A8003D1A91 /* memoir.c */,
 				5A2534F2172768A8003D1A91 /* memoir.h */,
 				5A89852C17297DFB00D1D72D /* odf.c */,
@@ -142,6 +167,10 @@
 				5A2534F4172768A8003D1A91 /* opml.h */,
 				5A116B561734545700DB0DE6 /* critic.c */,
 				5A116B571734545700DB0DE6 /* critic.h */,
+				5AE0694318515D1300DFFF33 /* rtf.c */,
+				5ABBCFCA18442416005F519F /* rng.c */,
+				5A56E583186CE833004089C0 /* transclude.c */,
+				5A56E584186CE833004089C0 /* transclude.h */,
 				5AD6CB231718CCDE0085E51D /* Generated Files */,
 				5AD6CB151718CB9A0085E51D /* Products */,
 			);
@@ -171,6 +200,9 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A1FF04A186A1724002544C0 /* lyxbeamer.h in Headers */,
+				5A56E587186CE833004089C0 /* transclude.h in Headers */,
+				5A1FF045186A16D3002544C0 /* lyx.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -296,16 +328,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				5A60F8DB172C07E200EFBF5B /* GLibFacade.c in Sources */,
+				5A56E586186CE833004089C0 /* transclude.c in Sources */,
 				5A60F8DC172C07E200EFBF5B /* parse_utilities.c in Sources */,
 				5A60F8DD172C07E200EFBF5B /* text.c in Sources */,
 				5A60F8DE172C07E200EFBF5B /* writer.c in Sources */,
 				5A60F8DF172C07E200EFBF5B /* html.c in Sources */,
+				5A1FF049186A1724002544C0 /* lyxbeamer.c in Sources */,
 				5A60F8E0172C07E200EFBF5B /* beamer.c in Sources */,
+				5A1FF044186A16D3002544C0 /* lyx.c in Sources */,
 				5A60F8E1172C07E200EFBF5B /* latex.c in Sources */,
+				5ABBCFCC18442416005F519F /* rng.c in Sources */,
 				5A60F8E2172C07E200EFBF5B /* memoir.c in Sources */,
 				5A60F8E3172C07E200EFBF5B /* odf.c in Sources */,
 				5A60F8E4172C07E200EFBF5B /* opml.c in Sources */,
 				5A60F8E5172C07E200EFBF5B /* parser.c in Sources */,
+				5AE0694518515D1300DFFF33 /* rtf.c in Sources */,
 				5A116B591734545B00DB0DE6 /* critic.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -314,9 +351,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A56E585186CE833004089C0 /* transclude.c in Sources */,
 				5AE59DB5172A14D600401A65 /* GLibFacade.c in Sources */,
+				5A1FF048186A1724002544C0 /* lyxbeamer.c in Sources */,
 				5AE59DB7172A14D600401A65 /* parser.c in Sources */,
 				5AE59DB8172A14D600401A65 /* text.c in Sources */,
+				5A1FF043186A16D3002544C0 /* lyx.c in Sources */,
+				5AE0694418515D1300DFFF33 /* rtf.c in Sources */,
 				5AE59DB9172A14D600401A65 /* writer.c in Sources */,
 				5AE59DBA172A14D600401A65 /* html.c in Sources */,
 				5AE59DBB172A14D600401A65 /* beamer.c in Sources */,
@@ -327,6 +368,7 @@
 				5A60F8B4172BFE4700EFBF5B /* parse_utilities.c in Sources */,
 				5A116B581734545700DB0DE6 /* critic.c in Sources */,
 				5AE4484C1769F0EA0055DD27 /* multimarkdown.c in Sources */,
+				5ABBCFCB18442416005F519F /* rng.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -493,6 +535,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				VALID_ARCHS = "i386 x86_64 ppc";
 			};
 			name = Debug;
 		};
@@ -500,6 +543,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				VALID_ARCHS = "i386 x86_64 ppc";
 			};
 			name = Release;
 		};
@@ -507,7 +551,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
@@ -529,7 +573,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = multimarkdown;
 				SDKROOT = macosx;
@@ -540,7 +584,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
@@ -552,11 +596,12 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				PRODUCT_NAME = multimarkdown;
 				SDKROOT = macosx;
 			};

@@ -20,6 +20,7 @@
 */
 
 #include "parser.h"
+#include <libgen.h>
 
 #pragma mark - Parse Tree
 
@@ -127,7 +128,11 @@ node * mk_pos_list(int key, node *list, unsigned int start, unsigned int stop) {
 
 /* free just the current node and children*/
 void free_node(node *n) {
-	free(n->str);
+	if (n == NULL)
+		return;
+	
+	if (n->str != NULL)
+		free(n->str);
 	n->str = NULL;
 
 	free_link_data(n->link_data);
@@ -137,6 +142,7 @@ void free_node(node *n) {
 		free_node_tree(n->children);
 		n->children = NULL;
 	}
+	n->next = NULL;
 	free(n);
 }
 
@@ -178,9 +184,14 @@ node * cons(node *new, node *list) {
 node * reverse_list(node *list) {
 	node *new = NULL;
 	node *next = NULL;
+#ifdef DEBUG_ON
+	if ((list != NULL) && (list->str != NULL))
+	fprintf(stderr, "reverse_list: '%s'\n",list->str);
+#endif
 	
 	while (list != NULL) {
 		next = list->next;
+		list->next = NULL;
 		new = cons(list, new);
 		list = next;
 	}
@@ -189,8 +200,16 @@ node * reverse_list(node *list) {
 
 /* append_list -- add element to end of list; slower than cons */
 void append_list(node *new, node *list) {
-	if (new != NULL) {
+
+    /* If we append to an empty list... */
+    if (list == NULL) {
+        list = new;
+        return;
+    }
+    
+    if (new != NULL) {
 		node *step = list;
+        
 		
 		while (step->next != NULL) {
 			step = step->next;
@@ -231,32 +250,56 @@ void free_parser_data(parser_data *data) {
 }
 
 /* mk_scratch_pad -- store stuff here while exporting the result tree */
+void ran_start(long seed);
 scratch_pad * mk_scratch_pad(unsigned long extensions) {
 	scratch_pad *result = (scratch_pad *)malloc(sizeof(scratch_pad));
 	result->extensions = extensions;
 	result->language = 0;
 	result->baseheaderlevel = 1;
-	result->notes      = mk_node(KEY_COUNTER);		/* Need empty need for trimming later */
-	result->used_notes = mk_node(KEY_COUNTER);
-	result->links      = mk_node(KEY_COUNTER);
-	result->glossary   = mk_node(KEY_COUNTER);
-	result->citations  = mk_node(KEY_COUNTER);
-	result->padded     = 2;
+	result->printing_notes = 0;
+	result->notes       = mk_node(KEY_COUNTER);		/* Need empty need for trimming later */
+	result->used_notes  = mk_node(KEY_COUNTER);
+	result->links       = mk_node(KEY_COUNTER);
+	result->glossary    = mk_node(KEY_COUNTER);
+	result->citations   = mk_node(KEY_COUNTER);
+	result->abbreviations = mk_node(KEY_COUNTER);
+	result->result_tree = NULL;
+	result->padded      = 2;
 	result->footnote_to_print = 0;
+	result->footnote_para_counter = 0;
 	result->max_footnote_num = 0;
 	result->obfuscate  = 0;
 	result->no_latex_footnote = 0;
 	result->latex_footer = NULL;
 	result->odf_list_needs_end_p = FALSE;
+	result->odf_para_type = PARA;
 	result->cell_type = 0;
+	result->table_alignment = NULL;
+	result->table_column = 0;
 
 	if (extensions & EXT_RANDOM_FOOT) {
-	    srand ((int)time(NULL));
+	    srand((int)time(NULL));
 		result->random_seed_base = rand() % 32000;
 	} else {
+		srand(1);
 		result->random_seed_base = 0;
 	}
+	ran_start(310952L);
 	
+	result->lyx_para_type = PARA;             /* CRC - Simple paragraph */
+	result->lyx_level = 0;                    /* CRC - out outside level */
+	result->no_lyx_footnote = 0;              /* CRC  */
+	result->lyx_number_headers = FALSE;       /* CRC - default is not to number */
+	result->lyx_debug_nest = 0;               /* CRC - initialize debug formatting */
+	result->lyx_debug_pad = g_string_new(""); /* CRC - initally, no indent */
+	result->lyx_definition_hit = TRUE;        /* CRC - initialize to have hit it (closed) */
+	result->lyx_definition_open = FALSE;      /* CRC - don't have an open definition */
+	result->lyx_in_frame = FALSE;             /* CRC - not in a frame */
+	result->lyx_beamerbullet = FALSE;         /* CRC - not in a beamer bullet */
+	result->lyx_debug_nest = 0;               /* CRC - no nesting yet */
+	result->lyx_table_need_line = FALSE;      /* CRC - No table yet */
+	result->lyx_table_total_rows = 0;         /* CRC - No rows */
+	result->lyx_table_total_cols = 0;         /* CRC - No Columns */
 	return result;
 }
 
@@ -270,10 +313,16 @@ void free_scratch_pad(scratch_pad *scratch) {
 	free_node_tree(scratch->links);
 	free_node_tree(scratch->glossary);
 	free_node_tree(scratch->citations);
+	free_node_tree(scratch->abbreviations);
+	
+	g_string_free(scratch->lyx_debug_pad, true);    /* CRC - initally, no indent */
 	
 	if (scratch->latex_footer != NULL)
 		free(scratch->latex_footer);
 	
+	if (scratch->table_alignment != NULL)
+		free(scratch->table_alignment);
+
 	free (scratch);
 #ifdef DEBUG_ON
 	fprintf(stderr, "finished freeing scratch\n");
@@ -338,8 +387,43 @@ char *label_from_string(char *str) {
 		/* Is this a multibyte character? */
 		if ((*next_char & 0xC0) == 0x80) {
 			g_string_append_c(out, *str);
-			str++;
-			g_string_append_c(out, *str);
+			while ((*next_char & 0xC0) == 0x80) {
+				str++;
+				/* fprintf(stderr, "multibyte\n"); */
+				g_string_append_c(out, *str);
+				next_char++;
+			}
+		}
+		
+		/* can relax on following characters */
+		else if ((*str >= '0' && *str <= '9') || (*str >= 'A' && *str <= 'Z')
+			|| (*str >= 'a' && *str <= 'z') || (*str == '.') || (*str== '_')
+			|| (*str== '-') || (*str== ':'))
+		{
+			g_string_append_c(out, tolower(*str));
+		}           
+		str++;
+	}
+	label = out->str;
+	g_string_free(out, false);
+	return label;
+}
+
+char *ascii_label_from_string(char *str) {
+	GString *out = g_string_new("");
+	char *label;
+	char *next_char;
+
+	while (*str != '\0') {
+		next_char = str;
+		next_char++;
+		/* Is this a multibyte character? */
+		if ((*next_char & 0xC0) == 0x80) {
+			while ((*next_char & 0xC0) == 0x80) {
+				str++;
+				/* fprintf(stderr, "multibyte\n"); */
+				next_char++;
+			}
 		}
 		
 		/* can relax on following characters */
@@ -380,9 +464,25 @@ char * clean_string(char *str) {
 	return clean;
 }
 
+/* string_from_node_tree -- Returns a null-terminated string,
+	which must be freed after use. */
+char * string_from_node_tree(node *n) {
+	char *result;
+	if (n == NULL)
+		return NULL;
+
+	GString *raw = g_string_new("");
+	print_raw_node_tree(raw, n);
+
+	result = raw->str;
+	g_string_free(raw, false);
+
+	return result;
+}
+
 /* label_from_node_tree -- Returns a null-terminated string,
 	which must be freed after use. */
-char *label_from_node_tree(node *n) {
+char * label_from_node_tree(node *n) {
 	char *label;
 	if (n == NULL)
 		return NULL;
@@ -404,6 +504,30 @@ char *label_from_node_tree(node *n) {
 	return label;
 }
 
+/* ascii_label_from_node_tree -- Returns a null-terminated string,
+	which must be freed after use. */
+char * ascii_label_from_node_tree(node *n) {
+	char *label;
+	if (n == NULL)
+		return NULL;
+	
+#ifdef DEBUG_ON
+		fprintf(stderr, "\n\nstart label from node_tree\n");
+#endif
+	GString *raw = g_string_new("");
+	print_raw_node_tree(raw, n);
+
+#ifdef DEBUG_ON
+		fprintf(stderr, "halfway('%s')\n",raw->str);
+#endif
+	label =  ascii_label_from_string(raw->str);
+	g_string_free(raw,true);
+#ifdef DEBUG_ON
+		fprintf(stderr, "finish label from node_tree: '%s'\n",label);
+#endif
+	return label;
+}
+
 /* label_from_node -- Returns a null-terminated string,
 	which must be freed after use. */
 char *label_from_node(node *n) {
@@ -415,6 +539,23 @@ char *label_from_node(node *n) {
 	GString *raw = g_string_new("");
 	print_raw_node(raw, n);
 	label =  label_from_string(raw->str);
+	label2 = strdup(label);
+	free(label);
+	g_string_free(raw,true);
+	return label2;
+}
+
+/* ascii_label_from_node -- Returns a null-terminated string,
+	which must be freed after use. */
+char *ascii_label_from_node(node *n) {
+	char *label;
+	char *label2;
+	if (n == NULL)
+		return NULL;
+	
+	GString *raw = g_string_new("");
+	print_raw_node(raw, n);
+	label =  ascii_label_from_string(raw->str);
 	label2 = strdup(label);
 	free(label);
 	g_string_free(raw,true);
@@ -530,6 +671,24 @@ bool tree_contains_key(node *list, int key) {
 		step = step->next;
 	}
 	return FALSE;
+}
+
+/* Count number of matches of type */
+int tree_contains_key_count(node *list, int key) {
+	node *step = NULL;
+	int counter = 0;
+
+	step = list;
+	while ( step != NULL ) {
+		if (step->key == key) {
+			counter++;
+		}
+		if (step->children != NULL) {
+			counter += tree_contains_key_count(step->children, key);
+		}
+		step = step->next;
+	}
+	return counter;
 }
 
 /* list all metadata keys, if present */
@@ -658,10 +817,53 @@ char * mmd_version(void) {
 }
 
 void debug_node(node *n) {
+	if (n != NULL) {
+		fprintf(stderr, "node (%d) '%s'\n",n->key, n->str);
+		if (n->children != NULL)
+			debug_node_tree(n->children);
+	}
+}
+
+void debug_node_tree(node *n) {
 	while (n != NULL) {
 		fprintf(stderr, "node (%d) '%s'\n",n->key, n->str);
 		if (n->children != NULL)
-			debug_node(n->children);
+			debug_node_tree(n->children);
 		n = n->next;
+	}
+}
+
+node * copy_node(node *n) {
+	if (n == NULL)
+		return NULL;
+	else {
+		node *m = (node *) malloc(sizeof(node));
+
+		*m = *n;
+
+		if (n->str != NULL)
+			m->str = strdup(n->str);
+
+		if (n->link_data != NULL) {
+			m->link_data = mk_link_data(n->link_data->label, n->link_data->source, n->link_data->title, copy_node_tree(n->link_data->attr));
+		}
+
+		if (n->children != NULL)
+			m->children = copy_node_tree(n->children);
+
+		return m;
+	}
+}
+
+node * copy_node_tree(node *n) {
+	if (n == NULL)
+		return NULL;
+	else {
+		node *m = copy_node(n);
+		
+		if (n->next != NULL)
+			m->next = copy_node_tree(n->next);
+	
+		return m;
 	}
 }

@@ -38,6 +38,7 @@ void print_memoir_node(GString *out, node *n, scratch_pad *scratch) {
 		}
 	switch (n->key) {
 		case VERBATIM:
+		case VERBATIMFENCE:
 			pad(out, 2, scratch);
 			if ((n->children != NULL) && (n->children->key == VERBATIMTYPE)) {
 				trim_trailing_whitespace(n->children->str);

@@ -63,7 +63,8 @@ void print_beamer_node(GString *out, node *n, scratch_pad *scratch) {
 				pad(out, 2, scratch);
 				g_string_append_printf(out, "\\begin{frame}");
 				/* TODO: Fix this */
-				if (tree_contains_key(n->children,VERBATIM)) {
+				if (tree_contains_key(n->children,VERBATIM) ||
+				    tree_contains_key(n->children,VERBATIMFENCE)) {
 					g_string_append_printf(out, "[fragile]");
 				}
 				scratch->padded = 0;
@@ -124,6 +125,8 @@ void print_beamer_node(GString *out, node *n, scratch_pad *scratch) {
 /* print_beamer_endnotes */
 void print_beamer_endnotes(GString *out, scratch_pad *scratch) {
 	scratch->used_notes = reverse_list(scratch->used_notes);
+	scratch->printing_notes = 1;
+	
 	node *note = scratch->used_notes;
 #ifdef DEBUG_ON
 	fprintf(stderr, "start endnotes\n");

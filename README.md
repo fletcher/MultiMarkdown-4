@@ -1,4 +1,4 @@
-Title:	MultiMarkdown 4.0 ReadMe  
+Title:	MultiMarkdown 4 ReadMe  
 Author:	Fletcher T. Penney  
 Base Header Level:	2  
 
@@ -32,7 +32,8 @@ You can compile for yourself, or download a precompiled binary from the [downloa
 * Download the source from the [github] web site using `git`
 * `git submodule init` and then `git submodule update` to download `greg` and the test suite
 * Run `make` to compile.
-* Run `make test-all | less` to verify that the build is correct.  As mentioned 1 test is expected to fail on Mac systems.  The email tests will fail on other systems, since they use a different randomization algorithm and the obfuscated emails won't match.  This won't affect functionality
+* Run `make test-all | less` to verify that the build is correct.  As mentioned, one of the tests is expected to fail; the rest should pass on all systems.  
+* Run `sudo make install` and (optionally) `sudo make install-scripts` to install `multimarkdown` and the helper scripts.
 
 
 # Usage #
@@ -45,7 +46,7 @@ Once installed, you simply do something like the following:
 
 * `multimarkdown -t latex file.txt` --- output the results as LaTeX instead of HTML. This can then be processed into a PDF if you have LaTeX installed. You can further specify the `LaTeX Mode` metadata to customize output for compatibility with `memoir` or `beamer` classes. 
 
-* `multimarkdown -t odf file.txt` --- output the results as an OpenDocument Text Flat XML file. Does require the plugin be installed in your copy of OpenOffice, which is available at the [downloads] page. LibreOffice includes this plugin by default. 
+* `multimarkdown -t odf file.txt` --- output the results as an OpenDocument Text Flat XML file. Does require the plugin be installed in your copy of OpenOffice, which is available at the [peg-multimarkdown-downloads] page. LibreOffice includes this plugin by default. 
 
 * `multimarkdown -t opml file.txt` --- convert the MMD text file to an MMD OPML file, compatible with OmniOutliner and certain other outlining and mind-mapping programs (including iThoughts and iThoughtsHD). 
 
@@ -58,12 +59,22 @@ Once installed, you simply do something like the following:
 
 If you get an error that `greg` fails to build try `touch greg/greg.c`.  I had an issue where the timestamp on that file might have been too old, which caused the build to fail.
 
+
+# LyX Support #
+
+Charles R. Cowan (<https://github.com/crcowan>) added support for conversion to [LyX](http://www.lyx.org/).  Support for this should be considered to be in alpha/beta, and is not guaranteed.  Issues related to LyX can be added to the MultiMarkdown [issues] page on github, but will need to be answered by Charles.  I am happy to include this code in the main MMD repo, but since I don't use LyX I can't support it myself.  If this arrangement becomes a problem, then LyX support can be removed and it can be kept as a separate fork.
+
+# More Information #
+
+To get more information about MultiMarkdown, check out the [website][MultiMarkdown] or [User's Guide].
+
 [peg-markdown]:	https://github.com/jgm/peg-markdown
 [Markdown]:	http://daringfireball.net/projects/markdown/
 [MultiMarkdown]:	http://fletcherpenney.net/multimarkdown/
 [peg-multimarkdown]:	https://github.com/fletcher/peg-multimarkdown
+[peg-multimarkdown-downloads]:	https://github.com/fletcher/peg-multimarkdown/downloads
 [fink]:	http://www.finkproject.org/
-[downloads]:	http://github.com/fletcher/peg-multimarkdown/downloads
+[downloads]:	http://fletcherpenney.net/multimarkdown/download/
 [GTK+]:	http://www.gtk.org/
 [homebrew]:	https://github.com/mxcl/homebrew
 [MacPorts]:	http://www.macports.org/
@@ -71,3 +82,5 @@ If you get an error that `greg` fails to build try `touch greg/greg.c`.  I had a
 [github]:	https://github.com/fletcher/MultiMarkdown-4
 [greg]:	https://github.com/nddrylliog/greg
 [peg/leg]:	http://piumarta.com/software/peg/
+[issues]:	https://github.com/fletcher/MultiMarkdown-4/issues
+[User's Guide]:	http://fletcher.github.io/MultiMarkdown-4/

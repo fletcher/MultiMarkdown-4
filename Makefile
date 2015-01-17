@@ -2,17 +2,40 @@
 # Feel free to submit pull requests if you have a proposed change.
 # Please explain your change so I'll understand what you need, and why - 
 # I don't claim to be an expert at this aspect! 
+#
+#
+# You can use `make pkg-install` and `make pkg-install-scripts` to install to 
+# a custom directory (useful when building package installers):
+#
+#		make pkg-install DESTDIR=/some/folder/to/be/created
+#
 # - Fletcher T. Penney
 
 CFLAGS ?= -Wall -g -O3 -include GLibFacade.h
 PROGRAM = multimarkdown
-VERSION = 4.3.1
+VERSION = 4.6
 
-OBJS= multimarkdown.o parse_utilities.o parser.o GLibFacade.o writer.o text.o html.o latex.o memoir.o beamer.o opml.o odf.o critic.o
+OBJS= multimarkdown.o parse_utilities.o parser.o GLibFacade.o writer.o text.o html.o latex.o memoir.o beamer.o lyx.o lyxbeamer.o opml.o odf.o critic.o rng.o rtf.o transclude.o
+
+# Common prefix for installation directories.
+# NOTE: This directory must exist when you start the install.
+prefix = /usr/local
+exec_prefix = $(prefix)
+# Where to put the executable
+bindir = $(exec_prefix)/bin
+
+# Allow for linking any libraries statically
+# This only matters on some OS/environments, and 
+# only if you move the binary to a different OS/environment
+# `make static` may not work on all OS versions (e.g. Mac OS X)
+ifeq ($(MAKECMDGOALS),static)
+LDFLAGS += -static -static-libgcc
+endif
 
 GREG= greg/greg
 
 ALL : $(PROGRAM) enumMap.txt
+static : $(PROGRAM) enumMap.txt
 
 %.o : %.c parser.h
 	$(CC) -c $(CFLAGS) -o $@ $<
@@ -24,12 +47,31 @@ $(GREG): greg
 	$(MAKE) -C greg
 
 $(PROGRAM) : $(OBJS)
-	$(CC) $(CFLAGS) -o $@ $(OBJS)
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $(OBJS)
+
+install: $(PROGRAM) | $(prefix)/bin
+	install -m 0755 multimarkdown $(prefix)/bin
+
+$(prefix)/bin:
+	-mkdir $(prefix)/bin  2>/dev/null
+
+install-scripts:
+	install -m 0755 scripts/* $(prefix)/bin
+
+pkg-install: $(PROGRAM) | $(DESTDIR)$(prefix)/bin
+	install -m 0755 multimarkdown $(DESTDIR)$(prefix)/bin
+
+$(DESTDIR)$(prefix)/bin:
+	-mkdir -p $(DESTDIR)$(prefix)/bin  2>/dev/null
+
+pkg-install-scripts:
+	install -m 0755 scripts/* $(DESTDIR)$(prefix)/bin
 
 clean:
 	rm -f $(PROGRAM) $(OBJS) parser.c enumMap.txt speed*.txt; \
 	rm -rf mac_installer/Package_Root/usr/local/bin mac_installer/Support_Root mac_installer/*.pkg; \
-	rm -f mac_installer/Resources/*.html
+	rm -f mac_installer/Resources/*.html; \
+	rm -rf build
 
 # Build for windows on a *nix machine with MinGW installed
 windows: parser.c
@@ -64,6 +106,14 @@ test-memoir: $(PROGRAM)
 	cd MarkdownTest; \
 	./MarkdownTest.pl --Script=../$(PROGRAM) --testdir=MemoirTests --Flags="-t memoir" --ext=".tex"
 
+test-lyx: $(PROGRAM)
+	cd MarkdownTest; \
+	./MarkdownTest.pl --Script=../$(PROGRAM) --testdir=MultiMarkdownTests --Flags="-t lyx" --ext=".lyx"
+
+test-lyx-beamer: $(PROGRAM)
+	cd MarkdownTest; \
+	./MarkdownTest.pl --Script=../$(PROGRAM) --testdir=BeamerTests --Flags="-t lyx" --ext=".lyx"
+
 test-opml: $(PROGRAM)
 	cd MarkdownTest; \
 	./MarkdownTest.pl --Script=../$(PROGRAM) --testdir=MultiMarkdownTests --Flags="-t opml" --ext=".opml"
@@ -88,8 +138,33 @@ test-critic-accept: $(PROGRAM)
 test-critic-reject: $(PROGRAM)
 	cd MarkdownTest; \
 	./MarkdownTest.pl --Script=../$(PROGRAM) --testdir=CriticMarkup --Flags="-r" --ext=".htmlr"
-	
-test-all: $(PROGRAM) test test-mmd test-compat test-latex test-beamer test-memoir test-opml test-odf test-critic-accept test-critic-reject
+
+test-critic-highlight: $(PROGRAM)
+	cd MarkdownTest; \
+	./MarkdownTest.pl --Script=../$(PROGRAM) --testdir=CriticMarkup --Flags="-a -r" --ext=".htmlh"
+
+test-all: $(PROGRAM) test test-mmd test-compat test-latex test-beamer test-memoir test-opml test-odf test-critic-accept test-critic-reject test-critic-highlight test-lyx test-lyx-beamer
+
+test-memory: $(PROGRAM)
+	valgrind --leak-check=full ./$(PROGRAM) MarkdownTest/Tests/*.text MarkdownTest/MultiMarkdownTests/*.text > /dev/null
+
+test-memory-latex: $(PROGRAM)
+	valgrind --leak-check=full ./$(PROGRAM) -t latex MarkdownTest/Tests/*.text MarkdownTest/MultiMarkdownTests/*.text > /dev/null
+
+test-memory-beamer: $(PROGRAM)
+	valgrind --leak-check=full ./$(PROGRAM) -t beamer MarkdownTest/Tests/*.text MarkdownTest/MultiMarkdownTests/*.text > /dev/null
+
+test-memory-memoir: $(PROGRAM)
+	valgrind --leak-check=full ./$(PROGRAM) -t memoir MarkdownTest/Tests/*.text MarkdownTest/MultiMarkdownTests/*.text > /dev/null
+
+test-memory-lyx: $(PROGRAM)
+	valgrind --leak-check=full ./$(PROGRAM) -t lyx MarkdownTest/Tests/*.text MarkdownTest/MultiMarkdownTests/*.text MarkdownTest/BeamerTests/*.text > /dev/null
+
+test-memory-odf: $(PROGRAM)
+	valgrind --leak-check=full ./$(PROGRAM) -t odf MarkdownTest/Tests/*.text MarkdownTest/MultiMarkdownTests/*.text > /dev/null
+
+test-memory-opml: $(PROGRAM)
+	valgrind --leak-check=full ./$(PROGRAM) -t opml MarkdownTest/Tests/*.text MarkdownTest/MultiMarkdownTests/*.text > /dev/null
 
 enumMap.txt: parser.h
 	./enumsToPerl.pl libMultiMarkdown.h enumMap.txt
@@ -141,13 +216,18 @@ test-speed-gruber: speed64.txt
 	time ./$(PROGRAM) -c speed64.txt > /dev/null
 	time MarkdownTest/Markdown.pl speed64.txt > /dev/null
 
+# Build using Xcode (more compatible across legacy OS/Hardware)
+xcode: 
+	xcodebuild
+	cp build/Release/multimarkdown .
+
 # Build Mac Installer
-mac-installer:
+mac-installer: xcode
 	mkdir -p mac_installer/Package_Root/usr/local/bin
 	mkdir -p mac_installer/Support_Root/Library/Application\ Support
 	mkdir -p mac_installer/Resources
 	rm -rf mac_installer/Support_Root
-	cp multimarkdown scripts/mmd* mac_installer/Package_Root/usr/local/bin/
+	cp build/Release/multimarkdown scripts/mmd* mac_installer/Package_Root/usr/local/bin/
 	./multimarkdown README.md > mac_installer/Resources/README.html
 	./multimarkdown mac_installer/Resources/Welcome.txt > mac_installer/Resources/Welcome.html
 	./multimarkdown LICENSE > mac_installer/Resources/License.html
@@ -186,3 +266,6 @@ win-installer:
 	zip -r windows_installer/MultiMarkdown-Windows-$(VERSION).zip windows_installer/MMD-windows-$(VERSION).exe -x windows_installer/MultiMarkdown*.zip
 	cd windows_installer; zip -r MultiMarkdown-Windows-Portable-$(VERSION).zip *.bat multimarkdown.exe README.txt LICENSE.html -x install_multimarkdown.bat
 
+# Can make the portable version without BitRock 
+win-portable:
+	cd windows_installer; zip -r MultiMarkdown-Windows-Portable-$(VERSION).zip *.bat multimarkdown.exe README.txt LICENSE.html -x install_multimarkdown.bat
