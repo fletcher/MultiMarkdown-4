@@ -326,7 +326,8 @@ int main(int argc, char **argv)
 			if (!(extensions & EXT_COMPATIBILITY)) {
 				temp = strdup(argv[i+1]);
 				folder = dirname(temp);
-				append_mmd_footers(inputbuf);
+				prepend_mmd_header(inputbuf);
+				append_mmd_footer(inputbuf);
 				transclude_source(inputbuf, folder, NULL, output_format, manifest);
 				free(temp);
 				// free(folder);
@@ -430,7 +431,8 @@ int main(int argc, char **argv)
 		}
 		
 		if (!(extensions & EXT_COMPATIBILITY)) {
-			append_mmd_footers(inputbuf);
+			prepend_mmd_header(inputbuf);
+			append_mmd_footer(inputbuf);
 			transclude_source(inputbuf, folder, NULL, output_format, manifest);
 		}
 

@@ -77,6 +77,7 @@ void g_string_append_printf(GString* baseString, char* format, ...);
 
 void g_string_insert(GString* baseString, size_t pos, char * insertedString);
 void g_string_insert_c(GString* baseString, size_t pos, char insertedCharacter);
+void g_string_insert_printf(GString* baseString, size_t pos, char* format, ...);
 
 void g_string_erase(GString* baseString, size_t pos, size_t len);
 

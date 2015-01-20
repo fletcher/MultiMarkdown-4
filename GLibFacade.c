@@ -233,6 +233,22 @@ void g_string_insert_c(GString* baseString, size_t pos, char insertedCharacter)
 	baseString->str[baseString->currentStringLength] = '\0';
 }
 
+
+void g_string_insert_printf(GString* baseString, size_t pos, char* format, ...)
+{
+	va_list args;
+	va_start(args, format);
+	
+	char* formattedString = NULL;
+	vasprintf(&formattedString, format, args);
+	if (formattedString != NULL)
+	{
+		g_string_insert(baseString, pos, formattedString);
+		free(formattedString);
+	}
+	va_end(args);
+}
+
 void g_string_erase(GString* baseString, size_t pos, size_t len)
 {
 	if ((pos > baseString->currentStringLength) || (len <= 0))
