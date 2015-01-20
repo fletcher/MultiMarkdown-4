@@ -298,7 +298,7 @@ void prepend_mmd_header(GString *source) {
 			char *content = strstr(source->str, "\n\n");
 			if (content != NULL) {
 				size_t pos = content - source->str;
-				g_string_insert_printf(source, pos, "\n\n{{%s}", meta);
+				g_string_insert_printf(source, pos, "\n\n{{%s}}", meta);
 			} else {
 				g_string_append_printf(source, "\n\n{{%s}}\n", meta);
 			}
