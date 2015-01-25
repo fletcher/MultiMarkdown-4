@@ -474,6 +474,17 @@ void print_rtf_node(GString *out, node *n, scratch_pad *scratch) {
 				free(temp);
 			}
 			break;
+		case HTMLBLOCK:
+			/* don't print HTML block */
+			/* but do print HTML comments for raw RTF */
+			if (strncmp(n->str,"<!--",4) == 0) {
+				pad(out, 2, scratch);
+				/* trim "-->" from end */
+				n->str[strlen(n->str)-3] = '\0';
+				g_string_append_printf(out, "%s", &n->str[4]);
+				scratch->padded = 0;
+			}
+			break;
 		default:
 			fprintf(stderr, "print_rtf_node encountered unknown node key = %d\n",n->key);
 			g_string_append_printf(out, "%s",n->str);
