@@ -77,7 +77,7 @@ int main(int argc, char **argv)
 	};
 	
 	GString *inputbuf;
-	GString *manifest = g_string_new("");
+	GString *manifest;
 	FILE *input;
 	FILE *output;
 	int curchar;
@@ -285,6 +285,7 @@ int main(int argc, char **argv)
 		
 		for (i = 0; i < numargs; i++) {
 			inputbuf = g_string_new("");
+			manifest = g_string_new("");
 			char *temp = NULL;
 			char *folder = NULL;
 
