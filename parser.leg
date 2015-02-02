@@ -1247,8 +1247,8 @@ Table = a:StartList b:StartList (TableCaption { b = cons($$, b);})?
 				append_list($$,a); } )
 		(TableBody { a = cons($$, a);} )
 		(BlankLine !TableCaption TableBody { a = cons($$, a); }
-		&(TableCaption | BlankLine) )*
-		( (TableCaption { b = cons($$, b);} &BlankLine) | &BlankLine)
+		&(TableCaption | BlankLine | Heading) )*
+		( (TableCaption { b = cons($$, b);} &BlankLine) | &BlankLine | &Heading)
 		# Requires blank line to end table "block"
 		{
 			if (b != NULL) { append_list(b,a); };
