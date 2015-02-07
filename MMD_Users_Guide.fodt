@@ -479,11 +479,36 @@ The main MultiMarkdown page, for example, would be
 
 <text:h text:outline-level="3"><text:bookmark text:name="macos"/>Mac OS<text:bookmark-end text:name="macos"/></text:h>
 
+<text:h text:outline-level="4"><text:bookmark text:name="installer"/>Installer<text:bookmark-end text:name="installer"/></text:h>
+
 <text:p text:style-name="Standard">You can download the installers from the MMD website <text:a xlink:type="simple" xlink:href="http://fletcherpenney.net/multimarkdown/download/">download</text:a> page. You need the <text:span text:style-name="Source_20_Text">Mac Installer</text:span>. Download it. Run it. Done.</text:p>
 
 <text:p text:style-name="Standard">If you use older tools that were designed for MultiMarkdown version 3, you may need to use the <text:span text:style-name="Source_20_Text">Mac Support Installer</text:span>. This is also useful if you need the older XSLT based parsing tools.</text:p>
 
 <text:p text:style-name="Standard">If you plan on creating LaTeX documents, you should also download the <text:a xlink:type="simple" xlink:href="https://github.com/fletcher/peg-multimarkdown-latex-support">LaTeX Support Files</text:a> and install them into the appropriate location for your system and LaTeX software.</text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="homebrew"/>Homebrew<text:bookmark-end text:name="homebrew"/></text:h>
+
+<text:p text:style-name="Standard">You can use <text:a xlink:type="simple" xlink:href="https://github.com/Homebrew/homebrew">homebrew</text:a> to install:</text:p>
+
+<text:p text:style-name="Preformatted Text">brew install multimarkdown<text:line-break/></text:p>
+
+
+<text:p text:style-name="Standard">Or, if you want the latest updates between releases:</text:p>
+
+<text:p text:style-name="Preformatted Text">brew install --HEAD multimarkdown<text:line-break/></text:p>
+
+
+<text:p text:style-name="Standard">(<text:span text:style-name="MMD-Bold">Note:</text:span> I use the <text:span text:style-name="Source_20_Text">--HEAD</text:span> version on my own machine.)</text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="macports"/>MacPorts<text:bookmark-end text:name="macports"/></text:h>
+
+<text:p text:style-name="Standard"><text:a xlink:type="simple" xlink:href="https://www.macports.org/">MacPorts</text:a> has a package for MultiMarkdown:</text:p>
+
+<text:p text:style-name="Preformatted Text">sudo port install multimarkdown<text:line-break/></text:p>
+
+
+<text:p text:style-name="Standard">I don&#8217;t maintain this package, and it will likely not point to the latest version. I don&#8217;t recommend it.</text:p>
 
 <text:h text:outline-level="3"><text:bookmark text:name="nix"/>*nix<text:bookmark-end text:name="nix"/></text:h>
 
@@ -515,27 +540,46 @@ versions of MMD as well.</text:p>
 
 <text:h text:outline-level="3"><text:bookmark text:name="compilefromsource"/>Compile From Source<text:bookmark-end text:name="compilefromsource"/></text:h>
 
-<text:p text:style-name="Standard">For Mac and *nix users:</text:p>
+<text:h text:outline-level="4"><text:bookmark text:name="macandnixmachines"/>Mac and *Nix Machines<text:bookmark-end text:name="macandnixmachines"/></text:h>
 
 <text:list text:style-name="L1"><text:list-item>
-<text:p text:style-name="P1">Download the source from the <text:a xlink:type="simple" xlink:href="https://github.com/fletcher/MultiMarkdown-4">github</text:a> web site using <text:span text:style-name="Source_20_Text">git https://github.com/fletcher/MultiMarkdown-4.git</text:span></text:p></text:list-item>
+<text:p text:style-name="P1">Download the source from the <text:a xlink:type="simple" xlink:href="https://github.com/fletcher/MultiMarkdown-4">github</text:a> web site:</text:p>
+
+<text:p text:style-name="Preformatted Text">git https://github.com/fletcher/MultiMarkdown-4.git<text:line-break/></text:p>
+</text:list-item>
 <text:list-item>
-<text:p text:style-name="P1"><text:span text:style-name="Source_20_Text">git submodule init</text:span> and then <text:span text:style-name="Source_20_Text">git submodule update</text:span> to download <text:span text:style-name="Source_20_Text">greg</text:span> and the test suite submodules (as well as others)</text:p></text:list-item>
+<text:p text:style-name="P1">Update the submodules, including <text:span text:style-name="Source_20_Text">greg</text:span></text:p>
+
+<text:p text:style-name="Preformatted Text">git submodule init<text:line-break/>git submodule update<text:line-break/></text:p>
+</text:list-item>
 <text:list-item>
-<text:p text:style-name="P1">Run <text:span text:style-name="Source_20_Text">make</text:span> to compile.</text:p></text:list-item>
+<text:p text:style-name="P1">Compile:</text:p>
+
+<text:p text:style-name="Preformatted Text">make<text:line-break/></text:p>
+</text:list-item>
 <text:list-item>
-<text:p text:style-name="P1">Run <text:span text:style-name="Source_20_Text">make test-all | less</text:span> (or <text:span text:style-name="Source_20_Text">make test-all | grep failed</text:span> for a more concise version) to verify that the build is correct. One of the tests is expected to fail (&#8220;Ordered and unordered lists&#8221;); the rest should pass on all systems.</text:p></text:list-item>
+<text:p text:style-name="P1">Run <text:span text:style-name="Source_20_Text">make test-all | less</text:span> (or <text:span text:style-name="Source_20_Text">make test-all | grep failed</text:span> for a more concise version) to verify that the build is correct. One of the tests is expected to fail (&#8220;Ordered and unordered lists&#8221;); the rest should pass on all systems. </text:p>
+</text:list-item>
 <text:list-item>
-<text:p text:style-name="P1"><text:span text:style-name="Source_20_Text">make install</text:span> (as root) will install the software</text:p></text:list-item>
+<text:p text:style-name="P1"><text:span text:style-name="Source_20_Text">make install</text:span> (as root) will install the software</text:p>
+</text:list-item>
 <text:list-item>
-<text:p text:style-name="P1"><text:span text:style-name="Source_20_Text">make install-scripts</text:span> will install the helper scripts for you (e.g.<text:span text:style-name="Source_20_Text">mmd</text:span>, <text:span text:style-name="Source_20_Text">mmd2tex</text:span>, etc.)</text:p></text:list-item>
+<text:p text:style-name="P1"><text:span text:style-name="Source_20_Text">make install-scripts</text:span> will install the helper scripts for you (e.g.<text:span text:style-name="Source_20_Text">mmd</text:span>, <text:span text:style-name="Source_20_Text">mmd2tex</text:span>, etc.)</text:p>
+</text:list-item>
 <text:list-item>
-<text:p text:style-name="P1">If you plan on creating LaTeX documents, you should also download the <text:a xlink:type="simple" xlink:href="https://github.com/fletcher/peg-multimarkdown-latex-support">LaTeX Support Files</text:a> and install them into the appropriate location for your system and LaTeX software.</text:p></text:list-item>
+<text:p text:style-name="P1">If you plan on creating LaTeX documents, you should also download the <text:a xlink:type="simple" xlink:href="https://github.com/fletcher/peg-multimarkdown-latex-support">LaTeX Support Files</text:a> and install them into the appropriate location for your system and LaTeX software.</text:p>
+</text:list-item>
 </text:list>
 
 <text:p text:style-name="Standard">MultiMarkdown includes a few other projects as submodules, but the only one you need to actually compile the code is the <text:span text:style-name="Source_20_Text">greg</text:span> software. Once compiled, MultiMarkdown has no external dependencies &#8211; the binary is self-contained. Therefore, it should basically compile and run anywhere. </text:p>
 
+<text:h text:outline-level="4"><text:bookmark text:name="windows"/>Windows<text:bookmark-end text:name="windows"/></text:h>
+
 <text:p text:style-name="Standard">Windows users can obtain the code in the same way, but will need to use their own compiler. The way I compile for Windows is actually to use the <text:span text:style-name="Source_20_Text">make windows</text:span> command running on a *nix system with MinGW installed.</text:p>
+
+<text:p text:style-name="Standard">The instructions for <text:a xlink:type="simple" xlink:href="https://github.com/jgm/peg-markdown">peg-markdown</text:a> demonstrate how to compile a package for Windows.</text:p>
+
+<text:p text:style-name="Standard">Otherwise, you&#8217;re on your own here.</text:p>
 
 <text:h text:outline-level="2"><text:bookmark text:name="howtousemultimarkdown"/>How to Use MultiMarkdown<text:bookmark-end text:name="howtousemultimarkdown"/></text:h>
 
