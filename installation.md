@@ -25,11 +25,34 @@ You have several options for obtaining and installing MultiMarkdown:
 
 ## Mac OS ##
 
+
+### Installer ###
+
 You can download the installers from the MMD website [download] page.  You need the `Mac Installer`.  Download it.  Run it.  Done.
 
 If you use older tools that were designed for MultiMarkdown version 3, you may need to use the `Mac Support Installer`.  This is also useful if you need the older XSLT based parsing tools.
 
 If you plan on creating LaTeX documents, you should also download the [LaTeX Support Files] and install them into the appropriate location for your system and LaTeX software.
+
+### Homebrew ###
+
+You can use [homebrew](https://github.com/Homebrew/homebrew) to install:
+
+	brew install multimarkdown
+
+Or, if you want the latest updates between releases:
+
+	brew install --HEAD multimarkdown
+
+(**Note:** I use the `--HEAD` version on my own machine.)
+
+### MacPorts ###
+
+[MacPorts](https://www.macports.org/) has a package for MultiMarkdown:
+
+	sudo port install multimarkdown
+
+I don't maintain this package, and it will likely not point to the latest version. I don't recommend it.
 
 ## *nix ##
 
@@ -50,8 +73,8 @@ versions of MMD as well.
 
 You can also download a "Portable" version that can be run off USB thumb drives, for example.  It is also available on the [download] page.
 
-## Free BSD ##
 
+## Free BSD ##
 
 If you want to compile manually, you should be able to follow the directions for Linux below. However, apparently MultiMarkdown has been put in the ports tree, so you can also use:
 
@@ -60,18 +83,37 @@ If you want to compile manually, you should be able to follow the directions for
 
 (I have not tested this myself, and cannot guarantee that it works properly.)
 
+
 ## Compile From Source ##
 
-For Mac and *nix users:
 
-* Download the source from the [github] web site using `git https://github.com/fletcher/MultiMarkdown-4.git`
-* `git submodule init` and then `git submodule update` to download `greg` and the test suite submodules (as well as others)
-* Run `make` to compile.
-* Run `make test-all | less`  (or `make test-all | grep failed` for a more concise version) to verify that the build is correct.  One of the tests is expected to fail ("Ordered and unordered lists"); the rest should pass on all systems.  
-* `make install` (as root) will install the software
-* `make install-scripts` will install the helper scripts for you (e.g.`mmd`, `mmd2tex`, etc.)
-* If you plan on creating LaTeX documents, you should also download the [LaTeX Support Files] and install them into the appropriate location for your system and LaTeX software.
+### Mac and *Nix Machines ###
+
+*	Download the source from the [github] web site:
+
+		git https://github.com/fletcher/MultiMarkdown-4.git
+
+*	Update the submodules, including `greg`
+
+		git submodule init
+		git submodule update
+
+*	 Compile:
+
+		make
+
+*	Run `make test-all | less`  (or `make test-all | grep failed` for a more concise version) to verify that the build is correct.  One of the tests is expected to fail ("Ordered and unordered lists"); the rest should pass on all systems.  
+*	`make install` (as root) will install the software
+*	`make install-scripts` will install the helper scripts for you (e.g.`mmd`, `mmd2tex`, etc.)
+*	If you plan on creating LaTeX documents, you should also download the [LaTeX Support Files] and install them into the appropriate location for your system and LaTeX software.
 
 MultiMarkdown includes a few other projects as submodules, but the only one you need to actually compile the code is the `greg` software.  Once compiled, MultiMarkdown has no external dependencies -- the binary is self-contained.  Therefore, it should basically compile and run anywhere. 
 
+
+### Windows ###
+
 Windows users can obtain the code in the same way, but will need to use their own compiler.  The way I compile for Windows is actually to use the `make windows` command running on a *nix system with MinGW installed.
+
+The instructions for [peg-markdown] demonstrate how to compile a package for Windows.
+
+Otherwise, you're on your own here.

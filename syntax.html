@@ -307,7 +307,7 @@ proposals really disrupted the readability of the syntax. I consider myself a
 it as readable as possible. The idea is that a Markdown-formatted
 document should be publishable as-is, as plain text, without looking
 like it&#8217;s been marked up with tags or formatting instructions. While
-Markdown&#8217;s syntax has been influenced by several existing text-to-HTML
+Markdown&#8217;s syntax has been influenced by several existing text-to-<abbr title="HyperText Markup Language">HTML</abbr>
 filters, the single biggest source of inspiration for Markdown&#8217;s
 syntax is the format of plain text email.</p>
 </blockquote>
@@ -472,7 +472,7 @@ the beginning of the line</li>
  anchors pointing to the table. If there is no label, then the caption acts
  as the label</p></li>
 <li><p>Cells can be empty.</p></li>
-<li><p>You can create multiple <code>&lt;tbody&gt;</code> tags (for HTML) within a table by having a <strong>single</strong> empty line between rows of the table. This allows your CSS to place horizontal borders to emphasize different sections of the table. This feature doesn&#8217;t work in all output formats (e.g. RTF and OpenDocument).</p></li>
+<li><p>You can create multiple <code>&lt;tbody&gt;</code> tags (for <abbr title="HyperText Markup Language">HTML</abbr>) within a table by having a <strong>single</strong> empty line between rows of the table. This allows your CSS to place horizontal borders to emphasize different sections of the table. This feature doesn&#8217;t work in all output formats (e.g. RTF and OpenDocument).</p></li>
 </ul>
 
 <h4 id="limitationsoftables">Limitations of Tables</h4>
@@ -886,7 +886,7 @@ makeindex -s `kpsewhich basic.gst` -o &quot;${basefile}.gls&quot; &quot;${basefi
 <li>Leave the CriticMarkup syntax in place (<code>multimarkdown foo.txt</code>)</li>
 <li>Accept all changes, giving you the &#8220;new&#8221; document (<code>multimarkdown -a foo.txt</code>)</li>
 <li>Reject all changes, giving you the &#8220;original&#8221; document (<code>multimarkdown -r foo.txt</code>)</li>
-<li>Attempt to show the changes as highlights. This only works in HTML, and to use it you ask for the new and original document at the same time (<code>multimarkdown -a -r foo.txt</code>)</li>
+<li>Attempt to show the changes as highlights. This only works in <abbr title="HyperText Markup Language">HTML</abbr>, and to use it you ask for the new and original document at the same time (<code>multimarkdown -a -r foo.txt</code>)</li>
 </ul>
 
 <p>CriticMarkup comments and highlighting are ignored when processing.</p>
@@ -922,7 +922,7 @@ makeindex -s `kpsewhich basic.gst` -o &quot;${basefile}.gls&quot; &quot;${basefi
 
 <ol>
 <li><p>A syntax for documenting editing notes and changes, and for collaborating amongst coauthors.</p></li>
-<li><p>A means to display those notes/changes in the HTML output.</p></li>
+<li><p>A means to display those notes/changes in the <abbr title="HyperText Markup Language">HTML</abbr> output.</p></li>
 </ol>
 
 <p>I believe that #1 is a really great idea, and well implemented. #2 is not so well implemented, largely due to the &#8220;orthogonal&#8221; nature of CriticMarkup and the underlying Markdown syntax.</p>
@@ -938,7 +938,7 @@ makeindex -s `kpsewhich basic.gst` -o &quot;${basefile}.gls&quot; &quot;${basefi
 <ol>
 <li>CriticMarkup syntax is &#8220;understood&#8221; by the MultiMarkdown parser, and by MultiMarkdown Composer syntax highlighting.</li>
 <li>When converting from MultiMarkdown text to an output format, you can ignore CM formatting (probably not what you want to do), accept all changes, or reject all changes (as above). These are the preferred choices.</li>
-<li>The secondary to choice, when exporting to HTML, is to <em>attempt</em> to show the changes in the HTML output. Because the syntaxes are orthogonal, this will not always work properly, and will not always give valid HTML output.</li>
+<li>The secondary to choice, when exporting to <abbr title="HyperText Markup Language">HTML</abbr>, is to <em>attempt</em> to show the changes in the <abbr title="HyperText Markup Language">HTML</abbr> output. Because the syntaxes are orthogonal, this will not always work properly, and will not always give valid <abbr title="HyperText Markup Language">HTML</abbr> output.</li>
 </ol>
 
 <h3 id="rawhtml">Raw HTML</h3>

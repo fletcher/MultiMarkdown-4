@@ -45,13 +45,13 @@ Markdown">Markdown</a>. The best description of what Markdown is comes from John
 Markdown web site:</p>
 
 <blockquote>
-<p>Markdown is a text-to-HTML conversion tool for web writers. Markdown
+<p>Markdown is a text-to-<abbr title="HyperText Markup Language">HTML</abbr> conversion tool for web writers. Markdown
 allows you to write using an easy-to-read, easy-to-write plain text
-format, then convert it to structurally valid XHTML (or HTML).</p>
+format, then convert it to structurally valid XHTML (or <abbr title="HyperText Markup Language">HTML</abbr>).</p>
 
 <p>Thus, &#8220;Markdown&#8221; is two things: (1) a plain text formatting
 syntax; and (2) a software tool, written in Perl, that converts
-the plain text formatting to HTML. See the Syntax page for details
+the plain text formatting to <abbr title="HyperText Markup Language">HTML</abbr>. See the Syntax page for details
 pertaining to Markdown&#8217;s formatting syntax. You can try it out,
 right now, using the online Dingus.</p>
 
@@ -60,7 +60,7 @@ make it as readable as possible. The idea is that a Markdown-formatted
 document should be publishable as-is, as plain text, without looking
 like it&#8217;s been marked up with tags or formatting instructions. While
 Markdown&#8217;s syntax has been influenced by several existing
-text-to-HTML filters, the single biggest source of inspiration for
+text-to-<abbr title="HyperText Markup Language">HTML</abbr> filters, the single biggest source of inspiration for
 Markdown&#8217;s syntax is the format of plain text email. &#8212; <a href="http://daringfireball.net/projects/markdown/" title="Daring Fireball: Markdown">John Gruber</a></p>
 </blockquote>
 
@@ -178,7 +178,7 @@ The main MultiMarkdown page, for example, would be
 <ul>
 <li>The source is now in the <code>gh_pages</code> branch of the <a href="https://github.com/fletcher/MultiMarkdown-4">MultiMarkdown project</a>. You can submit changes as a pull request, or by writing me.</li>
 <li>You can access this information on the web at <a href="http://fletcher.github.io/MultiMarkdown-4">http://fletcher.github.io/MultiMarkdown-4</a></li>
-<li>The source itself is a collection of MultiMarkdown text documents that use the transclusion features to create a master document from the individual source files. These documents can be viewed in the browser as HTML, or downloaded as PDF or OpenDocument files.</li>
+<li>The source itself is a collection of MultiMarkdown text documents that use the transclusion features to create a master document from the individual source files. These documents can be viewed in the browser as <abbr title="HyperText Markup Language">HTML</abbr>, or downloaded as PDF or OpenDocument files.</li>
 </ul>
 
 <h2 id="thephilosophybehindmultimarkdown">The Philosophy Behind MultiMarkdown</h2>
@@ -246,11 +246,36 @@ The main MultiMarkdown page, for example, would be
 
 <h3 id="macos">Mac OS</h3>
 
+<h4 id="installer">Installer</h4>
+
 <p>You can download the installers from the MMD website <a href="http://fletcherpenney.net/multimarkdown/download/">download</a> page. You need the <code>Mac Installer</code>. Download it. Run it. Done.</p>
 
 <p>If you use older tools that were designed for MultiMarkdown version 3, you may need to use the <code>Mac Support Installer</code>. This is also useful if you need the older XSLT based parsing tools.</p>
 
 <p>If you plan on creating LaTeX documents, you should also download the <a href="https://github.com/fletcher/peg-multimarkdown-latex-support">LaTeX Support Files</a> and install them into the appropriate location for your system and LaTeX software.</p>
+
+<h4 id="homebrew">Homebrew</h4>
+
+<p>You can use <a href="https://github.com/Homebrew/homebrew">homebrew</a> to install:</p>
+
+<pre><code>brew install multimarkdown
+</code></pre>
+
+<p>Or, if you want the latest updates between releases:</p>
+
+<pre><code>brew install --HEAD multimarkdown
+</code></pre>
+
+<p>(<strong>Note:</strong> I use the <code>--HEAD</code> version on my own machine.)</p>
+
+<h4 id="macports">MacPorts</h4>
+
+<p><a href="https://www.macports.org/">MacPorts</a> has a package for MultiMarkdown:</p>
+
+<pre><code>sudo port install multimarkdown
+</code></pre>
+
+<p>I don&#8217;t maintain this package, and it will likely not point to the latest version. I don&#8217;t recommend it.</p>
 
 <h3 id="nix">*nix</h3>
 
@@ -283,7 +308,7 @@ make install
 
 <h3 id="compilefromsource">Compile From Source</h3>
 
-<p>For Mac and *nix users:</p>
+<h4 id="macandnixmachines">Mac and *Nix Machines</h4>
 
 <ul>
 <li>Download the source from the <a href="https://github.com/fletcher/MultiMarkdown-4">github</a> web site using <code>git https://github.com/fletcher/MultiMarkdown-4.git</code></li>
@@ -297,7 +322,13 @@ make install
 
 <p>MultiMarkdown includes a few other projects as submodules, but the only one you need to actually compile the code is the <code>greg</code> software. Once compiled, MultiMarkdown has no external dependencies &#8211; the binary is self-contained. Therefore, it should basically compile and run anywhere. </p>
 
+<h4 id="windows">Windows</h4>
+
 <p>Windows users can obtain the code in the same way, but will need to use their own compiler. The way I compile for Windows is actually to use the <code>make windows</code> command running on a *nix system with MinGW installed.</p>
+
+<p>The instructions for <a href="https://github.com/jgm/peg-markdown">peg-markdown</a> demonstrate how to compile a package for Windows.</p>
+
+<p>Otherwise, you&#8217;re on your own here.</p>
 
 <h2 id="howtousemultimarkdown">How to Use MultiMarkdown</h2>
 
@@ -535,22 +566,22 @@ virtually identical with that created by the regular LaTeX approach.</p>
 <p>There are a few differences in the two approaches, however:</p>
 
 <ul>
-<li><p>Once a MultiMarkdown file is converted to HTML, it is impossible to tell
- whether the resulting HTML was generated by MultiMarkdown, or if it was
- included as raw HTML within the source document. So <em>either</em> way, it will
+<li><p>Once a MultiMarkdown file is converted to <abbr title="HyperText Markup Language">HTML</abbr>, it is impossible to tell
+ whether the resulting <abbr title="HyperText Markup Language">HTML</abbr> was generated by MultiMarkdown, or if it was
+ included as raw <abbr title="HyperText Markup Language">HTML</abbr> within the source document. So <em>either</em> way, it will
  be converted to the analagous LaTeX syntax. The <code>multimarkdown</code> binary on
- its own will <em>not</em> convert HTML into LaTeX.</p></li>
+ its own will <em>not</em> convert <abbr title="HyperText Markup Language">HTML</abbr> into LaTeX.</p></li>
 <li><p>The whitespace that is generated will be different under certain
  circumstances. Typically, this will result in one extra or one fewer blank
  lines with the the XSLT approach. Generally this will not be an issue, but
  when used with <code>&lt;!-- some comment --&gt;</code> it may cause a newline to be lost.</p></li>
-<li><p>The default XSLT recognizes <code>class=&quot;noxslt&quot;</code> when applied to HTML entities,
+<li><p>The default XSLT recognizes <code>class=&quot;noxslt&quot;</code> when applied to <abbr title="HyperText Markup Language">HTML</abbr> entities,
  and will discard them from the output.</p></li>
-<li><p>An XSLT can only be applied to a complete HTML document, not a &#8220;snippet&#8221;.
+<li><p>An XSLT can only be applied to a complete <abbr title="HyperText Markup Language">HTML</abbr> document, not a &#8220;snippet&#8221;.
  Therefore, if you want to use the XSLT method, your file must have metadata
  that triggers a complete document (i.e. any metadata except &#8220;quotes
  language&#8221; or &#8220;base header level&#8221;).</p></li>
-<li><p>Using XSL to process an HTML file will &#8220;de-obfuscate&#8221; any email addresses
+<li><p>Using XSL to process an <abbr title="HyperText Markup Language">HTML</abbr> file will &#8220;de-obfuscate&#8221; any email addresses
  that were obfuscated by MultiMarkdown.</p></li>
 </ul>
 
@@ -1056,7 +1087,7 @@ proposals really disrupted the readability of the syntax. I consider myself a
 it as readable as possible. The idea is that a Markdown-formatted
 document should be publishable as-is, as plain text, without looking
 like it&#8217;s been marked up with tags or formatting instructions. While
-Markdown&#8217;s syntax has been influenced by several existing text-to-HTML
+Markdown&#8217;s syntax has been influenced by several existing text-to-<abbr title="HyperText Markup Language">HTML</abbr>
 filters, the single biggest source of inspiration for Markdown&#8217;s
 syntax is the format of plain text email.</p>
 </blockquote>
@@ -1221,7 +1252,7 @@ the beginning of the line</li>
  anchors pointing to the table. If there is no label, then the caption acts
  as the label</p></li>
 <li><p>Cells can be empty.</p></li>
-<li><p>You can create multiple <code>&lt;tbody&gt;</code> tags (for HTML) within a table by having a <strong>single</strong> empty line between rows of the table. This allows your CSS to place horizontal borders to emphasize different sections of the table. This feature doesn&#8217;t work in all output formats (e.g. RTF and OpenDocument).</p></li>
+<li><p>You can create multiple <code>&lt;tbody&gt;</code> tags (for <abbr title="HyperText Markup Language">HTML</abbr>) within a table by having a <strong>single</strong> empty line between rows of the table. This allows your CSS to place horizontal borders to emphasize different sections of the table. This feature doesn&#8217;t work in all output formats (e.g. RTF and OpenDocument).</p></li>
 </ul>
 
 <h4 id="limitationsoftables">Limitations of Tables</h4>
@@ -1635,7 +1666,7 @@ makeindex -s `kpsewhich basic.gst` -o &quot;${basefile}.gls&quot; &quot;${basefi
 <li>Leave the CriticMarkup syntax in place (<code>multimarkdown foo.txt</code>)</li>
 <li>Accept all changes, giving you the &#8220;new&#8221; document (<code>multimarkdown -a foo.txt</code>)</li>
 <li>Reject all changes, giving you the &#8220;original&#8221; document (<code>multimarkdown -r foo.txt</code>)</li>
-<li>Attempt to show the changes as highlights. This only works in HTML, and to use it you ask for the new and original document at the same time (<code>multimarkdown -a -r foo.txt</code>)</li>
+<li>Attempt to show the changes as highlights. This only works in <abbr title="HyperText Markup Language">HTML</abbr>, and to use it you ask for the new and original document at the same time (<code>multimarkdown -a -r foo.txt</code>)</li>
 </ul>
 
 <p>CriticMarkup comments and highlighting are ignored when processing.</p>
@@ -1671,7 +1702,7 @@ makeindex -s `kpsewhich basic.gst` -o &quot;${basefile}.gls&quot; &quot;${basefi
 
 <ol>
 <li><p>A syntax for documenting editing notes and changes, and for collaborating amongst coauthors.</p></li>
-<li><p>A means to display those notes/changes in the HTML output.</p></li>
+<li><p>A means to display those notes/changes in the <abbr title="HyperText Markup Language">HTML</abbr> output.</p></li>
 </ol>
 
 <p>I believe that #1 is a really great idea, and well implemented. #2 is not so well implemented, largely due to the &#8220;orthogonal&#8221; nature of CriticMarkup and the underlying Markdown syntax.</p>
@@ -1687,7 +1718,7 @@ makeindex -s `kpsewhich basic.gst` -o &quot;${basefile}.gls&quot; &quot;${basefi
 <ol>
 <li>CriticMarkup syntax is &#8220;understood&#8221; by the MultiMarkdown parser, and by MultiMarkdown Composer syntax highlighting.</li>
 <li>When converting from MultiMarkdown text to an output format, you can ignore CM formatting (probably not what you want to do), accept all changes, or reject all changes (as above). These are the preferred choices.</li>
-<li>The secondary to choice, when exporting to HTML, is to <em>attempt</em> to show the changes in the HTML output. Because the syntaxes are orthogonal, this will not always work properly, and will not always give valid HTML output.</li>
+<li>The secondary to choice, when exporting to <abbr title="HyperText Markup Language">HTML</abbr>, is to <em>attempt</em> to show the changes in the <abbr title="HyperText Markup Language">HTML</abbr> output. Because the syntaxes are orthogonal, this will not always work properly, and will not always give valid <abbr title="HyperText Markup Language">HTML</abbr> output.</li>
 </ol>
 
 <h3 id="rawhtml">Raw HTML</h3>
@@ -1817,7 +1848,7 @@ This is a new line.
 <p>You have a few options for crafting MultiMarkdown that will be handled differently for <abbr title="HyperText Markup Language">HTML</abbr> than for another format.</p>
 
 <ol>
-<li><p>You can use HTML comments to include text that is ignored in HTML documents, but is passed through verbatim to other formats. See the section on <a href="#rawhtml">Raw Source</a> for more information. This only works with one format besides HTML.</p></li>
+<li><p>You can use <abbr title="HyperText Markup Language">HTML</abbr> comments to include text that is ignored in <abbr title="HyperText Markup Language">HTML</abbr> documents, but is passed through verbatim to other formats. See the section on <a href="#rawhtml">Raw Source</a> for more information. This only works with one format besides <abbr title="HyperText Markup Language">HTML</abbr>.</p></li>
 <li><p>You can use file transclusion with <a href="#wildcardextensions">Wildcard Extensions</a> to embed a different string of text for each output format. This requires a bit more organization, but allows you to do just about anything you like.</p></li>
 </ol>
 

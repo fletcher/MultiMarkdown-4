@@ -35,11 +35,36 @@
 
 <h4 id="macos">Mac OS</h4>
 
+<h5 id="installer">Installer</h5>
+
 <p>You can download the installers from the MMD website <a href="http://fletcherpenney.net/multimarkdown/download/">download</a> page. You need the <code>Mac Installer</code>. Download it. Run it. Done.</p>
 
 <p>If you use older tools that were designed for MultiMarkdown version 3, you may need to use the <code>Mac Support Installer</code>. This is also useful if you need the older XSLT based parsing tools.</p>
 
 <p>If you plan on creating LaTeX documents, you should also download the <a href="https://github.com/fletcher/peg-multimarkdown-latex-support">LaTeX Support Files</a> and install them into the appropriate location for your system and LaTeX software.</p>
+
+<h5 id="homebrew">Homebrew</h5>
+
+<p>You can use <a href="https://github.com/Homebrew/homebrew">homebrew</a> to install:</p>
+
+<pre><code>brew install multimarkdown
+</code></pre>
+
+<p>Or, if you want the latest updates between releases:</p>
+
+<pre><code>brew install --HEAD multimarkdown
+</code></pre>
+
+<p>(<strong>Note:</strong> I use the <code>--HEAD</code> version on my own machine.)</p>
+
+<h5 id="macports">MacPorts</h5>
+
+<p><a href="https://www.macports.org/">MacPorts</a> has a package for MultiMarkdown:</p>
+
+<pre><code>sudo port install multimarkdown
+</code></pre>
+
+<p>I don&#8217;t maintain this package, and it will likely not point to the latest version. I don&#8217;t recommend it.</p>
 
 <h4 id="nix">*nix</h4>
 
@@ -72,21 +97,37 @@ make install
 
 <h4 id="compilefromsource">Compile From Source</h4>
 
-<p>For Mac and *nix users:</p>
+<h5 id="macandnixmachines">Mac and *Nix Machines</h5>
 
 <ul>
-<li>Download the source from the <a href="https://github.com/fletcher/MultiMarkdown-4">github</a> web site using <code>git https://github.com/fletcher/MultiMarkdown-4.git</code></li>
-<li><code>git submodule init</code> and then <code>git submodule update</code> to download <code>greg</code> and the test suite submodules (as well as others)</li>
-<li>Run <code>make</code> to compile.</li>
-<li>Run <code>make test-all | less</code> (or <code>make test-all | grep failed</code> for a more concise version) to verify that the build is correct. One of the tests is expected to fail (&#8220;Ordered and unordered lists&#8221;); the rest should pass on all systems.</li>
-<li><code>make install</code> (as root) will install the software</li>
-<li><code>make install-scripts</code> will install the helper scripts for you (e.g.<code>mmd</code>, <code>mmd2tex</code>, etc.)</li>
-<li>If you plan on creating LaTeX documents, you should also download the <a href="https://github.com/fletcher/peg-multimarkdown-latex-support">LaTeX Support Files</a> and install them into the appropriate location for your system and LaTeX software.</li>
+<li><p>Download the source from the <a href="https://github.com/fletcher/MultiMarkdown-4">github</a> web site:</p>
+
+<pre><code>git https://github.com/fletcher/MultiMarkdown-4.git
+</code></pre></li>
+<li><p>Update the submodules, including <code>greg</code></p>
+
+<pre><code>git submodule init
+git submodule update
+</code></pre></li>
+<li><p>Compile:</p>
+
+<pre><code>make
+</code></pre></li>
+<li><p>Run <code>make test-all | less</code> (or <code>make test-all | grep failed</code> for a more concise version) to verify that the build is correct. One of the tests is expected to fail (&#8220;Ordered and unordered lists&#8221;); the rest should pass on all systems. </p></li>
+<li><p><code>make install</code> (as root) will install the software</p></li>
+<li><p><code>make install-scripts</code> will install the helper scripts for you (e.g.<code>mmd</code>, <code>mmd2tex</code>, etc.)</p></li>
+<li><p>If you plan on creating LaTeX documents, you should also download the <a href="https://github.com/fletcher/peg-multimarkdown-latex-support">LaTeX Support Files</a> and install them into the appropriate location for your system and LaTeX software.</p></li>
 </ul>
 
 <p>MultiMarkdown includes a few other projects as submodules, but the only one you need to actually compile the code is the <code>greg</code> software. Once compiled, MultiMarkdown has no external dependencies &#8211; the binary is self-contained. Therefore, it should basically compile and run anywhere. </p>
 
+<h5 id="windows">Windows</h5>
+
 <p>Windows users can obtain the code in the same way, but will need to use their own compiler. The way I compile for Windows is actually to use the <code>make windows</code> command running on a *nix system with MinGW installed.</p>
+
+<p>The instructions for <a href="https://github.com/jgm/peg-markdown">peg-markdown</a> demonstrate how to compile a package for Windows.</p>
+
+<p>Otherwise, you&#8217;re on your own here.</p>
 
 </body>
 </html>
