@@ -2,7 +2,7 @@ latex input:	mmd-tufte-handout-header
 Title:	Fenced Code Blocks
 Author:	Fletcher T. Penney
 Version:	{{version.txt}}
-Revised:	2014-01-04 
+Revised:	2015-02-20 
 Base Header Level:	2
 CSS:	{{css.txt}}
 html header:	<link rel="stylesheet" href="http://yandex.st/highlightjs/7.3/styles/default.min.css">
@@ -37,4 +37,4 @@ html header:	<link rel="stylesheet" href="http://yandex.st/highlightjs/7.3/style
 	<script>hljs.initHighlightingOnLoad();</script>
 ```
 
-Fenced code blocks are particularly useful when included another file ([File Transclusion]), and you want to show the *source* of the file, not what the file looks like when processed by MultiMarkdown.
+Fenced code blocks are particularly useful when including another file ([File Transclusion]), and you want to show the *source* of the file, not what the file looks like when processed by MultiMarkdown.

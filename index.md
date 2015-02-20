@@ -2,7 +2,7 @@ latex input:	mmd-tufte-handout-header
 Title:	MultiMarkdown User's Guide
 Author:	Fletcher T. Penney
 Version:	{{version.txt}}
-Revised:	2014-09-22  
+Revised:	2015-02-20  
 Keywords:	MultiMarkdown, Markdown, LaTeX, PDF, RTF, LyX, HTML
 Base Header Level:	2
 CSS:	{{css.txt}}
@@ -25,30 +25,30 @@ You can view the MultiMarkdown User's Guide as a **single document**:
 
 Or as a set of web pages for individual sections:
 
-* [Introduction](introduction)
-* [Philosophy](philosophy)
-* [Installation](installation)
-* [Using MultiMarkdown](using_mmd)
-* [MultiMarkdown Syntax](syntax)
-	* [Metadata](metadata)
-	* [Smart Typography](typography)
-	* [Cross-References](cross-references)
-	* [Link and Image Attributes](attributes)
-	* [Images](images)
-	* [Tables](tables)
-	* [Footnotes](footnotes)
-	* [Citations](citations)
-	* [Definition Lists](definitionlists)
-	* [Abbreviations](abbreviations)
-	* [Fenced Code Blocks](fences)
-	* [Math](math)
-	* [Glossaries](glossary)
-	* [CriticMarkup](criticmarkup)
-	* [Raw Source](raw)
-	* [File Transclusion](transclusion)
-	* [Escaped Newlines](escaped-newlines)
-* ["Hacking" MultiMarkdown](hacking)
-* [Known Issues](known_issues)
-* [To Do](to_do)
-* [More Information](more_information)
-* [Acknowledgements](acknowledgements)
+* [Introduction](introduction.html)
+* [Philosophy](philosophy.html)
+* [Installation](installation.html)
+* [Using MultiMarkdown](using_mmd.html)
+* [MultiMarkdown Syntax](syntax.html)
+	* [Metadata](metadata.html)
+	* [Smart Typography](typography.html)
+	* [Cross-References](cross-references.html)
+	* [Link and Image Attributes](attributes.html)
+	* [Images](images.html)
+	* [Tables](tables.html)
+	* [Footnotes](footnotes.html)
+	* [Citations](citations.html)
+	* [Definition Lists](definitionlists.html)
+	* [Abbreviations](abbreviations.html)
+	* [Fenced Code Blocks](fences.html)
+	* [Math](math.html)
+	* [Glossaries](glossary.html)
+	* [CriticMarkup](criticmarkup.html)
+	* [Raw Source](raw.html)
+	* [File Transclusion](transclusion.html)
+	* [Escaped Newlines](escaped-newlines.html)
+* ["Hacking" MultiMarkdown](hacking.html)
+* [Known Issues](known_issues.html)
+* [To Do](to_do.html)
+* [More Information](more_information.html)
+* [Acknowledgements](acknowledgements.html)

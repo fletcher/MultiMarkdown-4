@@ -261,7 +261,7 @@
 User's Guide</meta:user-defined>
 <meta:user-defined meta:name="Author">Fletcher T. Penney</meta:user-defined>
 <meta:user-defined meta:name="Version">4.6</meta:user-defined>
-<meta:user-defined meta:name="Revised">2014-09-22</meta:user-defined>
+<meta:user-defined meta:name="Revised">2015-02-20</meta:user-defined>
 <meta:keyword>MultiMarkdown, Markdown, LaTeX, PDF, RTF, LyX, HTML</meta:keyword>
 <meta:user-defined meta:name="MMD Footer">links.txt</meta:user-defined>
 </office:meta>
@@ -269,7 +269,7 @@ User's Guide</meta:user-defined>
 <office:text>
 <text:h text:outline-level="2"><text:bookmark text:name="title"/>MultiMarkdown User's Guide<text:bookmark-end text:name="title"/></text:h>
 
-<text:p text:style-name="Quotations">Version 4.6<text:line-break/>Revised 2014-09-22</text:p>
+<text:p text:style-name="Quotations">Version 4.6<text:line-break/>Revised 2015-02-20</text:p>
 
 <text:h text:outline-level="2"><text:bookmark text:name="introduction"/>Introduction<text:bookmark-end text:name="introduction"/></text:h>
 
@@ -1738,7 +1738,7 @@ prefer the <text:span text:style-name="Source_20_Text">&lt;p&gt;</text:span> tag
 <text:p text:style-name="Preformatted Text">html header:<text:tab/>&lt;link rel=&quot;stylesheet&quot; href=&quot;http://yandex.st/highlightjs/7.3/styles/default.min.css&quot;&gt;<text:line-break/><text:tab/>&lt;script src=&quot;http://yandex.st/highlightjs/7.3/highlight.min.js&quot;&gt;&lt;/script&gt;<text:line-break/><text:tab/>&lt;script&gt;hljs.initHighlightingOnLoad();&lt;/script&gt;<text:line-break/></text:p>
 
 
-<text:p text:style-name="Standard">Fenced code blocks are particularly useful when included another file (<text:a xlink:type="simple" xlink:href="#filetransclusion">File Transclusion</text:a>), and you want to show the <text:span text:style-name="MMD-Italic">source</text:span> of the file, not what the file looks like when processed by MultiMarkdown.</text:p>
+<text:p text:style-name="Standard">Fenced code blocks are particularly useful when including another file (<text:a xlink:type="simple" xlink:href="#filetransclusion">File Transclusion</text:a>), and you want to show the <text:span text:style-name="MMD-Italic">source</text:span> of the file, not what the file looks like when processed by MultiMarkdown.</text:p>
 
 <text:h text:outline-level="3"><text:bookmark text:name="math"/>Math<text:bookmark-end text:name="math"/></text:h>
 
