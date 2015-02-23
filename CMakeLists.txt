@@ -56,7 +56,7 @@ include_directories( ${PROJECT_SOURCE_DIR}/src )
 
 # libMultiMarkdown
 # ================
-# Since "MultiMarkdown" and "multimarkdown" are the same, 
+# Since "MultiMarkdown" and "multimarkdown" are almost the same, 
 # it causes errors on case insensitive file systems.
 # add "lib" and remove the extra "liblibFOO" later
 
@@ -66,7 +66,7 @@ add_library(libMultiMarkdown STATIC
 	${CMAKE_CURRENT_BINARY_DIR}/parser.c
 )
 
-# remove the exta from "liblibFOO"
+# remove the extra from "liblibFOO"
 SET_TARGET_PROPERTIES(libMultiMarkdown PROPERTIES PREFIX "")
 
 
