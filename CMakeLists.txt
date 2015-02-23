@@ -2,6 +2,9 @@ cmake_minimum_required(VERSION 3.0)
 
 project(MultiMarkdown)
 
+set (MMD_VERSION_MAJOR 4)
+set (MMD_VERSION_MINOR 7)
+
 set(src_files
 	src/GLibFacade.c
 	src/beamer.c
@@ -78,6 +81,26 @@ add_executable(multimarkdown
 )
 
 target_link_libraries (multimarkdown libMultiMarkdown)
+
+
+# Installer
+# (NOTE: README.html has to be generated before it can be used here)
+
+install (TARGETS multimarkdown DESTINATION bin)
+
+include (InstallRequiredSystemLibraries)
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "MultiMarkdown - lightweight markup processor")
+set(CPACK_PACKAGE_VENDOR "Fletcher T. Penney")
+set(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_BINARY_DIR}/README.html")
+set(CPACK_RESOURCE_FILE_README "${CMAKE_CURRENT_BINARY_DIR}/README.html")
+set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/License.txt")
+set(CPACK_COMPONENTS_IGNORE_GROUPS 1)
+
+set (CPACK_PACKAGE_VERSION 4.7)
+set (CPACK_PACKAGE_VERSION_MAJOR "${MMD_VERSION_MAJOR}")
+set (CPACK_PACKAGE_VERSION_MINOR "${MMD_VERSION_MINOR}")
+
+include (CPack)
 
 
 # Test Suite
