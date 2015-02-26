@@ -10,11 +10,11 @@ release: $(BUILD_DIR) $(BUILD_DIR)/README.html
 	cd $(BUILD_DIR); \
 	cmake -DCMAKE_BUILD_TYPE=Release ..
 
-debug: $(BUILD_DIR)
+debug: $(BUILD_DIR)  $(BUILD_DIR)/README.html
 	cd $(BUILD_DIR); \
 	cmake ..
 
-xcode: $(BUILD_DIR)
+xcode: $(BUILD_DIR)  $(BUILD_DIR)/README.html
 	cd $(BUILD_DIR); \
 	cmake -G Xcode ..
 
