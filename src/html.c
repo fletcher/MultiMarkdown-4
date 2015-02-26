@@ -21,7 +21,7 @@
 
 #include "html.h"
 
-#define DEBUG_ON
+#define DEBUG_OFF
 
 bool is_html_complete_doc(node *meta);
 void print_col_group(GString *out,scratch_pad *scratch);
