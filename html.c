@@ -21,6 +21,8 @@
 
 #include "html.h"
 
+#define DEBUG_OFF
+
 bool is_html_complete_doc(node *meta);
 void print_col_group(GString *out,scratch_pad *scratch);
 
@@ -44,6 +46,7 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 	char *width = NULL;
 	char *height = NULL;
 	GString *temp_str;
+	GString *temp_str_b;
 
 	if (n == NULL)
 		return;
@@ -475,13 +478,23 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 				n->link_data = extract_link_data(temp, scratch);
 				
 				if (n->link_data == NULL) {
-					g_string_append_printf(out, "![");
-					print_html_node_tree(out, n->children, scratch);
-					g_string_append_printf(out,"][%s]",temp);
+					temp_str = g_string_new("");
+					print_html_node_tree(temp_str, n->children, scratch);
+
+					temp_str_b = g_string_new("");
+					print_html_string(temp_str_b, temp, scratch);
+
+					if (strcmp(temp_str->str,temp_str_b->str) == 0) {
+						g_string_append_printf(out, "![%s]",temp_str->str);
+					} else {
+						g_string_append_printf(out, "![%s][%s]",temp_str->str, temp_str_b->str);
+					}
 
 					/* Restore stashed copy */
 					n->link_data = temp_link_data;
 
+					g_string_free(temp_str, TRUE);
+					g_string_free(temp_str_b, TRUE);
 					free(temp);
 
 					break;
