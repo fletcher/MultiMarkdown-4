@@ -108,7 +108,22 @@ include (CPack)
 
 enable_testing()
 
-add_test( markdown ${PROJECT_SOURCE_DIR}/MarkdownTest/MarkdownTest.pl --Script=../build/multimarkdown --Tidy --Flags="--compatibility")
+add_test( markdown ${PROJECT_SOURCE_DIR}/MarkdownTest/MarkdownTest.pl --Script=${CMAKE_CURRENT_BINARY_DIR}/multimarkdown --Tidy --Flags="--compatibility" --testdir=${PROJECT_SOURCE_DIR}/MarkdownTest/Tests)
 
-add_test ( mmd  ${PROJECT_SOURCE_DIR}/MarkdownTest/MarkdownTest.pl --Script=../build/multimarkdown --testdir=MarkdownTest/MultiMarkdownTests)
+add_test ( mmd  ${PROJECT_SOURCE_DIR}/MarkdownTest/MarkdownTest.pl --Script=${CMAKE_CURRENT_BINARY_DIR}/multimarkdown --testdir=${PROJECT_SOURCE_DIR}/MarkdownTest/MultiMarkdownTests)
 
+add_test ( latex  ${PROJECT_SOURCE_DIR}/MarkdownTest/MarkdownTest.pl --Script=${CMAKE_CURRENT_BINARY_DIR}/multimarkdown --testdir=${PROJECT_SOURCE_DIR}/MarkdownTest/MultiMarkdownTests --Flags=-t\ latex --ext=tex)
+
+add_test ( beamer  ${PROJECT_SOURCE_DIR}/MarkdownTest/MarkdownTest.pl --Script=${CMAKE_CURRENT_BINARY_DIR}/multimarkdown --testdir=${PROJECT_SOURCE_DIR}/MarkdownTest/BeamerTests --Flags=-t\ beamer --ext=tex)
+
+add_test ( memoir  ${PROJECT_SOURCE_DIR}/MarkdownTest/MarkdownTest.pl --Script=${CMAKE_CURRENT_BINARY_DIR}/multimarkdown --testdir=${PROJECT_SOURCE_DIR}/MarkdownTest/MemoirTests --Flags=-t\ memoir --ext=tex)
+
+add_test ( lyx  ${PROJECT_SOURCE_DIR}/MarkdownTest/MarkdownTest.pl --Script=${CMAKE_CURRENT_BINARY_DIR}/multimarkdown --testdir=${PROJECT_SOURCE_DIR}/MarkdownTest/MultiMarkdownTests --Flags=-t\ lyx --ext=lyx)
+
+add_test ( lyx-beamer  ${PROJECT_SOURCE_DIR}/MarkdownTest/MarkdownTest.pl --Script=${CMAKE_CURRENT_BINARY_DIR}/multimarkdown --testdir=${PROJECT_SOURCE_DIR}/MarkdownTest/BeamerTests --Flags=-t\ lyx --ext=lyx)
+
+add_test ( latex  ${PROJECT_SOURCE_DIR}/MarkdownTest/MarkdownTest.pl --Script=${CMAKE_CURRENT_BINARY_DIR}/multimarkdown --testdir=${PROJECT_SOURCE_DIR}/MarkdownTest/MultiMarkdownTests --Flags=-t\ latex --ext=tex)
+
+add_test ( opml  ${PROJECT_SOURCE_DIR}/MarkdownTest/MarkdownTest.pl --Script=${CMAKE_CURRENT_BINARY_DIR}/multimarkdown --testdir=${PROJECT_SOURCE_DIR}/MarkdownTest/MultiMarkdownTests --Flags=-t\ opml --ext=opml)
+
+add_test ( odf  ${PROJECT_SOURCE_DIR}/MarkdownTest/MarkdownTest.pl --Script=${CMAKE_CURRENT_BINARY_DIR}/multimarkdown --testdir=${PROJECT_SOURCE_DIR}/MarkdownTest/MultiMarkdownTests --Flags=-t\ odf --ext=fodt)
