@@ -80,68 +80,69 @@ windows: parser.c
 
 # Test program against MMD Test Suite
 test: $(PROGRAM)
-	cd MarkdownTest; \
+	-cd MarkdownTest; \
 	./MarkdownTest.pl --Script=../$(PROGRAM) --Tidy --Flags="--compatibility"; \
 	echo ""; \
 	echo "** It's expected that we fail the \"Ordered and unordered lists\" test **"; \
-	echo "";
-
+	echo ""; \
+	./MarkdownTest.pl --Script=../$(PROGRAM) --Tidy --Flags="--compatibility" --testdir=Test
+	
 test-mmd: $(PROGRAM)
-	cd MarkdownTest; \
+	-cd MarkdownTest; \
 	./MarkdownTest.pl --Script=../$(PROGRAM) --testdir=MultiMarkdownTests
 
 test-compat: $(PROGRAM)
-	cd MarkdownTest; \
+	-cd MarkdownTest; \
 	./MarkdownTest.pl --Script=../$(PROGRAM) --testdir=CompatibilityTests --Flags="--compatibility"
 
 test-latex: $(PROGRAM)
-	cd MarkdownTest; \
-	./MarkdownTest.pl --Script=../$(PROGRAM) --testdir=MultiMarkdownTests --Flags="-t latex" --ext=".tex"
+	-cd MarkdownTest; \
+	./MarkdownTest.pl --Script=../$(PROGRAM) --testdir=MultiMarkdownTests --Flags="-t latex" --ext="tex"
 
 test-beamer: $(PROGRAM)
-	cd MarkdownTest; \
-	./MarkdownTest.pl --Script=../$(PROGRAM) --testdir=BeamerTests --Flags="-t beamer" --ext=".tex"
+	-cd MarkdownTest; \
+	./MarkdownTest.pl --Script=../$(PROGRAM) --testdir=BeamerTests --Flags="-t beamer" --ext="tex"
 
 test-memoir: $(PROGRAM)
-	cd MarkdownTest; \
-	./MarkdownTest.pl --Script=../$(PROGRAM) --testdir=MemoirTests --Flags="-t memoir" --ext=".tex"
+	-cd MarkdownTest; \
+	./MarkdownTest.pl --Script=../$(PROGRAM) --testdir=MemoirTests --Flags="-t memoir" --ext="tex"
 
 test-lyx: $(PROGRAM)
-	cd MarkdownTest; \
-	./MarkdownTest.pl --Script=../$(PROGRAM) --testdir=MultiMarkdownTests --Flags="-t lyx" --ext=".lyx"
+	-cd MarkdownTest; \
+	./MarkdownTest.pl --Script=../$(PROGRAM) --testdir=MultiMarkdownTests --Flags="-t lyx" --ext="lyx"
 
 test-lyx-beamer: $(PROGRAM)
-	cd MarkdownTest; \
-	./MarkdownTest.pl --Script=../$(PROGRAM) --testdir=BeamerTests --Flags="-t lyx" --ext=".lyx"
+	-cd MarkdownTest; \
+	./MarkdownTest.pl --Script=../$(PROGRAM) --testdir=BeamerTests --Flags="-t lyx" --ext="lyx"
 
 test-opml: $(PROGRAM)
-	cd MarkdownTest; \
-	./MarkdownTest.pl --Script=../$(PROGRAM) --testdir=MultiMarkdownTests --Flags="-t opml" --ext=".opml"
+	-cd MarkdownTest; \
+	./MarkdownTest.pl --Script=../$(PROGRAM) --testdir=MultiMarkdownTests --Flags="-t opml" --ext="opml"
 
 test-odf: $(PROGRAM)
-	cd MarkdownTest; \
-	./MarkdownTest.pl --Script=../$(PROGRAM) --testdir=MultiMarkdownTests --Flags="-t odf" --ext=".fodt"
+	-cd MarkdownTest; \
+	./MarkdownTest.pl --Script=../$(PROGRAM) --testdir=MultiMarkdownTests --Flags="-t odf" --ext="fodt"
 
 test-xslt: $(PROGRAM)
-	cd MarkdownTest; \
+	-cd MarkdownTest; \
 	./MarkdownTest.pl --Script=/bin/cat --testdir=MultiMarkdownTests \
-	--TrailFlags="| ../Support/bin/mmd2tex-xslt" --ext=".tex"; \
+	--TrailFlags="| ../Support/bin/mmd2tex-xslt" --ext="tex"; \
 	./MarkdownTest.pl --Script=/bin/cat --testdir=BeamerTests \
-	--TrailFlags="| ../Support/bin/mmd2tex-xslt" --ext=".tex"; \
+	--TrailFlags="| ../Support/bin/mmd2tex-xslt" --ext="tex"; \
 	./MarkdownTest.pl --Script=/bin/cat --testdir=MemoirTests \
-	--TrailFlags="| ../Support/bin/mmd2tex-xslt" --ext=".tex"; \
+	--TrailFlags="| ../Support/bin/mmd2tex-xslt" --ext="tex"; \
 
 test-critic-accept: $(PROGRAM)
-	cd MarkdownTest; \
-	./MarkdownTest.pl --Script=../$(PROGRAM) --testdir=CriticMarkup --Flags="-a" --ext=".htmla"
+	-cd MarkdownTest; \
+	./MarkdownTest.pl --Script=../$(PROGRAM) --testdir=CriticMarkup --Flags="-a" --ext="htmla"
 
 test-critic-reject: $(PROGRAM)
-	cd MarkdownTest; \
-	./MarkdownTest.pl --Script=../$(PROGRAM) --testdir=CriticMarkup --Flags="-r" --ext=".htmlr"
+	-cd MarkdownTest; \
+	./MarkdownTest.pl --Script=../$(PROGRAM) --testdir=CriticMarkup --Flags="-r" --ext="htmlr"
 
 test-critic-highlight: $(PROGRAM)
-	cd MarkdownTest; \
-	./MarkdownTest.pl --Script=../$(PROGRAM) --testdir=CriticMarkup --Flags="-a -r" --ext=".htmlh"
+	-cd MarkdownTest; \
+	./MarkdownTest.pl --Script=../$(PROGRAM) --testdir=CriticMarkup --Flags="-a -r" --ext="htmlh"
 
 test-all: $(PROGRAM) test test-mmd test-compat test-latex test-beamer test-memoir test-opml test-odf test-critic-accept test-critic-reject test-critic-highlight test-lyx test-lyx-beamer
 
