@@ -108,6 +108,8 @@ include (CPack)
 
 enable_testing()
 
+add_test( markdown-should-fail ${PROJECT_SOURCE_DIR}/MarkdownTest/MarkdownTest.pl --Script=${CMAKE_CURRENT_BINARY_DIR}/multimarkdown --Tidy --Flags="--compatibility" --testdir=${PROJECT_SOURCE_DIR}/MarkdownTest/Test)
+
 add_test( markdown ${PROJECT_SOURCE_DIR}/MarkdownTest/MarkdownTest.pl --Script=${CMAKE_CURRENT_BINARY_DIR}/multimarkdown --Tidy --Flags="--compatibility" --testdir=${PROJECT_SOURCE_DIR}/MarkdownTest/Tests)
 
 add_test ( mmd  ${PROJECT_SOURCE_DIR}/MarkdownTest/MarkdownTest.pl --Script=${CMAKE_CURRENT_BINARY_DIR}/multimarkdown --testdir=${PROJECT_SOURCE_DIR}/MarkdownTest/MultiMarkdownTests)
@@ -127,3 +129,11 @@ add_test ( latex  ${PROJECT_SOURCE_DIR}/MarkdownTest/MarkdownTest.pl --Script=${
 add_test ( opml  ${PROJECT_SOURCE_DIR}/MarkdownTest/MarkdownTest.pl --Script=${CMAKE_CURRENT_BINARY_DIR}/multimarkdown --testdir=${PROJECT_SOURCE_DIR}/MarkdownTest/MultiMarkdownTests --Flags=-t\ opml --ext=opml)
 
 add_test ( odf  ${PROJECT_SOURCE_DIR}/MarkdownTest/MarkdownTest.pl --Script=${CMAKE_CURRENT_BINARY_DIR}/multimarkdown --testdir=${PROJECT_SOURCE_DIR}/MarkdownTest/MultiMarkdownTests --Flags=-t\ odf --ext=fodt)
+
+add_test ( critic-accept  ${PROJECT_SOURCE_DIR}/MarkdownTest/MarkdownTest.pl --Script=${CMAKE_CURRENT_BINARY_DIR}/multimarkdown --testdir=${PROJECT_SOURCE_DIR}/MarkdownTest/CriticMarkup --Flags=-a --ext=htmla)
+add_test ( critic-reject  ${PROJECT_SOURCE_DIR}/MarkdownTest/MarkdownTest.pl --Script=${CMAKE_CURRENT_BINARY_DIR}/multimarkdown --testdir=${PROJECT_SOURCE_DIR}/MarkdownTest/CriticMarkup --Flags=-r --ext=htmlr)
+add_test ( critic-highlight  ${PROJECT_SOURCE_DIR}/MarkdownTest/MarkdownTest.pl --Script=${CMAKE_CURRENT_BINARY_DIR}/multimarkdown --testdir=${PROJECT_SOURCE_DIR}/MarkdownTest/CriticMarkup --Flags=-r\ -a --ext=htmlh)
+
+add_test ( xslt-1  ${PROJECT_SOURCE_DIR}/MarkdownTest/MarkdownTest.pl --Script=/bin/cat --testdir=${PROJECT_SOURCE_DIR}/MarkdownTest/MultiMarkdownTests --TrailFlags=|\ ${PROJECT_SOURCE_DIR}/Support/bin/mmd2tex-xslt --ext=tex)
+add_test ( xslt-2  ${PROJECT_SOURCE_DIR}/MarkdownTest/MarkdownTest.pl --Script=/bin/cat --testdir=${PROJECT_SOURCE_DIR}/MarkdownTest/BeamerTests --TrailFlags=|\ ${PROJECT_SOURCE_DIR}/Support/bin/mmd2tex-xslt --ext=tex)
+add_test ( xslt-3  ${PROJECT_SOURCE_DIR}/MarkdownTest/MarkdownTest.pl --Script=/bin/cat --testdir=${PROJECT_SOURCE_DIR}/MarkdownTest/MemoirTests --TrailFlags=|\ ${PROJECT_SOURCE_DIR}/Support/bin/mmd2tex-xslt --ext=tex)
