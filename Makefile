@@ -84,8 +84,9 @@ test: $(PROGRAM)
 	./MarkdownTest.pl --Script=../$(PROGRAM) --Tidy --Flags="--compatibility"; \
 	echo ""; \
 	echo "** It's expected that we fail the \"Ordered and unordered lists\" test **"; \
-	echo "";
-
+	echo ""; \
+	./MarkdownTest.pl --Script=../$(PROGRAM) --Tidy --Flags="--compatibility" --testdir=Test;
+	
 test-mmd: $(PROGRAM)
 	cd MarkdownTest; \
 	./MarkdownTest.pl --Script=../$(PROGRAM) --testdir=MultiMarkdownTests
