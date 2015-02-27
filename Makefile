@@ -24,3 +24,4 @@ clean: $(BUILD_DIR)
 
 $(BUILD_DIR)/README.html: README.md
 	multimarkdown -o $(BUILD_DIR)/README.html README.md
+
