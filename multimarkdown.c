@@ -140,6 +140,7 @@ int main(int argc, char **argv)
 				"    --process-html         Process Markdown inside of raw HTML\n"
 				"    -m, --metadata-keys    List all metadata keys\n"
 				"    -e, --extract          Extract specified metadata\n"
+				"    -x, --manifest         Show manifest of all transcluded files\n"
 				"    --random               Use random numbers for footnote anchors\n"
 				"\n"
 				"    -a, --accept           Accept all CriticMarkup changes\n"
