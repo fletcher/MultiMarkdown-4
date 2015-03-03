@@ -217,13 +217,13 @@ Spnl =          Sp (Newline Sp)?
 Spacechar =		' ' | '\t'
 Nonspacechar =  !Spacechar !Newline .
 NormalChar =	!( SpecialChar | Spacechar | Newline ) .
-SpecialChar =   '*' | '_' | '`' | '&' | '[' | ']' | '(' | ')' | '<' | '!' | '#' | '\\' | '\'' | '"' | '?' | ',' | ';' | '/' | '.' | ExtendedSpecialChar
+SpecialChar =   '*' | '_' | '`' | '&' | '[' | ']' | '(' | ')' | '<' | '!' | '#' | '\\' | '\'' | '"' | '?' | ',' | ';' | '/' | '.' | '。' | '、'| ExtendedSpecialChar
 ExtendedSpecialChar = &{ ext(EXT_SMART) } ('.' | '-' | '\'' | '"')
 		| &{ ext(EXT_NOTES) } ( '^' )
 		| &{ ext(EXT_CRITIC) } ( '{' )
 		| &{ !ext(EXT_COMPATIBILITY) } ( '~' )
 		| &{ !ext(EXT_COMPATIBILITY) } ( '|' )
-Punctuation = '.' | ',' | '?' | '!' | ';' | ':'
+Punctuation = '.' | ',' | '?' | '!' | ';' | ':' | '。' | '、'
 NonPunctuation = !(Punctuation | SpecialChar | Spacechar | Newline) .
 
 Quoted =        '"' (!'"' .)* '"' | '\'' (!'\'' .)* '\''
@@ -347,11 +347,11 @@ voidNormalEndline = Sp Newline !BlankLine !'>' !AtxStart
 		!(RawLine ('='+ | '-'+) Newline)
 
 Str = 	a:StartList < NormalChar+ > { a = cons(str(yytext), a); }
-		( StrChunk { a = cons($$, a); } )*
+		( &{ !ext(EXT_COMPATIBILITY) }  StrChunk { a = cons($$, a); } )*
 		( &{ !ext(EXT_COMPATIBILITY) } ( Superscript | Subscript) {a = cons($$, a); } )*
 		{ if (a->next == NULL) { $$ = a; } else { $$ = list(LIST, a); } }
 
-StrChunk = < (NormalChar | '_'+ &Alphanumeric)+ > { $$ = str(yytext); } |
+StrChunk = < (NormalChar | '_'+ !Punctuation &Alphanumeric)+ > { $$ = str(yytext); } |
 	AposChunk
 
 AposChunk = &{ ext(EXT_SMART) } '\'' &Alphanumeric

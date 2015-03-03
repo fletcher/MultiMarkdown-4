@@ -140,6 +140,7 @@ int main(int argc, char **argv)
 				"    --process-html         Process Markdown inside of raw HTML\n"
 				"    -m, --metadata-keys    List all metadata keys\n"
 				"    -e, --extract          Extract specified metadata\n"
+				"    -x, --manifest         Show manifest of all transcluded files\n"
 				"    --random               Use random numbers for footnote anchors\n"
 				"\n"
 				"    -a, --accept           Accept all CriticMarkup changes\n"
@@ -151,7 +152,7 @@ int main(int argc, char **argv)
 				"    --mask, --nomask       Mask email addresses in HTML\n"
 				"    --escaped-line-breaks  Enable escaped line breaks\n"
 
-				"\nAvailable FORMATs: html(default), latex, beamer, memoir, odf, opml, lyx\n\n"
+				"\nAvailable FORMATs: html(default), latex, beamer, memoir, odf, opml, lyx, mmd\n\n"
 				"NOTE: The lyx output format was created by Charles R. Cowan, and \n\tis provided as is.\n\n\n"
 				);
 				return(EXIT_SUCCESS);
@@ -175,6 +176,8 @@ int main(int argc, char **argv)
 					output_format = RTF_FORMAT;
 				else if (strcmp(optarg, "lyx") == 0)
 					output_format = LYX_FORMAT;
+				else if (strcmp(optarg, "mmd") == 0)
+					output_format = ORIGINAL_FORMAT;
 				else {
 					/* no valid format specified */
 					fprintf(stderr, "%s: Unknown output format '%s'\n",argv[0], optarg);
@@ -344,9 +347,14 @@ int main(int argc, char **argv)
 				g_string_free(manifest, true);
 			}
 
-			out = markdown_to_string(inputbuf->str,  extensions, output_format);
-			
-			g_string_free(inputbuf, true);
+			if (output_format == ORIGINAL_FORMAT) {
+				/* We want the source, don't parse */
+				out = (inputbuf->str);
+				g_string_free(inputbuf, FALSE);
+			} else {
+				out = markdown_to_string(inputbuf->str,  extensions, output_format);
+				g_string_free(inputbuf, true);
+			}
 			
 			/* set up for output */
 			temp = argv[i+1];	/* get current filename */
@@ -378,6 +386,8 @@ int main(int argc, char **argv)
 				g_string_append(filename,".lyx");
 			} else if (output_format == RTF_FORMAT) {
 				g_string_append(filename,".rtf");
+			} else if (output_format == ORIGINAL_FORMAT) {
+				g_string_append(filename,".mmd_out");
 			} else {
 				/* default extension -- in this case we only have 1 */
 				g_string_append(filename,".txt");
@@ -475,9 +485,14 @@ int main(int argc, char **argv)
 			g_string_free(manifest, true);			
 		}
 
-		out = markdown_to_string(inputbuf->str, extensions, output_format);
-		
-		g_string_free(inputbuf, true);
+		if (output_format == ORIGINAL_FORMAT) {
+			/* We want the source, don't parse */
+			out = (inputbuf->str);
+			g_string_free(inputbuf, FALSE);
+		} else {
+			out = markdown_to_string(inputbuf->str,  extensions, output_format);
+			g_string_free(inputbuf, true);
+		}
 		
 		/* did we specify an output filename; "-" equals stdout */
 		if ((filename == NULL) || (strcmp(filename->str, "-") == 0)) {
