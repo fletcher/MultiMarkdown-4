@@ -64,6 +64,7 @@ enum export_formats {
 	CRITIC_REJECT_FORMAT,
 	CRITIC_HTML_HIGHLIGHT_FORMAT,
 	LYX_FORMAT,
+	TOC_FORMAT,
 };
 
 /* These are the identifiers for node types */
@@ -148,6 +149,7 @@ enum keys {
 	ABBR,
 	ABBRSTART,
 	ABBRSTOP,
+	TOC,
 	KEY_COUNTER                      /* This *MUST* be the last item in the list */
 };
 

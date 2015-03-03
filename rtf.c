@@ -485,6 +485,9 @@ void print_rtf_node(GString *out, node *n, scratch_pad *scratch) {
 				scratch->padded = 0;
 			}
 			break;
+		case TOC:
+			print_rtf_node_tree(out,n->children, scratch);
+			break;
 		default:
 			fprintf(stderr, "print_rtf_node encountered unknown node key = %d\n",n->key);
 			g_string_append_printf(out, "%s",n->str);

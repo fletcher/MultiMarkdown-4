@@ -138,6 +138,10 @@ char * export_node_tree(node *list, int format, unsigned long extensions) {
 		case CRITIC_HTML_HIGHLIGHT_FORMAT:
 			print_critic_html_highlight_node_tree(out, list, scratch);
 			break;
+		case TOC_FORMAT:
+			scratch->toc_level = 0;
+			print_toc_node_tree(out,list,scratch);
+			break;
 		default:
 			fprintf(stderr, "Unknown export format = %d\n",format);
 			exit(EXIT_FAILURE);

@@ -130,6 +130,7 @@ Block =	BlankLine*
 		| StyleBlock
 		| &{ !ext(EXT_COMPATIBILITY) } Table
 		| &{ !ext(EXT_COMPATIBILITY) } ImageBlock
+		| &{ !ext(EXT_COMPATIBILITY) } TOC
 		| !(Sp HtmlBlockInTags) Para
 		| Plain )
 
@@ -150,8 +151,16 @@ HeadingSectionBlock = BlankLine* !Heading
 		| StyleBlock
 		| &{ !ext(EXT_COMPATIBILITY) } Table
 		| &{ !ext(EXT_COMPATIBILITY) } ImageBlock
+		| &{ !ext(EXT_COMPATIBILITY) } TOC
 		| !(Sp HtmlBlockInTags) Para
 		| Plain )
+
+TOC = "{{TOC}}" Sp Newline
+	{
+		$$ = mk_node(TOC);
+		$$->children = mk_node(RAW);
+		$$->children->str = markdown_to_string(((parser_data *)G->data)->original, 0, TOC_FORMAT);
+	}
 
 Heading = SetextHeading | AtxHeading
 
@@ -1391,6 +1400,22 @@ OPMLSectionBlock = BlankLine* !OPMLHeading OPMLPlain
 OPMLPlain = a:StartList (!BlankLine !Heading Line { a = cons($$,a); })+
 		{ $$ = mk_list(PLAIN, a); }
 
+DocForTOC = BOM? a: StartList
+		(&( (YAMLStart)? MetaDataKey Sp ':' Sp (!Newline)) MetaData )?
+		( TOCBlock { a = cons($$, a); } | TOCPlain)*
+		BlankLine*
+		{ ((parser_data *)G->data)->result = reverse_list(a); }
+
+TOCBlock = BlankLine* TOCHeadingSection
+
+TOCHeadingSection = a:StartList Heading { a = cons($$, a); }
+	(TOCSectionBlock )*
+	{ $$ = mk_list(HEADINGSECTION, a); }
+
+TOCSectionBlock = BlankLine* !Heading TOCPlain
+
+TOCPlain = (!BlankLine !Heading Line )+
+
 # Critic Markup
 
 CriticMarkup = CriticAddition | CriticDeletion | CriticSubstitution | CriticHighlight | CriticComment
@@ -1534,6 +1559,8 @@ char * markdown_to_string(char * source, unsigned long extensions, int format) {
 	
 	if (format == OPML_FORMAT) {
 		while (yyparse_from(&g, yy_DocForOPML));	/* We want simpler version */
+	} else if (format == TOC_FORMAT) {
+		while (yyparse_from(&g, yy_DocForTOC));		/* We want simpler version */
 	} else {
 		while (yyparse(&g));       /* parse */
 	}
