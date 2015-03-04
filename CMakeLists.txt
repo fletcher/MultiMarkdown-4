@@ -1,5 +1,9 @@
 cmake_minimum_required(VERSION 2.8)
 
+# ====================
+	MultiMarkdown 
+# ====================
+
 project(MultiMarkdown)
 
 set (MMD_VERSION_MAJOR 4)
@@ -59,8 +63,10 @@ add_custom_command (
 include_directories( ${PROJECT_SOURCE_DIR}/src )
 
 
+# ================
 # libMultiMarkdown
 # ================
+
 # Since "MultiMarkdown" and "multimarkdown" are almost the same, 
 # it causes errors on case insensitive file systems.
 # add "lib" and remove the extra "liblibFOO" later
@@ -75,6 +81,7 @@ add_library(libMultiMarkdown STATIC
 SET_TARGET_PROPERTIES(libMultiMarkdown PROPERTIES PREFIX "")
 
 
+# =============
 # multimarkdown
 # =============
 
@@ -84,8 +91,10 @@ add_executable(multimarkdown
 
 target_link_libraries (multimarkdown libMultiMarkdown)
 
-
+# =========
 # Installer
+# =========
+
 # (NOTE: README.html has to be generated before it can be used here)
 
 install (TARGETS multimarkdown DESTINATION bin)
@@ -105,7 +114,9 @@ set (CPACK_PACKAGE_VERSION_MINOR "${MMD_VERSION_MINOR}")
 include (CPack)
 
 
+# ==========
 # Test Suite
+# ==========
 
 enable_testing()
 
