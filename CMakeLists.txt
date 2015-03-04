@@ -22,6 +22,7 @@ set(src_files
 	src/rtf.c
 	src/strtok.c
 	src/text.c
+	src/toc.c
 	src/transclude.c
 	src/writer.c
 )
@@ -43,6 +44,7 @@ set(header_files
 	src/rtf.h
 	src/strtok.h
 	src/text.h
+	src/toc.h
 	src/transclude.h
 	src/writer.h
 )
