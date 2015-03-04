@@ -1730,6 +1730,9 @@ void print_lyx_node(GString *out, node *n, scratch_pad *scratch, bool no_newline
 			break;
 		case KEY_COUNTER:
 			break;
+		case TOC:
+			print_lyx_node_tree(out,n->children, scratch, false);
+			break;
 		default:
 			fprintf(stderr, "print_lyx_node encountered unknown node key = %d\n",n->key);
 			exit(EXIT_FAILURE);

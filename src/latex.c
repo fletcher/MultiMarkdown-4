@@ -916,6 +916,9 @@ void print_latex_node(GString *out, node *n, scratch_pad *scratch) {
 			break;
 		case KEY_COUNTER:
 			break;
+		case TOC:
+			print_latex_node_tree(out,n->children, scratch);
+			break;
 		default:
 			fprintf(stderr, "print_latex_node encountered unknown node key = %d\n",n->key);
 			exit(EXIT_FAILURE);

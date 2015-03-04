@@ -11,6 +11,7 @@
 #include "odf.h"
 #include "rtf.h"
 #include "critic.h"
+#include "toc.h"
 
 char * export_node_tree(node *list, int format, unsigned long extensions);
 

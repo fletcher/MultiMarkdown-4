@@ -71,6 +71,7 @@ typedef struct {
 	int   odf_para_type;         /* what type of paragraph do we need? */
 	bool  odf_list_needs_end_p;  /* is there a <p> that need to be closed */
 	int   random_seed_base;      /* Allow random footnotes */
+	int   toc_level;             /* Track depth for TOC */
 	int   table_row;             /* CRC - Track the current row number */
 	int   lyx_para_type;         /* CRC - the type of paragraph being processed */
 	int   lyx_level;             /* CRC - nesting level */
