@@ -31,3 +31,4 @@ latex footer:	mmd-tufte-book-footer
 {{to_do.md}}
 {{more_information.md}}
 {{acknowledgements.md}}
+{{release_notes.md}}

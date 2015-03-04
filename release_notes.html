@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<meta name="latexinput" content="mmd-tufte-handout-header"/>
+	<title>Release Notes</title>
+	<meta name="author" content="Fletcher T. Penney"/>
+	<meta name="version" content="4.7"/>
+	<meta name="revised" content="2015-03-04"/>
+	<link type="text/css" rel="stylesheet" href="http://fletcher.github.io/MultiMarkdown-4/css/document.css"/>
+<script type="text/javascript"
+src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+	<meta name="latexmode" content="memoir"/>
+	<meta name="latexinput" content="mmd-tufte-handout-begin-doc"/>
+	<meta name="latexfooter" content="mmd-tufte-footer"/>
+</head>
+<body>
+
+<h2 id="releasenotes">Release Notes</h2>
+
+<h3 id="4.7">4.7</h3>
+
+<ul>
+<li>As of version 4.7, the OS X MultiMarkdown installer will no longer support
+ppc processors. You will have to compile yourself for these machines.</li>
+<li><code>{{TOC}}</code> inserts a basic Table of Contents inside the document</li>
+<li>Improve abbreviation matching to include blockquotes, lists</li>
+<li><code>mmd</code> export format &#8211; performs transclusions but doesn&#8217;t parse</li>
+<li>restructure test suite</li>
+<li>add a <code>cmake</code> experimental branch &#8211; same source, different build system</li>
+<li>fix error with certain invalid image links</li>
+<li>update documentation</li>
+<li>don&#8217;t break if heading immediately follows table</li>
+<li>fix error when parsing multiple files at once</li>
+<li>allow for raw RTF</li>
+<li>add <code>mmd_header</code> metadata support</li>
+<li>improve code blocks in beamer (thanks to marco-m)</li>
+<li>improve backtick style quotes</li>
+<li>improve transclusion with nested directories</li>
+<li>option to show manifest of transcluded files (<code>-x</code> or <code>--manifest</code>)</li>
+<li>Improved YAML support</li>
+<li>Update <code>greg</code></li>
+<li>Improved Unicode support on Windows when transcluding</li>
+<li>Strip BOM when transcluding</li>
+<li>Support &#8220;japanese commas&#8221; for underscored strong/emph</li>
+<li>show &#8220;&#8211;manifest&#8221; option in help</li>
+<li>Other bug fixes</li>
+</ul>
+
+<h3 id="4.6">4.6</h3>
+
+<ul>
+<li>Add <code>mmd footer</code> metadata feature</li>
+<li>Add support for abbreviations</li>
+<li>improve hyphen escaping in LaTeX</li>
+<li>Ignore wrapping <code>&lt;&gt;</code> in reference URLs</li>
+<li>Improve table alignment in LaTeX</li>
+<li>Improve windows batch script paths</li>
+<li>Additional error checking in file transclusion</li>
+<li>memory fixes/code cleanup</li>
+<li>Other small fixes</li>
+<li>improve strong/emph matching</li>
+<li>improve whitespace handling around fenced code blocks</li>
+<li>Improve whitespace handling around headings, block quotes</li>
+<li>Fix bug in tables</li>
+<li>Fix YAML and OPML</li>
+</ul>
+
+<h3 id="4.5.3">4.5.3</h3>
+
+<ul>
+<li>Include mmd2rtf in Windows installer</li>
+<li>improved support for inline footnotes</li>
+<li>Fix potential bug when handling beamer latexmode metadata</li>
+<li>add <code>latex title</code> and <code>latex author</code> metadata support</li>
+<li>Fix bug when sequential dashes used in code spans for LaTeX export (Thanks to Thomas Hodgson for noticing this)</li>
+<li>Add to list of known HTML5 tags</li>
+<li>update windows batch scripts</li>
+<li>Improve metadata handling in snippet mode</li>
+<li>Improved transclusion path logic</li>
+<li>Fix order of citations when printing footnotes in HTML</li>
+<li>Fix potential memory leaks</li>
+</ul>
+
+<h3 id="4.5.2">4.5.2</h3>
+
+<ul>
+<li>escaped newlines (from njmsdk)&#8212; <a href="http://fletcher.github.io/MultiMarkdown-4/escaped-newlines">http://fletcher.github.io/MultiMarkdown-4/escaped-newlines</a></li>
+<li>updated test suite</li>
+<li>fix bug in CriticMarkup parsing</li>
+<li>fix bug when processing multiple files in batch mode with latexmode metadata set</li>
+<li>add <code>mmd2rtf</code>, for what it&#8217;s worth (RTF support is not complete)</li>
+</ul>
+
+</body>
+</html>

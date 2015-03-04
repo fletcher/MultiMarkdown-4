@@ -2260,6 +2260,130 @@ improving Markdown and MultiMarkdown:</text:p>
 </text:list>
 
 <text:p text:style-name="Standard">and others I have surely forgotten&#8230;.</text:p>
-</office:text>
+
+<text:h text:outline-level="2"><text:bookmark text:name="releasenotes"/>Release Notes<text:bookmark-end text:name="releasenotes"/></text:h>
+
+<text:h text:outline-level="3"><text:bookmark text:name="4.7"/>4.7<text:bookmark-end text:name="4.7"/></text:h>
+
+<text:list text:style-name="L1"><text:list-item>
+<text:p text:style-name="P1">As of version 4.7, the OS X MultiMarkdown installer will no longer support
+ppc processors. You will have to compile yourself for these machines.</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1"><text:span text:style-name="Source_20_Text">{{TOC}}</text:span> inserts a basic Table of Contents inside the document</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">Improve abbreviation matching to include blockquotes, lists</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1"><text:span text:style-name="Source_20_Text">mmd</text:span> export format &#8211; performs transclusions but doesn&#8217;t parse</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">restructure test suite</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">add a <text:span text:style-name="Source_20_Text">cmake</text:span> experimental branch &#8211; same source, different build system</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">fix error with certain invalid image links</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">update documentation</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">don&#8217;t break if heading immediately follows table</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">fix error when parsing multiple files at once</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">allow for raw RTF</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">add <text:span text:style-name="Source_20_Text">mmd_header</text:span> metadata support</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">improve code blocks in beamer (thanks to marco-m)</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">improve backtick style quotes</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">improve transclusion with nested directories</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">option to show manifest of transcluded files (<text:span text:style-name="Source_20_Text">-x</text:span> or <text:span text:style-name="Source_20_Text">--manifest</text:span>)</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">Improved YAML support</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">Update <text:span text:style-name="Source_20_Text">greg</text:span></text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">Improved Unicode support on Windows when transcluding</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">Strip BOM when transcluding</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">Support &#8220;japanese commas&#8221; for underscored strong/emph</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">show &#8220;&#8211;manifest&#8221; option in help</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">Other bug fixes</text:p></text:list-item>
+</text:list>
+
+<text:h text:outline-level="3"><text:bookmark text:name="4.6"/>4.6<text:bookmark-end text:name="4.6"/></text:h>
+
+<text:list text:style-name="L1"><text:list-item>
+<text:p text:style-name="P1">Add <text:span text:style-name="Source_20_Text">mmd footer</text:span> metadata feature</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">Add support for abbreviations</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">improve hyphen escaping in LaTeX</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">Ignore wrapping <text:span text:style-name="Source_20_Text">&lt;&gt;</text:span> in reference URLs</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">Improve table alignment in LaTeX</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">Improve windows batch script paths</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">Additional error checking in file transclusion</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">memory fixes/code cleanup</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">Other small fixes</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">improve strong/emph matching</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">improve whitespace handling around fenced code blocks</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">Improve whitespace handling around headings, block quotes</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">Fix bug in tables</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">Fix YAML and OPML</text:p></text:list-item>
+</text:list>
+
+<text:h text:outline-level="3"><text:bookmark text:name="4.5.3"/>4.5.3<text:bookmark-end text:name="4.5.3"/></text:h>
+
+<text:list text:style-name="L1"><text:list-item>
+<text:p text:style-name="P1">Include mmd2rtf in Windows installer</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">improved support for inline footnotes</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">Fix potential bug when handling beamer latexmode metadata</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">add <text:span text:style-name="Source_20_Text">latex title</text:span> and <text:span text:style-name="Source_20_Text">latex author</text:span> metadata support</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">Fix bug when sequential dashes used in code spans for LaTeX export (Thanks to Thomas Hodgson for noticing this)</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">Add to list of known HTML5 tags</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">update windows batch scripts</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">Improve metadata handling in snippet mode</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">Improved transclusion path logic</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">Fix order of citations when printing footnotes in HTML</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">Fix potential memory leaks</text:p></text:list-item>
+</text:list>
+
+<text:h text:outline-level="3"><text:bookmark text:name="4.5.2"/>4.5.2<text:bookmark-end text:name="4.5.2"/></text:h>
+
+<text:list text:style-name="L1"><text:list-item>
+<text:p text:style-name="P1">escaped newlines (from njmsdk)&#8212; <text:a xlink:type="simple" xlink:href="http://fletcher.github.io/MultiMarkdown-4/escaped-newlines">http://fletcher.github.io/MultiMarkdown-4/escaped-newlines</text:a></text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">updated test suite</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">fix bug in CriticMarkup parsing</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">fix bug when processing multiple files in batch mode with latexmode metadata set</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">add <text:span text:style-name="Source_20_Text">mmd2rtf</text:span>, for what it&#8217;s worth (RTF support is not complete)</text:p></text:list-item>
+</text:list></office:text>
 </office:body>
 </office:document>

@@ -52,3 +52,4 @@ Or as a set of web pages for individual sections:
 * [To Do](to_do.html)
 * [More Information](more_information.html)
 * [Acknowledgements](acknowledgements.html)
+* [Release Notes](release_notes.html)
