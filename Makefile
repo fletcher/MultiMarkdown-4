@@ -8,7 +8,7 @@ $(BUILD_DIR):
 
 release: $(BUILD_DIR) $(BUILD_DIR)/README.html $(BUILD_DIR)/LICENSE.html $(BUILD_DIR)/enumMap.txt
 	cd $(BUILD_DIR); \
-	cmake -DCMAKE_BUILD_TYPE=Release ..
+	cmake -DCMAKE_BUILD_TYPE=Release "-DCMAKE_OSX_ARCHITECTURES=x86_64;i386;ppc" ..
 
 debug: $(BUILD_DIR) $(BUILD_DIR)/README.html $(BUILD_DIR)/LICENSE.html $(BUILD_DIR)/enumMap.txt
 	cd $(BUILD_DIR); \
@@ -16,7 +16,7 @@ debug: $(BUILD_DIR) $(BUILD_DIR)/README.html $(BUILD_DIR)/LICENSE.html $(BUILD_D
 
 xcode: $(BUILD_DIR) $(BUILD_DIR)/README.html $(BUILD_DIR)/LICENSE.html $(BUILD_DIR)/enumMap.txt
 	cd $(BUILD_DIR); \
-	cmake -G Xcode ..
+	cmake -G Xcode "-DCMAKE_OSX_ARCHITECTURES=x86_64;i386;ppc" ..
 
 clean: $(BUILD_DIR)
 	cd $(BUILD_DIR); \

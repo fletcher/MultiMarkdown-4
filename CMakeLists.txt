@@ -115,7 +115,7 @@ install (TARGETS multimarkdown
 
 set (CPACK_COMPONENT_APPLICATION_DISPLAY_NAME "MultiMarkdown")
 set (CPACK_COMPONENT_APPLICATION_DESCRIPTION 
-   "Install the actual MultiMarkdown program.")
+   "Install the actual `multimarkdown` program.")
 
 
 install (FILES ${scripts}
@@ -126,15 +126,6 @@ install (FILES ${scripts}
 set (CPACK_COMPONENT_SCRIPTS_DISPLAY_NAME "Convenience scripts")
 set (CPACK_COMPONENT_SCRIPTS_DESCRIPTION 
    "Install convenience scripts for common MultiMarkdown shortcuts, e.g. `mmd`, `mmd2tex`, etc.")
-
-
-#install (FILES ${scripts}
-#	DESTINATION bin
-#	COMPONENT support
-#)
-
-set (CPACK_COMPONENT_SUPPORT_DISPLAY_NAME "MyLib Application")
-set (CPACK_COMPONENT_SUPPORT_DISABLED)
 
 include (InstallRequiredSystemLibraries)
 set (CPACK_PACKAGE_DESCRIPTION_SUMMARY "MultiMarkdown - lightweight markup processor")
@@ -148,19 +139,14 @@ set (CPACK_PACKAGE_VERSION 4.7)
 set (CPACK_PACKAGE_VERSION_MAJOR "${MMD_VERSION_MAJOR}")
 set (CPACK_PACKAGE_VERSION_MINOR "${MMD_VERSION_MINOR}")
 
-set (CPACK_COMPONENTS_ALL application scripts support)
-#set (CPACK_COMPONENTS_ALL application scripts)
+set (CPACK_COMPONENTS_ALL application scripts)
 
 
 set (CPACK_COMPONENT_APPLICATION_GROUP "MultiMarkdown")
 set (CPACK_COMPONENT_SCRIPTS_GROUP "MultiMarkdown")
-set (CPACK_COMPONENT_SUPPORT_Group "Support")
 
 set (CPACK_COMPONENT_GROUP_MULTIMARKDOWN_DESCRIPTION
-   "The basic MultiMarkdown command and convenience scripts.")
-
-set (CPACK_COMPONENT_GROUP_SUPPORT_DESCRIPTION
-   "Additional support files...")
+   "The basic MultiMarkdown utility and convenience scripts.")
 
 set(CPACK_SET_DESTDIR true)
 set(CPACK_INSTALL_PREFIX /usr/local)
