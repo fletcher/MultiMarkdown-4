@@ -67,13 +67,15 @@ void print_toc_section_and_children(GString *out, node *list, scratch_pad *scrat
 /* print_toc_node -- convert given node to OPML and append */
 void print_toc_node(GString *out, node *n, scratch_pad *scratch) {
 	char *temp;
+	int i;
+
 #ifdef DEBUG_ON
 	fprintf(stderr, "print_toc_node: %d\n",n->key);
 #endif
 	switch (n->key) {
 		case HEADINGSECTION:
 			/* Need to handle "nesting" properly */
-			for (int i = 0; i < scratch->toc_level; ++i)
+			for (i = 0; i < scratch->toc_level; ++i)
 			{
 				g_string_append_printf(out, "\t");
 			}
