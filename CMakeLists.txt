@@ -76,6 +76,7 @@ include_directories( ${PROJECT_SOURCE_DIR}/src )
 
 if(APPLE)
    SET(CMAKE_OSX_DEPLOYMENT_TARGET "10.4" CACHE STRING "Deployment target for OSX" FORCE)
+   SET (CMAKE_OSX_ARCHITECTURES x86_64;i386)
 endif(APPLE)
 
 # ================
