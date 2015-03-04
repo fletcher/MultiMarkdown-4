@@ -8,6 +8,7 @@ project(MultiMarkdown)
 
 set (MMD_VERSION_MAJOR 4)
 set (MMD_VERSION_MINOR 7)
+set (MMD_VERSION_PATCH 0)
 
 set(src_files
 	src/GLibFacade.c
@@ -51,6 +52,16 @@ set(header_files
 	src/toc.h
 	src/transclude.h
 	src/writer.h
+)
+
+set(scripts
+	scripts/mmd
+	scripts/mmd2all
+	scripts/mmd2opml
+	scripts/mmd2rtf
+	scripts/mmd2odf
+	scripts/mmd2pdf
+	scripts/mmd2tex
 )
 
 # TODO: build greg if not present
@@ -97,19 +108,62 @@ target_link_libraries (multimarkdown libMultiMarkdown)
 
 # (NOTE: README.html has to be generated before it can be used here)
 
-install (TARGETS multimarkdown DESTINATION bin)
+install (TARGETS multimarkdown
+	DESTINATION bin
+	COMPONENT application
+)
+
+set (CPACK_COMPONENT_APPLICATION_DISPLAY_NAME "MultiMarkdown")
+set (CPACK_COMPONENT_APPLICATION_DESCRIPTION 
+   "Install the actual MultiMarkdown program.")
+
+
+install (FILES ${scripts}
+	DESTINATION bin
+	COMPONENT scripts
+)
+
+set (CPACK_COMPONENT_SCRIPTS_DISPLAY_NAME "Convenience scripts")
+set (CPACK_COMPONENT_SCRIPTS_DESCRIPTION 
+   "Install convenience scripts for common MultiMarkdown shortcuts, e.g. `mmd`, `mmd2tex`, etc.")
+
+
+#install (FILES ${scripts}
+#	DESTINATION bin
+#	COMPONENT support
+#)
+
+set (CPACK_COMPONENT_SUPPORT_DISPLAY_NAME "MyLib Application")
+set (CPACK_COMPONENT_SUPPORT_DISABLED)
 
 include (InstallRequiredSystemLibraries)
-set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "MultiMarkdown - lightweight markup processor")
-set(CPACK_PACKAGE_VENDOR "Fletcher T. Penney")
-set(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_BINARY_DIR}/README.html")
-set(CPACK_RESOURCE_FILE_README "${CMAKE_CURRENT_BINARY_DIR}/README.html")
-set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/License.txt")
-set(CPACK_COMPONENTS_IGNORE_GROUPS 1)
+set (CPACK_PACKAGE_DESCRIPTION_SUMMARY "MultiMarkdown - lightweight markup processor")
+set (CPACK_PACKAGE_VENDOR "Fletcher T. Penney")
+set (CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_BINARY_DIR}/README.html")
+set (CPACK_RESOURCE_FILE_README "${CMAKE_CURRENT_BINARY_DIR}/README.html")
+set (CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_BINARY_DIR}/LICENSE.html")
+# set (CPACK_COMPONENTS_IGNORE_GROUPS 1)
 
 set (CPACK_PACKAGE_VERSION 4.7)
 set (CPACK_PACKAGE_VERSION_MAJOR "${MMD_VERSION_MAJOR}")
 set (CPACK_PACKAGE_VERSION_MINOR "${MMD_VERSION_MINOR}")
+
+set (CPACK_COMPONENTS_ALL application scripts support)
+#set (CPACK_COMPONENTS_ALL application scripts)
+
+
+set (CPACK_COMPONENT_APPLICATION_GROUP "MultiMarkdown")
+set (CPACK_COMPONENT_SCRIPTS_GROUP "MultiMarkdown")
+set (CPACK_COMPONENT_SUPPORT_Group "Support")
+
+set (CPACK_COMPONENT_GROUP_MULTIMARKDOWN_DESCRIPTION
+   "The basic MultiMarkdown command and convenience scripts.")
+
+set (CPACK_COMPONENT_GROUP_SUPPORT_DESCRIPTION
+   "Additional support files...")
+
+set(CPACK_SET_DESTDIR true)
+set(CPACK_INSTALL_PREFIX /usr/local)
 
 include (CPack)
 
