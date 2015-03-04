@@ -74,6 +74,10 @@ add_custom_command (
 include_directories( ${PROJECT_SOURCE_DIR}/src )
 
 
+if(APPLE)
+   SET(CMAKE_OSX_DEPLOYMENT_TARGET "10.4" CACHE STRING "Deployment target for OSX" FORCE)
+endif(APPLE)
+
 # ================
 # libMultiMarkdown
 # ================
