@@ -25,7 +25,6 @@ set(src_files
 	src/parse_utilities.c
 	src/rng.c
 	src/rtf.c
-	src/strtok.c
 	src/text.c
 	src/toc.c
 	src/transclude.c
@@ -47,7 +46,6 @@ set(header_files
 	src/opml.h
 	src/parser.h
 	src/rtf.h
-	src/strtok.h
 	src/text.h
 	src/toc.h
 	src/transclude.h
@@ -72,7 +70,6 @@ add_custom_command (
 )
 
 include_directories( ${PROJECT_SOURCE_DIR}/src )
-
 
 if(APPLE)
    SET(CMAKE_OSX_DEPLOYMENT_TARGET "10.4" CACHE STRING "Deployment target for OSX" FORCE)
