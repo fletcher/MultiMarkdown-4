@@ -62,6 +62,8 @@ set(scripts
 	scripts/mmd2tex
 )
 
+
+
 # TODO: build greg if not present
 # Need to build parser.c via greg
 add_custom_command (
@@ -71,7 +73,25 @@ add_custom_command (
 
 include_directories( ${PROJECT_SOURCE_DIR}/src )
 
-if(APPLE)
+if (WIN32)
+
+# We need strtok on Windows
+	list (APPEND src_files src/strtok.c)
+	list (APPEND header_files src/strtok.h)
+
+# Use bat files instead of shell scripts
+	set(scripts
+		scripts/mmd.bat
+		scripts/mmd2odf.bat
+		scripts/mmd2opml.bat
+		scripts/mmd2rtf.bat
+		scripts/mmd2tex.bat
+	)
+
+endif (WIN32)
+
+
+if (APPLE)
 # Support back to 10.4 on OS X (this was chosen somewhat arbitrarily, and older versions may work)
    SET(CMAKE_OSX_DEPLOYMENT_TARGET "10.4" CACHE STRING "Deployment target for OSX" FORCE)
 
@@ -80,7 +100,7 @@ if(APPLE)
 		SET (CMAKE_OSX_ARCHITECTURES x86_64;i386)
 	endif(CMAKE_BUILD_TYPE MATCHES "Release")
 
-endif(APPLE)
+endif (APPLE)
 
 
 # ================
@@ -143,7 +163,7 @@ set (CPACK_PACKAGE_DESCRIPTION_SUMMARY "MultiMarkdown - lightweight markup proce
 set (CPACK_PACKAGE_VENDOR "Fletcher T. Penney")
 set (CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_BINARY_DIR}/README.html")
 set (CPACK_RESOURCE_FILE_README "${CMAKE_CURRENT_BINARY_DIR}/README.html")
-set (CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_BINARY_DIR}/LICENSE.html")
+set (CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/LICENSE.txt")
 # set (CPACK_COMPONENTS_IGNORE_GROUPS 1)
 
 set (CPACK_PACKAGE_VERSION 4.7)
@@ -162,6 +182,9 @@ set (CPACK_COMPONENT_GROUP_MULTIMARKDOWN_DESCRIPTION
 
 set(CPACK_SET_DESTDIR true)
 set(CPACK_INSTALL_PREFIX /usr/local)
+
+set (CPACK_PACKAGE_INSTALL_DIRECTORY ${PROJET})
+
 
 include (CPack)
 

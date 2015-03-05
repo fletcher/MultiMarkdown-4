@@ -18,6 +18,11 @@ xcode: extras
 	cd $(BUILD_DIR); \
 	cmake -G Xcode  ..
 
+# This is for cross-compiling for Windows via MinGW32
+windows: extras
+	cd %(BUILD_DIR); \
+	cmake -DCMAKE_TOOLCHAIN_FILE=../Toolchain-mingw32.cmake -DCMAKE_BUILD_TYPE=Release ..
+
 clean: $(BUILD_DIR)
 	cd $(BUILD_DIR); \
 	rm -rf *
