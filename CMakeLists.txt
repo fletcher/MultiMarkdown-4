@@ -133,6 +133,7 @@ set (CPACK_COMPONENT_SCRIPTS_DESCRIPTION
    "Install convenience scripts for common MultiMarkdown shortcuts, e.g. `mmd`, `mmd2tex`, etc.")
 
 include (InstallRequiredSystemLibraries)
+
 set (CPACK_PACKAGE_DESCRIPTION_SUMMARY "MultiMarkdown - lightweight markup processor")
 set (CPACK_PACKAGE_VENDOR "Fletcher T. Penney")
 set (CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_BINARY_DIR}/README.html")
@@ -146,6 +147,7 @@ set (CPACK_PACKAGE_VERSION_MINOR "${MMD_VERSION_MINOR}")
 
 set (CPACK_COMPONENTS_ALL application scripts)
 
+set (CPACK_PACKAGE_FILE_NAME "${PROJECT_NAME}-${CPACK_PACKAGE_VERSION}")
 
 set (CPACK_COMPONENT_APPLICATION_GROUP "MultiMarkdown")
 set (CPACK_COMPONENT_SCRIPTS_GROUP "MultiMarkdown")
