@@ -153,6 +153,10 @@ install (FILES ${scripts}
 	COMPONENT scripts
 )
 
+install (FILES ${PROJECT_SOURCE_DIR}/LICENSE.txt ${CMAKE_CURRENT_BINARY_DIR}/README.html
+	DESTINATION notes
+)
+
 set (CPACK_COMPONENT_SCRIPTS_DISPLAY_NAME "Convenience scripts")
 set (CPACK_COMPONENT_SCRIPTS_DESCRIPTION 
    "Install convenience scripts for common MultiMarkdown shortcuts, e.g. `mmd`, `mmd2tex`, etc.")
@@ -172,7 +176,12 @@ set (CPACK_PACKAGE_VERSION_MINOR "${MMD_VERSION_MINOR}")
 
 set (CPACK_COMPONENTS_ALL application scripts)
 
-set (CPACK_PACKAGE_FILE_NAME "${PROJECT_NAME}-${CPACK_PACKAGE_VERSION}")
+if (WIN32)
+	set (CPACK_PACKAGE_FILE_NAME "${PROJECT_NAME}-Windows-${CPACK_PACKAGE_VERSION}")
+else (WIN32)
+	set (CPACK_PACKAGE_FILE_NAME "${PROJECT_NAME}-${CPACK_PACKAGE_VERSION}")
+endif (WIN32)
+
 
 set (CPACK_COMPONENT_APPLICATION_GROUP "MultiMarkdown")
 set (CPACK_COMPONENT_SCRIPTS_GROUP "MultiMarkdown")
