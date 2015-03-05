@@ -184,6 +184,7 @@ set (CPACK_SET_DESTDIR true)
 
 if (WIN32)
 	set (CPACK_INSTALL_PREFIX "")
+	set (CPACK_NSIS_MODIFY_PATH ON)
 else (WIN32)
 	set (CPACK_INSTALL_PREFIX /usr/local)
 endif (WIN32)
