@@ -180,10 +180,16 @@ set (CPACK_COMPONENT_SCRIPTS_GROUP "MultiMarkdown")
 set (CPACK_COMPONENT_GROUP_MULTIMARKDOWN_DESCRIPTION
    "The basic MultiMarkdown utility and convenience scripts.")
 
-set(CPACK_SET_DESTDIR true)
-set(CPACK_INSTALL_PREFIX /usr/local)
+set (CPACK_SET_DESTDIR true)
 
-set (CPACK_PACKAGE_INSTALL_DIRECTORY ${PROJET})
+if (WIN32)
+	set (CPACK_INSTALL_PREFIX "")
+else (WIN32)
+	set (CPACK_INSTALL_PREFIX /usr/local)
+endif (WIN32)
+
+
+set (CPACK_PACKAGE_INSTALL_DIRECTORY ${PROJECT})
 
 
 include (CPack)
