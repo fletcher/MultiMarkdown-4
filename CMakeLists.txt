@@ -82,6 +82,7 @@ if(APPLE)
 
 endif(APPLE)
 
+
 # ================
 # libMultiMarkdown
 # ================
@@ -109,6 +110,7 @@ add_executable(multimarkdown
 )
 
 target_link_libraries (multimarkdown libMultiMarkdown)
+
 
 # =========
 # Installer
