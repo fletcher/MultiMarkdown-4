@@ -40,6 +40,11 @@ map: $(BUILD_DIR)/enumMap.txt
 $(BUILD_DIR)/enumMap.txt: src/libMultiMarkdown.h
 	./enumsToPerl.pl src/libMultiMarkdown.h $(BUILD_DIR)/enumMap.txt
 
+# Use default cpack generator to build an installer
+package:
+	cd $(BUILD_DIR); \
+	cpack
+
 # Use cpack to create a zipfile containing the relevant files (useful as a portable version)
 portable:
 	cd $(BUILD_DIR); \
