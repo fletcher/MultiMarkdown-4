@@ -432,7 +432,7 @@ Strong = StrongStar | StrongUl
 
 StrongStar = "**" !Whitespace
 		a:StartList
-		( !"**" b:Inline { a = cons(b, a); })+
+		( !"**" b:Inline { a = cons(b, a); })+ 
 		<"**">
 		{ $$ = list(STRONG, a); }
 
@@ -453,13 +453,15 @@ StrongAndEmphStar = "***" !Whitespace
 			$$ = list(STRONG, $$);
 		}
 
-EmphAndStrongStar = "*" &("**")
+EmphAndStrongStar = "*" &(PossibleEmphStrongStar)
 		a:StartList 
 		( !('*' !'*') b:InlineNoEmph { a = cons(b, a); })+
 		<"*">
 		{
-			$$ = list(EMPH, a); 
+			$$ = list(EMPH, a);
 		}
+
+PossibleEmphStrongStar = "**" (!'\n' !'*' .)+ "**" (!'\n' !'*' .)+ '*'
 
 StrongAndEmphUl = "___" !Whitespace
 		a:StartList
@@ -470,13 +472,15 @@ StrongAndEmphUl = "___" !Whitespace
 			$$ = list(STRONG, $$);
 		}
 
-EmphAndStrongUl = "_" &("__")
+EmphAndStrongUl = "_" &(PossibleEmphStrongUl)
 		a:StartList 
 		( !('_' !'_') b:InlineNoEmph { a = cons(b, a); })+
 		<"_">
 		{
 			$$ = list(EMPH, a); 
 		}
+
+PossibleEmphStrongUl = "__" (!'\n' !'_' .)+ "__" (!'\n' !'_' .)+ '_'
 
 Link = ExplicitLink | ReferenceLink | AutoLink
 
