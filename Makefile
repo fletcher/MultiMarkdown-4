@@ -6,21 +6,23 @@ $(BUILD_DIR):
 	cd $(BUILD_DIR); \
 	rm -rf *
 
-release: $(BUILD_DIR) $(BUILD_DIR)/README.html $(BUILD_DIR)/LICENSE.html $(BUILD_DIR)/enumMap.txt
+release: extras
 	cd $(BUILD_DIR); \
 	cmake -DCMAKE_BUILD_TYPE=Release ..
 
-debug: $(BUILD_DIR) $(BUILD_DIR)/README.html $(BUILD_DIR)/LICENSE.html $(BUILD_DIR)/enumMap.txt
+debug: extras
 	cd $(BUILD_DIR); \
 	cmake ..
 
-xcode: $(BUILD_DIR) $(BUILD_DIR)/README.html $(BUILD_DIR)/LICENSE.html $(BUILD_DIR)/enumMap.txt
+xcode: extras
 	cd $(BUILD_DIR); \
 	cmake -G Xcode  ..
 
 clean: $(BUILD_DIR)
 	cd $(BUILD_DIR); \
 	rm -rf *
+
+extras: $(BUILD_DIR) $(BUILD_DIR)/README.html $(BUILD_DIR)/LICENSE.html $(BUILD_DIR)/enumMap.txt
 
 $(BUILD_DIR)/README.html: README.md
 	multimarkdown -o $(BUILD_DIR)/README.html README.md
