@@ -72,8 +72,14 @@ add_custom_command (
 include_directories( ${PROJECT_SOURCE_DIR}/src )
 
 if(APPLE)
+# Support back to 10.4 on OS X (this was chosen somewhat arbitrarily, and older versions may work)
    SET(CMAKE_OSX_DEPLOYMENT_TARGET "10.4" CACHE STRING "Deployment target for OSX" FORCE)
-   SET (CMAKE_OSX_ARCHITECTURES x86_64;i386)
+
+# Compile for both processor types in Release version (ppc is no longer supported)
+	if(CMAKE_BUILD_TYPE MATCHES "Release")
+		SET (CMAKE_OSX_ARCHITECTURES x86_64;i386)
+	endif(CMAKE_BUILD_TYPE MATCHES "Release")
+
 endif(APPLE)
 
 # ================
