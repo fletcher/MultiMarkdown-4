@@ -867,3 +867,18 @@ node * copy_node_tree(node *n) {
 		return m;
 	}
 }
+
+char * my_strndup(const char * source, size_t n) {
+	size_t len = strlen(source);
+	char * result;
+
+	if (n < len)
+		len = n;
+
+	result = malloc(len + 1);
+
+	memcpy(result, source, len);
+	result[len] = '\0';
+
+	return result;
+}
