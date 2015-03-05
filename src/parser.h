@@ -183,4 +183,6 @@ bool check_timeout();
 void debug_node(node *n);
 void debug_node_tree(node *n);
 
+char * my_strndup(const char * source, size_t n);
+
 #endif

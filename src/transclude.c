@@ -63,7 +63,7 @@ void split_path_file(char** dir, char** file, char *path) {
 
     while ((next = strpbrk(slash + 1, sep))) slash = next;
     if (path != slash) slash++;
-    *dir = strndup(path, slash - path);
+    *dir = my_strndup(path, slash - path);
     *file = strdup(slash);
 }
 
