@@ -20,16 +20,16 @@ do
 	file_name=`echo $1| sed 's/\.[^.]*$//'`
 
 	multimarkdown -b "$1"
-	open "$file_name.html"
+#	open "$file_name.html"
 
 	multimarkdown -b -t latex "$1"
-	mate "$file_name.tex"
+#	mate "$file_name.tex"
 
 	multimarkdown -b -t odf "$1"
-	open "$file_name.fodt"
+#	open "$file_name.fodt"
 
 	multimarkdown -b -t opml "$1"
-	open "$file_name.opml"
+#	open "$file_name.opml"
 
 	shift
 done
