@@ -44,8 +44,12 @@ typedef int gboolean;
 typedef char gchar;
 
 /* This style of bool is used in shared source code */
+#if !defined(FALSE)
 #define FALSE false
+#endif
+#if !defined(TRUE)
 #define TRUE true
+#endif
 
 /* WE implement minimal mirror implementations of GLib's GString and GSList 
  * sufficient to cover the functionality required by MultiMarkdown.
