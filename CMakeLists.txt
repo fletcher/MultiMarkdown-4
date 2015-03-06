@@ -60,6 +60,7 @@ set(scripts
 	scripts/mmd2odf
 	scripts/mmd2pdf
 	scripts/mmd2tex
+	scripts/markdown
 )
 
 
@@ -86,6 +87,7 @@ if (WIN32)
 		scripts/mmd2opml.bat
 		scripts/mmd2rtf.bat
 		scripts/mmd2tex.bat
+		scripts/markdown.bat
 	)
 
 	set (CPACK_GENERATOR NSIS)
