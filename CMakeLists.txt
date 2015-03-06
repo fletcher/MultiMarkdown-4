@@ -88,6 +88,8 @@ if (WIN32)
 		scripts/mmd2tex.bat
 	)
 
+	set (CPACK_GENERATOR NSIS)
+
 endif (WIN32)
 
 
@@ -99,6 +101,8 @@ if (APPLE)
 	if(CMAKE_BUILD_TYPE MATCHES "Release")
 		SET (CMAKE_OSX_ARCHITECTURES x86_64;i386)
 	endif(CMAKE_BUILD_TYPE MATCHES "Release")
+
+	set (CPACK_GENERATOR PackageMaker)
 
 endif (APPLE)
 
