@@ -21,7 +21,7 @@ xcode: extras
 # This is for cross-compiling for Windows via MinGW32
 windows: extras
 	cd $(BUILD_DIR); \
-	cmake -DCMAKE_TOOLCHAIN_FILE=../Toolchain-mingw32.cmake -DCMAKE_BUILD_TYPE=Release ..
+	cmake -DCMAKE_TOOLCHAIN_FILE=../tools/Toolchain-mingw32.cmake -DCMAKE_BUILD_TYPE=Release ..
 
 clean: $(BUILD_DIR)
 	cd $(BUILD_DIR); \
@@ -38,7 +38,7 @@ $(BUILD_DIR)/LICENSE.html: LICENSE.txt
 map: $(BUILD_DIR)/enumMap.txt
 
 $(BUILD_DIR)/enumMap.txt: src/libMultiMarkdown.h
-	./enumsToPerl.pl src/libMultiMarkdown.h $(BUILD_DIR)/enumMap.txt
+	./tools/enumsToPerl.pl src/libMultiMarkdown.h $(BUILD_DIR)/enumMap.txt
 
 # Use default cpack generator to build an installer (e.g. NSIS for Windows, Packagemaker for OS X, etc.)
 installer: release
