@@ -139,7 +139,7 @@ GString * concat_string_list(node *list);
 parser_data * mk_parser_data(char *charbuf, unsigned long extensions);
 void   free_parser_data(parser_data *data);
 
-char * preformat_text(char *text);
+char * preformat_text(const char *text);
 
 scratch_pad * mk_scratch_pad(unsigned long extensions);
 void   free_scratch_pad(scratch_pad *scratch);
