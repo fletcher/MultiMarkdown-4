@@ -608,7 +608,7 @@ void print_raw_node_tree(GString *out, node *n) {
 
 /* preformat_text - allocate and copy text buffer while
  * performing tab expansion. */
-char * preformat_text(char *text) {
+char * preformat_text(const char *text) {
 	GString *buf;
 	char next_char;
 	int charstotab;
