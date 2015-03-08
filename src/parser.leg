@@ -1405,7 +1405,7 @@ OPMLPlain = a:StartList (!BlankLine !Heading Line { a = cons($$,a); })+
 		{ $$ = mk_list(PLAIN, a); }
 
 DocForTOC = BOM? a: StartList
-		(&( (YAMLStart)? MetaDataKey Sp ':' Sp (!Newline)) MetaData )?
+		(&( (YAMLStart)? MetaDataKey Sp ':' Sp (!Newline)) z:MetaData { free_node_tree(z); } )?
 		( TOCBlock { a = cons($$, a); } | TOCPlain)*
 		BlankLine*
 		{ ((parser_data *)G->data)->result = reverse_list(a); }
@@ -1418,7 +1418,7 @@ TOCHeadingSection = a:StartList Heading { a = cons($$, a); }
 
 TOCSectionBlock = BlankLine* !Heading TOCPlain
 
-TOCPlain = (!BlankLine !Heading Line )+
+TOCPlain = (!BlankLine !Heading z:Line { free_node_tree(z); } )+
 
 # Critic Markup
 
