@@ -35,8 +35,8 @@
 
 /* This is the data we store in the parser context */
 typedef struct {
-	char *charbuf;              /* Input buffer */
-	char *original;             /* Original input buffer */
+	const char *charbuf;        /* Input buffer */
+	const char *original;       /* Original input buffer */
 	node *result;               /* Resulting parse tree */
 	unsigned long extensions;   /* Extension bitfield */
 	node *autolabels;           /* Store for later retrieval */
@@ -136,7 +136,7 @@ void   append_list(node *new, node *list);
 node    * mk_str_from_list(node *list, bool extra_newline);
 GString * concat_string_list(node *list);
 
-parser_data * mk_parser_data(char *charbuf, unsigned long extensions);
+parser_data * mk_parser_data(const char *charbuf, unsigned long extensions);
 void   free_parser_data(parser_data *data);
 
 char * preformat_text(const char *text);

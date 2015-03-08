@@ -1513,7 +1513,7 @@ node * process_raw_blocks(node * n, unsigned long extensions) {
 	return n;
 }
 
-char * markdown_to_string(char * source, unsigned long extensions, int format) {
+char * markdown_to_string(const char * source, unsigned long extensions, int format) {
 	char *out;
 	char *formatted;
 	char *critic_resolved;
@@ -1603,7 +1603,7 @@ char * markdown_to_string(char * source, unsigned long extensions, int format) {
 }
 
 /* has_metadata -- determine whether metadata exists or not */
-bool has_metadata(char *source, unsigned long extensions) {
+bool has_metadata(const char *source, unsigned long extensions) {
 	char *formatted;
 	GREG g;
 	yyinit(&g);
@@ -1629,7 +1629,7 @@ bool has_metadata(char *source, unsigned long extensions) {
 }
 
 /* extract_metadata_keys -- return list of metadata keys as "\n" separated list */
-char * extract_metadata_keys(char *source, unsigned long extensions) {
+char * extract_metadata_keys(const char *source, unsigned long extensions) {
 	char *out;
 	char *formatted;
 	GREG g;
@@ -1655,7 +1655,7 @@ char * extract_metadata_keys(char *source, unsigned long extensions) {
 }
 
 /* extract_metadata_value -- find the value and return it */
-char * extract_metadata_value(char *source, unsigned long extensions, char *key) {
+char * extract_metadata_value(const char *source, unsigned long extensions, char *key) {
 	char *out;
 	char *formatted;
 	GREG g;
