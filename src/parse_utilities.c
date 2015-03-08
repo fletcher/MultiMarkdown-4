@@ -223,7 +223,7 @@ void append_list(node *new, node *list) {
 
 /* Create parser data - this is where you stash stuff to communicate 
 	into and out of the parser */
-parser_data * mk_parser_data(char *charbuf, unsigned long extensions) {
+parser_data * mk_parser_data(const char *charbuf, unsigned long extensions) {
 	clock_t start = clock();
 
 	parser_data *result = (parser_data *)malloc(sizeof(parser_data));
@@ -608,7 +608,7 @@ void print_raw_node_tree(GString *out, node *n) {
 
 /* preformat_text - allocate and copy text buffer while
  * performing tab expansion. */
-char * preformat_text(char *text) {
+char * preformat_text(const char *text) {
 	GString *buf;
 	char next_char;
 	int charstotab;
