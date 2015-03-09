@@ -16,6 +16,7 @@ latex footer:	mmd-tufte-footer
 
 # Release Notes #
 
+{{release_4.7.1.md}}
 {{release_4.7.md}}
 {{release_4.6.md}}
 {{release_4.5.3.md}}

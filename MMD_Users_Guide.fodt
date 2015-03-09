@@ -260,8 +260,8 @@
 <meta:user-defined meta:name="latex title">MultiMarkdown \\
 User's Guide</meta:user-defined>
 <meta:user-defined meta:name="Author">Fletcher T. Penney</meta:user-defined>
-<meta:user-defined meta:name="Version">4.7</meta:user-defined>
-<meta:user-defined meta:name="Revised">2015-03-04</meta:user-defined>
+<meta:user-defined meta:name="Version">4.7.1</meta:user-defined>
+<meta:user-defined meta:name="Revised">2015-03-09</meta:user-defined>
 <meta:keyword>MultiMarkdown, Markdown, LaTeX, PDF, RTF, LyX, HTML</meta:keyword>
 <meta:user-defined meta:name="MMD Footer">links.txt</meta:user-defined>
 </office:meta>
@@ -269,7 +269,7 @@ User's Guide</meta:user-defined>
 <office:text>
 <text:h text:outline-level="2"><text:bookmark text:name="title"/>MultiMarkdown User's Guide<text:bookmark-end text:name="title"/></text:h>
 
-<text:p text:style-name="Quotations">Version 4.7<text:line-break/>Revised 2015-03-04</text:p>
+<text:p text:style-name="Quotations">Version 4.7.1<text:line-break/>Revised 2015-03-09</text:p>
 
 <text:h text:outline-level="2"><text:bookmark text:name="introduction"/>Introduction<text:bookmark-end text:name="introduction"/></text:h>
 
@@ -2262,6 +2262,22 @@ improving Markdown and MultiMarkdown:</text:p>
 <text:p text:style-name="Standard">and others I have surely forgotten&#8230;.</text:p>
 
 <text:h text:outline-level="2"><text:bookmark text:name="releasenotes"/>Release Notes<text:bookmark-end text:name="releasenotes"/></text:h>
+
+<text:h text:outline-level="3"><text:bookmark text:name="4.7.1"/>4.7.1<text:bookmark-end text:name="4.7.1"/></text:h>
+
+<text:list text:style-name="L1"><text:list-item>
+<text:p text:style-name="P1">New installers &#8211; should preserve proper owner on OS X; New format for Windows installer &#8211; please let me know if it doesn&#8217;t work.</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">Fix memory leaks</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">Fix edge case in strong/emph parsing</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">custom &#8216;strndup&#8217; function to improve compiling on Windows (seriously, I wish Windows would join the rest of the modern world&#8230;)</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">&#8216;markdown&#8217; script/batch file to run in compatibility mode</text:p></text:list-item>
+<text:list-item>
+<text:p text:style-name="P1">other slight tweaks to source code</text:p></text:list-item>
+</text:list>
 
 <text:h text:outline-level="3"><text:bookmark text:name="4.7"/>4.7<text:bookmark-end text:name="4.7"/></text:h>
 
