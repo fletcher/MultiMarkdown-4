@@ -8,7 +8,7 @@ project(MultiMarkdown)
 
 set (MMD_VERSION_MAJOR 4)
 set (MMD_VERSION_MINOR 7)
-set (MMD_VERSION_PATCH 0)
+set (MMD_VERSION_PATCH 1)
 
 set(src_files
 	src/GLibFacade.c
