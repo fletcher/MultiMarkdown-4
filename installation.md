@@ -2,7 +2,7 @@ latex input:	mmd-tufte-handout-header
 Title:	Installation
 Author:	Fletcher T. Penney
 Version:	{{version.txt}}
-Revised:	2014-01-04 
+Revised:	2015-03-10  
 Base Header Level:	3
 CSS:	{{css.txt}}
 MMD Footer:	links.txt
@@ -62,7 +62,7 @@ Unix/Linux users should use the instructions for compiling from source below.
 
 The easiest way to install MMD on Windows is the `MultiMarkdown-Windows`
 installer from the [download] page and run it. The installer is built using
-software by [BitRock](http://bitrock.com/).
+the `NSIS` package maker software via the `cmake` and `cpack` tools.
 
 Just as with the Mac OS X version, the installer includes the `multimarkdown`
 binary, as well as several convenience scripts.

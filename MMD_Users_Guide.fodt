@@ -261,7 +261,7 @@
 User's Guide</meta:user-defined>
 <meta:user-defined meta:name="Author">Fletcher T. Penney</meta:user-defined>
 <meta:user-defined meta:name="Version">4.7.1</meta:user-defined>
-<meta:user-defined meta:name="Revised">2015-03-09</meta:user-defined>
+<meta:user-defined meta:name="Revised">2015-03-10</meta:user-defined>
 <meta:keyword>MultiMarkdown, Markdown, LaTeX, PDF, RTF, LyX, HTML</meta:keyword>
 <meta:user-defined meta:name="MMD Footer">links.txt</meta:user-defined>
 </office:meta>
@@ -269,7 +269,7 @@ User's Guide</meta:user-defined>
 <office:text>
 <text:h text:outline-level="2"><text:bookmark text:name="title"/>MultiMarkdown User's Guide<text:bookmark-end text:name="title"/></text:h>
 
-<text:p text:style-name="Quotations">Version 4.7.1<text:line-break/>Revised 2015-03-09</text:p>
+<text:p text:style-name="Quotations">Version 4.7.1<text:line-break/>Revised 2015-03-10</text:p>
 
 <text:h text:outline-level="2"><text:bookmark text:name="introduction"/>Introduction<text:bookmark-end text:name="introduction"/></text:h>
 
@@ -518,7 +518,7 @@ The main MultiMarkdown page, for example, would be
 
 <text:p text:style-name="Standard">The easiest way to install MMD on Windows is the <text:span text:style-name="Source_20_Text">MultiMarkdown-Windows</text:span>
 installer from the <text:a xlink:type="simple" xlink:href="http://fletcherpenney.net/multimarkdown/download/">download</text:a> page and run it. The installer is built using
-software by <text:a xlink:type="simple" xlink:href="http://bitrock.com/">BitRock</text:a>.</text:p>
+the <text:span text:style-name="Source_20_Text">NSIS</text:span> package maker software via the <text:span text:style-name="Source_20_Text">cmake</text:span> and <text:span text:style-name="Source_20_Text">cpack</text:span> tools.</text:p>
 
 <text:p text:style-name="Standard">Just as with the Mac OS X version, the installer includes the <text:span text:style-name="Source_20_Text">multimarkdown</text:span>
 binary, as well as several convenience scripts.</text:p>
