@@ -23,6 +23,10 @@ void begin_odf_output(GString *out, node* list, scratch_pad *scratch) {
 	fprintf(stderr, "begin_odf_output\n");
 #endif	
 	print_odf_header(out);
+
+	if (list == NULL) {
+		g_string_append_printf(out, "<office:body>\n<office:text>\n");
+	}
 }
 
 /* end_odf_output -- close the document */
