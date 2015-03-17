@@ -103,11 +103,23 @@ void print_toc_node(GString *out, node *n, scratch_pad *scratch) {
 		case STR:
 			print_toc_string(out, n->str);
 			break;
+		case EMPH:
+			g_string_append_printf(out, "*");
+			print_toc_node_tree(out, n->children, scratch);
+			g_string_append_printf(out, "*");
+			break;
+		case STRONG:
+			g_string_append_printf(out, "**");
+			print_toc_node_tree(out, n->children, scratch);
+			g_string_append_printf(out, "**");
+			break;
 		case SPACE:
 			g_string_append_printf(out, "%s", n->str);
 			break;
 		case LINK:
 			print_toc_node_tree(out, n->children, scratch);
+			break;
+		case HTML:
 			break;
 		case LINKREFERENCE:
 			break;
@@ -116,7 +128,7 @@ void print_toc_node(GString *out, node *n, scratch_pad *scratch) {
 		case LIST:
 			print_toc_node_tree(out, n->children, scratch);
 			break;
-		default: fprintf(stderr, "print_html_node encountered unknown node key = %d\n",n->key);
+		default: fprintf(stderr, "print_toc_node encountered unknown node key = %d\n",n->key);
 			break;
 	}
 #ifdef DEBUG_ON
