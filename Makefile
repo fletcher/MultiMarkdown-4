@@ -32,7 +32,14 @@ ifeq ($(MAKECMDGOALS),static)
 LDFLAGS += -static -static-libgcc
 endif
 
-GREG= greg/greg
+# OUR_GREG: the version of greg in a submodule
+# GREG: the path to greg we want to use for parser.leg
+#
+# This way we can pass GREG=/usr/local/bin/greg in on
+# the command line if we have greg installed already.
+
+OUR_GREG=greg/greg
+GREG?=$(OUR_GREG)
 
 ALL : $(PROGRAM) enumMap.txt
 static : $(PROGRAM) enumMap.txt
@@ -40,10 +47,10 @@ static : $(PROGRAM) enumMap.txt
 %.o : %.c parser.h
 	$(CC) -c $(CFLAGS) -o $@ $<
 
-parser.c : parser.leg greg/greg parser.h
-	greg/greg -o parser.c parser.leg
+parser.c : parser.leg $(GREG) parser.h
+	$(GREG) -o parser.c parser.leg
 
-$(GREG): greg
+$(OUR_GREG): greg
 	$(MAKE) -C greg
 
 $(PROGRAM) : $(OBJS)
