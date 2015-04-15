@@ -25,6 +25,7 @@
 /* export_node_tree -- given a tree, export as specified format */
 char * export_node_tree(node *list, int format, unsigned long extensions) {
 	char *output;
+	char *temp;
 	GString *out = g_string_new("");
 	scratch_pad *scratch = mk_scratch_pad(extensions);
 	scratch->result_tree = list;  /* Pointer to result tree to use later */
@@ -60,8 +61,15 @@ char * export_node_tree(node *list, int format, unsigned long extensions) {
 			break;
 		case HTML_FORMAT:
 			if (scratch->extensions & EXT_COMPLETE) {
-			    g_string_append_printf(out,
-				"<!DOCTYPE html>\n<html>\n<head>\n\t<meta charset=\"utf-8\"/>\n");
+				temp = metavalue_for_key("lang", scratch->result_tree);
+				if (temp != NULL) {
+				    g_string_append_printf(out,
+					"<!DOCTYPE html>\n<html lang=\"%s\">\n<head>\n\t<meta charset=\"utf-8\"/>\n",temp);
+					free(temp);
+				} else {
+				    g_string_append_printf(out,
+					"<!DOCTYPE html>\n<html>\n<head>\n\t<meta charset=\"utf-8\"/>\n");
+				}
 			}
 #ifdef DEBUG_ON
 	fprintf(stderr, "print_html output\n");
