@@ -262,6 +262,7 @@ void print_latex_node(GString *out, node *n, scratch_pad *scratch) {
 			} else if (strcmp(n->str, "htmlheader") == 0) {
 			} else if (strcmp(n->str, "mmdfooter") == 0) {
 			} else if (strcmp(n->str, "mmdheader") == 0) {
+			} else if (strcmp(n->str, "lang") == 0) {
 			} else if (strcmp(n->str, "latexinput") == 0) {
 				trim_trailing_whitespace(n->children->str);
 				g_string_append_printf(out, "\\input{%s}\n", n->children->str);
