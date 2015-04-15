@@ -15,6 +15,9 @@
 		5A1FF048186A1724002544C0 /* lyxbeamer.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A1FF046186A1724002544C0 /* lyxbeamer.c */; };
 		5A1FF049186A1724002544C0 /* lyxbeamer.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A1FF046186A1724002544C0 /* lyxbeamer.c */; };
 		5A1FF04A186A1724002544C0 /* lyxbeamer.h in Headers */ = {isa = PBXBuildFile; fileRef = 5A1FF047186A1724002544C0 /* lyxbeamer.h */; };
+		5A50A7571ADDFE600069AFD5 /* toc.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A50A7551ADDFE600069AFD5 /* toc.c */; };
+		5A50A7581ADDFE600069AFD5 /* toc.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A50A7551ADDFE600069AFD5 /* toc.c */; };
+		5A50A7591ADDFE600069AFD5 /* toc.h in Headers */ = {isa = PBXBuildFile; fileRef = 5A50A7561ADDFE600069AFD5 /* toc.h */; };
 		5A56E585186CE833004089C0 /* transclude.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A56E583186CE833004089C0 /* transclude.c */; };
 		5A56E586186CE833004089C0 /* transclude.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A56E583186CE833004089C0 /* transclude.c */; };
 		5A56E587186CE833004089C0 /* transclude.h in Headers */ = {isa = PBXBuildFile; fileRef = 5A56E584186CE833004089C0 /* transclude.h */; };
@@ -97,6 +100,8 @@
 		5A2534F2172768A8003D1A91 /* memoir.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = memoir.h; sourceTree = "<group>"; };
 		5A2534F3172768A8003D1A91 /* opml.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = opml.c; sourceTree = "<group>"; };
 		5A2534F4172768A8003D1A91 /* opml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = opml.h; sourceTree = "<group>"; };
+		5A50A7551ADDFE600069AFD5 /* toc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = toc.c; sourceTree = "<group>"; };
+		5A50A7561ADDFE600069AFD5 /* toc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = toc.h; sourceTree = "<group>"; };
 		5A56E583186CE833004089C0 /* transclude.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = transclude.c; sourceTree = "<group>"; };
 		5A56E584186CE833004089C0 /* transclude.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = transclude.h; sourceTree = "<group>"; };
 		5A60F8D7172C07D100EFBF5B /* libMultiMarkdown.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMultiMarkdown.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -169,6 +174,8 @@
 				5A116B571734545700DB0DE6 /* critic.h */,
 				5AE0694318515D1300DFFF33 /* rtf.c */,
 				5ABBCFCA18442416005F519F /* rng.c */,
+				5A50A7551ADDFE600069AFD5 /* toc.c */,
+				5A50A7561ADDFE600069AFD5 /* toc.h */,
 				5A56E583186CE833004089C0 /* transclude.c */,
 				5A56E584186CE833004089C0 /* transclude.h */,
 				5AD6CB231718CCDE0085E51D /* Generated Files */,
@@ -201,6 +208,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5A1FF04A186A1724002544C0 /* lyxbeamer.h in Headers */,
+				5A50A7591ADDFE600069AFD5 /* toc.h in Headers */,
 				5A56E587186CE833004089C0 /* transclude.h in Headers */,
 				5A1FF045186A16D3002544C0 /* lyx.h in Headers */,
 			);
@@ -333,6 +341,7 @@
 				5A60F8DD172C07E200EFBF5B /* text.c in Sources */,
 				5A60F8DE172C07E200EFBF5B /* writer.c in Sources */,
 				5A60F8DF172C07E200EFBF5B /* html.c in Sources */,
+				5A50A7581ADDFE600069AFD5 /* toc.c in Sources */,
 				5A1FF049186A1724002544C0 /* lyxbeamer.c in Sources */,
 				5A60F8E0172C07E200EFBF5B /* beamer.c in Sources */,
 				5A1FF044186A16D3002544C0 /* lyx.c in Sources */,
@@ -369,6 +378,7 @@
 				5A116B581734545700DB0DE6 /* critic.c in Sources */,
 				5AE4484C1769F0EA0055DD27 /* multimarkdown.c in Sources */,
 				5ABBCFCB18442416005F519F /* rng.c in Sources */,
+				5A50A7571ADDFE600069AFD5 /* toc.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
