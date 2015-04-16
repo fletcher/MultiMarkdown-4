@@ -162,6 +162,13 @@ void transclude_source(GString *source, char *basedir, char *stack, int output_f
 			filename = g_string_new(folder->str);
 			g_string_append_printf(filename, "%s",real);
 
+			if (strcmp(filename->str,"./TOC") == 0) {
+				pos = stop - source->str;
+				start = strstr(source->str + pos,"{{");
+				g_string_free(filename, true);
+				continue;
+			}
+
 			/* Adjust for wildcard extensions */
 			/* But not if output_format == 0 */
 			if (output_format && strncmp(&filename->str[strlen(filename->str) - 2],".*",2) == 0) {
