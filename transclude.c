@@ -107,6 +107,7 @@ void transclude_source(GString *source, char *basedir, char *stack, int output_f
 	size_t pos;
 	char real[1000];
 	FILE *input;
+	int offset;
 
 	if (basedir == NULL) {
 		base = strdup("");
@@ -159,8 +160,18 @@ void transclude_source(GString *source, char *basedir, char *stack, int output_f
 			strncpy(real,start+2,stop-start-2);
 			real[stop-start-2] = '\0';
 
-			filename = g_string_new(folder->str);
-			g_string_append_printf(filename, "%s",real);
+#if defined(__WIN32)
+			char sep = '\\';
+#else
+			char sep = '/';
+#endif
+
+			if (real[0] == sep) {
+				filename = g_string_new(real);
+			} else {
+				filename = g_string_new(folder->str);
+				g_string_append_printf(filename, "%s",real);
+			}
 
 			/* Adjust for wildcard extensions */
 			/* But not if output_format == 0 */
@@ -196,8 +207,11 @@ void transclude_source(GString *source, char *basedir, char *stack, int output_f
 			if (manifest != NULL) {
 				temp = strstr(manifest->str,filename->str);
 
-				if ((temp != NULL) && (temp[strlen(filename->str)] == '\n')){
-					/* Already on manifest */
+				offset = temp - manifest->str;
+				if ((temp != NULL) &&
+					((temp == manifest->str) || ((manifest->str)[offset - 1] == '\n')) &&
+					(temp[strlen(filename->str)] == '\n') ){
+					/* Already on manifest, so don't add again */
 				} else {
 					g_string_append_printf(manifest,"%s\n",filename->str);
 				}
