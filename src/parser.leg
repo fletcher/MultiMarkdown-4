@@ -810,7 +810,7 @@ BackTickEnd = '\'\''
 
 BackTickQuoted =  BackTickStart
 		a:StartList
-		( !DoubleQuoteEnd !BackTickEnd b:Inline { a = cons(b, a); } )+
+		( !DoubleQuoteEnd !BackTickEnd b:Inline { a = cons(b, a); } )*
 		BackTickEnd
 		{ $$ = mk_list(DOUBLEQUOTED, a); }
 
