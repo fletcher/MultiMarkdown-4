@@ -238,6 +238,7 @@ void print_odf_node(GString *out, node *n, scratch_pad *scratch) {
 			} else if (strcmp(temp, "xhtmlheader") == 0) {
 			} else if (strcmp(temp, "htmlheader") == 0) {
 			} else if (strcmp(n->str, "mmdfooter") == 0) {
+			} else if (strcmp(n->str, "mmdheader") == 0) {
 			} else if (strcmp(temp, "baseheaderlevel") == 0) {
 				scratch->baseheaderlevel = atoi(n->children->str);
 			} else if (strcmp(temp, "odfheaderlevel") == 0) {
@@ -258,6 +259,7 @@ void print_odf_node(GString *out, node *n, scratch_pad *scratch) {
 				if (strcmp(temp, "germanguillemets") == 0) { scratch->language = GERMANGUILL; } else 
 				if ((strcmp(temp, "fr") == 0) || (strcmp(temp, "french") == 0)) { scratch->language = FRENCH; } else 
 				if ((strcmp(temp, "sv") == 0) || (strcmp(temp, "swedish") == 0)) { scratch->language = SWEDISH; }
+			} else if (strcmp(temp, "lang") == 0) {
 			} else {
 				g_string_append_printf(out,"<meta:user-defined meta:name=\"");
 				print_odf_string(out, n->str);

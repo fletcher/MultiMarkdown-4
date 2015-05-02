@@ -790,7 +790,7 @@ SingleQuoteEnd = '\'' !Alphanumeric
 
 SingleQuoted = SingleQuoteStart
 		a:StartList
-		( !SingleQuoteEnd b:Inline { a = cons(b, a); } )+
+		( !SingleQuoteEnd b:Inline { a = cons(b, a); } )*
 		SingleQuoteEnd
 		{ $$ = mk_list(SINGLEQUOTED, a); }
 
@@ -800,7 +800,7 @@ DoubleQuoteEnd = '"'
 
 DoubleQuoted =  DoubleQuoteStart
 		a:StartList
-		( !DoubleQuoteEnd !BackTickEnd !BackTickStart b:Inline { a = cons(b, a); } )+
+		( !DoubleQuoteEnd !BackTickEnd !BackTickStart b:Inline { a = cons(b, a); } )*
 		DoubleQuoteEnd
 		{ $$ = mk_list(DOUBLEQUOTED, a); }
 

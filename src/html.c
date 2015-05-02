@@ -187,8 +187,15 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 			
 			if (!(scratch->extensions & EXT_COMPLETE) && (is_html_complete_doc(n))) {
 				/* We have metadata to include, and didn't already force complete */
-				g_string_append_printf(out,
-				"<!DOCTYPE html>\n<html>\n<head>\n\t<meta charset=\"utf-8\"/>\n");
+				temp = metavalue_for_key("lang", scratch->result_tree);
+				if (temp != NULL) {
+				    g_string_append_printf(out,
+					"<!DOCTYPE html>\n<html lang=\"%s\">\n<head>\n\t<meta charset=\"utf-8\"/>\n",temp);
+					free(temp);
+				} else {
+				    g_string_append_printf(out,
+					"<!DOCTYPE html>\n<html>\n<head>\n\t<meta charset=\"utf-8\"/>\n");
+				}
 				/* either way, now we need to be a complete doc */
 				scratch->extensions = scratch->extensions | EXT_COMPLETE;
 			} else {
@@ -245,6 +252,8 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 				print_raw_node(out, n->children);
 				g_string_append_printf(out, "\n");
 			} else if (strcmp(n->str, "mmdfooter") == 0) {
+			} else if (strcmp(n->str, "mmdheader") == 0) {
+			} else if (strcmp(n->str, "lang") == 0) {
 			} else {
 				g_string_append_printf(out,"\t<meta name=\"%s\" content=\"",n->str);
 				print_html_node(out,n->children,scratch);
