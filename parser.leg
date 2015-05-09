@@ -1418,7 +1418,8 @@ TOCHeadingSection = a:StartList Heading { a = cons($$, a); }
 
 TOCSectionBlock = BlankLine* !Heading TOCPlain
 
-TOCPlain = (!BlankLine !Heading z:Line { free_node_tree(z); } )+
+TOCPlain = ( (y:Fenced { free_node_tree(y); } ) | (!BlankLine !Heading z:Line { free_node_tree(z); }) )+
+
 
 # Critic Markup
 
