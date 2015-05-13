@@ -51,15 +51,15 @@ enum parser_extensions {
 
 /* Define output formats we support -- first in list is default */
 enum export_formats {
+	ORIGINAL_FORMAT,                /* Transclusion happens, but no parsing */
 	HTML_FORMAT,
-	TEXT_FORMAT,
+	TEXT_FORMAT,                    /* Not currently used */
 	LATEX_FORMAT,
 	MEMOIR_FORMAT,
 	BEAMER_FORMAT,
 	OPML_FORMAT,
 	ODF_FORMAT,
 	RTF_FORMAT,
-	ORIGINAL_FORMAT,                 /* Not currently used */
 	CRITIC_ACCEPT_FORMAT,
 	CRITIC_REJECT_FORMAT,
 	CRITIC_HTML_HIGHLIGHT_FORMAT,
