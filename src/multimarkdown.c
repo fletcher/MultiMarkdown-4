@@ -86,7 +86,7 @@ int main(int argc, char **argv)
 	char *out;
 	
 	/* set up my data for the parser */
-	int output_format = 0;
+	int output_format = HTML_FORMAT;	/* Default output format unless specified otherwise */
 	unsigned long extensions = 0;
 	extensions = extensions | EXT_SMART | EXT_NOTES | EXT_OBFUSCATE;
 	

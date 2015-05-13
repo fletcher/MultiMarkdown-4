@@ -14,6 +14,9 @@
 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 	GNU General Public License for more details.
 
+
+	WARNING -- Not complete and not intended for use
+
 */
 
 #include "text.h"
