@@ -1430,7 +1430,7 @@ void print_lyx_node(GString *out, node *n, scratch_pad *scratch, bool no_newline
 			if (temp == NULL) {
 				g_string_append_printf(out, "[%%%s]",n->str);
 			} else {
-				g_string_append_printf(out, temp);
+				print_lyx_string(out, temp, scratch, LYX_NONE);
 				free(temp);
 			}
 			break;
