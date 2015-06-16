@@ -470,7 +470,7 @@ void print_rtf_node(GString *out, node *n, scratch_pad *scratch) {
 			if (temp == NULL) {
 				g_string_append_printf(out, "[%%%s]",n->str);
 			} else {
-				g_string_append_printf(out, temp);
+				print_rtf_string(out, temp, scratch);
 				free(temp);
 			}
 			break;

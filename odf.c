@@ -660,7 +660,7 @@ void print_odf_node(GString *out, node *n, scratch_pad *scratch) {
 			if (temp == NULL) {
 				g_string_append_printf(out, "[%%%s]",n->str);
 			} else {
-				g_string_append_printf(out, temp);
+				print_odf_string(out, temp);
 				free(temp);
 			}
 			break;
