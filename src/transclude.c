@@ -22,6 +22,17 @@
 #endif
 
 
+/* Windows can use either `\` or `/` as a separator -- thanks to t-beckmann on github
+	for suggesting a fix for this. */
+
+bool is_separator(char c) {
+#if defined(__WIN32)
+	return c == '\\' || c == '/';
+#else
+	return c == '/';
+#endif
+}
+
 /* Combine directory and filename to create a full path */
 char * path_from_dir_base(char *dir, char *base) {
 #if defined(__WIN32)
@@ -32,13 +43,13 @@ char * path_from_dir_base(char *dir, char *base) {
 	GString *path = NULL;
 	char *result;
 
-	if ((base != NULL) && (base[0] == sep)) {
+	if ((base != NULL) && (is_separator(base[0]))) {
 		path = g_string_new(base);
 	} else {
 		path = g_string_new(dir);
 
 		/* Ensure that folder ends in "/" */
-		if (!(path->str[strlen(path->str)-1] == sep) ) {
+		if (!is_separator(path->str[strlen(path->str)-1]) ) {
 			g_string_append_c(path, sep);
 		}
 
@@ -56,7 +67,7 @@ char * path_from_dir_base(char *dir, char *base) {
 void split_path_file(char** dir, char** file, char *path) {
     char *slash = path, *next;
 #if defined(__WIN32)
-	const char sep[] = "\\";
+	const char sep[] = "\\/";	// Windows allows either variant
 #else
 	const char sep[] = "/";
 #endif
@@ -160,13 +171,7 @@ void transclude_source(GString *source, char *basedir, char *stack, int output_f
 			strncpy(real,start+2,stop-start-2);
 			real[stop-start-2] = '\0';
 
-#if defined(__WIN32)
-			char sep = '\\';
-#else
-			char sep = '/';
-#endif
-
-			if (real[0] == sep) {
+			if (is_separator(real[0])) {
 				filename = g_string_new(real);
 			} else {
 				filename = g_string_new(folder->str);
