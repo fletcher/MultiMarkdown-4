@@ -888,9 +888,8 @@ ListLoose = a:StartList
 
 ListItem = < ( Bullet | Enumerator | BulletNoSpace &EmptyList | EnumeratorNoSpace &EmptyList )>
 		a:StartList
-		( EmptyList { a = cons($$, a); } |
 		( ListBlock { a = cons($$, a); }
-		( ListContinuationBlock { a = cons($$, a); } )* ))
+		( ListContinuationBlock { a = cons($$, a); } )* )
 		{
 			node *raw;
 			raw = mk_str_from_list(a, false);
@@ -901,11 +900,10 @@ ListItem = < ( Bullet | Enumerator | BulletNoSpace &EmptyList | EnumeratorNoSpac
 
 ListItemTight = ( Bullet | Enumerator | BulletNoSpace &EmptyList | EnumeratorNoSpace &EmptyList )
 		a:StartList
-		( EmptyList { a = cons($$, a); } |
 		( ListBlock { a = cons($$, a); }
 		( !BlankLine
 		ListContinuationBlock { a = cons($$, a); } )*
-		!ListContinuationBlock))
+		!ListContinuationBlock)
 		{
 			node *raw;
 			raw = mk_str_from_list(a, false);
@@ -918,7 +916,7 @@ EmptyList = BlankLine
 		{ $$ = mk_str(""); }
 
 ListBlock = a:StartList
-		!BlankLine !Heading Line { a = cons($$, a); }
+		( EmptyList | !Heading Line ) { a = cons($$, a); }
 		( ListBlockLine { a = cons($$, a); } )*
 		{ $$ = mk_str_from_list(a, false); }
 
@@ -930,7 +928,7 @@ ListContinuationBlock = a:StartList
 			else
 				a = cons(str(yytext), a);
 		} )
-		( Indent ListBlock { a = cons($$, a); } )+
+		( Indent !BlankLine ListBlock { a = cons($$, a); } )+
 		{  $$ = mk_str_from_list(a, false); }
 
 Enumerator = NonindentSpace [0-9]+ '.' Spacechar+
