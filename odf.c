@@ -199,6 +199,16 @@ void print_odf_node(GString *out, node *n, scratch_pad *scratch) {
 						break;
 				}
 				scratch->odf_list_needs_end_p = true;
+			} else if ((n->children != NULL) && (n->children->key == LIST) && (n->children->children == NULL)) {
+				/* This is an empty list item.  ODF apparently requires something for the empty item to appear */
+				switch (scratch->odf_para_type) {
+					case BULLETLIST:
+						g_string_append_printf(out, "<text:p text:style-name=\"P1\"/>");
+						break;
+					case ORDEREDLIST:
+						g_string_append_printf(out, "<text:p text:style-name=\"P2\"/>");
+						break;
+				}
 			}
 			scratch->padded = 2;
 			print_odf_node_tree(out, n->children, scratch);
