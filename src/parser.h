@@ -178,6 +178,8 @@ char * metavalue_for_key(char *key, node *list);
 bool tree_contains_key(node *list, int key);
 int tree_contains_key_count(node *list, int key);
 
+node * markdown_chunk_to_node(const char * source, unsigned long extensions);
+
 bool check_timeout();
 
 void debug_node(node *n);
