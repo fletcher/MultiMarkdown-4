@@ -669,7 +669,7 @@ Label = < "[" !'[' ( !'^' !'#' &{ ext(EXT_NOTES) } | &. &{ !ext(EXT_NOTES) } )
 			']'>
 	{ $$ = list(LIST, a); }
 
-AutoLabel = '[' < (!Newline !'^' !'#' !'%' . )( !Newline !']' . )+ > ']' &(!(Sp ('(' | '[')))
+AutoLabel = '[' < (!Newline !'^' !'#' !'%' . )( !Newline !']' !'[' . )+ > ']' &(!(Sp ('(' | '[')))
 {
 	node *ref;
 	$$ = str(yytext);
@@ -1330,11 +1330,14 @@ RightAlign = ('-'+ | '='+)':' &(!'-' !'=' !':')
 
 CellDivider = '|'
 
-TableCaption = b:StartList a:Label
+BracketedText = ((!'[' !']' .) | '[' BracketedText ']' )*	# Matches text within [...], but allows for recursive brackets
+
+TableCaption = b:StartList a:StartList ('[' < BracketedText > ']' {a = markdown_chunk_to_node(yytext, ((parser_data *)G->data)->extensions);} )
 		( c:AutoLabel { b = c; b->key = TABLELABEL;})? Sp Newline
 		{
 			$$ = a;
 			$$->key = TABLECAPTION;
+
 			if ( (b != NULL) && (b->key == TABLELABEL) ) {
 				b->next = $$->children;
 				$$->children = b;
@@ -1510,6 +1513,33 @@ node * process_raw_blocks(node * n, unsigned long extensions) {
 		current = current->next;
 	}
 	return n;
+}
+
+node * markdown_chunk_to_node(const char * source, unsigned long extensions) {
+	/* 
+		Designed for parsing 'chunks' of markdown from inside a specific range,
+		e.g. a label from '[' ... ']' that can have various markup inside
+
+		Prevents situations where the parser gets greedy and goes beyond the 
+		intended boundaries.
+	*/
+
+	GREG g;
+	yyinit(&g);
+	node * result;
+
+	g.data = mk_parser_data(source, extensions);
+
+	while (yyparse(&g));
+
+	result = process_raw_blocks(((parser_data *)g.data)->result, extensions);
+
+	((parser_data *)g.data)->result = NULL;
+
+	free_parser_data((parser_data *)g.data);
+	yydeinit(&g);
+
+	return result;
 }
 
 char * markdown_to_string(const char * source, unsigned long extensions, int format) {
