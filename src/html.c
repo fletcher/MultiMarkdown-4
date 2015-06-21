@@ -459,8 +459,6 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 			if (n->link_data != NULL)
 				temp_link_data = mk_link_data(n->link_data->label, n->link_data->source, n->link_data->title, n->link_data->attr);
 
-			if (n->key == IMAGEBLOCK)
-				g_string_append_printf(out, "<figure>\n");
 			/* Do we have proper info? */
 			if ((n->link_data->label == NULL) &&
 			(n->link_data->source == NULL)) {
@@ -494,6 +492,9 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 					free(temp);
 
 					break;
+				} else {
+					if (n->key == IMAGEBLOCK)
+						g_string_append_printf(out, "<figure>\n");
 				}
 				free(temp);
 			}
