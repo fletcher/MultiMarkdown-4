@@ -2,7 +2,7 @@ latex input:	mmd-tufte-handout-header
 Title:	How to Use MultiMarkdown
 Author:	Fletcher T. Penney
 Version:	{{version.txt}}
-Revised:	2015-06-22 
+Revised:	2015-06-23 
 Base Header Level:	2
 CSS:	{{css.txt}}
 MMD Footer:	links.txt

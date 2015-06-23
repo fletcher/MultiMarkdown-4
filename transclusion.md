@@ -2,7 +2,7 @@ latex input:	mmd-tufte-handout-header
 Title:	File Transclusion
 Author:	Fletcher T. Penney
 Version:	{{version.txt}}
-Revised:	2014-02-28 
+Revised:	2015-06-23  
 Base Header Level:	2
 CSS:	{{css.txt}}
 MMD Footer:	links.txt
@@ -47,3 +47,12 @@ Sometimes you may wish to transclude alternate versions of a file depending on y
 
 	Insert a different version of a file here based on export format:
 	{{foo.*}}
+
+
+### Transclusion Preprocessing ###
+
+If you want to perform transclusion, *without* converting to another format, you can use `mmd` as the output format:
+
+	multimarkdown -t mmd foo.txt
+
+This will only perform "basic" transclusion --it does not support wildcard extensions, since the final output format is not known.

@@ -6,7 +6,7 @@
 	<title>Syntax</title>
 	<meta name="author" content="Fletcher T. Penney"/>
 	<meta name="version" content="4.7.1"/>
-	<meta name="revised" content="2015-02-20"/>
+	<meta name="revised" content="2015-06-23"/>
 	<link type="text/css" rel="stylesheet" href="http://fletcher.github.io/MultiMarkdown-4/css/document.css"/>
 <script type="text/javascript"
 src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
@@ -1036,6 +1036,15 @@ Another paragraph
 <pre><code>Insert a different version of a file here based on export format:
 {{foo.*}}
 </code></pre>
+
+<h4 id="transclusionpreprocessing">Transclusion Preprocessing</h4>
+
+<p>If you want to perform transclusion, <em>without</em> converting to another format, you can use <code>mmd</code> as the output format:</p>
+
+<pre><code>multimarkdown -t mmd foo.txt
+</code></pre>
+
+<p>This will only perform &#8220;basic&#8221; transclusion &#8211;it does not support wildcard extensions, since the final output format is not known.</p>
 
 <h3 id="escapednewlines">Escaped newlines</h3>
 

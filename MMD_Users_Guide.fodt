@@ -261,7 +261,7 @@
 User's Guide</meta:user-defined>
 <meta:user-defined meta:name="Author">Fletcher T. Penney</meta:user-defined>
 <meta:user-defined meta:name="Version">4.7.1</meta:user-defined>
-<meta:user-defined meta:name="Revised">2015-06-22</meta:user-defined>
+<meta:user-defined meta:name="Revised">2015-06-23</meta:user-defined>
 <meta:keyword>MultiMarkdown, Markdown, LaTeX, PDF, RTF, LyX, HTML</meta:keyword>
 <meta:user-defined meta:name="MMD Footer">links.txt</meta:user-defined>
 </office:meta>
@@ -269,7 +269,7 @@ User's Guide</meta:user-defined>
 <office:text>
 <text:h text:outline-level="2"><text:bookmark text:name="title"/>MultiMarkdown User's Guide<text:bookmark-end text:name="title"/></text:h>
 
-<text:p text:style-name="Quotations">Version 4.7.1<text:line-break/>Revised 2015-06-22</text:p>
+<text:p text:style-name="Quotations">Version 4.7.1<text:line-break/>Revised 2015-06-23</text:p>
 
 <text:h text:outline-level="2"><text:bookmark text:name="introduction"/>Introduction<text:bookmark-end text:name="introduction"/></text:h>
 
@@ -2011,6 +2011,15 @@ into a single paragraph.</text:p>
 
 <text:p text:style-name="Preformatted Text">Insert a different version of a file here based on export format:<text:line-break/>{{foo.*}}<text:line-break/></text:p>
 
+
+<text:h text:outline-level="4"><text:bookmark text:name="transclusionpreprocessing"/>Transclusion Preprocessing<text:bookmark-end text:name="transclusionpreprocessing"/></text:h>
+
+<text:p text:style-name="Standard">If you want to perform transclusion, <text:span text:style-name="MMD-Italic">without</text:span> converting to another format, you can use <text:span text:style-name="Source_20_Text">mmd</text:span> as the output format:</text:p>
+
+<text:p text:style-name="Preformatted Text">multimarkdown -t mmd foo.txt<text:line-break/></text:p>
+
+
+<text:p text:style-name="Standard">This will only perform &#8220;basic&#8221; transclusion &#8211;it does not support wildcard extensions, since the final output format is not known.</text:p>
 
 <text:h text:outline-level="3"><text:bookmark text:name="escapednewlines"/>Escaped newlines<text:bookmark-end text:name="escapednewlines"/></text:h>
 
