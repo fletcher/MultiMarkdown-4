@@ -276,6 +276,7 @@ scratch_pad * mk_scratch_pad(unsigned long extensions) {
 	result->cell_type = 0;
 	result->table_alignment = NULL;
 	result->table_column = 0;
+	result->inside_footnote = 0;
 
 	if (extensions & EXT_RANDOM_FOOT) {
 	    srand((int)time(NULL));
