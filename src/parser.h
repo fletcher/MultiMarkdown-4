@@ -53,6 +53,7 @@ typedef struct {
 	int   language;              /* For smart quotes */
 	char *table_alignment;       /* Hold the alignment string while parsing table */
 	int   table_column;          /* Track the current column number */
+	bool  inside_footnote;       /* Are we inside a footnote? */
 	char  cell_type;             /* What sort of cell type are we in? */
 	bool  printing_notes;        /* Are we printing notes/glossary/etc.? */
 	node *notes;                 /* Store reference notes */
