@@ -261,7 +261,7 @@
 User's Guide</meta:user-defined>
 <meta:user-defined meta:name="Author">Fletcher T. Penney</meta:user-defined>
 <meta:user-defined meta:name="Version">4.7.1</meta:user-defined>
-<meta:user-defined meta:name="Revised">2015-03-10</meta:user-defined>
+<meta:user-defined meta:name="Revised">2015-06-22</meta:user-defined>
 <meta:keyword>MultiMarkdown, Markdown, LaTeX, PDF, RTF, LyX, HTML</meta:keyword>
 <meta:user-defined meta:name="MMD Footer">links.txt</meta:user-defined>
 </office:meta>
@@ -269,7 +269,7 @@ User's Guide</meta:user-defined>
 <office:text>
 <text:h text:outline-level="2"><text:bookmark text:name="title"/>MultiMarkdown User's Guide<text:bookmark-end text:name="title"/></text:h>
 
-<text:p text:style-name="Quotations">Version 4.7.1<text:line-break/>Revised 2015-03-10</text:p>
+<text:p text:style-name="Quotations">Version 4.7.1<text:line-break/>Revised 2015-06-22</text:p>
 
 <text:h text:outline-level="2"><text:bookmark text:name="introduction"/>Introduction<text:bookmark-end text:name="introduction"/></text:h>
 
@@ -649,6 +649,12 @@ output to the same base filename that is input, with the extension <text:span te
 <text:p text:style-name="Standard">And for an OpenDocument text file:</text:p>
 
 <text:p text:style-name="Preformatted Text">multimarkdown -t odf file.txt<text:line-break/></text:p>
+
+
+<text:p text:style-name="Standard">If you are using &#8220;basic&#8221; transclusion (not dependent on particular output formats), you can
+use MMD to perform the transclusion and output the raw MMD source:</text:p>
+
+<text:p text:style-name="Preformatted Text">multimarkdown -t mmd file.txt<text:line-break/></text:p>
 
 
 <text:p text:style-name="Standard">There are also several convenience scripts included with MultiMarkdown:</text:p>

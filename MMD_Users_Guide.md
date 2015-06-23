@@ -4,7 +4,7 @@ latex title:	MultiMarkdown \\
 	User's Guide
 Author:	Fletcher T. Penney
 Version:	{{version.txt}}
-Revised:	2015-03-10  
+Revised:	2015-06-22  
 Keywords:	MultiMarkdown, Markdown, LaTeX, PDF, RTF, LyX, HTML
 Base Header Level:	2
 CSS:	{{css.txt}}

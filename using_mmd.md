@@ -2,7 +2,7 @@ latex input:	mmd-tufte-handout-header
 Title:	How to Use MultiMarkdown
 Author:	Fletcher T. Penney
 Version:	{{version.txt}}
-Revised:	2014-01-04 
+Revised:	2015-06-22 
 Base Header Level:	2
 CSS:	{{css.txt}}
 MMD Footer:	links.txt
@@ -71,6 +71,11 @@ For RTF (RTF output is limited -- check the output carefully to be sure it's ok 
 And for an OpenDocument text file:
 
 	multimarkdown -t odf file.txt
+
+If you are using "basic" transclusion (not dependent on particular output formats), you can
+use MMD to perform the transclusion and output the raw MMD source:
+
+	multimarkdown -t mmd file.txt
 
 There are also several convenience scripts included with MultiMarkdown:
 

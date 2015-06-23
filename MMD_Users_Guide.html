@@ -8,7 +8,7 @@
 User's Guide"/>
 	<meta name="author" content="Fletcher T. Penney"/>
 	<meta name="version" content="4.7.1"/>
-	<meta name="revised" content="2015-03-10"/>
+	<meta name="revised" content="2015-06-22"/>
 	<meta name="keywords" content="MultiMarkdown, Markdown, LaTeX, PDF, RTF, LyX, HTML"/>
 	<link type="text/css" rel="stylesheet" href="http://fletcher.github.io/MultiMarkdown-4/css/document.css"/>
 <script type="text/javascript"
@@ -24,7 +24,7 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorM
 
 <blockquote>
 <p>Version 4.7.1<br/>
-Revised 2015-03-10</p>
+Revised 2015-06-22</p>
 </blockquote>
 
 <h2 id="introduction">Introduction</h2>
@@ -408,6 +408,12 @@ output to the same base filename that is input, with the extension <code>.html</
 <p>And for an OpenDocument text file:</p>
 
 <pre><code>multimarkdown -t odf file.txt
+</code></pre>
+
+<p>If you are using &#8220;basic&#8221; transclusion (not dependent on particular output formats), you can
+use MMD to perform the transclusion and output the raw MMD source:</p>
+
+<pre><code>multimarkdown -t mmd file.txt
 </code></pre>
 
 <p>There are also several convenience scripts included with MultiMarkdown:</p>

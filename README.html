@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<title>MultiMarkdown User's Guide</title>
+	<meta name="author" content="Fletcher T. Penney"/>
+</head>
+<body>
+
+<p>These files are used to generate the MultiMarkdown User&#8217;s Guide. The document is, of course, written using MultiMarkdown. It is also a <em>relatively</em> complex document, making use of several tricks with file transclusion among other things. The idea is to repeat oneself as little as possible, and make it easier to keep all the formats and files in sync automatically.</p>
+
+<p>Compiled versions of these documents can be found on the github site &#8211; <a href="http://fletcher.github.io/MultiMarkdown-4/">http://fletcher.github.io/MultiMarkdown-4/</a>.</p>
+
+<p>There are several commands you can use to compile the documentation:</p>
+
+<ul>
+<li><p><code>make pdf</code> &#8211; compile all of the files into a single PDF (using the Tufte Book class for LaTeX)</p></li>
+<li><p><code>make html</code> &#8211; compile each of the files into a separate HTML file, suitable for navigating on a web site.</p></li>
+<li><p><code>make guide</code> &#8211; make a single HTML file with all of the contents</p></li>
+<li><p><code>make all</code> &#8211; compile each file into the following document types: </p>
+
+<ul>
+<li>html</li>
+<li>LaTeX (which will then need to be compiled to PDF)</li>
+<li>RTF</li>
+<li>FODT</li>
+</ul></li>
+<li><p><code>make odf</code> &#8211; compile a single FODT document</p></li>
+</ul>
+
+</body>
+</html>
