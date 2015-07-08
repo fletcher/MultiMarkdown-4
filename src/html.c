@@ -497,6 +497,9 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 						g_string_append_printf(out, "<figure>\n");
 				}
 				free(temp);
+			} else {
+				if (n->key == IMAGEBLOCK)
+						g_string_append_printf(out, "<figure>\n");
 			}
 #ifdef DEBUG_ON
 	fprintf(stderr, "create img\n");
