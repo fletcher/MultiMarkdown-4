@@ -236,7 +236,7 @@ Punctuation = '.' | ',' | '?' | '!' | ';' | ':' | '。' | '、'
 NonPunctuation = !(Punctuation | SpecialChar | Spacechar | Newline) .
 
 Quoted =        '"' (!'"' .)* '"' | '\'' (!'\'' .)* '\''
-HtmlAttribute = (AlphanumericAscii | '-')+ Spnl ('=' Spnl (Quoted | (!'>' Nonspacechar)+))? Spnl
+HtmlAttribute = (AlphanumericAscii | '-' | ':')+ Spnl ('=' Spnl (Quoted | (!'>' Nonspacechar)+))? Spnl
 HtmlComment =   "<!--" (!"-->" .)* "-->"
 HtmlTag =       '<' Spnl '/'? AlphanumericAscii+ Spnl HtmlAttribute* '/'? Spnl '>'
 
