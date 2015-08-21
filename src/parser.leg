@@ -549,9 +549,9 @@ SourceContents = ( ( !'(' !')' !'>' Nonspacechar )+ | '(' SourceContents ')')*
 Title = ( TitleSingle | TitleDouble | < "" > )
 	{ $$ = str(yytext); $$->key = TITLE; }
 
-TitleSingle = '\'' < ( !( '\'' Sp ( ')' | Newline ) ) . )* > '\''
+TitleSingle = '\'' < ( !( '\'' Sp ( ')' | Newline ) ) !BlankLine . )* > '\''
 
-TitleDouble = '"' < ( !( '"' Sp ( ')' | Newline ) ) . )* > '"'
+TitleDouble = '"' < ( !( '"' Sp ( ')' | Newline ) ) !BlankLine . )* > '"'
 
 AutoLink = AutoLinkUrl | AutoLinkEmail
 
