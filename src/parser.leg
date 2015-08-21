@@ -1169,9 +1169,9 @@ HtmlBlockInTags = HtmlBlockAddress
 		| HtmlBlockNoframes
 		| HtmlBlockNoscript
 		| HtmlBlockOl
-		| HtmlBlockP
 		| HtmlBlockPre
 		| HtmlBlockProgress
+		| HtmlBlockP # This must come after other <p... tags
 		| HtmlBlockSection
 		| HtmlBlockTable
 		| HtmlBlockUl
@@ -1183,8 +1183,8 @@ HtmlBlockInTags = HtmlBlockAddress
 		| HtmlBlockTbody
 		| HtmlBlockTd
 		| HtmlBlockTfoot
-		| HtmlBlockTh
 		| HtmlBlockThead
+		| HtmlBlockTh # This must come after other <th... tags
 		| HtmlBlockTr
 		| HtmlBlockScript
 		| HtmlBlockHead
