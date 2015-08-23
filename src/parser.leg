@@ -1332,7 +1332,12 @@ CellDivider = '|'
 
 BracketedText = ((!'[' !']' .) | '[' BracketedText ']' )*	# Matches text within [...], but allows for recursive brackets
 
-TableCaption = b:StartList a:StartList ('[' < BracketedText > ']' {a = markdown_chunk_to_node(yytext, ((parser_data *)G->data)->extensions);} )
+TableCaption = b:StartList a:StartList ('[' < BracketedText > ']'
+		{
+			a = markdown_chunk_to_node(yytext, ((parser_data *)G->data)->extensions);
+			if (a == NULL)
+				a = mk_str("");
+		} )
 		( c:AutoLabel { b = c; b->key = TABLELABEL;})? Sp Newline
 		{
 			$$ = a;
