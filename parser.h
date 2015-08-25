@@ -160,6 +160,7 @@ void   trim_trailing_whitespace(char *str);
 void   trim_trailing_newlines(char *str);
 
 /* other utilities */
+char * lower_string(char *str);
 char * label_from_string(char *str);
 char * ascii_label_from_string(char *str);
 char * clean_string(char *str);
