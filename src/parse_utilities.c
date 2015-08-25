@@ -465,6 +465,41 @@ char * clean_string(char *str) {
 	return clean;
 }
 
+/* lower_string -- return lower case version of string */
+char * lower_string(char *str) {
+	GString *out = g_string_new("");
+	char *result;
+	char *next_char;
+
+	while (*str != '\0') {
+		next_char = str;
+		next_char++;
+		/* Is this a multibyte character? */
+		if ((*next_char & 0xC0) == 0x80) {
+			g_string_append_c(out, *str);
+			while ((*next_char & 0xC0) == 0x80) {
+				str++;
+				/* fprintf(stderr, "multibyte\n"); */
+				g_string_append_c(out, *str);
+				next_char++;
+			}
+		}
+		
+		/* can relax on following characters */
+		else if (*str >= 'A' && *str <= 'Z')
+		{
+			g_string_append_c(out, tolower(*str));
+		} else {
+			g_string_append_c(out, *str);
+		}
+		str++;
+	}
+	
+	result = out->str;
+	g_string_free(out, false);
+	return result;
+}
+
 /* string_from_node_tree -- Returns a null-terminated string,
 	which must be freed after use. */
 char * string_from_node_tree(node *n) {

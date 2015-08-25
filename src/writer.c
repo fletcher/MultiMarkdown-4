@@ -170,18 +170,23 @@ char * export_node_tree(node *list, int format, unsigned long extensions) {
    Copy them from main parse tree */
 void extract_references(node *list, scratch_pad *scratch) {
 	node *temp;
+	char * temp_str;
 	link_data *l;
 	
 	while (list != NULL) {
 		switch (list->key) {
 			case LINKREFERENCE:
 				l = list->link_data;
-				temp = mk_link(list->children, l->label, l->source, l->title, NULL);
+				temp_str = lower_string(l->label);
+
+				temp = mk_link(list->children, temp_str, l->source, l->title, NULL);
 				temp->link_data->attr = copy_node_tree(l->attr);
 
 				/* store copy of link reference */
 				scratch->links = cons(temp, scratch->links);
 				
+				free(temp_str);
+
 				break;
 			case NOTESOURCE:
 			case GLOSSARYSOURCE:
@@ -345,7 +350,8 @@ link_data * extract_link_data(char *label, scratch_pad *scratch) {
 	if ((label == NULL) || (strlen(label) == 0))
 		return NULL;
 	
-	temp = clean_string(label);
+	/* temp = clean_string(label); */
+	temp = lower_string(label);
 	
 	/* look for label string as is */
 	while (ref != NULL) {
