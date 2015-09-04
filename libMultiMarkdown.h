@@ -49,21 +49,23 @@ enum parser_extensions {
 	EXT_FAKE                = 1 << 31,   /* 31 is highest number allowed */
 };
 
-/* Define output formats we support -- first in list is default */
+/* Define output formats we support -- first in list is default. As a rule, */
+/* formats with no comment should be treated with suspicion and care. Use of */
+/* some export formats may cause crashing or undefined behavior. */
 enum export_formats {
 	ORIGINAL_FORMAT,                /* Transclusion happens, but no parsing */
-	HTML_FORMAT,
-	TEXT_FORMAT,                    /* Not currently used */
+	HTML_FORMAT,					/* Well supported */
+	TEXT_FORMAT,                    /* Not currently used, may exit host process */
 	LATEX_FORMAT,
 	MEMOIR_FORMAT,
 	BEAMER_FORMAT,
 	OPML_FORMAT,
 	ODF_FORMAT,
-	RTF_FORMAT,
+	RTF_FORMAT,						/* Not recommended for production code, may crash */
 	CRITIC_ACCEPT_FORMAT,
 	CRITIC_REJECT_FORMAT,
 	CRITIC_HTML_HIGHLIGHT_FORMAT,
-	LYX_FORMAT,
+	LYX_FORMAT,						/* Not actively developed */
 	TOC_FORMAT,
 };
 
