@@ -118,7 +118,7 @@ void transclude_source(GString *source, char *basedir, char *stack, int output_f
 	size_t pos;
 	char real[1000];
 	FILE *input;
-	int offset;
+	long offset;
 
 	if (basedir == NULL) {
 		base = strdup("");
