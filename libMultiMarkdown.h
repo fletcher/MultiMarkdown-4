@@ -46,6 +46,8 @@ enum parser_extensions {
 	EXT_RANDOM_FOOT         = 1 << 15,   /* Use random numbers for footnote links */
 	EXT_HEADINGSECTION      = 1 << 16,   /* Group blocks under parent heading */
 	EXT_ESCAPED_LINE_BREAKS = 1 << 17,   /* Escaped line break */
+	EXT_NO_STRONG           = 1 << 18,   /* Don't allow nested <strong>'s */
+	EXT_NO_EMPH             = 1 << 19,   /* Don't allow nested <emph>'s */
 	EXT_FAKE                = 1 << 31,   /* 31 is highest number allowed */
 };
 
