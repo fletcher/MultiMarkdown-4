@@ -236,7 +236,7 @@ Punctuation = '.' | ',' | '?' | '!' | ';' | ':' | '。' | '、'
 NonPunctuation = !(Punctuation | SpecialChar | Spacechar | Newline) .
 
 Quoted =        '"' (!'"' .)* '"' | '\'' (!'\'' .)* '\''
-HtmlAttribute = (AlphanumericAscii | '-')+ Spnl ('=' Spnl (Quoted | (!'>' Nonspacechar)+))? Spnl
+HtmlAttribute = (AlphanumericAscii | '-' | ':')+ Spnl ('=' Spnl (Quoted | (!'>' Nonspacechar)+))? Spnl
 HtmlComment =   "<!--" (!"-->" .)* "-->"
 HtmlTag =       '<' Spnl '/'? AlphanumericAscii+ Spnl HtmlAttribute* '/'? Spnl '>'
 
@@ -408,50 +408,64 @@ UlOrStarLine =  (UlLine | StarLine) { $$ = str(yytext); }
 StarLine =      < "****" '*'* > | < Spacechar '*'+ &Spacechar >
 UlLine   =      < "____" '_'* > | < Spacechar '_'+ &Spacechar >
 
-Emph =	EmphStar | EmphUl
+Whitespace =  Spacechar | Newline
 
-Whitespace = Spacechar | Newline
+Emph = < EmphMatch >
+	{
+		yytext[strlen(yytext) - 1] = '\0';
+		/*
+			$$ = markdown_chunk_to_node(&yytext[1], ((parser_data *)G->data)->extensions | EXT_NO_EMPH);
 
-EmphStar =  '*' !Whitespace
-		a:StartList
-		( !'*' b:Inline { a = cons(b, a); }
-			| b:StrongStar  { a = cons(b, a); }
-		)+
-		<'*'> 
-		{ $$ = list(EMPH, a); }
+			Applying the EXT_NO_EMPH extension allows forbidding `<em> foo <em>bar</em> foo</em>`
+		*/
+
+		$$ = markdown_chunk_to_node(&yytext[1], ((parser_data *)G->data)->extensions);
+		if ($$ != NULL)
+			$$->key = EMPH;
+	}
+
+
+EmphMatch =	&{ !ext(EXT_NO_EMPH) } (EmphStar | EmphUl)
+
+EmphStar = '*' !Whitespace
+		(StrongMatch |
+		BracketedText |
+		(!'*' !BlankLine .) )+
+		'*'
 
 EmphUl = '_' !Whitespace
-		a:StartList
-		( !'_' b:Inline { a = cons(b, a); }
-			| b:StrongUl  { a = cons(b, a); }
-		)+
-		<'_'>
-		{ $$ = list(EMPH, a); }
+		(StrongMatch |
+		BracketedText |
+		(!'_' !BlankLine .) )+
+		'_'
 
-Strong = StrongStar | StrongUl
+Strong = < StrongMatch >
+		{
+			yytext[strlen(yytext) - 2] = '\0';
+			/*
+				$$ = markdown_chunk_to_node(&yytext[2], ((parser_data *)G->data)->extensions | EXT_NO_STRONG);
+			*/
+
+			$$ = markdown_chunk_to_node(&yytext[2], ((parser_data *)G->data)->extensions );
+			if ($$ != NULL)
+				$$->key = STRONG;
+		}
+
+StrongMatch = &{ !ext(EXT_NO_STRONG) } (StrongStar | StrongUl)
 
 StrongStar = "**" !Whitespace
-		a:StartList
-		( !"**" b:Inline { a = cons(b, a); })+ 
-		<"**">
-		{ $$ = list(STRONG, a); }
-
+		(EmphMatch |
+		BracketedText |
+		(!"**" !BlankLine .) )+
+		"**"
+		
 StrongUl = "__" !Whitespace
-		a:StartList
-		( !"__" b:Inline { a = cons(b, a); })+
-		<"__">
-		{ $$ = list(STRONG, a); }
+		(EmphMatch |
+		BracketedText |
+		(!"__" !BlankLine .) )+
+		"__"
 
-StrongAndEmph = StrongAndEmphStar | StrongAndEmphUl | EmphAndStrongStar | EmphAndStrongUl
-
-StrongAndEmphStar = "***" !Whitespace
-		a:StartList
-		( !"***" !"**" !"*" b:Inline { a = cons(b, a); })+
-		<"***">
-		{
-			$$ = list(EMPH, a); 
-			$$ = list(STRONG, $$);
-		}
+StrongAndEmph = EmphAndStrongStar | EmphAndStrongUl
 
 EmphAndStrongStar = "*" &(PossibleEmphStrongStar)
 		a:StartList 
@@ -462,15 +476,6 @@ EmphAndStrongStar = "*" &(PossibleEmphStrongStar)
 		}
 
 PossibleEmphStrongStar = "**" (!'\n' !'*' .)+ "**" (!'\n' !'*' .)+ '*'
-
-StrongAndEmphUl = "___" !Whitespace
-		a:StartList
-		( !"___" b:Inline { a = cons(b, a); })+
-		<"___">
-		{
-			$$ = list(EMPH, a); 
-			$$ = list(STRONG, $$);
-		}
 
 EmphAndStrongUl = "_" &(PossibleEmphStrongUl)
 		a:StartList 
@@ -549,9 +554,9 @@ SourceContents = ( ( !'(' !')' !'>' Nonspacechar )+ | '(' SourceContents ')')*
 Title = ( TitleSingle | TitleDouble | < "" > )
 	{ $$ = str(yytext); $$->key = TITLE; }
 
-TitleSingle = '\'' < ( !( '\'' Sp ( ')' | Newline ) ) . )* > '\''
+TitleSingle = '\'' < ( !( '\'' Sp ( ')' | Newline ) ) !BlankLine . )* > '\''
 
-TitleDouble = '"' < ( !( '"' Sp ( ')' | Newline ) ) . )* > '"'
+TitleDouble = '"' < ( !( '"' Sp ( ')' | Newline ) ) !BlankLine . )* > '"'
 
 AutoLink = AutoLinkUrl | AutoLinkEmail
 
@@ -1169,9 +1174,9 @@ HtmlBlockInTags = HtmlBlockAddress
 		| HtmlBlockNoframes
 		| HtmlBlockNoscript
 		| HtmlBlockOl
-		| HtmlBlockP
 		| HtmlBlockPre
 		| HtmlBlockProgress
+		| HtmlBlockP # This must come after other <p... tags
 		| HtmlBlockSection
 		| HtmlBlockTable
 		| HtmlBlockUl
@@ -1183,8 +1188,8 @@ HtmlBlockInTags = HtmlBlockAddress
 		| HtmlBlockTbody
 		| HtmlBlockTd
 		| HtmlBlockTfoot
-		| HtmlBlockTh
 		| HtmlBlockThead
+		| HtmlBlockTh # This must come after other <th... tags
 		| HtmlBlockTr
 		| HtmlBlockScript
 		| HtmlBlockHead
@@ -1330,9 +1335,13 @@ RightAlign = ('-'+ | '='+)':' &(!'-' !'=' !':')
 
 CellDivider = '|'
 
-BracketedText = ((!'[' !']' .) | '[' BracketedText ']' )*	# Matches text within [...], but allows for recursive brackets
+BracketedText = '[' ((!'[' !']' .) | BracketedText )* ']'	# Matches text within [...], but allows for recursive brackets
 
-TableCaption = b:StartList a:StartList ('[' < BracketedText > ']' {a = markdown_chunk_to_node(yytext, ((parser_data *)G->data)->extensions);} )
+TableCaption = b:StartList a:StartList (< BracketedText >
+	{
+		yytext[strlen(yytext) - 1] = '\0';
+		a = markdown_chunk_to_node(&yytext[1], ((parser_data *)G->data)->extensions);
+	} )
 		( c:AutoLabel { b = c; b->key = TABLELABEL;})? Sp Newline
 		{
 			$$ = a;
@@ -1523,6 +1532,8 @@ node * markdown_chunk_to_node(const char * source, unsigned long extensions) {
 		Prevents situations where the parser gets greedy and goes beyond the 
 		intended boundaries.
 	*/
+
+	/* fprintf(stderr, "Process '%s'\n",source); */
 
 	GREG g;
 	yyinit(&g);

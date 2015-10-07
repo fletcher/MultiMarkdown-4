@@ -276,6 +276,7 @@ scratch_pad * mk_scratch_pad(unsigned long extensions) {
 	result->cell_type = 0;
 	result->table_alignment = NULL;
 	result->table_column = 0;
+	result->inside_footnote = 0;
 
 	if (extensions & EXT_RANDOM_FOOT) {
 	    srand((int)time(NULL));
@@ -462,6 +463,41 @@ char * clean_string(char *str) {
 	clean = out->str;
 	g_string_free(out, false);
 	return clean;
+}
+
+/* lower_string -- return lower case version of string */
+char * lower_string(char *str) {
+	GString *out = g_string_new("");
+	char *result;
+	char *next_char;
+
+	while (*str != '\0') {
+		next_char = str;
+		next_char++;
+		/* Is this a multibyte character? */
+		if ((*next_char & 0xC0) == 0x80) {
+			g_string_append_c(out, *str);
+			while ((*next_char & 0xC0) == 0x80) {
+				str++;
+				/* fprintf(stderr, "multibyte\n"); */
+				g_string_append_c(out, *str);
+				next_char++;
+			}
+		}
+		
+		/* can relax on following characters */
+		else if (*str >= 'A' && *str <= 'Z')
+		{
+			g_string_append_c(out, tolower(*str));
+		} else {
+			g_string_append_c(out, *str);
+		}
+		str++;
+	}
+	
+	result = out->str;
+	g_string_free(out, false);
+	return result;
 }
 
 /* string_from_node_tree -- Returns a null-terminated string,

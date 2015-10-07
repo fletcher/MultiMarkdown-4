@@ -21,6 +21,8 @@
 
 #include "html.h"
 
+/* #define DEBUG_ON */
+
 bool is_html_complete_doc(node *meta);
 void print_col_group(GString *out,scratch_pad *scratch);
 
@@ -376,6 +378,10 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 			if (n->link_data->label != NULL) {
 				temp = strdup(n->link_data->label);
 
+#ifdef DEBUG_ON
+	fprintf(stderr, "print html link: '%s'\n",n->link_data->title);				
+	fprintf(stderr, "print html link: '%s'\n",temp);
+#endif
 				n->link_data->attr = NULL;
 				free_link_data(n->link_data);
 
@@ -497,6 +503,9 @@ void print_html_node(GString *out, node *n, scratch_pad *scratch) {
 						g_string_append_printf(out, "<figure>\n");
 				}
 				free(temp);
+			} else {
+				if (n->key == IMAGEBLOCK)
+						g_string_append_printf(out, "<figure>\n");
 			}
 #ifdef DEBUG_ON
 	fprintf(stderr, "create img\n");
