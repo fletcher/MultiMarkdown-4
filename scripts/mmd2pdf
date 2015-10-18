@@ -37,7 +37,7 @@ do
 		
 		xelatex "$file_name.tex"
 
-		if [ "$?" == "127" ]
+		if [ "$?" = "127" ]
 		then
 			echo "It doesn't appear that xelatex is installed properly." 1>&2
 			echo "Be sure you have a working LaTeX installation." 1>&2
@@ -53,7 +53,7 @@ do
 		# Use LaTeX
 		latexmk "$file_name.tex"
 	
-		if [ "$?" == "127" ]
+		if [ "$?" = "127" ]
 		then
 			echo "It doesn't appear that latexmk is installed properly." 1>&2
 			echo "Be sure you have a working LaTeX installation." 1>&2
