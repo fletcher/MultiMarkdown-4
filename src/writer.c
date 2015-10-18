@@ -325,6 +325,12 @@ void find_abbreviations(node *list, scratch_pad *scratch) {
 			case GLOSSARYSOURCE:
 			case BLOCKQUOTEMARKER:
 			case BLOCKQUOTE:
+			case STRONG:
+			case EMPH:
+			case TABLE:
+			case TABLEBODY:
+			case TABLEROW:
+			case TABLECELL:
 				/* Check children of these elements */
 				find_abbreviations(list->children, scratch);
 				break;
@@ -340,6 +346,7 @@ void find_abbreviations(node *list, scratch_pad *scratch) {
 /* extract_link_data -- given a label, parse the link data and return */
 link_data * extract_link_data(char *label, scratch_pad *scratch) {
 	char *temp;
+	char *temp2;
 	link_data *d;
 	node *ref = scratch->links;
 	bool debug = 0;
@@ -350,8 +357,8 @@ link_data * extract_link_data(char *label, scratch_pad *scratch) {
 	if ((label == NULL) || (strlen(label) == 0))
 		return NULL;
 	
-	/* temp = clean_string(label); */
-	temp = lower_string(label);
+	temp2 = clean_string(label);
+	temp = lower_string(temp2);
 	
 	/* look for label string as is */
 	while (ref != NULL) {
@@ -375,6 +382,7 @@ link_data * extract_link_data(char *label, scratch_pad *scratch) {
 		ref = ref->next;
 	}
 	free(temp);
+	free(temp2);
 	
 	/* No match.  Check for label()version */
 	
