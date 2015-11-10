@@ -146,7 +146,7 @@ target_link_libraries (multimarkdown libMultiMarkdown)
 add_custom_command (
 	TARGET multimarkdown
 	POST_BUILD
-	COMMAND $<TARGET_FILE:multimarkdown -f -b ${PROJET_BINARY_DIR}/README.md
+	COMMAND $<TARGET_FILE:multimarkdown> -f ../README.md > ${CMAKE_CURRENT_BINARY_DIR}/README.html
 )
 
 install (TARGETS multimarkdown

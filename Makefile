@@ -29,6 +29,8 @@ clean: $(BUILD_DIR)
 
 extras: $(BUILD_DIR) $(BUILD_DIR)/README.html $(BUILD_DIR)/LICENSE.html $(BUILD_DIR)/enumMap.txt
 
+$(BUILD_DIR)/README.html: README.md
+	touch $(BUILD_DIR)/README.html
 
 $(BUILD_DIR)/LICENSE.html: LICENSE.txt
 	multimarkdown -o $(BUILD_DIR)/LICENSE.html LICENSE.txt
