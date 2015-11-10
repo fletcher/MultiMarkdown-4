@@ -4,7 +4,7 @@ BUILD_DIR = build
 $(BUILD_DIR): 
 	-mkdir $(BUILD_DIR) 2>/dev/null
 	cd $(BUILD_DIR); \
-	rm -rf *
+	rm -rf *; touch README.html
 
 release: extras
 	cd $(BUILD_DIR); \
@@ -29,8 +29,6 @@ clean: $(BUILD_DIR)
 
 extras: $(BUILD_DIR) $(BUILD_DIR)/README.html $(BUILD_DIR)/LICENSE.html $(BUILD_DIR)/enumMap.txt
 
-$(BUILD_DIR)/README.html: README.md
-	multimarkdown -o $(BUILD_DIR)/README.html README.md
 
 $(BUILD_DIR)/LICENSE.html: LICENSE.txt
 	multimarkdown -o $(BUILD_DIR)/LICENSE.html LICENSE.txt

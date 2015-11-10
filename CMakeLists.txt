@@ -143,6 +143,11 @@ target_link_libraries (multimarkdown libMultiMarkdown)
 # =========
 
 # (NOTE: README.html has to be generated before it can be used here)
+add_custom_command (
+	TARGET multimarkdown
+	POST_BUILD
+	COMMAND $<TARGET_FILE:multimarkdown -f -b ${PROJET_BINARY_DIR}/README.md
+)
 
 install (TARGETS multimarkdown
 	DESTINATION bin
