@@ -373,7 +373,10 @@ link_data * extract_link_data(char *label, scratch_pad *scratch) {
 			/* matched */
 			d = ref->link_data;
 			d = mk_link_data(d->label, d->source, d->title, d->attr);
+
 			free(temp);
+			free(temp2);
+			
 			return d;
 		} else {
 			if (debug)
@@ -381,6 +384,7 @@ link_data * extract_link_data(char *label, scratch_pad *scratch) {
 		}
 		ref = ref->next;
 	}
+
 	free(temp);
 	free(temp2);
 	
@@ -406,7 +410,9 @@ link_data * extract_link_data(char *label, scratch_pad *scratch) {
 			/* matched */
 			d = ref->link_data;
 			d = mk_link_data(d->label, d->source, d->title, d->attr);
+			
 			free(temp);
+
 			return d;
 		} else {
 			if (debug)
@@ -414,8 +420,9 @@ link_data * extract_link_data(char *label, scratch_pad *scratch) {
 		}
 		ref = ref->next;
 	}
-	free(temp);
 
+	free(temp);
+	
 	if (debug)
 		fprintf(stderr, "finish extract\n");
 	return NULL;
