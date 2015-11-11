@@ -15,7 +15,7 @@
 #		LaTeX file.
 
 # Be sure to include multimarkdown and latex in our PATH
-export PATH="/usr/local/bin:/usr/texbin:$PATH"
+export PATH="/usr/local/bin:/usr/texbin:/Library/TeX/texbin$PATH"
 
 if [ $# = 0 ]
 then
