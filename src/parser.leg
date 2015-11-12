@@ -759,7 +759,7 @@ Code = ( Ticks1 Sp < ( ( !'`' Nonspacechar )+ | !Ticks1 '`'+ | !( Sp Ticks1 ) ( 
        )
        { $$ = str(yytext); $$->key = CODE; }
 
-FenceType = Sp RawLine
+FenceType = Sp &((!'\n' !'\r' !'`' .)* Newline) RawLine
 		{ $$ = str(yytext); $$->key = VERBATIMTYPE; }
 
 Fenced = NonindentSpace (( Ticks3 a:FenceType < ( (!(NonindentSpace Ticks3) NonMatchingRawLine)* ) > NonindentSpace Ticks3 Sp Newline ) |
