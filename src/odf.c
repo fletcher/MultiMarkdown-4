@@ -572,11 +572,11 @@ void print_odf_node(GString *out, node *n, scratch_pad *scratch) {
 			if (temp_node->key == GLOSSARYSOURCE) {
 				g_string_append_printf(out, "<text:note text:id=\"\" text:note-class=\"glossary\"><text:note-body>\n");
 				print_odf_node_tree(out, temp_node->children, scratch);
-				g_string_append_printf(out, "</text:note-body>\n</text:note>\n");
+				g_string_append_printf(out, "</text:note-body>\n</text:note>");
 			} else {
 				g_string_append_printf(out, "<text:note text:id=\"\" text:note-class=\"footnote\"><text:note-body>\n");
 				print_odf_node_tree(out, temp_node->children, scratch);
-				g_string_append_printf(out, "</text:note-body>\n</text:note>\n");
+				g_string_append_printf(out, "</text:note-body>\n</text:note>");
 			}
 			scratch->printing_notes = 0;
 			scratch->padded = 1;
@@ -625,7 +625,7 @@ void print_odf_node(GString *out, node *n, scratch_pad *scratch) {
 							print_odf_node(out, temp_node->children, scratch);
 						}
 						pad(out, 1, scratch);
-						g_string_append_printf(out, "</text:note-body>\n</text:note>\n");
+						g_string_append_printf(out, "</text:note-body>\n</text:note>");
 						scratch->odf_para_type = old_type;
 					} else {
 						/* We are reusing a previous citation */
